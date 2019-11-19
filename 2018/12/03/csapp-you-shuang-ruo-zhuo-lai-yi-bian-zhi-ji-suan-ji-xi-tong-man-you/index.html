@@ -1,0 +1,1006 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="CSAPP又双叒叕来一遍之计算机系统漫游, 书鱼">
+    <meta name="description" content="说在前面的一些废话，如果你困了，请直接跳至正文刚入学就买的这本《深入理解计算机系统》。一年多来，学学停停，但是永远记住了第一章第二段的第二句话如果你全力投身学习本书的概念，完全理解底层计算机系统以及它对应用程序的影响
+那么你会走向为数不多的">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>CSAPP又双叒叕来一遍之计算机系统漫游 | 书鱼</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    
+    <script src="/libs/jquery/jquery.min.js"></script>
+    
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper head-container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">书鱼</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>起居注</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>书鱼是谁</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>快来膜大佬</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>私密相册</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">书鱼</div>
+        <div class="logo-desc">
+            
+            他浑身都是弱点，简直一无是处，但他靠着自己的力量一步步克服，最终成为了火影
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			起居注
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			书鱼是谁
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			快来膜大佬
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			私密相册
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/4.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        CSAPP又双叒叕来一遍之计算机系统漫游
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                          <div class="article-tag">
+                            <span class="chip bg-color">无标签</span>
+                          </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/CSAPP/" class="post-category">
+                                CSAPP
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2018-12-03
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    1.6k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    5 分
+                </div>
+                
+				
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+            
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="说在前面的一些废话，如果你困了，请直接跳至正文"><a href="#说在前面的一些废话，如果你困了，请直接跳至正文" class="headerlink" title="说在前面的一些废话，如果你困了，请直接跳至正文"></a>说在前面的一些废话，如果你困了，请直接跳至正文</h2><h5 id="刚入学就买的这本《深入理解计算机系统》。一年多来，学学停停，但是永远记住了第一章第二段的第二句话"><a href="#刚入学就买的这本《深入理解计算机系统》。一年多来，学学停停，但是永远记住了第一章第二段的第二句话" class="headerlink" title="刚入学就买的这本《深入理解计算机系统》。一年多来，学学停停，但是永远记住了第一章第二段的第二句话"></a>刚入学就买的这本《深入理解计算机系统》。一年多来，学学停停，但是永远记住了第一章第二段的第二句话</h5><pre><code>如果你全力投身学习本书的概念，完全理解底层计算机系统以及它对应用程序的影响
+那么你会走向为数不多的“大牛”的道路</code></pre><a id="more"></a>
+<h5 id="好一个大牛的道路，对于热爱计算机的人来说的“大牛的道路”-和-爱好钱财的人的“富婆包养路”（或者是富萝莉）地位相同"><a href="#好一个大牛的道路，对于热爱计算机的人来说的“大牛的道路”-和-爱好钱财的人的“富婆包养路”（或者是富萝莉）地位相同" class="headerlink" title="好一个大牛的道路，对于热爱计算机的人来说的“大牛的道路” 和 爱好钱财的人的“富婆包养路”（或者是富萝莉）地位相同"></a>好一个大牛的道路，对于热爱计算机的人来说的“大牛的道路” 和 爱好钱财的人的“富婆包养路”（或者是富萝莉）地位相同</h5><p>在这句话的驱动下（多少人和我一样啊），这本书是我花费最多时间和精力去啃的专业书籍<br>这本书确实无敌到能让一个完全不懂的孩童般见识到了计算机专业广阔无垠、波澜壮阔的海洋。<br>惭愧的是自己完全没有达到大牛们啃完后通彻计算机系统的境界<br>即便是如此我还是受益匪浅，CSAPP无愧为计算机专业的神书！<br>如今我已经大二，按理说是踌躇满志的时候，我却满是遗憾，遗憾自己大一后半学期的固步自封，<br>浪费了那么多宝贵的青春年华在毫无意义的事物上，追求短暂的愉悦却荒芜了年华。</p>
+<h4 id="但是往昔不可忆，切记不要再浪费自己的青春和元气。"><a href="#但是往昔不可忆，切记不要再浪费自己的青春和元气。" class="headerlink" title="但是往昔不可忆，切记不要再浪费自己的青春和元气。"></a>但是往昔不可忆，切记不要再浪费自己的青春和元气。</h4><h2 id="所以重整旗鼓，这回想认真总结一下（感言结束，疯狂暗示♂）"><a href="#所以重整旗鼓，这回想认真总结一下（感言结束，疯狂暗示♂）" class="headerlink" title="所以重整旗鼓，这回想认真总结一下（感言结束，疯狂暗示♂）"></a>所以重整旗鼓，这回想认真总结一下（感言结束，疯狂暗示♂）</h2><h3 id="一、分析hello-c的例子，从其生命周期分析系统的执行过程"><a href="#一、分析hello-c的例子，从其生命周期分析系统的执行过程" class="headerlink" title="一、分析hello.c的例子，从其生命周期分析系统的执行过程"></a>一、分析hello.c的例子，从其生命周期分析系统的执行过程</h3><p>hello.c 源代码：</p>
+<pre><code>#include&lt;stdio.h&gt;
+int main()
+{
+   printf(&quot;hello world&quot;);
+   return 0;
+}
+</code></pre><p>在Unix系统上,从源文件到目标文件的转化是由编译器驱动程序完成的:</p>
+<pre><code>unix&gt;gcc -o hello hello.c</code></pre><p><img src="huibian.jpg" alt=""></p>
+<h4 id="执行这四个阶段的程序-预处理器、编译器、汇编器、链接器-一起构成了编译系统-compilation-system"><a href="#执行这四个阶段的程序-预处理器、编译器、汇编器、链接器-一起构成了编译系统-compilation-system" class="headerlink" title="执行这四个阶段的程序(预处理器、编译器、汇编器、链接器)一起构成了编译系统(compilation system)."></a>执行这四个阶段的程序(预处理器、编译器、汇编器、链接器)一起构成了编译系统(compilation system).</h4><ol>
+<li>预处理阶段:也就是对程序进行预处理。C程序中特指“”#“”包含的库文件。预处理器将库文件直接导入到源代码中，<br>此例就是将头文件“stdio.h”导入到源程序中，生成hello.i源代码。</li>
+<li>编译阶段:编译器(ccl)将文本文件hello.i翻译成文本文件hello.s,它包含一个汇编语言程序.</li>
+<li>汇编阶段: 将汇编语言转化为机器指令,生成二进制文件——hello.o。</li>
+<li>链接阶段.目标文件合并到我们的hello.o程序中,链接器就处理这种合并.得到hello文件,一个可执行目标文件,可以被加载到内存中,由系统执行.</li>
+</ol>
+<h3 id="二、信息就是位-上下文"><a href="#二、信息就是位-上下文" class="headerlink" title="二、信息就是位+上下文"></a>二、信息就是位+上下文</h3><p>源程序实际上就是由一个值0和1组成的位(bit)序列,8个位被组织成一组,称为字节.每个字节表示程序中某个文本字符.<br>大部分现代系统都是有ASCII标准表示文本字符,只由ASCII字符构成的文件称为文本文件,所有其他文件都称为二进制文件<br>系统中所有的信息—–包括磁盘文件、存储器中的程序、存储器中存放的用户数据以及网络上传送的数据,都是由一串位表示的.区分不同数据对象的唯一方法是我们读到这些数据对象时的上下文.比如:在不同的上下文中,一个同样的字节序列可能表示一个整数、浮点数、字符串或者机器指令. </p>
+<h3 id="三、系统的硬件组成"><a href="#三、系统的硬件组成" class="headerlink" title="三、系统的硬件组成"></a>三、系统的硬件组成</h3><p><img src="1-4.jpg" alt=""><br><strong>CPU</strong>:中央处理单元 &ensp; <strong>ALU</strong>:算术/逻辑单元 &ensp;<strong>PC</strong>:程序计数器 &ensp;<strong>USB</strong>:通用串行总线</p>
+<ul>
+<li>总线贯穿整个系统的是一组电子管道,称做总线,它携带信息字节并负责在各个部件间传递.</li>
+<li>I/O设备:输入/输出(I/O)设备是系统与外部世界的联系通道</li>
+<li>主存:主存是一个临时存储设备,在处理器执行程序时,用来存放程序和程序处理的数据.</li>
+<li>处理器:中央处理单元(CPU),简称处理器,是解释(或执行)存储在主存中指令的引擎.<br>处理器的核心是一个字长的存储设备(或寄存器),称为程序计数器(PC).</li>
+</ul>
+<h3 id="四、存储设备形成层次结构"><a href="#四、存储设备形成层次结构" class="headerlink" title="四、存储设备形成层次结构"></a>四、存储设备形成层次结构</h3><p>存储器层次结构的主要思想是一层上的存储器作为低一层存储器的高速缓存.<br><img src="1-9.png" alt=""></p>
+<h3 id="五、线程进程，单独分离写了个博客，这里不重复"><a href="#五、线程进程，单独分离写了个博客，这里不重复" class="headerlink" title="五、线程进程，单独分离写了个博客，这里不重复"></a>五、线程进程，单独分离写了个博客，这里不重复</h3><h3 id="六、计算机系统中抽象的重要性"><a href="#六、计算机系统中抽象的重要性" class="headerlink" title="六、计算机系统中抽象的重要性"></a>六、计算机系统中抽象的重要性</h3><ul>
+<li>文件是对I/O的抽象</li>
+<li>虚拟存储器是对程序存储器的抽象.</li>
+<li>进程是对一个正在运行的程序的抽象.</li>
+<li>虚拟机,它提供对整个计算机(操作系统,处理器和程序)的抽象.</li>
+</ul>
+<p><img src="chouxiang.jpg" alt=""></p>
+<h3 id="七、虚拟内存"><a href="#七、虚拟内存" class="headerlink" title="七、虚拟内存"></a>七、虚拟内存</h3><h4 id="虚拟内存是一个抽象概念，它为每个进程提供了一个假象，即每个进程都在独占地使用主存。"><a href="#虚拟内存是一个抽象概念，它为每个进程提供了一个假象，即每个进程都在独占地使用主存。" class="headerlink" title="虚拟内存是一个抽象概念，它为每个进程提供了一个假象，即每个进程都在独占地使用主存。"></a>虚拟内存是一个抽象概念，它为每个进程提供了一个假象，即每个进程都在独占地使用主存。</h4><h4 id="每个进程看到的内存都是一致的，称为虚拟地址空间。在linux中，进程的虚拟地址空间如下图"><a href="#每个进程看到的内存都是一致的，称为虚拟地址空间。在linux中，进程的虚拟地址空间如下图" class="headerlink" title="每个进程看到的内存都是一致的，称为虚拟地址空间。在linux中，进程的虚拟地址空间如下图"></a>每个进程看到的内存都是一致的，称为虚拟地址空间。在linux中，进程的虚拟地址空间如下图</h4><p><img src="1-13.png" alt=""></p>
+<ul>
+<li><p>程序代码和数据：对于所有进程来说，代码从一固定地址开始，紧接和C全局变量相对应的数据位置。第七章研究链接和加载时，学到更多有关地址空间的内容。</p>
+</li>
+<li><p>堆 ：代码和数据区紧随着运行时堆。代码和数据区是在进程一开始就被规定了大小，与此不同，调用malloc和free时堆动态的扩展和收缩。第9章学习管理虚拟存储器时，详细研究。</p>
+</li>
+<li><p>共享库：地址空间的中间部分存放C标准库和数学库这样共享库代码和数据的区域。共享库概念非常强大，相当难懂。第七章详解。</p>
+</li>
+<li><p>栈: 用户虚拟地址顶部的是用户栈，编译器用它来实现函数调用。和堆一样，在执行时动态的扩展和收缩。第三章详解。</p>
+</li>
+<li><p>内核虚拟内存。 内核总是驻留在内存中，是操作系统一部分。</p>
+</li>
+</ul>
+<h3 id="总结：由于本章只是计算机漫游，故只阐释了计算机的大概，具体细节后面章节，慢慢展开"><a href="#总结：由于本章只是计算机漫游，故只阐释了计算机的大概，具体细节后面章节，慢慢展开" class="headerlink" title="总结：由于本章只是计算机漫游，故只阐释了计算机的大概，具体细节后面章节，慢慢展开"></a>总结：由于本章只是计算机漫游，故只阐释了计算机的大概，具体细节后面章节，慢慢展开</h3>
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://kit4y.github.io" rel="external nofollow noreferrer">st4ck</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://kit4y.github.io/2018/12/03/csapp-you-shuang-ruo-zhuo-lai-yi-bian-zhi-ji-suan-ji-xi-tong-man-you/">https://kit4y.github.io/2018/12/03/csapp-you-shuang-ruo-zhuo-lai-yi-bian-zhi-ji-suan-ji-xi-tong-man-you/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="https://kit4y.github.io" target="_blank">st4ck</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            <span class="chip bg-color">无标签</span>
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2018/12/06/csapp-you-shuang-ruo-zhuo-lai-yi-bian-zhi-cheng-xu-de-ji-qi-ji-biao-shi/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="CSAPP又双叒叕来一遍之程序的机器级表示">
+                        
+                        <span class="card-title">CSAPP又双叒叕来一遍之程序的机器级表示</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            一、本章主要内容
+
+二、程序编码计算机系统使用了多种不同形式的抽象，利用更简单的抽象模型来隐藏实现的细节。对于机器级编程来说，其中两种抽象尤为重要：
+指令集体系结构或指令级框架：它定义了处理器状态、指令的格式，以及每条指令对状态的影响。IA
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2018-12-06
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/CSAPP/" class="post-category">
+                                    CSAPP
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E6%B1%87%E7%BC%96/">
+                        <span class="chip bg-color">汇编</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2018/12/03/duo-xian-cheng-he-duo-jin-cheng-de-ai-mei-chan-mian/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="多线程和多进程的暧昧缠绵">
+                        
+                        <span class="card-title">多线程和多进程的暧昧缠绵</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            先教科书一波（“千万别被吓到”），教科书上关于多进程和多线程解释为进程是资源分配的最小单位，线程是CPU调度的最小单位据说这句话拿去考试,改卷老师一定会给高分，但是还是嘚深入了解一下
+
+线程的定义：线程是操作系统能够进行运算调度的最小单位。
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2018-12-03
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/" class="post-category">
+                                    计算机杂七杂八
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E8%BF%9B%E7%A8%8B-%E7%BA%BF%E7%A8%8B/">
+                        <span class="chip bg-color">进程&amp;&amp;线程</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: 书鱼<br />'
+            + '文章作者: st4ck<br />'
+            + '文章链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归书鱼所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+    
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">年份</span>
+            <a href="https://kit4y.github.io" target="_blank">st4ck</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">177.2k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    window.setTimeout("siteTime()", 1000);
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2019";
+                    var startMonth = "6";
+                    var startDate = "28";
+                    var startHour = "0";
+                    var startMinute = "0";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/Kit4y" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:381382770@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=381382770" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 381382770" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script type="text/javascript" src="/libs/background/ribbon-dynamic.js" async="async"></script>
+    
+    
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/miku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+
+</html>

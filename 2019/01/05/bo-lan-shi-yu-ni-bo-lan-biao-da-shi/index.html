@@ -1,0 +1,1334 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="波兰式与逆波兰表达式, 书鱼">
+    <meta name="description" content="前缀、中缀、后缀表达式(逆波兰表达式)整体介绍
+前缀表达式、中缀表达式、后缀表达式都是四则运算的表达方式,用以四则运算表达式求值  ,即数学表达式的求值
+
+一、中缀表达式1.1、简介
+中缀表达式就是常见的运算表达式，如(3+4)×5-6
+
+">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>波兰式与逆波兰表达式 | 书鱼</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    
+    <script src="/libs/jquery/jquery.min.js"></script>
+    
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper head-container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">书鱼</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>起居注</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>书鱼是谁</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>快来膜大佬</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>私密相册</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">书鱼</div>
+        <div class="logo-desc">
+            
+            他浑身都是弱点，简直一无是处，但他靠着自己的力量一步步克服，最终成为了火影
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			起居注
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			书鱼是谁
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			快来膜大佬
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			私密相册
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        波兰式与逆波兰表达式
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">
+                                <span class="chip bg-color">数据结构</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E7%AE%97%E6%B3%95/" class="post-category">
+                                算法
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2019-01-05
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    2.3k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    9 分
+                </div>
+                
+				
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+            
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="前缀、中缀、后缀表达式-逆波兰表达式-整体介绍"><a href="#前缀、中缀、后缀表达式-逆波兰表达式-整体介绍" class="headerlink" title="前缀、中缀、后缀表达式(逆波兰表达式)整体介绍"></a>前缀、中缀、后缀表达式(逆波兰表达式)整体介绍</h2><blockquote>
+<p>前缀表达式、中缀表达式、后缀表达式都是四则运算的表达方式,用以四则运算表达式求值  ,即数学表达式的求值</p>
+</blockquote>
+<h3 id="一、中缀表达式"><a href="#一、中缀表达式" class="headerlink" title="一、中缀表达式"></a>一、中缀表达式</h3><h3 id="1-1、简介"><a href="#1-1、简介" class="headerlink" title="1.1、简介"></a>1.1、简介</h3><blockquote>
+<p>中缀表达式就是常见的运算表达式，如(3+4)×5-6</p>
+</blockquote>
+<a id="more"></a>
+<h3 id="二、前缀表达式"><a href="#二、前缀表达式" class="headerlink" title="二、前缀表达式"></a>二、前缀表达式</h3><h4 id="2-1、简介"><a href="#2-1、简介" class="headerlink" title="2.1、简介"></a>2.1、简介</h4><blockquote>
+<p>前缀表达式又称波兰式，<strong>前缀表达式的运算符位于操作数之前</strong></p>
+</blockquote>
+<blockquote>
+<p>比如:<strong>- × + 3 4 5 6</strong></p>
+</blockquote>
+<h4 id="2-2、如何通过前缀表达式来求值"><a href="#2-2、如何通过前缀表达式来求值" class="headerlink" title="2.2、如何通过前缀表达式来求值"></a>2.2、如何通过前缀表达式来求值</h4><blockquote>
+<p>从右至左扫描表达式，遇到数字时，将数字压入堆栈，遇到运算符时，弹出栈顶的两个数，用运算符对它们做相应的计算（栈顶元素 op 次顶元素），并将结果入栈；重复上述过程直到表达式最左端，最后运算得出的值即为表达式的结果</p>
+</blockquote>
+<ul>
+<li><p>例如:<strong>- × + 3 4 5 6</strong></p>
+<blockquote>
+<ol>
+<li>从右至左扫描，将6、5、4、3压入堆栈</li>
+<li>遇到+运算符，因此弹出3和4（3为栈顶元素，4为次顶元素，注意与后缀表达式做比较），计算出3+4的值，得7，再将7入栈</li>
+<li>接下来是×运算符，因此弹出7和5，计算出7×5=35，将35入栈</li>
+<li>最后是-运算符，计算出35-6的值，即29，由此得出最终结果</li>
+</ol>
+</blockquote>
+</li>
+</ul>
+<h4 id="2-3、将中缀表达式转换为前缀表达式"><a href="#2-3、将中缀表达式转换为前缀表达式" class="headerlink" title="2.3、将中缀表达式转换为前缀表达式"></a>2.3、将中缀表达式转换为前缀表达式</h4><blockquote>
+<p><strong>转换步骤如下</strong>:</p>
+</blockquote>
+<ol>
+<li>初始化两个栈:运算符栈s1，储存中间结果的栈s2</li>
+<li>从右至左扫描中缀表达式</li>
+<li>遇到操作数时，将其压入s2</li>
+<li>遇到运算符时，比较其与s1栈顶运算符的优先级<ol>
+<li>如果s1为空，或栈顶运算符为右括号“)”，则直接将此运算符入栈</li>
+<li>否则，若优先级比栈顶运算符的较高或相等，也将运算符压入s1</li>
+<li>否则，将s1栈顶的运算符弹出并压入到s2中，再次转到(4-1)与s1中新的栈顶运算符相比较</li>
+</ol>
+</li>
+<li>遇到括号时<ol>
+<li>如果是右括号“)”，则直接压入s1</li>
+<li>如果是左括号“(”，则依次弹出S1栈顶的运算符，并压入S2，直到遇到右括号为止，此时将这一对括号丢弃</li>
+</ol>
+</li>
+<li>重复步骤2至5，直到表达式的最左边</li>
+<li>将s1中剩余的运算符依次弹出并压入s2</li>
+<li>依次弹出s2中的元素并输出，结果即为中缀表达式对应的前缀表达式</li>
+</ol>
+<blockquote>
+<p><strong>例如:1+((2+3)×4)-5具体过程，如下表</strong></p>
+</blockquote>
+<p><img src="1.png" alt=""></p>
+<blockquote>
+<p><strong>结果是:- + 1 × + 2 3 4 5</strong></p>
+</blockquote>
+<h3 id="三、后缀表达式-逆波兰表达式"><a href="#三、后缀表达式-逆波兰表达式" class="headerlink" title="三、后缀表达式(逆波兰表达式)"></a>三、后缀表达式(逆波兰表达式)</h3><h4 id="3-1、简介"><a href="#3-1、简介" class="headerlink" title="3.1、简介"></a>3.1、简介</h4><blockquote>
+<p>后缀表达式又称逆波兰表达式,与前缀表达式相似，只是运算符位于操作数之后</p>
+</blockquote>
+<blockquote>
+<p>比如:<strong>3 4 + 5 × 6 -</strong></p>
+</blockquote>
+<h4 id="3-2、后缀表达式计算机求值"><a href="#3-2、后缀表达式计算机求值" class="headerlink" title="3.2、后缀表达式计算机求值"></a>3.2、后缀表达式计算机求值</h4><blockquote>
+<p>与前缀表达式类似，只是顺序是从左至右：</p>
+</blockquote>
+<blockquote>
+<p>从左至右扫描表达式，遇到数字时，将数字压入堆栈，遇到运算符时，弹出栈顶的两个数，用运算符对它们做相应的计算（次顶元素 op 栈顶元素），并将结果入栈；重复上述过程直到表达式最右端，最后运算得出的值即为表达式的结果</p>
+</blockquote>
+<blockquote>
+<p><strong>例如后缀表达式“3 4 + 5 × 6 -”</strong>：</p>
+</blockquote>
+<ol>
+<li>从左至右扫描，将3和4压入堆栈；</li>
+<li>遇到+运算符，因此弹出4和3（4为栈顶元素，3为次顶元素，注意与前缀表达式做比较），计算出3+4的值，得7，再将7入栈；</li>
+<li>将5入栈；</li>
+<li>接下来是×运算符，因此弹出5和7，计算出7×5=35，将35入栈；</li>
+<li>将6入栈；</li>
+<li>最后是-运算符，计算出35-6的值，即29，由此得出最终结果。</li>
+</ol>
+<h4 id="3-3、将中缀表达式转换为后缀表达式步骤"><a href="#3-3、将中缀表达式转换为后缀表达式步骤" class="headerlink" title="3.3、将中缀表达式转换为后缀表达式步骤"></a>3.3、将中缀表达式转换为后缀表达式步骤</h4><blockquote>
+<p>与转换为前缀表达式相似，步骤如下：</p>
+</blockquote>
+<ol>
+<li>初始化两个栈：运算符栈s1和储存中间结果的栈s2；</li>
+<li>从左至右扫描中缀表达式；</li>
+<li>遇到操作数时，将其压s2；</li>
+<li>遇到运算符时，比较其与s1栈顶运算符的优先级：<ol>
+<li>如果s1为空，或栈顶运算符为左括号“(”，则直接将此运算符入栈；</li>
+<li>否则，若优先级比栈顶运算符的高，也将运算符压入s1（<strong>注意转换为前缀表达式时是优先级较高或相同，而这里则不包括相同的情况</strong>）；</li>
+<li>否则，将s1栈顶的运算符弹出并压入到s2中，再次转到(4-1)与s1中新的栈顶运算符相比较；</li>
+</ol>
+</li>
+<li>遇到括号时：<ol>
+<li>如果是左括号“(”，则直接压入s1；</li>
+<li>如果是右括号“)”，则依次弹出s1栈顶的运算符，并压入s2，直到遇到左括号为止，此时将这一对括号丢弃；</li>
+</ol>
+</li>
+<li>重复步骤2至5，直到表达式的最右边；</li>
+<li>将s1中剩余的运算符依次弹出并压入s2；</li>
+<li>依次弹出s2中的元素并输出，<strong>结果的逆序即为中缀表达式对应的后缀表达式（转换为前缀表达式时不用逆序）</strong></li>
+</ol>
+<blockquote>
+<p><strong>例如，将中缀表达式“1+((2+3)×4)-5”转换为后缀表达式的过程如下</strong>：</p>
+</blockquote>
+<p><img src="2.png" alt=""></p>
+<blockquote>
+<p><strong>因此结果为“1 2 3 + 4 × + 5 -”</strong></p>
+</blockquote>
+<h4 id="3-4、C语言实现中缀表达式变后缀表达式"><a href="#3-4、C语言实现中缀表达式变后缀表达式" class="headerlink" title="3.4、C语言实现中缀表达式变后缀表达式"></a>3.4、C语言实现中缀表达式变后缀表达式</h4><pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+typedef struct Node
+{
+    char ele;
+    struct Node * next;
+}Node;
+
+typedef Node * Stack;
+
+Stack MakeStack(void)//新建栈并返回栈顶
+{
+    Stack S = (Node *)malloc(sizeof(Node));
+    S-&gt;next = NULL;
+    return S;
+}
+
+void MakeNUll(Stack S)//置空栈
+{
+    S-&gt;next = NULL;
+}
+
+void Pop(Stack S)//将栈顶弹出
+{
+    Stack temp = S-&gt;next;
+    S-&gt;next = temp-&gt;next;
+}
+
+void Push(Stack S, char c)//将新节点压入栈
+{
+    Stack temp = (Node *)malloc(sizeof(Node));
+    temp-&gt;ele = c;
+    temp-&gt;next = S-&gt;next;
+    S-&gt;next = temp;
+}
+
+Stack FindHead(Stack S)//返回栈顶
+{
+    Stack temp = S-&gt;next;
+    return temp;
+}
+
+void PrintHead(Stack S)//打印栈顶元素
+{
+    Stack temp = S-&gt;next;
+    printf(&quot;%c&quot;, temp-&gt;ele);
+}
+
+int main(void)
+{
+    Stack S = MakeStack();
+    int i = 0;
+    char str[200];
+    printf(&quot;Type something.\n&quot;);
+    gets(str);
+
+    while(str[i] != &#39;\0&#39;)
+    {
+        if(str[i] == &#39;+&#39; || str[i] == &#39;-&#39;)//如果str[i]是加号或减号，则先弹出栈顶直到栈已空或栈顶元素为左括号，再将str[i]压入栈
+        {
+            if(FindHead(S) == NULL)//若栈已空时，栈顶指针为空，找不到其元素，故须单独讨论
+            {
+                Push(S, str[i]);
+            }
+            else
+            {
+                while(FindHead(S)-&gt;ele == &#39;+&#39; || FindHead(S)-&gt;ele == &#39;-&#39; || FindHead(S)-&gt;ele == &#39;*&#39; || FindHead(S)-&gt;ele == &#39;/&#39;)
+                {
+                    PrintHead(S);
+                    Pop(S);
+                }
+                Push(S, str[i]);
+            }
+        }
+
+        else if(str[i] == &#39;*&#39; || str[i] == &#39;/&#39;)//如果str[i]是乘号或除号，则只有栈顶也是乘除号时才需要弹出
+        {
+            if(FindHead(S) == NULL)
+            {
+                Push(S, str[i]);
+            }
+            else
+            {
+                while(FindHead(S)-&gt;ele == &#39;*&#39; || FindHead(S)-&gt;ele == &#39;/&#39;)
+                {
+                    PrintHead(S);
+                    Pop(S);
+                }
+                Push(S, str[i]);
+            }
+        }
+
+        else if(str[i] == &#39;(&#39;)//如果str[i]是左括号则直接压入栈
+        {
+            Push(S, str[i]);
+        }
+
+        else if(str[i] == &#39;)&#39;)//如果str[i]是右括号，则打印并弹出栈中第一个左括号前的所有操作符，最后将此左括号直接弹出
+        {
+            while(FindHead(S)-&gt;ele != &#39;(&#39;)
+            {
+                PrintHead(S);
+                Pop(S);
+            }
+            Pop(S);
+        }
+
+        else//如果str[i]不是操作符则直接打印
+        {
+            printf(&quot;%c&quot;, str[i]);
+        }
+
+        i++;
+    }
+
+    while(FindHead(S) != NULL)//遍历后如果栈不为空，则弹出所有操作符
+    {
+        PrintHead(S);
+        Pop(S);
+    }
+
+    return 0;
+}</code></pre><h4 id="3-5、C语言实现逆波兰计算器"><a href="#3-5、C语言实现逆波兰计算器" class="headerlink" title="3.5、C语言实现逆波兰计算器"></a>3.5、C语言实现逆波兰计算器</h4><pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;math.h&gt;
+
+#define STACK_INIT_SIZE 20
+#define STACKINCREMENT 10
+#define MAXBUFFER 10
+
+typedef double ElemType;
+typedef struct{
+    ElemType *base;
+    ElemType *top;
+    int stackSize;
+}sqStack;
+
+// 创建一个栈
+void InitStack(sqlStack *s){
+    s-&gt;base = (ElemType *)malloc(STACK_INIT_SIZE *sizeof(ElemType));
+
+    if(!s-&gt;base){
+        exit(0);
+    }
+
+    s-&gt;top = s-&gt;base;
+    s-&gt;stackSize = STACK_INIT_SIZE;
+}
+
+// 压栈
+void Push(sqStack *s, ElemType e){
+
+    if(s-&gt;top - s-&gt;base &gt;= s-&gt;stackSize){
+        s-&gt;base = (ElemType *)realloc(s-&gt;base, (s-&gt;stackSize + STACKINCREMENT)*sizeof(ElemType));
+        if(!s-&gt;base){
+            exit(0);
+        }
+    }
+
+    *(s-&gt;top) = e;
+    s-&gt;top++;
+}
+
+void Pop(sqStack *s, ElemType *e){
+    if(s-&gt;top == s-&gt;base){
+        return;
+    }
+    *e = *--(s-&gt;top);
+}
+
+// 计算栈的当前容量 
+int StackLen(sqStack s){
+    return (s.top - s.base);
+}
+
+double main(){
+    sqStack s;      
+    char c;
+    double d, e;
+    char str[MAXBUFFER];
+
+    InitStacke(&amp;s);
+
+    printf(&quot;请按逆波兰表达式输入待计算数据，数据与运算符之间用空格隔开，以#号作为结束标志：\n&quot;);
+    scanf(&quot;%c&quot;, &amp;c);
+
+    while(C != &#39;#&#39;){
+
+        while(isdigit(c) || c==&#39;.&#39;){ // 用于过滤数字
+            str[i++] = c;
+            str[i] = &#39;\0&#39;;
+            if(i&gt;=10){
+                printf(&quot;出错：输入的单个数据过大!\n&quot;);
+                return -1;
+            }
+            scanf(&quot;%c&quot;, &amp;c);
+            if(c == &#39; &#39;){
+                d = atof(str);
+                Push(&amp;s, d);
+                i = 0;
+                break;
+            }
+        }
+
+        switch(c){
+            case &#39;+&#39;:
+                Pop(&amp;s, &amp;e);
+                Pop(&amp;s, &amp;d);
+                Push(&amp;s, d+e);
+                break;
+            case &#39;-&#39;:
+                Pop(&amp;s, &amp;e);
+                Pop(&amp;s, &amp;d);
+                Push(&amp;s, d-e);
+                break;
+            case &#39;*&#39;:
+                Pop(&amp;s, &amp;e);
+                Pop(&amp;s, &amp;d);
+                Push(&amp;s, d*e);
+                break;
+            case &#39;/&#39;:
+                Pop(&amp;s, &amp;e);
+                Pop(&amp;s, &amp;d);
+                if(e != 0){
+                    Push(&amp;s, d/e);
+                }else{
+                    printf(&quot;\n出错：除数为零!\n&quot;);
+                    return -1;
+                }
+
+                break;
+        }
+        scanf(&quot;%c&quot;, &amp;c);
+    }
+
+    Pop(&amp;s, &amp;d);
+    printf(&quot;\n最终的计算结果为:%f\n&quot;, d);
+
+    return 0;
+}
+
+// 计算案例 
+// 1 2 - 4 5 + *   结果：9.000000
+// 5 - (6 + 7) * 8 + 9 / 4      5 6 7 + 8 * - 9 4 / +   结果：-96.750000</code></pre>
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://kit4y.github.io" rel="external nofollow noreferrer">st4ck</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://kit4y.github.io/2019/01/05/bo-lan-shi-yu-ni-bo-lan-biao-da-shi/">https://kit4y.github.io/2019/01/05/bo-lan-shi-yu-ni-bo-lan-biao-da-shi/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="https://kit4y.github.io" target="_blank">st4ck</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">
+                                    <span class="chip bg-color">数据结构</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2019/01/06/wang-luo-an-quan-fa/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="网络安全法">
+                        
+                        <span class="card-title">网络安全法</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            听说不懂法的人是没法搞安全的，所以有空还是认真看一看（认真脸）。 ![](1.png) 
+
+
+
+目录
+第一章 总则
+第二章 网络安全支持与促进
+第三章 网络运行安全
+第一节 一般规定
+第二节 关键信息基础设施的运行安全
+第四章 网络信息安全
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2019-01-06
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E7%BB%BC%E5%90%88/" class="post-category">
+                                    综合
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E6%B3%95/">
+                        <span class="chip bg-color">网络安全法</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2019/01/02/qt-huan-jing-da-jian-yi-ji-zi-dong-da-bao/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="Qt环境搭建以及自动打包">
+                        
+                        <span class="card-title">Qt环境搭建以及自动打包</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            一、下载安装（Qt是什么就不用我说了 自行百度咯1. 官网下载开始我以为下载qtcreator就是下载了qt,然后发现居然下载qtcreator只是一个空壳，下载qt自带一个qtceator,折腾了老半天，嘤嘤嘤，所以下面地址是直接下载qt
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-01-02
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E9%9B%81%E5%84%BF%E5%87%A0%E5%BA%A6%E6%81%8B%E5%BC%80%E5%8F%91-%E6%84%BF%E5%BE%97%E4%B8%80%E7%AB%99%E5%85%A5%E4%B8%87%E5%AE%B6/" class="post-category">
+                                    雁儿几度恋开发-愿得一站入万家
+                                </a>
+                            
+                            <a href="/categories/%E9%9B%81%E5%84%BF%E5%87%A0%E5%BA%A6%E6%81%8B%E5%BC%80%E5%8F%91-%E6%84%BF%E5%BE%97%E4%B8%80%E7%AB%99%E5%85%A5%E4%B8%87%E5%AE%B6/Qt/" class="post-category">
+                                    Qt
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Qt/">
+                        <span class="chip bg-color">Qt</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: 书鱼<br />'
+            + '文章作者: st4ck<br />'
+            + '文章链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归书鱼所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+    
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">年份</span>
+            <a href="https://kit4y.github.io" target="_blank">st4ck</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">177.2k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    window.setTimeout("siteTime()", 1000);
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2019";
+                    var startMonth = "6";
+                    var startDate = "28";
+                    var startHour = "0";
+                    var startMinute = "0";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/Kit4y" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:381382770@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=381382770" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 381382770" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script type="text/javascript" src="/libs/background/ribbon-dynamic.js" async="async"></script>
+    
+    
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/miku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+
+</html>

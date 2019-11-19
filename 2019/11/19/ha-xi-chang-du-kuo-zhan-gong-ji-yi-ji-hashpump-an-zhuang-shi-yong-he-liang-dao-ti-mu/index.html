@@ -1,0 +1,1205 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="哈希长度扩展攻击以及HashPump安装使用和两道题目, 书鱼">
+    <meta name="description" content="能做什么如果salt的值你不知道，但是你知道长度，又知道sha1(salt)，那么就也就可以知道sha1(salt+“填充数据”+“任意可控数据”).这里的salt+“填充数据”就是对salt进行sha1时所补全的数据+最后8位的长度描述符">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>哈希长度扩展攻击以及HashPump安装使用和两道题目 | 书鱼</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    
+    <script src="/libs/jquery/jquery.min.js"></script>
+    
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper head-container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">书鱼</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>起居注</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>书鱼是谁</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>快来膜大佬</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>私密相册</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">书鱼</div>
+        <div class="logo-desc">
+            
+            他浑身都是弱点，简直一无是处，但他靠着自己的力量一步步克服，最终成为了火影
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			起居注
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			书鱼是谁
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			快来膜大佬
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			私密相册
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/16.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        哈希长度扩展攻击以及HashPump安装使用和两道题目
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/CTF/">
+                                <span class="chip bg-color">CTF</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/CTF/" class="post-category">
+                                CTF
+                            </a>
+                        
+                            <a href="/categories/CTF/Crypto/" class="post-category">
+                                Crypto
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2019-11-19
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    2.1k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    10 分
+                </div>
+                
+				
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+            
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h3 id="能做什么"><a href="#能做什么" class="headerlink" title="能做什么"></a>能做什么</h3><p>如果salt的值你不知道，但是你知道长度，又知道sha1(salt)，那么就也就可以知道sha1(salt+“填充数据”+“任意可控数据”).这里的salt+“填充数据”就是对salt进行sha1时所补全的数据+最后8位的长度描述符。一般来说，salt+”填充数据”的长度就是64字节，正好是一个分组。如果salt的长度就大于了56个字节，那么加入填充数据后的长度应该是N个64字节，等于N个分组。<br>为什么？你可以想象，sha1程序再对（salt+“填充数据”+“任意可控数据”）进行hash时，只需要进行第二轮及第二轮以后的运算。因为第一轮运算后的registers值就是sha1(salt)的值，该值你已经知道了。</p>
+<p>你把下面的例子中的<code>“1234567890abcdeadminadmin”</code>,<code>&quot;memeadmin&quot;</code>想成是salt,然后再考虑下呢？</p>
+<h3 id="HashPump安装"><a href="#HashPump安装" class="headerlink" title="HashPump安装"></a>HashPump安装</h3><pre class=" language-shell"><code class="language-shell">git clone https://github.com/bwall/HashPump
+apt-get install g++ libssl-dev
+cd HashPump
+make
+make install</code></pre>
+<p>在执行make的时候可能会出现openssl/sha.h没有文件的错误<br>那么</p>
+<pre><code>sudo apt-get install openssl
+sudo apt-get install libssl-dev</code></pre><p>然后make 和make install即可<br>使用：</p>
+<pre class=" language-bash"><code class="language-bash">kitty@ubuntu:~/桌面/HashPump$ hashpump
+Input Signature: c7813629f22b6a7d28a08041db3e80a9
+Input Data: admin
+Input Key Length: 4
+Input Data to Add: joychou 
+06cf5a94dcda53659f58c0f411ba0bd8
+admin\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00H\x00\x00\x00\x00\x00\x00\x00joychou</code></pre>
+<p>参数说明</p>
+<pre><code>signature来自已知消息的签名。
+data来自已知消息的数据。
+additional您要添加到已知消息的信息。
+keylength 用于对原始消息进行签名的密钥的长度（以字节为单位）。是除去一个admin的长度（具体看题）</code></pre><p>得到的第一行是新的hash值 第二行是payload<br>或者用python包</p>
+<h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h3><h4 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h4><p>其中<code>$salt = &quot;meme&quot;;</code>玩家不可见，计算不能用</p>
+<pre class=" language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
+
+<span class="token variable">$role</span> <span class="token operator">=</span> <span class="token variable">$_REQUEST</span><span class="token punctuation">[</span><span class="token string">"role"</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token variable">$hash</span> <span class="token operator">=</span> <span class="token variable">$_REQUEST</span><span class="token punctuation">[</span><span class="token string">"hash"</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token variable">$salt</span> <span class="token operator">=</span> <span class="token string">"meme"</span><span class="token punctuation">;</span> 
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$hash</span> <span class="token operator">!==</span> <span class="token function">md5</span><span class="token punctuation">(</span><span class="token variable">$salt</span><span class="token punctuation">.</span><span class="token variable">$role</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">echo</span> <span class="token string">'wrong!'</span><span class="token punctuation">;</span>     
+    exit<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+x
+<span class="token keyword">if</span> <span class="token punctuation">(</span> <span class="token variable">$role</span> <span class="token operator">==</span> <span class="token string">'admin'</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">echo</span> <span class="token string">'wrong, hash cann\'t be admin'</span><span class="token punctuation">;</span>
+    exit<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">echo</span> <span class="token string">"You are "</span><span class="token punctuation">.</span><span class="token variable">$role</span><span class="token punctuation">.</span><span class="token string">'&lt;/br>'</span><span class="token punctuation">;</span>
+<span class="token keyword">echo</span> <span class="token string">'Congradulation!'</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">//已知一组role为admin，salt长度为4，hash为c7813629f22b6a7d28a08041db3e80a9</span>
+<span class="token delimiter">?></span></code></pre>
+<p>首先计算</p>
+<pre><code>kitty@ubuntu:~/桌面$ hashpump
+Input Signature: c7813629f22b6a7d28a08041db3e80a9
+Input Data: admin
+Input Key Length: 4
+Input Data to Add: st4ck
+92910845adf673d71ca809b196bcab9e
+admin\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00H\x00\x00\x00\x00\x00\x00\x00st4ck</code></pre><p>编码</p>
+<pre><code>admin%80%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00H%00%00%00%00%00%00%00st4ck</code></pre><p>然后传参，由于没有urldecode，所以要最好用get,因为get请求自带urldecode</p>
+<pre><code>http://localhost/index.php?role=admin%80%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00H%00%00%00%00%00%00%00st4ck
+内容：hash=92910845adf673d71ca809b196bcab9e</code></pre><p><img src="2.png" alt="img"></p>
+<h4 id="题目2-实验吧-为了方便改了一下本地测试"><a href="#题目2-实验吧-为了方便改了一下本地测试" class="headerlink" title="题目2-实验吧-为了方便改了一下本地测试"></a>题目2-实验吧-为了方便改了一下本地测试</h4><p>其中<code>$secret=&quot;1234567890abcde&quot;;</code>给玩家不可见，计算也不能使用这个数据，这里展示出来只是为了本地操作</p>
+<pre class=" language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
+<span class="token variable">$secret</span><span class="token operator">=</span><span class="token string">"1234567890abcde"</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// This secret is 15 characters long for security!</span>
+<span class="token variable">$username</span><span class="token operator">=</span><span class="token string">"admin"</span><span class="token punctuation">;</span>
+<span class="token variable">$flag</span><span class="token operator">=</span><span class="token string">"flag{test}"</span><span class="token punctuation">;</span>
+<span class="token variable">$password</span> <span class="token operator">=</span> <span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string">"password"</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string">"getmein"</span><span class="token punctuation">]</span> <span class="token operator">===</span> <span class="token function">md5</span><span class="token punctuation">(</span><span class="token variable">$secret</span> <span class="token punctuation">.</span> <span class="token function">urldecode</span><span class="token punctuation">(</span><span class="token variable">$username</span> <span class="token punctuation">.</span> <span class="token variable">$password</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">echo</span> <span class="token string">"Congratulations! You are a registered user.\n&lt;br>"</span><span class="token punctuation">;</span>
+    <span class="token keyword">die</span> <span class="token punctuation">(</span><span class="token string">"The flag is "</span><span class="token punctuation">.</span> <span class="token variable">$flag</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
+    <span class="token keyword">die</span><span class="token punctuation">(</span><span class="token string">"Your cookies don't match up! STOP HACKING THIS SITE."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">// md5(1234567890abcdeadminadmin)=93a5e7bea9c040065617b1a62ffc3d72</span>
+<span class="token delimiter">?></span></code></pre>
+<p>题目中能得到信息</p>
+<pre class=" language-python"><code class="language-python">md5<span class="token punctuation">(</span>$secret<span class="token punctuation">.</span><span class="token string">"adminadmin"</span><span class="token punctuation">)</span>的值为<span class="token number">93a5e7bea9c040065617b1a62ffc3d72</span></code></pre>
+<p>稍微整理下我们已经知道的</p>
+<pre><code>$secret是密文，长度为15，如果再算上后面第一个admin，长度就是20
+而数据是admin
+签名（哈希值）是93a5e7bea9c040065617b1a62ffc3d72</code></pre><p>第一步计算payload</p>
+<pre class=" language-bash"><code class="language-bash">kitty@ubuntu:~/桌面$ hashpump
+Input Signature: 93a5e7bea9c040065617b1a62ffc3d72
+Input Data: admin
+Input Key Length: 20
+Input Data to Add: st4ck
+bf3722a5e102e94a83adef7cbf34a30b
+admin\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\xc8\x00\x00\x00\x00\x00\x00\x00st4ck</code></pre>
+<p>换一下编码</p>
+<pre><code>password=admin%80%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%c8%00%00%00%00%00%00%00st4ck&amp;getmein=bf3722a5e102e94a83adef7cbf34a30b</code></pre><p>由于自带urldecode，所以可以直接使用·</p>
+<p><img src="1.png" alt="img"></p>
+<h4 id="题目3-哈希长度拓展攻击之De1CTF-SSRF-Me"><a href="#题目3-哈希长度拓展攻击之De1CTF-SSRF-Me" class="headerlink" title="题目3-哈希长度拓展攻击之De1CTF - SSRF Me"></a>题目3-哈希长度拓展攻击之De1CTF - SSRF Me</h4><p>给出了源码</p>
+<pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true">#! /usr/bin/env python</span>
+<span class="token comment" spellcheck="true">#encoding=utf-8</span>
+<span class="token keyword">from</span> flask <span class="token keyword">import</span> Flask
+<span class="token keyword">from</span> flask <span class="token keyword">import</span> request
+<span class="token keyword">import</span> socket
+<span class="token keyword">import</span> hashlib
+<span class="token keyword">import</span> urllib
+<span class="token keyword">import</span> sys
+<span class="token keyword">import</span> os
+<span class="token keyword">import</span> json
+reload<span class="token punctuation">(</span>sys<span class="token punctuation">)</span>
+sys<span class="token punctuation">.</span>setdefaultencoding<span class="token punctuation">(</span><span class="token string">'latin1'</span><span class="token punctuation">)</span>
+
+app <span class="token operator">=</span> Flask<span class="token punctuation">(</span>__name__<span class="token punctuation">)</span>
+
+secert_key <span class="token operator">=</span> os<span class="token punctuation">.</span>urandom<span class="token punctuation">(</span><span class="token number">16</span><span class="token punctuation">)</span>
+
+
+<span class="token keyword">class</span> <span class="token class-name">Task</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> action<span class="token punctuation">,</span> param<span class="token punctuation">,</span> sign<span class="token punctuation">,</span> ip<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        self<span class="token punctuation">.</span>action <span class="token operator">=</span> action
+        self<span class="token punctuation">.</span>param <span class="token operator">=</span> param
+        self<span class="token punctuation">.</span>sign <span class="token operator">=</span> sign
+        self<span class="token punctuation">.</span>sandbox <span class="token operator">=</span> md5<span class="token punctuation">(</span>ip<span class="token punctuation">)</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">not</span> os<span class="token punctuation">.</span>path<span class="token punctuation">.</span>exists<span class="token punctuation">(</span>self<span class="token punctuation">.</span>sandbox<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>          <span class="token comment" spellcheck="true">#SandBox For Remote_Addr</span>
+            os<span class="token punctuation">.</span>mkdir<span class="token punctuation">(</span>self<span class="token punctuation">.</span>sandbox<span class="token punctuation">)</span>
+
+    <span class="token keyword">def</span> <span class="token function">Exec</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        result <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+        result<span class="token punctuation">[</span><span class="token string">'code'</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">500</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>self<span class="token punctuation">.</span>checkSign<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">if</span> <span class="token string">"scan"</span> <span class="token keyword">in</span> self<span class="token punctuation">.</span>action<span class="token punctuation">:</span>
+                tmpfile <span class="token operator">=</span> open<span class="token punctuation">(</span><span class="token string">"./%s/result.txt"</span> <span class="token operator">%</span> self<span class="token punctuation">.</span>sandbox<span class="token punctuation">,</span> <span class="token string">'w'</span><span class="token punctuation">)</span>
+                resp <span class="token operator">=</span> scan<span class="token punctuation">(</span>self<span class="token punctuation">.</span>param<span class="token punctuation">)</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>resp <span class="token operator">==</span> <span class="token string">"Connection Timeout"</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+                    result<span class="token punctuation">[</span><span class="token string">'data'</span><span class="token punctuation">]</span> <span class="token operator">=</span> resp
+                <span class="token keyword">else</span><span class="token punctuation">:</span>
+                    <span class="token keyword">print</span> resp
+                    tmpfile<span class="token punctuation">.</span>write<span class="token punctuation">(</span>resp<span class="token punctuation">)</span>
+                    tmpfile<span class="token punctuation">.</span>close<span class="token punctuation">(</span><span class="token punctuation">)</span>
+                result<span class="token punctuation">[</span><span class="token string">'code'</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">200</span>
+            <span class="token keyword">if</span> <span class="token string">"read"</span> <span class="token keyword">in</span> self<span class="token punctuation">.</span>action<span class="token punctuation">:</span>
+                f <span class="token operator">=</span> open<span class="token punctuation">(</span><span class="token string">"./%s/result.txt"</span> <span class="token operator">%</span> self<span class="token punctuation">.</span>sandbox<span class="token punctuation">,</span> <span class="token string">'r'</span><span class="token punctuation">)</span>
+                result<span class="token punctuation">[</span><span class="token string">'code'</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">200</span>
+                result<span class="token punctuation">[</span><span class="token string">'data'</span><span class="token punctuation">]</span> <span class="token operator">=</span> f<span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token keyword">if</span> result<span class="token punctuation">[</span><span class="token string">'code'</span><span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token number">500</span><span class="token punctuation">:</span>
+                result<span class="token punctuation">[</span><span class="token string">'data'</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">"Action Error"</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            result<span class="token punctuation">[</span><span class="token string">'code'</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">500</span>
+            result<span class="token punctuation">[</span><span class="token string">'msg'</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">"Sign Error"</span>
+        <span class="token keyword">return</span> result
+
+    <span class="token keyword">def</span> <span class="token function">checkSign</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>getSign<span class="token punctuation">(</span>self<span class="token punctuation">.</span>action<span class="token punctuation">,</span> self<span class="token punctuation">.</span>param<span class="token punctuation">)</span> <span class="token operator">==</span> self<span class="token punctuation">.</span>sign<span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">return</span> <span class="token boolean">True</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            <span class="token keyword">return</span> <span class="token boolean">False</span>
+
+
+<span class="token comment" spellcheck="true">#generate Sign For Action Scan.</span>
+@app<span class="token punctuation">.</span>route<span class="token punctuation">(</span><span class="token string">"/geneSign"</span><span class="token punctuation">,</span> methods<span class="token operator">=</span><span class="token punctuation">[</span><span class="token string">'GET'</span><span class="token punctuation">,</span> <span class="token string">'POST'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token keyword">def</span> <span class="token function">geneSign</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    param <span class="token operator">=</span> urllib<span class="token punctuation">.</span>unquote<span class="token punctuation">(</span>request<span class="token punctuation">.</span>args<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"param"</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    action <span class="token operator">=</span> <span class="token string">"scan"</span>
+    <span class="token keyword">return</span> getSign<span class="token punctuation">(</span>action<span class="token punctuation">,</span> param<span class="token punctuation">)</span>
+
+
+@app<span class="token punctuation">.</span>route<span class="token punctuation">(</span><span class="token string">'/De1ta'</span><span class="token punctuation">,</span>methods<span class="token operator">=</span><span class="token punctuation">[</span><span class="token string">'GET'</span><span class="token punctuation">,</span><span class="token string">'POST'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token keyword">def</span> <span class="token function">challenge</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    action <span class="token operator">=</span> urllib<span class="token punctuation">.</span>unquote<span class="token punctuation">(</span>request<span class="token punctuation">.</span>cookies<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"action"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    param <span class="token operator">=</span> urllib<span class="token punctuation">.</span>unquote<span class="token punctuation">(</span>request<span class="token punctuation">.</span>args<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"param"</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    sign <span class="token operator">=</span> urllib<span class="token punctuation">.</span>unquote<span class="token punctuation">(</span>request<span class="token punctuation">.</span>cookies<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"sign"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    ip <span class="token operator">=</span> request<span class="token punctuation">.</span>remote_addr
+    <span class="token keyword">if</span><span class="token punctuation">(</span>waf<span class="token punctuation">(</span>param<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token string">"No Hacker!!!!"</span>
+    task <span class="token operator">=</span> Task<span class="token punctuation">(</span>action<span class="token punctuation">,</span> param<span class="token punctuation">,</span> sign<span class="token punctuation">,</span> ip<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> json<span class="token punctuation">.</span>dumps<span class="token punctuation">(</span>task<span class="token punctuation">.</span>Exec<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+@app<span class="token punctuation">.</span>route<span class="token punctuation">(</span><span class="token string">'/'</span><span class="token punctuation">)</span>
+<span class="token keyword">def</span> <span class="token function">index</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> open<span class="token punctuation">(</span><span class="token string">"code.txt"</span><span class="token punctuation">,</span><span class="token string">"r"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+
+<span class="token keyword">def</span> <span class="token function">scan</span><span class="token punctuation">(</span>param<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    socket<span class="token punctuation">.</span>setdefaulttimeout<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token keyword">try</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> urllib<span class="token punctuation">.</span>urlopen<span class="token punctuation">(</span>param<span class="token punctuation">)</span><span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token number">50</span><span class="token punctuation">]</span>
+    <span class="token keyword">except</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token string">"Connection Timeout"</span>
+
+
+
+<span class="token keyword">def</span> <span class="token function">getSign</span><span class="token punctuation">(</span>action<span class="token punctuation">,</span> param<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> hashlib<span class="token punctuation">.</span>md5<span class="token punctuation">(</span>secert_key <span class="token operator">+</span> param <span class="token operator">+</span> action<span class="token punctuation">)</span><span class="token punctuation">.</span>hexdigest<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+
+<span class="token keyword">def</span> <span class="token function">md5</span><span class="token punctuation">(</span>content<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> hashlib<span class="token punctuation">.</span>md5<span class="token punctuation">(</span>content<span class="token punctuation">)</span><span class="token punctuation">.</span>hexdigest<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+
+<span class="token keyword">def</span> <span class="token function">waf</span><span class="token punctuation">(</span>param<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    check<span class="token operator">=</span>param<span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>lower<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">if</span> check<span class="token punctuation">.</span>startswith<span class="token punctuation">(</span><span class="token string">"gopher"</span><span class="token punctuation">)</span> <span class="token operator">or</span> check<span class="token punctuation">.</span>startswith<span class="token punctuation">(</span><span class="token string">"file"</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token boolean">True</span>
+    <span class="token keyword">else</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token boolean">False</span>
+
+
+<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
+    app<span class="token punctuation">.</span>debug <span class="token operator">=</span> <span class="token boolean">False</span>
+    app<span class="token punctuation">.</span>run<span class="token punctuation">(</span>host<span class="token operator">=</span><span class="token string">'0.0.0.0'</span><span class="token punctuation">,</span>port<span class="token operator">=</span><span class="token number">80</span><span class="token punctuation">)</span></code></pre>
+<p>确实看起来好懵逼啊<br>意思是</p>
+<pre><code>提示给的是 flag 在 ./flag.txt 中
+
+python 的 flask 框架，三个路由，index 用于获取源码，geneSign 用于生成 md5，De1ta 就是挑战
+
+大概思路就是在 /De1ta 中 get param ，cookie action sign 去读取 flag.txt，其中，param=flag.txt，action 中要含有 read 和 scan，且 sign=md5(secert_key + param + action)</code></pre><p>使用哈希拓展攻击</p>
+<pre><code>secert_key 是一个长度为 16 的字符串，在 /geneSign?param=flag.txt 中可以获取 md5(secert_key + &#39;flag.txt&#39; + &#39;scan&#39;) 的值,为 4bb4d74933b882b845a15a384f927bab，而目标则是获取 md5(secert_key + &#39;flag.txt&#39; + &#39;readscan&#39;) 的值</code></pre><p>首先用hashpump</p>
+<pre class=" language-bash"><code class="language-bash">kitty@ubuntu:~/桌面$ hashpump
+Input Signature: 4bb4d74933b882b845a15a384f927bab
+Input Data: scan
+Input Key Length: 24
+Input Data to Add: <span class="token function">read</span> 
+13e9cdc14801527def75d258d46cab59
+scan\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\xe0\x00\x00\x00\x00\x00\x00\x00read</code></pre>
+<p>所以exp为:</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> requests
+
+url <span class="token operator">=</span> <span class="token string">'http://acc709a0-59ca-44ac-9af9-5cf20b5635c0.node2.buuoj.cn.wetolink.com:82/De1ta?param=flag.txt'</span>
+
+cookies <span class="token operator">=</span> <span class="token punctuation">{</span>
+  <span class="token string">'sign'</span><span class="token punctuation">:</span> <span class="token string">'13e9cdc14801527def75d258d46cab59'</span><span class="token punctuation">,</span>
+  <span class="token string">'action'</span><span class="token punctuation">:</span> <span class="token string">'scan%80%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%e0%00%00%00%00%00%00%00read'</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span>
+
+res <span class="token operator">=</span> requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span>url<span class="token operator">=</span>url<span class="token punctuation">,</span> cookies<span class="token operator">=</span>cookies<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>res<span class="token punctuation">.</span>text<span class="token punctuation">)</span></code></pre>
+<p>也可以字符串拼接<br>不妨假设 secert_key 是 xxx ，那么在开始访问 <code>/geneSign?param=flag.txt</code> 的时候，返回的 md5 就是 <code>md5(&#39;xxx&#39; + &#39;flag.txt&#39; + &#39;scan&#39;)</code> ，在 python 里面上述表达式就相当于<code>md5(xxxflag.txtscan)</code>，这就很有意思了。</p>
+<p>直接构造访问<code>/geneSign?param=flag.txtread</code> ，拿到的 md5 就是<code>md5(&#39;xxx&#39; + &#39;flag.txtread&#39; + &#39;scan&#39;</code>) ，等价于 <code>md5(&#39;xxxflag.txtreadscan&#39;)</code>，这就达到了目标。<br>因为<code>md5(&#39;xxx&#39; + &#39;flag.txtread&#39; + &#39;scan&#39;)等于md5(&#39;xxx&#39; + &#39;flag.txt&#39; + &#39;readscan&#39;)</code><br>然后直接访问 <code>/De1ta?param=flag.txt</code>构造 <code>cookie: action=readscan;sign={上面获得的md5值}</code>即可</p>
+<h3 id="想法"><a href="#想法" class="headerlink" title="想法"></a>想法</h3><p>通过以上的分析，想必大家对此攻击有了更深入的认识。只要存在脆弱的（使用此类散列算法）Message authentication codes (MACs)用于验证信息真实性的地方就很可能受此攻击。<br>比如，我们发现了这样的一个下载文件的接口：<code>/download?name=test.pdf&amp;sig=6543109bb53887f7bb46fe424f26e24a</code>sig可能是这个文件的某种校验签名，如果想通过这个接口下载其他文件就会失败，因为sig校验不过。同时还会发现<code>md5(name) !== sig</code>，很明显在校验算法中添加了盐，如果我们想下载任意的文件比如<code>test.pdf%00/../../../../etc/passwd</code>，正常情况下是没办法的，因为有盐，所以我们无法构造自己的签名值，但是如果服务端使用了类似<code>if ($sig === md5($salt.$name))</code>的校验代码，那么就会存在此攻击。</p>
+
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://kit4y.github.io" rel="external nofollow noreferrer">st4ck</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://kit4y.github.io/2019/11/19/ha-xi-chang-du-kuo-zhan-gong-ji-yi-ji-hashpump-an-zhuang-shi-yong-he-liang-dao-ti-mu/">https://kit4y.github.io/2019/11/19/ha-xi-chang-du-kuo-zhan-gong-ji-yi-ji-hashpump-an-zhuang-shi-yong-he-liang-dao-ti-mu/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="https://kit4y.github.io" target="_blank">st4ck</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/CTF/">
+                                    <span class="chip bg-color">CTF</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2019/11/19/cong-flask-dao-ssti/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="从flask到SSTI">
+                        
+                        <span class="card-title">从flask到SSTI</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            flask基础知识from flask import Flask
+app=Flask(__name__)
+
+@app.route('/')
+def hello_world():
+    return "hello World！"
+
+if _
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2019-11-19
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/CTF/" class="post-category">
+                                    CTF
+                                </a>
+                            
+                            <a href="/categories/CTF/Web/" class="post-category">
+                                    Web
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/CTF/">
+                        <span class="chip bg-color">CTF</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2019/11/19/md5-suan-fa-de-xue-xi-he-c-python3-de-shi-xian/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="md5算法的学习和c-python3的实现">
+                        
+                        <span class="card-title">md5算法的学习和c-python3的实现</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            MD5算法分析MD5算法底层原理：简单概括起来，MD5算法的过程分为四步：处理原文，设置初始值，循环加工，拼接结果。
+第一步:处理原文
+首先，我们计算出原文长度(bit)对512求余的结果，如果不等于448，就需要填充原文使得原文对512求
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-11-19
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/CTF/" class="post-category">
+                                    CTF
+                                </a>
+                            
+                            <a href="/categories/CTF/Crypto/" class="post-category">
+                                    Crypto
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Md5/">
+                        <span class="chip bg-color">Md5</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: 书鱼<br />'
+            + '文章作者: st4ck<br />'
+            + '文章链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归书鱼所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+    
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">年份</span>
+            <a href="https://kit4y.github.io" target="_blank">st4ck</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">177.2k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    window.setTimeout("siteTime()", 1000);
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2019";
+                    var startMonth = "6";
+                    var startDate = "28";
+                    var startHour = "0";
+                    var startMinute = "0";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/Kit4y" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:381382770@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=381382770" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 381382770" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script type="text/javascript" src="/libs/background/ribbon-dynamic.js" async="async"></script>
+    
+    
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/miku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+
+</html>

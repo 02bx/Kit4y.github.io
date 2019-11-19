@@ -1,0 +1,1203 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="S-DES详解, 书鱼">
+    <meta name="description" content="一、S-DES介绍S-DES是DES算法的简化版,并没有什么实际使用的价值,只用于教学来理解DES算法的加密方法,那么可能就有小朋友会问了，为什么不是直接讲DES呢,Orz对于非信安的萌新来说,DES确实难,所以先看一下简洁版的S-DES的">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>S-DES详解 | 书鱼</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    
+    <script src="/libs/jquery/jquery.min.js"></script>
+    
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper head-container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">书鱼</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>起居注</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>书鱼是谁</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>快来膜大佬</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>私密相册</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">书鱼</div>
+        <div class="logo-desc">
+            
+            他浑身都是弱点，简直一无是处，但他靠着自己的力量一步步克服，最终成为了火影
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			起居注
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			书鱼是谁
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			快来膜大佬
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			私密相册
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        S-DES详解
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/DES/">
+                                <span class="chip bg-color">DES</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/Crypto/" class="post-category">
+                                Crypto
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2019-08-16
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    1.7k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    8 分
+                </div>
+                
+				
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+            
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h3 id="一、S-DES介绍"><a href="#一、S-DES介绍" class="headerlink" title="一、S-DES介绍"></a>一、S-DES介绍</h3><p>S-DES是DES算法的简化版,并没有什么实际使用的价值,只用于教学来理解DES算法的加密方法,那么可能就有小朋友会问了，为什么不是直接讲DES呢,Orz对于非信安的萌新来说,DES确实难,所以先看一下简洁版的S-DES的算法先预热预热。</p>
+<h3 id="二、整体加密流程"><a href="#二、整体加密流程" class="headerlink" title="二、整体加密流程"></a>二、整体加密流程</h3><a id="more"></a>
+<p><img src="1.png" alt=""><br>看起来很可怕，其实就是三个部分，一个是左边的加密算法，一个中间的密钥生成算法，一个右边的解密算法<br>按常理，先罗列一下所需要的前提条件</p>
+<h4 id="1-gt-数学知识储备"><a href="#1-gt-数学知识储备" class="headerlink" title="1 &gt;数学知识储备"></a>1 &gt;数学知识储备</h4><h5 id="1-置换"><a href="#1-置换" class="headerlink" title="1.置换"></a>1.置换</h5><p>离散上有的，切确来说就是，比如<code>p8{8,2,6,4,1,7,5,3}</code>,就是转换下标顺序，比如输入<code>ABCDEFGH</code>,经过p8,得到的<code>HBFDAGEC</code></p>
+<h5 id="2-循环"><a href="#2-循环" class="headerlink" title="2.循环"></a>2.循环</h5><p>比较好理解，就是左移右移，溢出的位循环补齐，比如<code>ABCD</code>,左移一位就是<code>BCDA</code></p>
+<h5 id="3-如何选S盒中的值"><a href="#3-如何选S盒中的值" class="headerlink" title="3.如何选S盒中的值"></a>3.如何选S盒中的值</h5><p>S盒就相当于一个二位数组，作用是输入一个4 bit的二进制流，输出一个2bit的二进制流<br>规则：当输入<code>ABCD</code>,则选择（AD，BC)为坐标，比如下方的S盒</p>
+<pre><code>S0:
+{1,0,3,2},
+{3,2,1,0},
+{0,2,1,3},
+{3,1,3,2},</code></pre><p>当输入0101时候，(AD,BC)= （01,10）=（1，2）=1=01 所以输出01，数组横纵坐标都是0~3</p>
+<h4 id="2-gt-一些变量"><a href="#2-gt-一些变量" class="headerlink" title="2&gt;一些变量"></a>2&gt;一些变量</h4><pre><code>P10 {3,5,2,7,4,10,1,9,8,6}
+P8 {6,3,7,4,8,5,10,9} 注意这个置换选择输入10位输出8位
+P4 {2,4,3,1}
+IP {2,6,3,1,4,8,5,7}
+IPI {4,1,3,5,7,2,8,6}
+EP {4,1,2,3,2,3,4,1} 注意这个是扩展置换,输入4位输出8位
+两个盒子
+S0:
+{1,0,3,2},
+{3,2,1,0},
+{0,2,1,3},
+{3,1,3,2},
+
+S1:
+{0,1,2,3},
+{2,0,1,3},
+{3,0,1,0},
+{2,1,0,3},</code></pre><h4 id="3-gt-简单的实现"><a href="#3-gt-简单的实现" class="headerlink" title="3&gt;简单的实现"></a>3&gt;简单的实现</h4><p>None的作用是占据下标为0的数组值</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">P10</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    k <span class="token operator">=</span> <span class="token punctuation">[</span>None<span class="token punctuation">]</span> <span class="token operator">+</span> key
+    <span class="token keyword">return</span> <span class="token punctuation">[</span>k<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">,</span>k<span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">,</span>k<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span>k<span class="token punctuation">[</span><span class="token number">7</span><span class="token punctuation">]</span><span class="token punctuation">,</span>k<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">,</span>k<span class="token punctuation">[</span><span class="token number">10</span><span class="token punctuation">]</span><span class="token punctuation">,</span>k<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span>k<span class="token punctuation">[</span><span class="token number">9</span><span class="token punctuation">]</span><span class="token punctuation">,</span>k<span class="token punctuation">[</span><span class="token number">8</span><span class="token punctuation">]</span><span class="token punctuation">,</span>k<span class="token punctuation">[</span><span class="token number">6</span><span class="token punctuation">]</span><span class="token punctuation">]</span>
+
+<span class="token keyword">def</span> <span class="token function">P8</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    k <span class="token operator">=</span> <span class="token punctuation">[</span>None<span class="token punctuation">]</span> <span class="token operator">+</span> key
+    <span class="token keyword">return</span> <span class="token punctuation">[</span>k<span class="token punctuation">[</span><span class="token number">6</span><span class="token punctuation">]</span><span class="token punctuation">,</span>k<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">,</span>k<span class="token punctuation">[</span><span class="token number">7</span><span class="token punctuation">]</span><span class="token punctuation">,</span>k<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">,</span>k<span class="token punctuation">[</span><span class="token number">8</span><span class="token punctuation">]</span><span class="token punctuation">,</span>k<span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">,</span>k<span class="token punctuation">[</span><span class="token number">10</span><span class="token punctuation">]</span><span class="token punctuation">,</span>k<span class="token punctuation">[</span><span class="token number">9</span><span class="token punctuation">]</span><span class="token punctuation">]</span>
+
+<span class="token keyword">def</span> <span class="token function">Shift</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> value<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token punctuation">]</span> <span class="token operator">+</span> value<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">:</span><span class="token number">1</span><span class="token punctuation">]</span></code></pre>
+<h3 id="三、密钥生成"><a href="#三、密钥生成" class="headerlink" title="三、密钥生成"></a>三、密钥生成</h3><p>单独把密钥生成拿出来考虑的话，其实就是输入一个10bit的二进制，得到一个8bit的K1,一个8Bit的K2<br><img src="2.png" alt=""><br>假设我们的10位密钥 key=01111 11101</p>
+<ul>
+<li>1、p10置换得到11111 10011 ,(p10表在上面有</li>
+<li>2、记左半的为LK=11111,右半为RK=10011</li>
+<li>3、LK,RK循环左移一位，得到LK=11111,RK=00111</li>
+<li>4、LK,RK重组为11111 00111 做p8置换，得到<code>K1=0101 1111</code></li>
+<li>5、抛弃第四条，把LK,RK再次循环左移两位得到LK=11111,RK=11100</li>
+<li>6、LK,PK重组得到11111 11100,做p8置换得到<code>K2=1111 1100</code></li>
+</ul>
+<p>到此位置密钥生成的算法我们就了解了</p>
+<h3 id="四、加密流程"><a href="#四、加密流程" class="headerlink" title="四、加密流程"></a>四、加密流程</h3><p><img src="3.png" alt=""></p>
+<h4 id="函数解释"><a href="#函数解释" class="headerlink" title="函数解释"></a>函数解释</h4><h5 id="1-IP与IP-1"><a href="#1-IP与IP-1" class="headerlink" title="1.IP与IP-1"></a>1.IP与IP-1</h5><p>其实IP就是一个8bit到8bit的置换，IP-1是他的逆，（离散真香<br>实现就是</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">IP</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    v <span class="token operator">=</span> <span class="token punctuation">[</span>None<span class="token punctuation">]</span> <span class="token operator">+</span> value
+    <span class="token keyword">return</span> <span class="token punctuation">[</span>k<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span>k<span class="token punctuation">[</span><span class="token number">6</span><span class="token punctuation">]</span><span class="token punctuation">,</span>k<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">,</span>k<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span>k<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">,</span>k<span class="token punctuation">[</span><span class="token number">8</span><span class="token punctuation">]</span><span class="token punctuation">,</span>k<span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">,</span>k<span class="token punctuation">[</span><span class="token number">7</span><span class="token punctuation">]</span><span class="token punctuation">]</span>
+
+<span class="token keyword">def</span> <span class="token function">IPinv</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    v <span class="token operator">=</span> <span class="token punctuation">[</span>None<span class="token punctuation">]</span> <span class="token operator">+</span> value
+    <span class="token keyword">return</span> <span class="token punctuation">[</span>k<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">,</span>k<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span>k<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">,</span>k<span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">,</span>k<span class="token punctuation">[</span><span class="token number">7</span><span class="token punctuation">]</span><span class="token punctuation">,</span>k<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span>k<span class="token punctuation">[</span><span class="token number">8</span><span class="token punctuation">]</span><span class="token punctuation">,</span>k<span class="token punctuation">[</span><span class="token number">6</span><span class="token punctuation">]</span><span class="token punctuation">]</span></code></pre>
+<h5 id="2-SW函数"><a href="#2-SW函数" class="headerlink" title="2.SW函数"></a>2.SW函数</h5><p>在大图中有一个SW的函数，在小图中因为更详细就没有，其实意思就是高四位和第四位互换</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">SW</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> value<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">:</span><span class="token punctuation">]</span> <span class="token operator">+</span> value<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token number">4</span><span class="token punctuation">]</span></code></pre>
+<h5 id="3-剩下最后一个F函数"><a href="#3-剩下最后一个F函数" class="headerlink" title="3.剩下最后一个F函数"></a>3.剩下最后一个F函数</h5><p>到目前为止，只剩下一个问题，就是F函数(大图的Fk函数)，我们先看F函数的功能参数和返回值<br><code>参数：一个8bit的子密钥K1,一个4Bit的L0,一个4Bit的R0</code><br><code>返回值：4bit的新R1</code><br>假如K1为<code>0101 1111</code>,左半(高位)为L0=<code>0100</code>,右半(低位)为R0=<code>1001</code></p>
+<ul>
+<li>1.对R0做EP扩展<code>（4,1,2,3,2,3,4,1）</code>置换,得Rm’=<code>1100 0011</code></li>
+<li>2.Rm’与子密钥K1按位异或,得Rm’= <code>1001 1100</code></li>
+<li>3.Rm’左半1001进入S0盒替代选择得S0(11,00)=S0(3,1)=11,右半1100进入S1盒替代选择的S1(10,10)=S1(2,2)=01,所以的到了Rm’=<code>1101</code></li>
+<li>4.对Rm’做P4（2,4,3,1）置换,得Rm’=1101</li>
+<li>5.Rm’与L0按位异或,得L0’=1001</li>
+<li>6.L0’与最开始的R0组合得到<code>1001(L0’) 1001(R0)</code></li>
+<li>7.然后交换高低位,1001(R0) 1001(L0’)作为输入第二轮的输入即：L1=1001，R1=1001</li>
+</ul>
+<p>到此第一轮循环完全结束，第二次也类似，第二轮结束的组合通过IP-1就算加密结束</p>
+<h3 id="五、简单的S-DES加密python实现"><a href="#五、简单的S-DES加密python实现" class="headerlink" title="五、简单的S-DES加密python实现"></a>五、简单的S-DES加密python实现</h3><p><img src="4.png" alt=""></p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> string
+
+plaintext <span class="token operator">=</span> <span class="token string">"11101010"</span>
+K <span class="token operator">=</span> <span class="token string">"0111111101"</span>
+rounds <span class="token operator">=</span> <span class="token number">2</span>
+alphabet <span class="token operator">=</span> string<span class="token punctuation">.</span>ascii_uppercase
+
+<span class="token keyword">def</span> <span class="token function">bin_to_ascii_4bit</span><span class="token punctuation">(</span>bin_string<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    h1<span class="token punctuation">,</span> h2 <span class="token operator">=</span> split_half<span class="token punctuation">(</span>bin_string<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> alphabet<span class="token punctuation">[</span>bin_to_int<span class="token punctuation">(</span>h1<span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token operator">+</span> alphabet<span class="token punctuation">[</span>bin_to_int<span class="token punctuation">(</span>h2<span class="token punctuation">)</span><span class="token punctuation">]</span>
+
+<span class="token keyword">def</span> <span class="token function">P10</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    box <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">]</span>
+    <span class="token keyword">return</span> <span class="token string">""</span><span class="token punctuation">.</span>join<span class="token punctuation">(</span>list<span class="token punctuation">(</span>map<span class="token punctuation">(</span><span class="token keyword">lambda</span> x<span class="token punctuation">:</span> data<span class="token punctuation">[</span>x <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> box<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token keyword">def</span> <span class="token function">P8</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    box <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">]</span>
+    <span class="token keyword">return</span> <span class="token string">""</span><span class="token punctuation">.</span>join<span class="token punctuation">(</span>list<span class="token punctuation">(</span>map<span class="token punctuation">(</span><span class="token keyword">lambda</span> x<span class="token punctuation">:</span> data<span class="token punctuation">[</span>x <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> box<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token keyword">def</span> <span class="token function">P4</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    box <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">]</span>
+    <span class="token keyword">return</span> <span class="token string">""</span><span class="token punctuation">.</span>join<span class="token punctuation">(</span>list<span class="token punctuation">(</span>map<span class="token punctuation">(</span><span class="token keyword">lambda</span> x<span class="token punctuation">:</span> data<span class="token punctuation">[</span>x <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> box<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token keyword">def</span> <span class="token function">S0</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    row <span class="token operator">=</span> bin_to_int<span class="token punctuation">(</span>data<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">+</span> data<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+    col <span class="token operator">=</span> bin_to_int<span class="token punctuation">(</span>data<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">+</span> data<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+    box <span class="token operator">=</span> <span class="token punctuation">[</span> <span class="token punctuation">[</span><span class="token string">"01"</span><span class="token punctuation">,</span> <span class="token string">"00"</span> <span class="token punctuation">,</span><span class="token string">"11"</span><span class="token punctuation">,</span> <span class="token string">"10"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+            <span class="token punctuation">[</span><span class="token string">"11"</span><span class="token punctuation">,</span> <span class="token string">"10"</span><span class="token punctuation">,</span> <span class="token string">"01"</span><span class="token punctuation">,</span> <span class="token string">"00"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+            <span class="token punctuation">[</span><span class="token string">"00"</span><span class="token punctuation">,</span> <span class="token string">"10"</span><span class="token punctuation">,</span> <span class="token string">"01"</span><span class="token punctuation">,</span> <span class="token string">"11"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+            <span class="token punctuation">[</span><span class="token string">"11"</span><span class="token punctuation">,</span> <span class="token string">"01"</span><span class="token punctuation">,</span> <span class="token string">"11"</span><span class="token punctuation">,</span> <span class="token string">"10"</span><span class="token punctuation">]</span>
+            <span class="token punctuation">]</span>
+
+    <span class="token keyword">return</span> box<span class="token punctuation">[</span>row<span class="token punctuation">]</span><span class="token punctuation">[</span>col<span class="token punctuation">]</span>
+
+<span class="token keyword">def</span> <span class="token function">S1</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    row <span class="token operator">=</span> bin_to_int<span class="token punctuation">(</span>data<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">+</span> data<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+    col <span class="token operator">=</span> bin_to_int<span class="token punctuation">(</span>data<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">+</span> data<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+    box <span class="token operator">=</span> <span class="token punctuation">[</span> <span class="token punctuation">[</span><span class="token string">"00"</span><span class="token punctuation">,</span> <span class="token string">"01"</span><span class="token punctuation">,</span> <span class="token string">"10"</span><span class="token punctuation">,</span> <span class="token string">"11"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+            <span class="token punctuation">[</span><span class="token string">"10"</span><span class="token punctuation">,</span> <span class="token string">"00"</span><span class="token punctuation">,</span> <span class="token string">"01"</span><span class="token punctuation">,</span> <span class="token string">"11"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+            <span class="token punctuation">[</span><span class="token string">"11"</span><span class="token punctuation">,</span> <span class="token string">"00"</span><span class="token punctuation">,</span> <span class="token string">"01"</span><span class="token punctuation">,</span> <span class="token string">"00"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+            <span class="token punctuation">[</span><span class="token string">"10"</span><span class="token punctuation">,</span> <span class="token string">"01"</span><span class="token punctuation">,</span> <span class="token string">"00"</span><span class="token punctuation">,</span> <span class="token string">"11"</span><span class="token punctuation">]</span>
+            <span class="token punctuation">]</span>
+
+    <span class="token keyword">return</span> box<span class="token punctuation">[</span>row<span class="token punctuation">]</span><span class="token punctuation">[</span>col<span class="token punctuation">]</span>
+
+<span class="token keyword">def</span> <span class="token function">IP</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    box <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">]</span>
+    <span class="token keyword">return</span> <span class="token string">""</span><span class="token punctuation">.</span>join<span class="token punctuation">(</span>list<span class="token punctuation">(</span>map<span class="token punctuation">(</span><span class="token keyword">lambda</span> x<span class="token punctuation">:</span> data<span class="token punctuation">[</span>x <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> box<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token keyword">def</span> <span class="token function">IP_1</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    box <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">]</span>
+    <span class="token keyword">return</span> <span class="token string">""</span><span class="token punctuation">.</span>join<span class="token punctuation">(</span>list<span class="token punctuation">(</span>map<span class="token punctuation">(</span><span class="token keyword">lambda</span> x<span class="token punctuation">:</span> data<span class="token punctuation">[</span>x <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> box<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token keyword">def</span> <span class="token function">E_P</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    box <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">]</span>
+    <span class="token keyword">return</span> <span class="token string">""</span><span class="token punctuation">.</span>join<span class="token punctuation">(</span>list<span class="token punctuation">(</span>map<span class="token punctuation">(</span><span class="token keyword">lambda</span> x<span class="token punctuation">:</span> data<span class="token punctuation">[</span>x <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> box<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token keyword">def</span> <span class="token function">XOR</span><span class="token punctuation">(</span>data<span class="token punctuation">,</span> key<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> <span class="token string">""</span><span class="token punctuation">.</span>join<span class="token punctuation">(</span>list<span class="token punctuation">(</span>map<span class="token punctuation">(</span><span class="token keyword">lambda</span> x<span class="token punctuation">,</span> y<span class="token punctuation">:</span> str<span class="token punctuation">(</span>int<span class="token punctuation">(</span>x<span class="token punctuation">)</span> <span class="token operator">^</span> int<span class="token punctuation">(</span>y<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> data<span class="token punctuation">,</span> key<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token keyword">def</span> <span class="token function">LS</span><span class="token punctuation">(</span>data<span class="token punctuation">,</span> amount<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> data<span class="token punctuation">[</span>amount<span class="token punctuation">:</span><span class="token punctuation">]</span> <span class="token operator">+</span> data<span class="token punctuation">[</span><span class="token punctuation">:</span>amount<span class="token punctuation">]</span>
+
+<span class="token keyword">def</span> <span class="token function">SW</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    data1<span class="token punctuation">,</span> data2 <span class="token operator">=</span> split_half<span class="token punctuation">(</span>data<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> data2 <span class="token operator">+</span> data1
+
+<span class="token keyword">def</span> <span class="token function">split_half</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> data<span class="token punctuation">[</span><span class="token punctuation">:</span>int<span class="token punctuation">(</span>len<span class="token punctuation">(</span>data<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">,</span> data<span class="token punctuation">[</span>int<span class="token punctuation">(</span>len<span class="token punctuation">(</span>data<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">:</span><span class="token punctuation">]</span>
+
+<span class="token keyword">def</span> <span class="token function">int_to_bin</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> <span class="token string">"{0:b}"</span><span class="token punctuation">.</span>format<span class="token punctuation">(</span>data<span class="token punctuation">)</span>
+
+<span class="token keyword">def</span> <span class="token function">bin_to_int</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> int<span class="token punctuation">(</span>data<span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span>
+
+<span class="token keyword">def</span> <span class="token function">generate_round_keys</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> rounds<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    round_keys <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    k_h1<span class="token punctuation">,</span> k_h2 <span class="token operator">=</span> split_half<span class="token punctuation">(</span>P10<span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+    s <span class="token operator">=</span> <span class="token number">0</span>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> rounds <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        s <span class="token operator">+=</span> i
+        h1<span class="token punctuation">,</span> h2 <span class="token operator">=</span> LS<span class="token punctuation">(</span>k_h1<span class="token punctuation">,</span> s<span class="token punctuation">)</span><span class="token punctuation">,</span> LS<span class="token punctuation">(</span>k_h2<span class="token punctuation">,</span> s<span class="token punctuation">)</span>
+        round_keys<span class="token punctuation">.</span>append<span class="token punctuation">(</span>P8<span class="token punctuation">(</span>h1 <span class="token operator">+</span> h2<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">return</span> round_keys
+
+<span class="token keyword">def</span> <span class="token function">encrypt</span><span class="token punctuation">(</span>data<span class="token punctuation">,</span> key<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    round_keys <span class="token operator">=</span> generate_round_keys<span class="token punctuation">(</span>key<span class="token punctuation">,</span> rounds<span class="token punctuation">)</span>
+    ip1<span class="token punctuation">,</span> ip2 <span class="token operator">=</span> split_half<span class="token punctuation">(</span>IP<span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"IP: {}"</span><span class="token punctuation">.</span>format<span class="token punctuation">(</span>ip1 <span class="token operator">+</span> ip2<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">for</span> i<span class="token punctuation">,</span> r_key <span class="token keyword">in</span> enumerate<span class="token punctuation">(</span>round_keys<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        data <span class="token operator">=</span> E_P<span class="token punctuation">(</span>ip2<span class="token punctuation">)</span>
+        data <span class="token operator">=</span> XOR<span class="token punctuation">(</span>data<span class="token punctuation">,</span> r_key<span class="token punctuation">)</span>
+        d1<span class="token punctuation">,</span> d2 <span class="token operator">=</span> split_half<span class="token punctuation">(</span>data<span class="token punctuation">)</span>
+        d1 <span class="token operator">=</span> S0<span class="token punctuation">(</span>d1<span class="token punctuation">)</span>
+        d2 <span class="token operator">=</span> S1<span class="token punctuation">(</span>d2<span class="token punctuation">)</span>
+        data <span class="token operator">=</span> XOR<span class="token punctuation">(</span>ip1<span class="token punctuation">,</span> P4<span class="token punctuation">(</span>d1 <span class="token operator">+</span> d2<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">+</span> ip2
+        <span class="token keyword">if</span> i <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">:</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"First Fk: {}"</span><span class="token punctuation">.</span>format<span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">elif</span> i <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">:</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Second Fk: {}"</span><span class="token punctuation">.</span>format<span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+        <span class="token keyword">if</span> i <span class="token operator">!=</span> len<span class="token punctuation">(</span>round_keys<span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">:</span>
+            ip1<span class="token punctuation">,</span> ip2 <span class="token operator">=</span> split_half<span class="token punctuation">(</span>SW<span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"SW: {}"</span><span class="token punctuation">.</span>format<span class="token punctuation">(</span>ip1 <span class="token operator">+</span> ip2<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            ciphertext <span class="token operator">=</span> IP_1<span class="token punctuation">(</span>data<span class="token punctuation">)</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"IP-1: {}"</span><span class="token punctuation">.</span>format<span class="token punctuation">(</span>ciphertext<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">return</span> ciphertext
+
+<span class="token keyword">def</span> <span class="token function">decrypt</span><span class="token punctuation">(</span>data<span class="token punctuation">,</span> key<span class="token punctuation">,</span> comments<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    round_keys <span class="token operator">=</span> list<span class="token punctuation">(</span>reversed<span class="token punctuation">(</span>generate_round_keys<span class="token punctuation">(</span>key<span class="token punctuation">,</span> rounds<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    ip1<span class="token punctuation">,</span> ip2 <span class="token operator">=</span> split_half<span class="token punctuation">(</span>IP<span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">if</span> comments<span class="token punctuation">:</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"IP: {}"</span><span class="token punctuation">.</span>format<span class="token punctuation">(</span>ip1 <span class="token operator">+</span> ip2<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">for</span> i<span class="token punctuation">,</span> r_key <span class="token keyword">in</span> enumerate<span class="token punctuation">(</span>round_keys<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        data <span class="token operator">=</span> E_P<span class="token punctuation">(</span>ip2<span class="token punctuation">)</span>
+        data <span class="token operator">=</span> XOR<span class="token punctuation">(</span>data<span class="token punctuation">,</span> r_key<span class="token punctuation">)</span>
+        d1<span class="token punctuation">,</span> d2 <span class="token operator">=</span> split_half<span class="token punctuation">(</span>data<span class="token punctuation">)</span>
+        d1 <span class="token operator">=</span> S0<span class="token punctuation">(</span>d1<span class="token punctuation">)</span>
+        d2 <span class="token operator">=</span> S1<span class="token punctuation">(</span>d2<span class="token punctuation">)</span>
+        data <span class="token operator">=</span> XOR<span class="token punctuation">(</span>ip1<span class="token punctuation">,</span> P4<span class="token punctuation">(</span>d1 <span class="token operator">+</span> d2<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">+</span> ip2
+        <span class="token keyword">if</span> comments <span class="token operator">and</span> i <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">:</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"First Fk: {}"</span><span class="token punctuation">.</span>format<span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">elif</span> comments <span class="token operator">and</span> i <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">:</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Second Fk: {}"</span><span class="token punctuation">.</span>format<span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+        <span class="token keyword">if</span> i <span class="token operator">!=</span> len<span class="token punctuation">(</span>round_keys<span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">:</span>
+            ip1<span class="token punctuation">,</span> ip2 <span class="token operator">=</span> split_half<span class="token punctuation">(</span>SW<span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token keyword">if</span> comments<span class="token punctuation">:</span>
+                <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"SW: {}"</span><span class="token punctuation">.</span>format<span class="token punctuation">(</span>ip1 <span class="token operator">+</span> ip2<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            plaintext <span class="token operator">=</span> IP_1<span class="token punctuation">(</span>data<span class="token punctuation">)</span>
+            <span class="token keyword">if</span> comments<span class="token punctuation">:</span>
+                <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"IP-1: {}"</span><span class="token punctuation">.</span>format<span class="token punctuation">(</span>plaintext<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+
+    <span class="token keyword">return</span> plaintext
+
+
+<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">"__main__"</span><span class="token punctuation">:</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"需要加密的明文为: {} ({})"</span><span class="token punctuation">.</span>format<span class="token punctuation">(</span>plaintext<span class="token punctuation">,</span> bin_to_ascii_4bit<span class="token punctuation">(</span>plaintext<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Key: {}"</span><span class="token punctuation">.</span>format<span class="token punctuation">(</span>K<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"\n以下是加密的过程\n-------------------\n"</span><span class="token punctuation">)</span>
+    C<span class="token operator">=</span> encrypt<span class="token punctuation">(</span>plaintext<span class="token punctuation">,</span>K<span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"加密后的密文为:  {} ({})"</span><span class="token punctuation">.</span>format<span class="token punctuation">(</span>C<span class="token punctuation">,</span> bin_to_ascii_4bit<span class="token punctuation">(</span>C<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"\n以下是解密的过程\n-------------------\n"</span><span class="token punctuation">)</span>
+    d <span class="token operator">=</span> decrypt<span class="token punctuation">(</span>C<span class="token punctuation">,</span> K<span class="token punctuation">,</span> comments<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"解密后的明文是: {} ({})"</span><span class="token punctuation">.</span>format<span class="token punctuation">(</span>d<span class="token punctuation">,</span> bin_to_ascii_4bit<span class="token punctuation">(</span>d<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span></code></pre>
+
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://kit4y.github.io" rel="external nofollow noreferrer">st4ck</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://kit4y.github.io/2019/08/16/s-des-xiang-jie/">https://kit4y.github.io/2019/08/16/s-des-xiang-jie/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="https://kit4y.github.io" target="_blank">st4ck</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/DES/">
+                                    <span class="chip bg-color">DES</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2019/09/01/xxe-bi-ji/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="XXE笔记">
+                        
+                        <span class="card-title">XXE笔记</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            XML的小知识
+1，元素元素是 XML 以及 HTML 文档的主要构建模块，元素可包含文本、其他元素或者是空的。实例:
+&lt;body>body text in between&lt;/body>
+&lt;message>some mes
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2019-09-01
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Web/" class="post-category">
+                                    Web
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/XXE/">
+                        <span class="chip bg-color">XXE</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2019/08/10/za-qi-za-ba-de-deng-lu-ti/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="令人窒息的登录题">
+                        
+                        <span class="card-title">令人窒息的登录题</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            一、约束攻击，啥玩意？假如有这么一个登录注册业务注册
+&lt;?php
+// Checking whether a user with the same username exists
+$username = mysql_real_esca
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-08-10
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Web/" class="post-category">
+                                    Web
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/PHP/">
+                        <span class="chip bg-color">PHP</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: 书鱼<br />'
+            + '文章作者: st4ck<br />'
+            + '文章链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归书鱼所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+    
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
+
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">年份</span>
+            <a href="https://kit4y.github.io" target="_blank">st4ck</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">177.2k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    window.setTimeout("siteTime()", 1000);
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2019";
+                    var startMonth = "6";
+                    var startDate = "28";
+                    var startHour = "0";
+                    var startMinute = "0";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/Kit4y" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:381382770@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=381382770" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 381382770" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script type="text/javascript" src="/libs/background/ribbon-dynamic.js" async="async"></script>
+    
+    
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/miku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+
+</html>

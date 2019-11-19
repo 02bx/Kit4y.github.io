@@ -1,0 +1,1192 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="精通Python网络爬虫-四五章基本使用, 书鱼">
+    <meta name="description" content="一、时代变迁下的比较:
+
+
+Python2.x时代
+Python3.x时代
+
+
+
+import urllib2
+import urllib.request,urllib.error
+
+
+import urllib
+import urllib">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>精通Python网络爬虫-四五章基本使用 | 书鱼</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    
+    <script src="/libs/jquery/jquery.min.js"></script>
+    
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper head-container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">书鱼</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>起居注</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>书鱼是谁</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>快来膜大佬</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>私密相册</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">书鱼</div>
+        <div class="logo-desc">
+            
+            他浑身都是弱点，简直一无是处，但他靠着自己的力量一步步克服，最终成为了火影
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			起居注
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			书鱼是谁
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			快来膜大佬
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			私密相册
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/17.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        精通Python网络爬虫-四五章基本使用
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E7%88%AC%E8%99%AB/">
+                                <span class="chip bg-color">爬虫</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E7%B2%BE%E9%80%9APython%E7%BD%91%E7%BB%9C%E7%88%AC%E8%99%AB/" class="post-category">
+                                精通Python网络爬虫
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2019-03-21
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    2.3k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    11 分
+                </div>
+                
+				
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+            
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h3 id="一、时代变迁下的比较"><a href="#一、时代变迁下的比较" class="headerlink" title="一、时代变迁下的比较:"></a>一、时代变迁下的比较:</h3><table>
+<thead>
+<tr>
+<th>Python2.x时代</th>
+<th>Python3.x时代</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>import urllib2</td>
+<td>import urllib.request,urllib.error</td>
+</tr>
+<tr>
+<td>import urllib</td>
+<td>import urllib2.request,urllib.error,urllib.parse</td>
+</tr>
+<tr>
+<td>import urlparse</td>
+<td>import urllib.parse</td>
+</tr>
+<tr>
+<td>urllib2.urlopen</td>
+<td>urllib.request.urlopen</td>
+</tr>
+<tr>
+<td>urllib.urlencode</td>
+<td>urllib.parse.urlencode</td>
+</tr>
+<tr>
+<td>urllib.quote</td>
+<td>urllib.request.quote</td>
+</tr>
+<tr>
+<td>cookielib.CookieJar</td>
+<td>http.CookieJar</td>
+</tr>
+<tr>
+<td>urllib2.Request</td>
+<td>urllib.request.Request</td>
+</tr>
+<tr>
+<td><a id="more"></a></td>
+<td></td>
+</tr>
+<tr>
+<td>#### 1.1、快速使用</td>
+<td></td>
+</tr>
+<tr>
+<td>```</td>
+<td></td>
+</tr>
+<tr>
+<td>//导入模块</td>
+<td></td>
+</tr>
+</tbody></table>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>import urllib.request<br>//打开网页<br>file=urllib.request.urlopen(“<a href="http://baidu.com&quot;" target="_blank" rel="noopener">http://baidu.com&quot;</a>)<br>//读取全部内容.内容赋给字符串变量<br>data=file.read()<br>//读取全部内容，内容赋给列表变量<br>data=file.readlines()<br>//读取一行内容<br>dataline=file.readline()<br>print dataline<br>print data<br>print(file.info())<br>print(file.getcode())<br>print(file.geturl())</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<pre><code>URL标准中一般只允许一部分ASCII字符，如数字、字母、部分符号等。若是特殊字符，如中文、：、或者&amp;等，需要编码。编码格式：</code></pre><p>urllib.request.quote(“<a href="http://www.baidu.com&quot;" target="_blank" rel="noopener">http://www.baidu.com&quot;</a>)<br>urllib.request.unquote(“http%3A//<a href="http://www.baidu.com&quot;" target="_blank" rel="noopener">www.baidu.com&quot;</a>)</p>
+<pre><code>
+保存本地方法1</code></pre><blockquote>
+<blockquote>
+<blockquote>
+<p>fhandle=open(“demo.html”)<br>fhandle.write(data)<br>fhandle.close()</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<pre><code>保存本地方法2</code></pre><p>filename=urllib.request.urlretrieve(“<a href="http://www.baidu.com&quot;,filename=&quot;demo.html&quot;" target="_blank" rel="noopener">http://www.baidu.com&quot;,filename=&quot;demo.html&quot;</a>)</p>
+<pre><code>#### 1.2、模拟浏览器 -- Headers 属性
+方法1、build_opener()修改报头</code></pre><p>import urllib.request<br>url=”<a href="http://blog.csdn.net/weiwei_pig/article/details/51178226&quot;" target="_blank" rel="noopener">http://blog.csdn.net/weiwei_pig/article/details/51178226&quot;</a><br>headers=(“User-Agent”,”Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Mobile Safari/537.36”)<br>opener = urllib.request.build_opener()<br>opener.addheaders = [headers]<br>data = opener.open(url).read()<br>print(data)</p>
+<pre><code>方法2、用add_header()添加报头</code></pre><p>import urllib.request<br>url=”<a href="http://blog.csdn.net/weiwei_pig/article/details/51178226&quot;" target="_blank" rel="noopener">http://blog.csdn.net/weiwei_pig/article/details/51178226&quot;</a><br>req=urllib.request.Request(url)<br>req.add_header(“User-Agent”,”Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Mobile Safari/537.36”)<br>data = urllib.request.urlopen(req).read()</p>
+<pre><code>#### 1.3、超时设置,比如gayhun   </code></pre><p>import urllib.request<br>for i in range(1,100):<br>    try:<br>        file = urllib.request.urlopen(“<a href="https://github.com/&quot;,timeout=1" target="_blank" rel="noopener">https://github.com/&quot;,timeout=1</a>)<br>        data = file.read()<br>        print(len(data))<br>    except Exception as e:<br>        print(“出现异常–&gt;”+str(e))</p>
+<pre><code>
+#### 1.4、POST请求</code></pre><p>import urllib.request<br>import urllib.parse<br>url = “<a href="http://www.iqianyue.com/mypost&quot;" target="_blank" rel="noopener">http://www.iqianyue.com/mypost&quot;</a><br>postdata = urllib.parse.urlencode({<br>“name”:”Kitty”,<br>“pass”:”haha”<br>}).encode(“utf-8”)<br>req = urllib.request.Request(url,postdata)<br>req.add_header(“User-Agent”,”Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Mobile Safari/537.36”)<br>data = urllib.request.urlopen(req).read().decode(‘utf-8’)<br>print(data)</p>
+<pre><code>### 二、异常处理
+#### 2.1、DebugLog开启</code></pre><p>import urllib.request<br>httphd=urllib.request.HTTPHandler(debuglevel=1)<br>httpshd=urllib.request.HTTPSHandler(debuglevel=1)<br>opener=urllib.request.build_opener(httphd,httpshd)<br>urllib.request.install_opener(opener)<br>data=urllib.request.urlopen(“<a href="http://edu.51cto.com&quot;" target="_blank" rel="noopener">http://edu.51cto.com&quot;</a>)<br>print(data)</p>
+<pre><code>#### 2.2、URLError</code></pre><p>import urllib.request<br>import urllib.error<br>try:<br>    file=urllib.request.urlopen(“<a href="http://www.baiduddd.com&quot;" target="_blank" rel="noopener">http://www.baiduddd.com&quot;</a>)<br>    print(file.read())<br>except urllib.error.URLError as e:<br>    if hasattr(e,”code”):<br>        print(e.code)<br>    if hasattr(e,”reason”):<br>        print(e.reason)</p>
+<h1 id="except-urllib-error-URLError-as-e"><a href="#except-urllib-error-URLError-as-e" class="headerlink" title="except urllib.error.URLError as e:"></a>except urllib.error.URLError as e:</h1><h1 id="print-e-reason"><a href="#print-e-reason" class="headerlink" title="print(e.reason)"></a>print(e.reason)</h1><h1 id="except-urllib-error-HTTPError-as-e"><a href="#except-urllib-error-HTTPError-as-e" class="headerlink" title="except urllib.error.HTTPError as e:"></a>except urllib.error.HTTPError as e:</h1><h1 id="print-e-code"><a href="#print-e-code" class="headerlink" title="print(e.code)"></a>print(e.code)</h1><h1 id="print-e-reason-1"><a href="#print-e-reason-1" class="headerlink" title="print(e.reason)"></a>print(e.reason)</h1><pre><code>### 三、正则表达式的使用
+如果对正则表达式没概念，请移步[正则表达式必知必会](/2019/01/15/正则表达式必知必会/)
+
+#### 3.1、正则表达式常用的功能函数包括：match、search、findall、sub
+##### 1、1、re.match()函数
+函数语法：</code></pre><p>re.match(pattern, string, flags=0)</p>
+<pre><code></code></pre><p> def match(pattern, string, flags=0):<br>     “””Try to apply the pattern at the start of the string, returning<br>     a match object, or None if no match was found.”””<br>     return _compile(pattern, flags).match(string)</p>
+<pre><code>函数参数说明：
+
+* pattern：匹配的正则表达式
+* string：要匹配的字符串
+* flag：标志位，用于控制正则表达式的匹配方式（是否匹配大小写、多行匹配等）
+作用：match()函数只在字符串的开始位置尝试匹配正则表达式，即从位置0开始匹配。如果匹配成功，则返回一个匹配的对象；如果字符串开始不符合正则表达式，则匹配失败，函数返回None。</code></pre><p>import  re<br>test = ‘<a href="http://news.163.com/17/0624/10/CNMHVBJP0001899N.html&#39;" target="_blank" rel="noopener">http://news.163.com/17/0624/10/CNMHVBJP0001899N.html&#39;</a><br>print(re.match(r’http’,test)) # &lt;_sre.SRE_Match object; span=(0, 4), match=’http’&gt;<br>print(re.match(r’news’,test)) # None</p>
+<pre><code>##### 2、re.search()函数
+函数语法：</code></pre><p>1 re.search(pattern, string[, flags])</p>
+<pre><code></code></pre><p>1 def search(pattern, string, flags=0):<br>2     “””Scan through string looking for a match to the pattern, returning<br>3     a match object, or None if no match was found.”””<br>4     return _compile(pattern, flags).search(string)</p>
+<pre><code>re.search()匹配整个字符串，直到找到第一个匹配的，如果字符串中没有匹配的，则返回None。</code></pre><p>1 import  re<br>2 test = ‘I am a loving child to learn.’<br>3 print(re.search(r’I’,test)) # &lt;_sre.SRE_Match object; span=(0, 1), match=’I’&gt;<br>4 print(re.search(r’learn’,test)) # &lt;_sre.SRE_Match object; span=(23, 28), match=’learn’&gt;<br>5 print(re.search(r’alina’,test)) # None</p>
+<pre><code>
+##### 3、re.sub()函数
+函数语法：</code></pre><p>1 re.sub(pattern,repl,string,count,flags)</p>
+<pre><code></code></pre><p>1 def sub(pattern, repl, string, count=0, flags=0):<br>2     “””Return the string obtained by replacing the leftmost<br>3     non-overlapping occurrences of the pattern in string by the<br>4     replacement repl.  repl can be either a string or a callable;<br>5     if a string, backslash escapes in it are processed.  If it is<br>6     a callable, it’s passed the match object and must return<br>7     a replacement string to be used.”””<br>8     return _compile(pattern, flags).sub(repl, string, count)</p>
+<pre><code>函数参数说明：
+
+* pattern：匹配的正则表达式
+* repl：替换的字符串
+* String：要被查找替换的原始字符串
+* count：匹配后替换的最大次数，默认0表示途欢所有的匹配
+* re.sub()函数用于替换字符串中的匹配项。</code></pre><p>1 import re<br>2 test = ‘I am a loving child to learn.’<br>3 print(re.sub(r’child’,’MMMMM’,test)) # 替换字符串，将child 替换成MMMMM</p>
+<pre><code>##### 4、re.findall()函数
+函数语法：</code></pre><p>1 re.findall(pattern,string,flags)</p>
+<pre><code></code></pre><p>1 def findall(pattern, string, flags=0):<br>2     “””Return a list of all non-overlapping matches in the string.<br>3<br>4     If one or more capturing groups are present in the pattern, return<br>5     a list of groups; this will be a list of tuples if the pattern<br>6     has more than one group.<br>7<br>8     Empty matches are included in the result.”””<br>9     return _compile(pattern, flags).findall(string)</p>
+<pre><code>re.findall()可以获取字符串中所有匹配的字符串</code></pre><p>1 import re<br>2 test = ‘<a href="http://www.educity.cn/zhibo/" target="_blank">直播课堂</a>‘<br>3 print(re.findall(r’<a href="(.*)" target="_blank">(.*)</a>‘,test)) #[(‘<a href="http://www.educity.cn/zhibo/&#39;" target="_blank" rel="noopener">http://www.educity.cn/zhibo/&#39;</a>, ‘直播课堂’)]</p>
+<pre><code>
+#### 3.2、常见匹配
+email
+</code></pre><p>import re<br>pattern = “\w+([.+-]\w+)<em>@\w+([.-]\w+)*.\w+([.-]\w+)</em>“<br>string = “<a href='http://www.baidu.com' target="_blank" rel="noopener">百度</a><br><a href='w.linkings@gail.com'>电邮</a>“<br>result = re.search(pattern,string)<br>print(result)<br>print(result.group(0))</p>
+<pre><code>
+电话</code></pre><p>import re<br>pattern = “\d{4}-\d{7}|\d{3}-\d{8}”<br>string = “0551-54321234513451451345”<br>result1 = re.search(pattern,string)<br>print(result1)<br>print(result1.group(0))</p>
+<pre><code>
+网站</code></pre><p>import re<br>pattern = “[a-zA-Z]+://[^\s]*[.com|.cn]”<br>string = “<a href='http://www.baidu.com' target="_blank" rel="noopener">百度首页</a>“<br>result1 = re.search(pattern,string)<br>print(result1)<br>print(result1.group(0))</p>
+<pre><code>### 四、Session
+一道CTF简答的题目,讲表达式结果迅速返回到服务器（秋名山老司机</code></pre><p>import requests<br>import re<br>url = ‘<a href="http://120.24.86.145:8002/qiumingshan/&#39;" target="_blank" rel="noopener">http://120.24.86.145:8002/qiumingshan/&#39;</a><br>s = requests.Session()<br>source = s.get(url)<br>expression = re.search(r’(\d+[+-*])+(\d+)’, source.text).group()<br>result = eval(expression)<br>post = {‘value’: result}<br>print(s.post(url, data = post).text)</p>
+<pre><code>### 五、更优雅的包，requests
+#### 5.1、简单使用</code></pre><blockquote>
+<blockquote>
+<blockquote>
+<p>import requests<br>然后，尝试获取某个网页。本例子中，我们来获取Github的公共时间线<br>r = requests.get(‘<a href="https://github.com/timeline.json&#39;" target="_blank" rel="noopener">https://github.com/timeline.json&#39;</a>)<br>r = requests.post(“<a href="http://httpbin.org/post&quot;" target="_blank" rel="noopener">http://httpbin.org/post&quot;</a>)<br>r = requests.put(“<a href="http://httpbin.org/put&quot;" target="_blank" rel="noopener">http://httpbin.org/put&quot;</a>)<br>r = requests.delete(“<a href="http://httpbin.org/delete&quot;" target="_blank" rel="noopener">http://httpbin.org/delete&quot;</a>)<br>r = requests.head(“<a href="http://httpbin.org/get&quot;" target="_blank" rel="noopener">http://httpbin.org/get&quot;</a>)<br>r = requests.options(“<a href="http://httpbin.org/get&quot;" target="_blank" rel="noopener">http://httpbin.org/get&quot;</a>)</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<pre><code>#### 5.2、为URL传递参数</code></pre><blockquote>
+<blockquote>
+<blockquote>
+<p>payload = {‘key1’: ‘value1’, ‘key2’: ‘value2’}<br>r = requests.get(“<a href="http://httpbin.org/get&quot;" target="_blank" rel="noopener">http://httpbin.org/get&quot;</a>, params=payload)<br>通过打印输出该URL，你能看到URL已被正确编码:</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>print r.url<br>u’<a href="http://httpbin.org/get?key2=value2&amp;key1=value1&#39;" target="_blank" rel="noopener">http://httpbin.org/get?key2=value2&amp;key1=value1&#39;</a></p>
+</blockquote>
+</blockquote>
+</blockquote>
+<pre><code>#### 5.3、响应内容</code></pre><blockquote>
+<blockquote>
+<blockquote>
+<p>import requests<br>r = requests.get(‘<a href="https://github.com/timeline.json&#39;" target="_blank" rel="noopener">https://github.com/timeline.json&#39;</a>)<br>r.text<br>‘[{“repository”:{“open_issues”:0,”url”:”<a href="https://github.com/" target="_blank" rel="noopener">https://github.com/</a>…</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<pre><code>Requests会自动解码来自服务器的内容。大多数unicode字符集都能被无缝地解码。
+
+请求发出后，Requests会基于HTTP头部对响应的编码作出有根据的推测。当你访问r.text 之时，Requests会使用其推测的文本编码。你可以找出Requests使用了什么编码，并且能够使用 r.encoding 属性来改变它:</code></pre><blockquote>
+<blockquote>
+<blockquote>
+<p>r.encoding<br>‘utf-8’<br>r.encoding = ‘ISO-8859-1’</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<pre><code>如果你改变了编码，每当你访问 r.text ，Request都将会使用 r.encoding 的新值。
+#### 5.4、二进制响应内容
+你也能以字节的方式访问请求响应体，对于非文本请求:</code></pre><blockquote>
+<blockquote>
+<blockquote>
+<p>r.content<br>b’[{“repository”:{“open_issues”:0,”url”:”<a href="https://github.com/" target="_blank" rel="noopener">https://github.com/</a>…</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<pre><code>Requests会自动为你解码 gzip 和 deflate 传输编码的响应数据。
+
+例如，以请求返回的二进制数据创建一张图片，你可以使用如下代码:</code></pre><blockquote>
+<blockquote>
+<blockquote>
+<p>from PIL import Image<br>from StringIO import StringIO<br>i = Image.open(StringIO(r.content))</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<pre><code>#### 5.5、JSON响应内容</code></pre><blockquote>
+<blockquote>
+<blockquote>
+<p>import requests<br>r = requests.get(‘<a href="https://github.com/timeline.json&#39;" target="_blank" rel="noopener">https://github.com/timeline.json&#39;</a>)<br>r.json()<br>[{u’repository’: {u’open_issues’: 0, u’url’: ‘<a href="https://github.com/" target="_blank" rel="noopener">https://github.com/</a>…</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<pre><code>如果JSON解码失败， r.json 就会抛出一个异常。
+
+#### 5.6、原始响应内容
+在罕见的情况下你可能想获取来自服务器的原始套接字响应，那么你可以访问 r.raw 。 如果你确实想这么干，那请你确保在初始请求中设置了 stream=True 。具体的你可以这么做:</code></pre><blockquote>
+<blockquote>
+<blockquote>
+<p>r = requests.get(‘<a href="https://github.com/timeline.json&#39;" target="_blank" rel="noopener">https://github.com/timeline.json&#39;</a>, stream=True)<br>r.raw<br>&lt;requests.packages.urllib3.response.HTTPResponse object at 0x101194810&gt;<br>r.raw.read(10)<br>‘\x1f\x8b\x08\x00\x00\x00\x00\x00\x00\x03’</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<pre><code>#### 5.7、定制请求头
+如果你想为请求添加HTTP头部，只要简单地传递一个 dict 给 headers 参数就可以了。
+
+例如，在前一个示例中我们没有指定content-type:</code></pre><blockquote>
+<blockquote>
+<blockquote>
+<p>import json<br>url = ‘<a href="https://api.github.com/some/endpoint&#39;" target="_blank" rel="noopener">https://api.github.com/some/endpoint&#39;</a><br>payload = {‘some’: ‘data’}<br>headers = {‘content-type’: ‘application/json’}<br>r = requests.post(url, data=json.dumps(payload), headers=headers)</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<pre><code>### 六、BeautifulSoup4的基本使用
+安装</code></pre><p>pip install beautifulsoup4</p>
+<pre><code>使用</code></pre><p>from bs4 import BeautifulSoup</p>
+<p>html_str = “””<br>    <ul><br>        <li><br>            <a href="http://www.baidu.com/" target="_blank" rel="noopener">百度一下</a><br>        </li><br>        <li>合适的话发多少</li><br>        <li><br>            <a class="baidu" href="http://www.baidu.com/" target="_blank" rel="noopener">不会发生看到</a><br>        </li><br>        <li><br>            <a  id="lagou" href="http://www.lagou.com/" target="_blank" rel="noopener">lagou</a><br>        </li><br>        <li><br>            <label class="enterText enterArea">列表图预览：</label><br>            <p class="enterImg"><br>                <img id="previewImage" title='mmm' src="http://www.google.com/logo.png"/><br>            </p><br>            <div class="Validform_checktip">范德萨范德萨</div><br>        </li><br>    </ul><br>“””</p>
+<p>soup = BeautifulSoup(html_str,’html.parser’)</p>
+<p>#html对象  text文本去掉标签</p>
+<h1 id="print-soup"><a href="#print-soup" class="headerlink" title="print(soup)"></a>print(soup)</h1><h1 id="print-soup-text"><a href="#print-soup-text" class="headerlink" title="print(soup.text)"></a>print(soup.text)</h1><h1 id="lt-class-‘bs4-BeautifulSoup’-gt-对象类型"><a href="#lt-class-‘bs4-BeautifulSoup’-gt-对象类型" class="headerlink" title="&lt;class ‘bs4.BeautifulSoup’&gt; 对象类型"></a>&lt;class ‘bs4.BeautifulSoup’&gt; 对象类型</h1><h1 id="print-type-soup"><a href="#print-type-soup" class="headerlink" title="print(type(soup))"></a>print(type(soup))</h1><h1 id="查找a标签-text打印a的内容"><a href="#查找a标签-text打印a的内容" class="headerlink" title="查找a标签 .text打印a的内容"></a>查找a标签 .text打印a的内容</h1><h1 id="print-soup-find-‘a’"><a href="#print-soup-find-‘a’" class="headerlink" title="print(soup.find(‘a’))"></a>print(soup.find(‘a’))</h1><h1 id="print-soup-find-‘a’-text"><a href="#print-soup-find-‘a’-text" class="headerlink" title="print(soup.find(‘a’).text)"></a>print(soup.find(‘a’).text)</h1><h1 id="查找a标签-class-baidu的"><a href="#查找a标签-class-baidu的" class="headerlink" title="查找a标签 class=baidu的"></a>查找a标签 class=baidu的</h1><h1 id="print-soup-find-‘a’-class-’baidu’"><a href="#print-soup-find-‘a’-class-’baidu’" class="headerlink" title="print(soup.find(‘a’,class_=’baidu’))"></a>print(soup.find(‘a’,class_=’baidu’))</h1><h1 id="查找id-lagou"><a href="#查找id-lagou" class="headerlink" title="查找id=lagou"></a>查找id=lagou</h1><h1 id="print-soup-find-id-’lagou’"><a href="#print-soup-find-id-’lagou’" class="headerlink" title="print(soup.find(id=’lagou’))"></a>print(soup.find(id=’lagou’))</h1><h1 id="查找title-’mmm’-前边可以写具体找哪个标签"><a href="#查找title-’mmm’-前边可以写具体找哪个标签" class="headerlink" title="查找title=’mmm’ 前边可以写具体找哪个标签"></a>查找title=’mmm’ 前边可以写具体找哪个标签</h1><h1 id="print-soup-find-title-’mmm’"><a href="#print-soup-find-title-’mmm’" class="headerlink" title="print(soup.find(title=’mmm’))"></a>print(soup.find(title=’mmm’))</h1><h1 id="find-all-找所有-返回一个list-数组类型"><a href="#find-all-找所有-返回一个list-数组类型" class="headerlink" title="find_all 找所有  返回一个list 数组类型"></a>find_all 找所有  返回一个list 数组类型</h1><h1 id="print-soup-find-all-‘a’"><a href="#print-soup-find-all-‘a’" class="headerlink" title="print(soup.find_all(‘a’))"></a>print(soup.find_all(‘a’))</h1><h1 id="print-soup-find-all-‘a’-0-第一个"><a href="#print-soup-find-all-‘a’-0-第一个" class="headerlink" title="print(soup.find_all(‘a’)[0]) #第一个"></a>print(soup.find_all(‘a’)[0]) #第一个</h1><p>all_a = soup.find_all(‘a’)<br>for item in all_a:<br>    if item:<br>        # print(item.attrs)<br>        print(item.attrs[‘href’]) #dict类型</p>
+<p>```</p>
+
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://kit4y.github.io" rel="external nofollow noreferrer">st4ck</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://kit4y.github.io/2019/03/21/jing-tong-python-wang-luo-pa-chong-san-si-zhang-ji-ben-shi-yong/">https://kit4y.github.io/2019/03/21/jing-tong-python-wang-luo-pa-chong-san-si-zhang-ji-ben-shi-yong/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="https://kit4y.github.io" target="_blank">st4ck</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/%E7%88%AC%E8%99%AB/">
+                                    <span class="chip bg-color">爬虫</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2019/03/31/java-number-math/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="Java Number&Math">
+                        
+                        <span class="card-title">Java Number&Math</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            为什么要给无聊的语法记博客呢，因为太菜了啊，写java后端代码不会复制粘贴的时候，一杯酒，一包烟，一行代码写半天，关于数据类型也折腾了不少时间。1、Java Number &amp; Math 类Java和其他语言一样，有内置的数据类型比如
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2019-03-31
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Java/" class="post-category">
+                                    Java
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/java/">
+                        <span class="chip bg-color">java</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2019/03/18/ji-suan-ji-wang-luo-zi-ding-xiang-xia-duo-mei-ti-wang-luo/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="计算机网络自顶向下-多媒体网络">
+                        
+                        <span class="card-title">计算机网络自顶向下-多媒体网络</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            一、多媒体网络应用1.1视频的性质
+高比特率:视频最主要的特点就是极大地数据量,由此产生的高比特率的传输
+可压缩:为了稍微减少传输的数据量,由此产生了压缩技术,比如会对空白区域进行处理或者由于视频一般具有较多的重复,由此来压缩视频
+多版本:
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-03-18
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B/" class="post-category">
+                                    计算机网络自顶向下
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">
+                        <span class="chip bg-color">计算机网络</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: 书鱼<br />'
+            + '文章作者: st4ck<br />'
+            + '文章链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归书鱼所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+    
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">年份</span>
+            <a href="https://kit4y.github.io" target="_blank">st4ck</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">177.2k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    window.setTimeout("siteTime()", 1000);
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2019";
+                    var startMonth = "6";
+                    var startDate = "28";
+                    var startHour = "0";
+                    var startMinute = "0";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/Kit4y" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:381382770@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=381382770" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 381382770" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script type="text/javascript" src="/libs/background/ribbon-dynamic.js" async="async"></script>
+    
+    
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/miku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+
+</html>

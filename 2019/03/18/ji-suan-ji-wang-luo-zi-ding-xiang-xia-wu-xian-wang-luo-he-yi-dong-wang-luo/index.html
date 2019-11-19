@@ -1,0 +1,1038 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="计算机网络自顶向下-无线网络和移动网络, 书鱼">
+    <meta name="description" content="一、概述：这篇文章主要是讨论无线网络和移动网络即我们一般所说的WiFi和手机网络.主要分为4个部分第一部分引言主要大致的描述一下无线网络和移动网络的特点以及和有限网络的区别第二部分讨论WiFi第三部分讨论蜂窝网络.由于有线网络和和无线网络的">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>计算机网络自顶向下-无线网络和移动网络 | 书鱼</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    
+    <script src="/libs/jquery/jquery.min.js"></script>
+    
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper head-container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">书鱼</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>起居注</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>书鱼是谁</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>快来膜大佬</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>私密相册</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">书鱼</div>
+        <div class="logo-desc">
+            
+            他浑身都是弱点，简直一无是处，但他靠着自己的力量一步步克服，最终成为了火影
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			起居注
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			书鱼是谁
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			快来膜大佬
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			私密相册
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        计算机网络自顶向下-无线网络和移动网络
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">
+                                <span class="chip bg-color">计算机网络</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B/" class="post-category">
+                                计算机网络自顶向下
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2019-03-18
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    2.5k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    8 分
+                </div>
+                
+				
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+            
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h3 id="一、概述："><a href="#一、概述：" class="headerlink" title="一、概述："></a>一、概述：</h3><p>这篇文章主要是讨论无线网络和移动网络即我们一般所说的WiFi和手机网络.主要分为4个部分<br>第一部分引言主要大致的描述一下无线网络和移动网络的特点以及和有限网络的区别<br>第二部分讨论WiFi<br>第三部分讨论蜂窝网络.由于有线网络和和无线网络的最大区别在于无线网络可以移动而且需要保持网络的连接<br>第四部分会讨论无线网络的移动管理.</p>
+<a id="more"></a>
+<h4 id="名词简介："><a href="#名词简介：" class="headerlink" title="名词简介："></a>名词简介：</h4><ol>
+<li>无线主机（wireless host）。端系统。</li>
+<li>无线链路（wireless communication link）。主机连接基站或另一台主机。</li>
+<li>基站（base station）。主机和基站关联：主机位于基站的无线通信覆盖范围，且主机使用基站中继和更大的网络的数据。例如，蜂窝网中的 蜂窝塔（cell tower），Wifi中的接入点（access point）。</li>
+<li>网络基础设施。与主机通信的更大的网络。</li>
+</ol>
+<p>与基站关联的主机以基础设施模式（infrastructure mode）运行，传统网络服务（地址分配、路由选择）通过基站提供给主机。自组织网络（ad hoc network）中，主机不与基站相连，主机本身提供这些服务。<br>无线网络类型。标准：无线网分组跨越的无线跳、是否有基础设施。 </p>
+<ol>
+<li>单跳、基于基础设施。802.11、3G蜂窝网等。</li>
+<li>单跳、无基础设施。蓝牙、自组织模式的802.11</li>
+<li>多跳、基于基础设施。结点通过无线结点中继通信，连接到基站，如无线网状网络。</li>
+<li>多跳、无基础设施。移动自组织网络，包括车载自组织网络。</li>
+</ol>
+<h3 id="二、无线链路和网络特征"><a href="#二、无线链路和网络特征" class="headerlink" title="二、无线链路和网络特征"></a>二、无线链路和网络特征</h3><h4 id="2-1、与有限链路的区别"><a href="#2-1、与有限链路的区别" class="headerlink" title="2.1、与有限链路的区别"></a>2.1、与有限链路的区别</h4><p>无线链路和有限链路最主要的区别如下:</p>
+<ol>
+<li>递减的信号强度:随着阻碍物和距离的增加,信号的强度会有相当大的损失</li>
+<li>来自其他源的干扰:无线信号会被其他源的无线信号干扰到,比如电磁炉</li>
+<li>多径传播:同一个信号可能会经过多种物质的反射从而在不同时间点传播的同一接收点中.</li>
+</ol>
+<h4 id="2-2、会产生的问题"><a href="#2-2、会产生的问题" class="headerlink" title="2.2、会产生的问题"></a>2.2、会产生的问题</h4><p>由于信号的减弱和障碍物的作用,所以无线链路通信会产生一些有线链路所没有的问题</p>
+<ol>
+<li>信噪比SNR:即信号和噪音的比值,用于衡量信号的优劣,值越高代表信号越好,相反,若太低,则表明噪声太多,信号质量差</li>
+<li>比特差错率BER:在无线链路的特性决定了传输的数据容易出现比特差错,BER用于衡量这一参数</li>
+<li>隐藏终端问题:基站是需要多路访问协议即MAC协议来控制多个无线主机向此基站发送的数据,通常采用CSMA(码多分址),其原理已经介绍过了,主要就是将每一个比特乘以一个特殊的编码在接收端再次解码,通过不同的无线站点分配不同的编码以解决碰撞的问题.原理如下图:</li>
+</ol>
+<p><img src="1.png" alt=""><br>而无线链路的情况不同于有线链路,它很有可能是检测不到其他无线主机正在想基站发送数据的,比如其中一台无线主机被大山挡住,导致另一台主机不能接收到此主机正在发送数据的信号,再比如说,随着位置的增加,可能会有基站可以接受到两台无线主机信号而两台无线主机之间不能接受到彼此的信号的情况.这就被称为隐藏终端问题.如下图:<br><img src="2.png" alt=""></p>
+<h3 id="三、Wifi-802-11无线LAN"><a href="#三、Wifi-802-11无线LAN" class="headerlink" title="三、Wifi(802.11无线LAN)"></a>三、Wifi(802.11无线LAN)</h3><h4 id="3-1、分类"><a href="#3-1、分类" class="headerlink" title="3.1、分类"></a>3.1、分类</h4><p>无线网络所使用的WiFi协议有许多种,他们分别有不同的频率范围和传输速度,如以下三种协议<br><img src="3.png" alt=""></p>
+<h4 id="3-2、组成"><a href="#3-2、组成" class="headerlink" title="3.2、组成"></a>3.2、组成</h4><p>无线网络主要由两部分组成,一是基本服务集BSS,包括无线站点和接入点AP,他们都具有唯一的MAC地址,二是分组交换机,BSS就是通过分组交换机与因特网连接.如下图:</p>
+<p><img src="4.png" alt=""></p>
+<h4 id="3-3、信道与关联"><a href="#3-3、信道与关联" class="headerlink" title="3.3、信道与关联"></a>3.3、信道与关联</h4><p>那么无线站点是如何通过上图中的体系结构连接如互联网的呢?<br>每个基本服务集BSS都拥有一个SSID,用于唯一标识,WiFi协议信道的频率可以分为11个部分,他们互相之间有重叠,只有1,6,11号信道之间是完全没有重叠的,所以可以在一个物理网络中使用三个信道,每个基站都有自己的信号范围,那么我们定义WiFi丛林的概念,即无线站点在任意物质可以接收到多个基站所发出的信号,那么在这种情况之下,无线站点如何同基站关联的?<br>主要有两种方法:</p>
+<ol>
+<li>被动扫描:每个接入点AP都会周期性的发送信标帧,信标帧中包括该AP的SSID和MAC地址,无线站点为了关联AP,就会扫描11 个信道,然后选择一个与之关联</li>
+<li>主动扫描:无线主机会向所有在其范围内的AP广播探测帧,AP接收到探测帧后会发送探测响应帧给无线站点,然后无线站点和AP关联</li>
+</ol>
+<p><img src="5.png" alt=""></p>
+<h4 id="3-4、MAC协议"><a href="#3-4、MAC协议" class="headerlink" title="3.4、MAC协议"></a>3.4、MAC协议</h4><p>我们在无线链路可能会遇到的问题中已经描述过隐藏终端问题,WiFi有时如何解决碰撞和处理隐藏终端问题的呢?<br> WiFi所使用的MAC协议叫做CSMA/CA,CSMA即是载波侦听,其原理同以前讲述的一样,他会检测其他无线站点是否正在发送数据,如果是则停止传输,知道信道空闲.但是和以前不同的是,CA是碰撞避免,而不是CD碰转检测,因为CD完全不适用于无线链路,其一,两个无线站点之间如果需要互相检测到对方的发送信号所需的成本太大,其二,即使可以互相检测到信号,也会因为隐藏终端问题导致大量的重传.</p>
+<p>碰撞避免CA的原理是:</p>
+<ol>
+<li>在发送信号之前,即侦听到信道空闲时,会在一个分布式帧间间隔DIFS的短时间后发送数据帧.</li>
+<li>若信道繁忙,会选取一个随机回退值,每当侦听到信道空闲时此回退值就会减小,信道繁忙则会冻结回退值,当回退值为0时,发送数据帧</li>
+<li>发送数据帧并等待确认,目的地则会在等待一个被称为短帧间间隔SIFS的短时间后发送确认帧.</li>
+<li>如果源收到确认帧,表示被正确接收了,需要发送其他帧会从第二部开始.如果未收到确认,进入第二部的回退阶段,并从更大的范围选取回退值</li>
+</ol>
+<p><img src="6.png" alt=""><br> 而为了解决隐藏终端问题,在上述的基础上,源会在传输数据帧之前发送一个请求发送控制帧RTS,其中包含了此次传输需要的总时间,目的地在接收到RTS后等待SIFS的短时间,会广播一个允许发送控制帧CTS,CTS的目的是给发送方明确的发送许可及禁止其他无线站点在预约的时间内发送数据帧,但是这种处理方式会消耗信道资源,所以只有需要交换长数据时才会使用.<br><img src="7.png" alt=""></p>
+<h4 id="3-5、帧结构"><a href="#3-5、帧结构" class="headerlink" title="3.5、帧结构"></a>3.5、帧结构</h4><p>802.11协议(WiFi)所使用的帧的结构如下图所示:<br><img src="8.png" alt=""></p>
+<ol>
+<li>帧控制:包含许多子字段,类型和子类型用于区分管理,RTS,CTS,ACK和数据帧,WEP用于知识是否加密,to,from定义不同地址字段的含义等等,不做具体描述</li>
+<li>持续期:表示预约信道的时间,即在上文中描述的如何处理隐藏终端问题的预约时间</li>
+<li>地址一:源MAC地址</li>
+<li>地址二:接收该帧的设备的MAC地址</li>
+<li>地址三:AP所连的交换机的MAC地址,是基本服务集BSS和因特网连接的关键</li>
+<li>序号控制:用于区分帧的重传和新的发送</li>
+<li>地址四:用于自组织间的MAC地址</li>
+<li>有效载荷:存放数据</li>
+<li>CRC:循环冗余检测字段</li>
+</ol>
+<h4 id="3-6、高级特色"><a href="#3-6、高级特色" class="headerlink" title="3.6、高级特色"></a>3.6、高级特色</h4><p> 802.11协议可以实现一些高级的功能,比如速率适应,无线站点会要求越来越多的带宽,知道接入点AP说”够了”,功率管理可以让无线 站点向接入点AP发送一个帧以设置一个定时器,无线站点进入睡眠模式,知道接入点在发送下一个信标帧时,唤醒该节点.</p>
+<h3 id="四、蜂窝因特网"><a href="#四、蜂窝因特网" class="headerlink" title="四、蜂窝因特网"></a>四、蜂窝因特网</h3><h4 id="4-1、2G"><a href="#4-1、2G" class="headerlink" title="4.1、2G"></a>4.1、2G</h4><p>以下是2G网络的组成,统称为GSM蜂窝网体系:<br><img src="9.png" alt=""></p>
+<ol>
+<li>基站控制器BSC:连接几十个基站,执行寻呼,移动用户的切换</li>
+<li>移动交换中心MSC:用于用户鉴别和账户管理,一级呼叫建立和切换</li>
+<li>网关MSC:与更大的网络相连<h4 id="4-2、3G"><a href="#4-2、3G" class="headerlink" title="4.2、3G"></a>4.2、3G</h4><img src="10.png" alt=""><br>在2G的基础上,将BSC换为了RNC,并添加了一些新设备</li>
+</ol>
+<h3 id="五、802-15协议"><a href="#五、802-15协议" class="headerlink" title="五、802.15协议"></a>五、802.15协议</h3><p>除了WiFi和蜂窝网络之外,还有其他的无线网络,这里只做极其简单的介绍,</p>
+<ol>
+<li>蓝牙:使用802.15.1协议,以TDM方式工作于无需2.4GHz无线电波段,存在主设备和从设备之分,使用自组织模式,形成一个皮可网.</li>
+</ol>
+<p><img src="11.png" alt=""></p>
+<ol start="2">
+<li>ZigBee:多个简化功能设备在单个全功能设备控制下运行.</li>
+</ol>
+<h3 id="最后给一张思维导图"><a href="#最后给一张思维导图" class="headerlink" title="最后给一张思维导图"></a>最后给一张思维导图</h3><p><img src="daotu.png" alt=""></p>
+
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://kit4y.github.io" rel="external nofollow noreferrer">st4ck</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://kit4y.github.io/2019/03/18/ji-suan-ji-wang-luo-zi-ding-xiang-xia-wu-xian-wang-luo-he-yi-dong-wang-luo/">https://kit4y.github.io/2019/03/18/ji-suan-ji-wang-luo-zi-ding-xiang-xia-wu-xian-wang-luo-he-yi-dong-wang-luo/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="https://kit4y.github.io" target="_blank">st4ck</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">
+                                    <span class="chip bg-color">计算机网络</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2019/03/18/ji-suan-ji-wang-luo-zi-ding-xiang-xia-duo-mei-ti-wang-luo/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="计算机网络自顶向下-多媒体网络">
+                        
+                        <span class="card-title">计算机网络自顶向下-多媒体网络</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            一、多媒体网络应用1.1视频的性质
+高比特率:视频最主要的特点就是极大地数据量,由此产生的高比特率的传输
+可压缩:为了稍微减少传输的数据量,由此产生了压缩技术,比如会对空白区域进行处理或者由于视频一般具有较多的重复,由此来压缩视频
+多版本:
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2019-03-18
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B/" class="post-category">
+                                    计算机网络自顶向下
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">
+                        <span class="chip bg-color">计算机网络</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2019/03/15/crc-tui-dao-yi-ji-yi-dao-crc32-bao-po-li-ti/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="CRC推导以及一道CRC32爆破例题">
+                        
+                        <span class="card-title">CRC推导以及一道CRC32爆破例题</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            一、在计算机网络自顶向下链路层有一笔带过CRC检验，感觉这个地方很实用，也经常见所以还是认真对待了一下百度百科：循环冗余校验(Cyclic Redundancy Check, CRC)是一种根据网络数据包或电脑文件等数据产生简短固定位数校验
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-03-15
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Crypto/" class="post-category">
+                                    Crypto
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/CRC/">
+                        <span class="chip bg-color">CRC</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: 书鱼<br />'
+            + '文章作者: st4ck<br />'
+            + '文章链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归书鱼所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+    
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">年份</span>
+            <a href="https://kit4y.github.io" target="_blank">st4ck</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">177.2k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    window.setTimeout("siteTime()", 1000);
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2019";
+                    var startMonth = "6";
+                    var startDate = "28";
+                    var startHour = "0";
+                    var startMinute = "0";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/Kit4y" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:381382770@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=381382770" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 381382770" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script type="text/javascript" src="/libs/background/ribbon-dynamic.js" async="async"></script>
+    
+    
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/miku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+
+</html>

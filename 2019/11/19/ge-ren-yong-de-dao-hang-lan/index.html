@@ -1,0 +1,997 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="个人用的导航栏, 书鱼">
+    <meta name="description" content="安全资源平台CTFWiki先知社区Sec-Newspaper.seebugfreebuf知道创宇洞悉漏洞安全课漏洞银行看雪论坛看雪学院渗透师导航乌云镜像国家信息安全漏洞库教育行业漏洞报告平台0day5漏洞时代网络尖刀
+
+CTF题目
+Pwnh">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>个人用的导航栏 | 书鱼</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    
+    <script src="/libs/jquery/jquery.min.js"></script>
+    
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper head-container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">书鱼</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>起居注</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>书鱼是谁</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>快来膜大佬</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>私密相册</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">书鱼</div>
+        <div class="logo-desc">
+            
+            他浑身都是弱点，简直一无是处，但他靠着自己的力量一步步克服，最终成为了火影
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			起居注
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			书鱼是谁
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			快来膜大佬
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			私密相册
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/17.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        个人用的导航栏
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E5%AF%BC%E8%88%AA%E6%A0%8F/">
+                                <span class="chip bg-color">导航栏</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E5%AF%BC%E8%88%AA%E6%A0%8F/" class="post-category">
+                                导航栏
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2019-11-19
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    756
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    2 分
+                </div>
+                
+				
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+            
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h3 id="安全资源平台"><a href="#安全资源平台" class="headerlink" title="安全资源平台"></a>安全资源平台</h3><p><a href="https://wiki.x10sec.org/" target="_blank" rel="noopener">CTFWiki</a><br><a href="https://xz.aliyun.com/" target="_blank" rel="noopener">先知社区</a><br><a href="https://wiki.ioin.in/" target="_blank" rel="noopener">Sec-News</a><br><a href="https://paper.seebug.org/744/" target="_blank" rel="noopener">paper.seebug</a><br><a href="https://www.freebuf.com/" target="_blank" rel="noopener">freebuf</a><br><a href="https://www.seebug.org/" target="_blank" rel="noopener">知道创宇洞悉漏洞</a><br><a href="https://www.anquanke.com/" target="_blank" rel="noopener">安全课</a><br><a href="https://skills.bugbank.cn/" target="_blank" rel="noopener">漏洞银行</a><br><a href="https://bbs.pediy.com/" target="_blank" rel="noopener">看雪论坛</a><br><a href="https://www.kanxue.com/chm.htm" target="_blank" rel="noopener">看雪学院</a><br><a href="https://www.shentoushi.top/" target="_blank" rel="noopener">渗透师导航</a><br><a href="http://www.anquan.us/" target="_blank" rel="noopener">乌云镜像</a><br><a href="http://www.cnnvd.org.cn/" target="_blank" rel="noopener">国家信息安全漏洞库</a><br><a href="https://src.sjtu.edu.cn/" target="_blank" rel="noopener">教育行业漏洞报告平台</a><br><a href="http://0day5.com/" target="_blank" rel="noopener">0day5漏洞时代</a><br><a href="https://www.1aq.com/?sc=a" target="_blank" rel="noopener">网络尖刀</a></p>
+<hr>
+<h3 id="CTF题目"><a href="#CTF题目" class="headerlink" title="CTF题目"></a>CTF题目</h3><ul>
+<li>Pwn<br><a href="http://pwnable.kr/" target="_blank" rel="noopener">http://pwnable.kr/</a><br><a href="https://pwnable.tw/challenge/" target="_blank" rel="noopener">https://pwnable.tw/challenge/</a><br><a href="https://github.com/bash-c/pwn_repo" target="_blank" rel="noopener">https://github.com/bash-c/pwn_repo</a></li>
+<li>Web<br><a href="https://github.com/Audi-1/sqli-labs" target="_blank" rel="noopener">https://github.com/Audi-1/sqli-labs</a><br><a href="https://github.com/c0ny1/upload-labs" target="_blank" rel="noopener">https://github.com/c0ny1/upload-labs</a><br><a href="https://github.com/CTFTraining/CTF_WEB_SOURCE" target="_blank" rel="noopener">https://github.com/CTFTraining/CTF_WEB_SOURCE</a><br><a href="https://github.com/hongriSec/Web-Security-Attack" target="_blank" rel="noopener">https://github.com/hongriSec/Web-Security-Attack</a><br><a href="https://github.com/hongriSec/PHP-Audit-Labs" target="_blank" rel="noopener">https://github.com/hongriSec/PHP-Audit-Labs</a><br><a href="https://github.com/80vul/phpcodz" target="_blank" rel="noopener">https://github.com/80vul/phpcodz</a><br><a href="http://xss-quiz.int21h.jp/" target="_blank" rel="noopener">http://xss-quiz.int21h.jp/</a></li>
+<li>刷题平台<br><a href="https://www.ichunqiu.com/battalion" target="_blank" rel="noopener">i春秋竞赛训练营</a><br><a href="https://buuoj.cn/" target="_blank" rel="noopener">https://buuoj.cn/</a><br><a href="https://www.jarvisoj.com/challenges" target="_blank" rel="noopener">https://www.jarvisoj.com/challenges</a><br><a href="https://ctf.bugku.com/" target="_blank" rel="noopener">https://ctf.bugku.com/</a></li>
+<li>wp和复现<br><a href="https://github.com/Mochazz/ThinkPHP-Vuln" target="_blank" rel="noopener">关于ThinkPHP框架的历史漏洞分析集合</a><br><a href="https://github.com/susers/Writeups" target="_blank" rel="noopener">https://github.com/susers/Writeups</a><br><a href="https://www.ctfwp.com/articals/all.html" target="_blank" rel="noopener">https://www.ctfwp.com/articals/all.html</a><br><a href="https://github.com/p4-team/ctf" target="_blank" rel="noopener">https://github.com/p4-team/ctf</a><br><a href="https://github.com/ctfs/write-ups-2017" target="_blank" rel="noopener">https://github.com/ctfs/write-ups-2017</a><br><a href="https://github.com/CTFTraining/CTFTraining" target="_blank" rel="noopener">https://github.com/CTFTraining/CTFTraining</a><br><a href="https://github.com/buptchk/webshell" target="_blank" rel="noopener">webshell收集项目</a><br><a href="https://github.com/hebtuerror404/CTF_competition_warehouse_2019" target="_blank" rel="noopener">CTF比赛题目仓库-2019</a><br><a href="https://xz.aliyun.com/u/10394" target="_blank" rel="noopener">红日安全https://xz.aliyun.com/u/10394</a><br><a href="https://github.com/balsn/ctf_writeup" target="_blank" rel="noopener">https://github.com/balsn/ctf_writeup</a><br><a href="https://github.com/Kit4y/Sql-Injection" target="_blank" rel="noopener">sqlilabs-wp</a><br><a href="https://ctfbook.ph0en1x.com/" target="_blank" rel="noopener">https://ctfbook.ph0en1x.com/</a></li>
+</ul>
+<hr>
+<h3 id="渗透学习的资料"><a href="#渗透学习的资料" class="headerlink" title="渗透学习的资料"></a>渗透学习的资料</h3><p><a href="https://github.com/az0ne/Permeable" target="_blank" rel="noopener">https://github.com/az0ne/Permeable</a><br><a href="https://github.com/uknowsec/Active-Directory-Pentest-Notes" target="_blank" rel="noopener">https://github.com/uknowsec/Active-Directory-Pentest-Notes</a><br><a href="https://github.com/coffeehb/Some-PoC-oR-ExP" target="_blank" rel="noopener">各种漏洞poc、Exp的收集或编写</a><br><a href="http://www.yunsee.cn/" target="_blank" rel="noopener">云悉资产-子域名，ip等信息收集</a><br><a href="https://www.t00ls.net/" target="_blank" rel="noopener">https://www.t00ls.net/</a><br><a href="https://github.com/ethicalhack3r/DVWA" target="_blank" rel="noopener">https://github.com/ethicalhack3r/DVWA</a><br><a href="https://github.com/l3m0n/pentest_study" target="_blank" rel="noopener">从零开始内网渗透学习</a><br><a href="https://github.com/yanxiu0614/subdomain3" target="_blank" rel="noopener">子域名收集工具</a></p>
+<hr>
+<h3 id="CTF工具"><a href="#CTF工具" class="headerlink" title="CTF工具"></a>CTF工具</h3><p><a href="http://ctf.ssleye.com/" target="_blank" rel="noopener">加解密工具大全</a><br><a href="https://pmd5.com/" target="_blank" rel="noopener">Md5在线解密</a><br><a href="https://tool.bugku.com/brainfuck/?wafcloud=1" target="_blank" rel="noopener">brainfuck</a><br><a href="https://www.bugku.com/tools/jsfuck/" target="_blank" rel="noopener">jsfuck</a><br><a href="https://www.qqxiuzi.cn/bianma/base.php" target="_blank" rel="noopener">base16-32-64</a><br><a href="https://tool.bugku.com/safe/hash.php" target="_blank" rel="noopener">hash计算</a><br><a href="https://tool.bugku.com/whois/" target="_blank" rel="noopener">whois</a><br><a href="http://factordb.com/index.php" target="_blank" rel="noopener">大整数分解</a><br><a href="https://github.com/lijiejie/GitHack" target="_blank" rel="noopener">GitHack</a><br><a href="https://github.com/WangYihang/GitHacker" target="_blank" rel="noopener">GitHacker（可恢复完整 Git 仓库）</a><br><a href="https://github.com/maurosoria/dirsearch" target="_blank" rel="noopener">dirsearch</a><br><a href="https://github.com/kost/dvcs-ripper" target="_blank" rel="noopener">.hg 文件恢复</a><br><a href="https://github.com/lijiejie/ds_store_exp" target="_blank" rel="noopener">ds_store_exp</a><br><a href="https://github.com/admintony/svnExploit" target="_blank" rel="noopener">svnExploit</a><br><a href="https://github.com/sqlmapproject/sqlmap" target="_blank" rel="noopener">sqlmap</a><br><a href="https://github.com/guyoung/CaptfEncoder" target="_blank" rel="noopener">CaptfEncoder跨平台网络安全工具套件</a><br><a href="https://github.com/Kit4y/fuzzdb-and-tools" target="_blank" rel="noopener">一些常用的木马-文件上传题目的一些小工具</a><br><a href="https://3v4l.org/" target="_blank" rel="noopener">在线运行各版本的php</a><br><a href="https://tool.lu/pyc/?utm_source=qdan.me" target="_blank" rel="noopener">pytho在线n反编译</a></p>
+<hr>
+<h3 id="程序员用工具"><a href="#程序员用工具" class="headerlink" title="程序员用工具"></a>程序员用工具</h3><p><a href="http://www.bejson.com/othertools/regex/" target="_blank" rel="noopener">在线正则</a><br><a href="http://www.jsons.cn/phpformat/" target="_blank" rel="noopener">代码格式工具</a><br><a href="http://tools.jb51.net/code/js" target="_blank" rel="noopener">js代码格式工具</a><br><a href="http://www.yishimei.cn/network/319.html" target="_blank" rel="noopener">KMS工具</a><br><a href="http://www.planetb.ca/syntax-highlight-word" target="_blank" rel="noopener">word文档中的代码高亮</a><br><a href="http://coolaf.com/tool/md" target="_blank" rel="noopener">在线markdown转word、pdf、html</a><br><a href="http://patorjk.com/software/taag/#p=display&f=Graffiti&t=Type%20Something%20" target="_blank" rel="noopener">生成banner</a><br><a href="https://crxdl.com/" target="_blank" rel="noopener">谷歌浏览器插件下载</a><br><a href="https://demo.codimd.org/" target="_blank" rel="noopener">共享面板https://demo.codimd.org/</a><br><a href="https://www.wondercv.com/cvs" target="_blank" rel="noopener">超级简历</a><br><a href="https://www.processon.com/" target="_blank" rel="noopener">在线制图</a></p>
+<hr>
+<h3 id="多媒体工具"><a href="#多媒体工具" class="headerlink" title="多媒体工具"></a>多媒体工具</h3><p><a href="https://www.aconvert.com/cn/audio/" target="_blank" rel="noopener">在线多媒体格式转换</a><br><a href="https://cli.im/" target="_blank" rel="noopener">生成二维码</a><br><a href="https://www.enterdesk.com/" target="_blank" rel="noopener">回车桌面高清壁纸</a><br><a href="http://desk.zol.com.cn/" target="_blank" rel="noopener">桌面壁纸</a><br><a href="https://www.zdqx.com/" target="_blank" rel="noopener">精品壁纸</a><br><a href="https://v.pnote.net/" target="_blank" rel="noopener">获得视频的每一帧</a><br><a href="http://www.ypppt.com/" target="_blank" rel="noopener">免费的ppt模板</a><br><a href="http://www.jiniannet.com/Page/allcolor" target="_blank" rel="noopener">在线从图片中颜色提取</a><br><a href="http://xiaohudie.net/RGB.html" target="_blank" rel="noopener">rgb取色</a><br><a href="http://q1.qlogo.cn/g?b=qq&nk=381382770&s=640" target="_blank" rel="noopener">获得qq头像</a><br><a href="https://www.jinrishici.com/#" target="_blank" rel="noopener">每日一句诗</a><br><a href="https://shici.store/huajianji/www/list/%E5%AE%8B%E8%AF%8D%E4%B8%89%E7%99%BE%E9%A6%96.html" target="_blank" rel="noopener">宋词三百首</a><br><a href="https://crashcourse.club/category/" target="_blank" rel="noopener">精品翻译课程</a><br><a href="https://github.com/yunweb/cool" target="_blank" rel="noopener">互联网上收集的各种炫酷特效源码</a></p>
+<hr>
+<h3 id="一些文档教程"><a href="#一些文档教程" class="headerlink" title="一些文档教程"></a>一些文档教程</h3><p><a href="https://www.runoob.com/" target="_blank" rel="noopener">菜鸟教程</a><br><a href="https://mybatis.org/mybatis-3/zh/index.html" target="_blank" rel="noopener">mybatis官方教程</a><br><a href="https://accp.site/categories/%E7%BC%96%E7%A8%8B/Java/SpringBoot/" target="_blank" rel="noopener">springboot教程-非官方</a><br><a href="https://spring.io/projects/spring-framework" target="_blank" rel="noopener">spring官方教程</a><br><a href="https://docs.djangoproject.com/zh-hans/2.2/" target="_blank" rel="noopener">django中文文档</a><br><a href="https://dormousehole.readthedocs.io/en/latest/quickstart.html#id2" target="_blank" rel="noopener">flask中文文档</a><br><a href="https://cli.vuejs.org/zh/guide/" target="_blank" rel="noopener">vue-cli官方教程</a><br><a href="https://github.com/PanJiaChen/vue-admin-template" target="_blank" rel="noopener">vue-admin仓库</a></p>
+<hr>
+<h3 id="一些有趣的笔记"><a href="#一些有趣的笔记" class="headerlink" title="一些有趣的笔记"></a>一些有趣的笔记</h3><p><a href="https://github.com/ZXZxin/ZXBlog" target="_blank" rel="noopener">记录各种学习笔记(算法、Java、数据库、并发……)</a><br><a href="https://github.com/0voice/interview_internal_reference" target="_blank" rel="noopener">2019年最新总结，阿里，腾讯，百度，美团，头条等技术面试题目</a><br><a href="https://github.com/Leezj9671/Pentest_Interview" target="_blank" rel="noopener">个人准备渗透测试和安全面试的经验之谈</a><br><a href="https://github.com/Dollarsss/sec-interview" target="_blank" rel="noopener">信息安全面试题汇总</a><br><a href="https://github.com/zhaoweiho/web-sec-interview/blob/master/README_CN.md" target="_blank" rel="noopener">信息安全行业从业者(Web安全/渗透测试方向)面试题目</a><br><a href="https://github.com/404notf0und/My-Security-Algorithm-Architecture" target="_blank" rel="noopener">404 Not Found的安全算法知识体系</a><br><a href="https://github.com/FeeiCN/SecurityInterviewQuestions" target="_blank" rel="noopener">网络信息安全从业者面试指南</a></p>
+<hr>
+<h3 id="一些有趣的东西"><a href="#一些有趣的东西" class="headerlink" title="一些有趣的东西"></a>一些有趣的东西</h3><p><a href="https://ftp.a2os.club/" target="_blank" rel="noopener">a20s网盘</a><br><a href="https://github.com/phith0n/Mind-Map" target="_blank" rel="noopener">脑图收集</a><br><a href="https://github.com/it-ebooks/it-ebooks-archive/blob/master/2018.md" target="_blank" rel="noopener">电子书下载</a><br><a href="https://github.com/404notf0und/Security-Data-Analysis-and-Visualization" target="_blank" rel="noopener">2018-2020青年安全圈-活跃技术博主/博客</a><br><a href="https://github.com/Kit4y/HtmlPageToMarkDown" target="_blank" rel="noopener">网页转成markdown</a><br><a href="https://github.com/riusksk/secbook/blob/master/README.md" target="_blank" rel="noopener">信息安全从业者书单推荐</a><br><a href="https://github.com/Kit4y/BookCorner" target="_blank" rel="noopener">nuaa-BookCorner</a><br><a href="https://github.com/haoel/leetcode" target="_blank" rel="noopener">leetcode示例</a><br><a href="https://github.com/shuoGG1239/Image2Text" target="_blank" rel="noopener">截屏获得文字内容</a><br><a href="http://mirrors.163.com/" target="_blank" rel="noopener">http://mirrors.163.com/</a><br><a href="https://www.bt.cn/btcode.html" target="_blank" rel="noopener">https://www.bt.cn/btcode.html</a></p>
+
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://kit4y.github.io" rel="external nofollow noreferrer">st4ck</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://kit4y.github.io/2019/11/19/ge-ren-yong-de-dao-hang-lan/">https://kit4y.github.io/2019/11/19/ge-ren-yong-de-dao-hang-lan/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="https://kit4y.github.io" target="_blank">st4ck</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/%E5%AF%BC%E8%88%AA%E6%A0%8F/">
+                                    <span class="chip bg-color">导航栏</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2019/11/19/web-shi-fu-men-de-bo-ke-shou-ji/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="web师傅们的博客收集">
+                        
+                        <span class="card-title">web师傅们的博客收集</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            坏男孩
+Sky’s blog
+PaperTiger’s blog
+BUUCTF的wp(随时弃坑) | Mrkaixin自留地
+ctf中常见的PHP漏洞小结 - 先知社区
+代码审计练习 · Ywc’s blog
+赵 – 为心中的美好而战
+SU
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2019-11-19
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E5%92%AA%E5%92%AA/" class="post-category">
+                                    咪咪
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Web/">
+                        <span class="chip bg-color">Web</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2019/11/19/cheng-chang-de-lu-shang-ou-er-mian-huai-guo-wang-cong-bu-chen-ni-yu-bei-shang/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="成长的路上,偶尔缅怀过往,从不沉溺于悲伤">
+                        
+                        <span class="card-title">成长的路上,偶尔缅怀过往,从不沉溺于悲伤</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            有咪咪~所以密码是我生日~8个数字
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-11-19
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E4%B8%96%E9%97%B4%E6%B8%A9%E6%9F%94/" class="post-category">
+                                    世间温柔
+                                </a>
+                            
+                            <a href="/categories/%E4%B8%96%E9%97%B4%E6%B8%A9%E6%9F%94/%E5%92%AA%E5%92%AA/" class="post-category">
+                                    咪咪
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E6%9C%89%E5%92%AA%E5%92%AA/">
+                        <span class="chip bg-color">有咪咪</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: 书鱼<br />'
+            + '文章作者: st4ck<br />'
+            + '文章链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归书鱼所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+    
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">年份</span>
+            <a href="https://kit4y.github.io" target="_blank">st4ck</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">177.2k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    window.setTimeout("siteTime()", 1000);
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2019";
+                    var startMonth = "6";
+                    var startDate = "28";
+                    var startHour = "0";
+                    var startMinute = "0";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/Kit4y" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:381382770@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=381382770" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 381382770" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script type="text/javascript" src="/libs/background/ribbon-dynamic.js" async="async"></script>
+    
+    
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/miku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+
+</html>

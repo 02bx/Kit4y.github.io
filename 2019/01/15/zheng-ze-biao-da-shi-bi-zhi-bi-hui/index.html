@@ -1,0 +1,1104 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="正则表达式必知必会&amp;&amp;python-re模块简单使用, 书鱼">
+    <meta name="description" content="正则表达式还是要会的，不然你连受处分得资格都没有（无意调侃，莫怪罪。虽然说这样的工具类的东西，知道1，其他的要什么再去查博客啦，文档啦什么的就行，但是如果你觉得有必要，系统性的过一遍，收获还是蛮大的，突然又回想起暑假PM工作那问会不会Lin">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>正则表达式必知必会&amp;&amp;python-re模块简单使用 | 书鱼</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    
+    <script src="/libs/jquery/jquery.min.js"></script>
+    
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper head-container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">书鱼</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>起居注</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>书鱼是谁</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>快来膜大佬</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>私密相册</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">书鱼</div>
+        <div class="logo-desc">
+            
+            他浑身都是弱点，简直一无是处，但他靠着自己的力量一步步克服，最终成为了火影
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			起居注
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			书鱼是谁
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			快来膜大佬
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			私密相册
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/16.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        正则表达式必知必会&amp;&amp;python-re模块简单使用
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
+                                <span class="chip bg-color">正则表达式</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/" class="post-category">
+                                正则表达式必知必会
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2019-01-15
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    2.3k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    8 分
+                </div>
+                
+				
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+            
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h4 id="正则表达式还是要会的，不然你连受处分得资格都没有（无意调侃，莫怪罪。虽然说这样的工具类的东西，知道1，其他的要什么再去查博客啦，文档啦什么的就行，但是如果你觉得有必要，系统性的过一遍，收获还是蛮大的，突然又回想起暑假PM工作那问会不会Linux-shell编程，其实之前是看过的，但是没有系统的去学，突然要你写起来就非常僵硬，还是咕咕咕了"><a href="#正则表达式还是要会的，不然你连受处分得资格都没有（无意调侃，莫怪罪。虽然说这样的工具类的东西，知道1，其他的要什么再去查博客啦，文档啦什么的就行，但是如果你觉得有必要，系统性的过一遍，收获还是蛮大的，突然又回想起暑假PM工作那问会不会Linux-shell编程，其实之前是看过的，但是没有系统的去学，突然要你写起来就非常僵硬，还是咕咕咕了" class="headerlink" title="正则表达式还是要会的，不然你连受处分得资格都没有（无意调侃，莫怪罪。虽然说这样的工具类的东西，知道1，其他的要什么再去查博客啦，文档啦什么的就行，但是如果你觉得有必要，系统性的过一遍，收获还是蛮大的，突然又回想起暑假PM工作那问会不会Linux shell编程，其实之前是看过的，但是没有系统的去学，突然要你写起来就非常僵硬，还是咕咕咕了"></a>正则表达式还是要会的，不然你连受处分得资格都没有（无意调侃，莫怪罪。虽然说这样的工具类的东西，知道1，其他的要什么再去查博客啦，文档啦什么的就行，但是如果你觉得有必要，系统性的过一遍，收获还是蛮大的，突然又回想起暑假PM工作那问会不会Linux shell编程，其实之前是看过的，但是没有系统的去学，突然要你写起来就非常僵硬，还是咕咕咕了</h4><h3 id="本书主要内容"><a href="#本书主要内容" class="headerlink" title="本书主要内容"></a>本书主要内容</h3><p><img src="1.png" alt=""></p>
+<a id="more"></a>
+<p>前人栽树后人乘凉，前人画图后人观赏<br>（意思就是图是盗来的（读书人怎么能叫盗呢，ε=ε=ε=┏(゜ロ゜;)┛逃。</p>
+<h4 id="第一章、入门"><a href="#第一章、入门" class="headerlink" title="第一章、入门"></a>第一章、入门</h4><p>正则表达式（regular expression，简称 regex）是文本处理方面最强大的工具之一。正则表达式语言用来构造正则表达式（最终构造出来的字符串就称为正则表达式），正则表达式用来完成搜索或替换操作。实际的正则表达式经常被简称为模式，它们其实是一些由字符构成的字符串。这些字符可以是普通字符（纯文本）或元字符（有特殊含义的特殊字符）。<br>推荐一个工具Regester，本地测试的小工具<br><a href="http://deerchao.net/tools/regester/index.htm" target="_blank" rel="noopener">Regester传送门</a></p>
+<h4 id="第二章、匹配单个字符"><a href="#第二章、匹配单个字符" class="headerlink" title="第二章、匹配单个字符"></a>第二章、匹配单个字符</h4><p>1.匹配纯文本：  </p>
+<p>文本：Hello , my name is Ben. Please visit my website at <a href="http://www.forta.com/" target="_blank" rel="noopener">http://www.forta.com/</a> .</p>
+<p>正则表达式：Ben</p>
+<p>结果：Hello , my name is Ben. Please visit my website at <a href="http://www.forta.com/" target="_blank" rel="noopener">http://www.forta.com/</a> .</p>
+<p>2.匹配任意字符：</p>
+<p>“.”元字符可以匹配任何一个单个的字符。</p>
+<p>3.匹配特殊字符：</p>
+<p>“\”元字符可以对有含义的字符进行转义。</p>
+<p>小结：正则表达式经常被简称为模式，它们其实是一些由字符构成的字符串。这些字符可以是普通字符（纯文本）或元字符（特殊含义的字符）。“.”可以匹配任何字符。“\”用来对字符进行转义。</p>
+<h4 id="第三章、匹配一组字符"><a href="#第三章、匹配一组字符" class="headerlink" title="第三章、匹配一组字符"></a>第三章、匹配一组字符</h4><p>1.匹配多个字符中的某一个：</p>
+<p>“[”和“]”元字符定义一个字符集合。</p>
+<p>在使用“[”和“]”定义的字符集合里，这两个字符之间的所有字符都是该集合的组成部分，字符集合的匹配结果是能够与该集合里的任意一个成员相匹配的文本。</p>
+<p>2.利用字符集合区间：</p>
+<p>正则表达式提供了一个特殊的元字符，字符区间可以用“-”（连字符）来定义。</p>
+<p>字符区间：[A-Z]、[a-z]、[A-z]、[A-Za-z0-9]</p>
+<p>Ps：区间外为“-”本身，无需转义</p>
+<p>3.取非匹配：</p>
+<p>“^”元字符表明对一个字符集合进行取非匹配。</p>
+<p>取非：[^0-9]：匹配任何不是数字的字符</p>
+<p>小结：元字符“[”和“]”用来定义一个字符集合，其含义是必须匹配该集合里的字符之一。定义一个字符集合的具体做法有两种：一是把所有的字符都列举出来；二是利用元字符“-”以字符区间的方式给出。字符集合可以以元字符“^”来求非，这将把给定的字符集强行排除在匹配操作以外，除了该字符集合里的字符，其他字符都可匹配。</p>
+<h4 id="第四章、使用元字符"><a href="#第四章、使用元字符" class="headerlink" title="第四章、使用元字符"></a>第四章、使用元字符</h4><p>1.元字符：是在正则表达式里有特殊含义的字符。</p>
+<p>元字符分类：  ①匹配文字（例如“.”）</p>
+<p> ②正则表达式语法要求（例如“[”“]”）<br> <img src="2.png" alt=""><br> <img src="3.png" alt=""><br> <img src="4.png" alt=""><br> <img src="5.png" alt=""></p>
+<h4 id="第五章、重复匹配"><a href="#第五章、重复匹配" class="headerlink" title="第五章、重复匹配"></a>第五章、重复匹配</h4><p> 1.匹配一个或多个字符：</p>
+<p>“+”：匹配一个或多个字符或字符集合，不可匹配0个字符。</p>
+<p>Ps：一般来说，当在字符集合里使用“.”“+”这样的元字符时，被看做普通字符，无需转义。</p>
+<p>2.匹配零个或多个字符：</p>
+<p>“*”：匹配字符连续出现零次或多次的情况。</p>
+<p>3.匹配零个或一个字符：</p>
+<p>“？”：只能匹配一个字符或字符集合的零次或一次重复。</p>
+<p>4.匹配的重复次数：</p>
+<p>“{”“}”：在其中给出重复次数。</p>
+<p>{数字}：确切的数</p>
+<p>{小值，大值}：区间</p>
+<p>{小值， }：至少重复“小值”次。<br> <img src="6.png" alt=""></p>
+<h4 id="第六章、位置匹配"><a href="#第六章、位置匹配" class="headerlink" title="第六章、位置匹配"></a>第六章、位置匹配</h4><p> 1.边界限定符：<br>  <img src="7.png" alt=""><br>  ③分行匹配模式：“（?m）”为分行匹配模式，把行分隔符当一个字符串分隔符。</p>
+<h4 id="第七章、使用子表达式"><a href="#第七章、使用子表达式" class="headerlink" title="第七章、使用子表达式"></a>第七章、使用子表达式</h4><p>1.子表达式必须用“（”和“）”括起来。</p>
+<p>2.子表达式的嵌套：</p>
+<p>文本：Pinging hog.forta.com [12.159.46.200] with 32 bytes of data:</p>
+<p>正则表达式：(((\d{1,2})|(1\d{2})|(2[0-4]\d)|(25[0-5])).){3}((\d{1,2})|(1\d{2})|(2[0-4]\d)|(25[0-5]))</p>
+<p>结果：Pinging hog.forta.com [<strong>12.159.46.200</strong>] with 32 bytes of data:</p>
+<p>小结：子表达式的作用是把同一个表达式的各个相关部分组合在一起。用“(”“)”来定义。子表达式的常见用途包括：对重复次数元字符的作用对象作出精确的设定和控制、对“|”操作符的OR条件作出准确的定义。</p>
+<h4 id="第八章、回溯引用，前后一致匹配"><a href="#第八章、回溯引用，前后一致匹配" class="headerlink" title="第八章、回溯引用，前后一致匹配"></a>第八章、回溯引用，前后一致匹配</h4><p>1.子表达式的另一用途：定义回溯引用。</p>
+<p>2.“\1”是一个回溯引用，回溯引用指的是模式的后半部分引用在前半部分中定义的子表达式。</p>
+<p>Ps：“\0”用来表示整个正则表达式。</p>
+<p>文本：This is a block of of text,several words here are are repeated ,and and they should not be.</p>
+<p>正则表达式：[ ]+(\w+)[ ]+\1</p>
+<p>结果：This is a block of of text,several words here are are repeated ,and and they should not be.</p>
+<p>3.回溯引用在替换操作中的应用：</p>
+<p>替换操作需要用到两个正则表达式：搜索模式和替换模式。</p>
+<p>文本：Hello , <a href="mailto:ben@forta.com" target="_blank" rel="noopener">ben@forta.com</a> is my email address.</p>
+<p>正则表达式： (\w+[\w.]*@[\w.]+.\w+)</p>
+<p>替换：<A HREF = “mailto:$1”>$1</A></p>
+<p>结果：Hello , <A HREF = “mailto:ben@forta.com”> ben@forta.com</A> is my email address.<br><img src="8.png" alt=""></p>
+<h4 id="第九章、前后查找"><a href="#第九章、前后查找" class="headerlink" title="第九章、前后查找"></a>第九章、前后查找</h4><p>1.向前查找：指定了一个必须匹配但不在结果中返回的模式。</p>
+<p>从语法上来看，一个向前查找模式其实就是一个以“?=”开头的子表达式，需要匹配的文本跟在“=”的后面。</p>
+<p>“匹配和返回文本”：消费</p>
+<p>“只匹配不返回”：不消费</p>
+<p>向前查找（向后查找）匹配本身其实是有返回结果的，只是这个结果的字节长度永远为0而已。因此，前后查找操作有时也称为零宽度匹配操作。</p>
+<p>文本：</p>
+<pre><code>    http://www.forta.com/
+
+    https://mail.forta.com/
+
+    ftp://ftp.forta.com/</code></pre><p>正则表达式： .+(?=:)</p>
+<p>结果：<br><strong>http</strong></p>
+<p><strong>https</strong></p>
+<p>2.向后查找：“?&lt;=”元字符。</p>
+<p>文本：</p>
+<pre><code>    ABC01：$23.45
+
+    HGG42：$5.31
+
+    CFMX1：$899.00
+
+    XTC99：$69.96
+
+    Total items found: 4</code></pre><p>正则表达式：(?&lt;=$)[0-9.]+</p>
+<p>结果：<br>ABC01：$<strong>23.45</strong></p>
+<p>HGG42：$<strong>5.31</strong></p>
+<p>CFMX1：$<strong>899.00</strong></p>
+<p>XTC99：$<strong>69.96</strong></p>
+<p>Total items found: 4<br><img src="9.png" alt=""></p>
+<p>$30 for 100 apples, 50 oranges, and 60 pears. I saved $5 on this order . </p>
+<p>正则表达式：\b(?&lt;!$)\d+\b</p>
+<p>结果：I paid $30 for <strong>100</strong> apples, <strong>50</strong> oranges, and <strong>60</strong> pears. I saved $5 on this order . （匹配数量）</p>
+<p>小结：有了向后查找，可以对最终的匹配结果包含且只包含哪些内容作出更精确的控制。前后查找操作可以利用子表达式来指定文本匹配操作的发生位置，并收到只匹配不消费的效果。</p>
+<h4 id="第十章、-嵌入条件"><a href="#第十章、-嵌入条件" class="headerlink" title="第十章、 嵌入条件"></a>第十章、 嵌入条件</h4><p>1.正则表达式里的条件用“?”来定义。</p>
+<p>2.嵌入条件：①根据一个回溯引用来进行条件处理。</p>
+<p> ②根据一个前后查找来进行条件处理。</p>
+<p>3.回溯引用条件：</p>
+<p>?(1)：检查第一个回溯引用是否存在。</p>
+<p>文本：</p>
+<pre><code>     123-456-7890
+
+     (123)456-7890
+
+     (123)-456-7890
+
+     (123-456-7890
+
+     1234567890
+
+     123 456 7890</code></pre><p>正则表达式：(\()?\d{3}(?(1))|-)\d{3}-\d{4}</p>
+<p>结果：<br><strong>123-456-7890</strong></p>
+<p><strong>(123)456-7890</strong></p>
+<p>(123)-456-7890</p>
+<p>(123-456-7890</p>
+<p>1234567890</p>
+<p>123 456 7890</p>
+<p>4.前后查找条件:  (?(前后查找表达式))</p>
+<p>文本：</p>
+<pre><code>    11111
+
+    22222
+
+    33333-
+
+    44444-4444</code></pre><p>正则表达式：\d{5}(?(?=-)-\d{4})</p>
+<p>结果：<br><strong>11111</strong></p>
+<p><strong>22222</strong></p>
+<p>33333-</p>
+<p><strong>44444-4444</strong></p>
+<h3 id="简单的python正则表达式-re模块"><a href="#简单的python正则表达式-re模块" class="headerlink" title="简单的python正则表达式(re模块)"></a>简单的python正则表达式(re模块)</h3><p>1、一个网页的HTML源码。其中有一段</p>
+<pre><code>&lt;html&gt;&lt;body&gt;&lt;h1&gt;hello world&lt;h1&gt;&lt;/body&gt;&lt;/html&gt;</code></pre><p>你想要把这个hello world提取出来</p>
+<pre><code>import re
+
+key = r&quot;&lt;html&gt;&lt;body&gt;&lt;h1&gt;hello world&lt;h1&gt;&lt;/body&gt;&lt;/html&gt;&quot;#这段是你要匹配的文本
+p1 = r&quot;(?&lt;=&lt;h1&gt;).+?(?=&lt;h1&gt;)&quot;#这是我们写的正则表达式规则，你现在可以不理解啥意思
+pattern1 = re.compile(p1)#我们在编译这段正则表达式
+matcher1 = re.search(pattern1,key)#在源文本中搜索符合正则表达式的部分
+print matcher1.group(0)#打印出来</code></pre><p>2、既有http://开头的，又有https://开头的，我们怎么处理？</p>
+<pre><code>import re
+
+key = r&quot;http://www.nsfbuhwe.com and https://www.auhfisna.com&quot;#胡编乱造的网址，别在意
+p1 = r&quot;https*://&quot;#看那个星号！1
+pattern1 = re.compile(p1)
+print pattern1.findall(key)</code></pre><p>输出</p>
+<pre><code>[&#39;http://&#39;, &#39;https://&#39;]</code></pre><p>findall函数返回的总是正则表达式在字符串中所有匹配结果的列表</p>
+
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://kit4y.github.io" rel="external nofollow noreferrer">st4ck</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://kit4y.github.io/2019/01/15/zheng-ze-biao-da-shi-bi-zhi-bi-hui/">https://kit4y.github.io/2019/01/15/zheng-ze-biao-da-shi-bi-zhi-bi-hui/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="https://kit4y.github.io" target="_blank">st4ck</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
+                                    <span class="chip bg-color">正则表达式</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2019/01/23/mysql-bi-zhi-bi-hui/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="mysql必知必会">
+                        
+                        <span class="card-title">mysql必知必会</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            一、目录（整体看一波这本书怎么讲的mysql）第一章——了解SQL第二章——MySQL简介第三章——使用MySQL第四章——检索数据第五章——排序检索数据第六章——过滤数据第七章——数据过滤第八章——用通配符进行过滤第九章——用正则表达式进
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2019-01-23
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Mysql%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/" class="post-category">
+                                    Mysql必知必会
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/mysql/">
+                        <span class="chip bg-color">mysql</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2019/01/13/csapp-you-shuang-ruo-zhuo-lai-yi-bian-zhi-xu-ni-nei-cun/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="CSAPP又双叒叕来一遍之虚拟内存">
+                        
+                        <span class="card-title">CSAPP又双叒叕来一遍之虚拟内存</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            本章还是比较肝的，说起虚拟内存想起了另外一个书《C++ primer plus》，大一寒假玩了一个月，唯独花了点时间看了这本书，印象最深的还是这本书讲了内存模型和名称空间，后悔啊大一上没看csapp，所以看的一脸懵逼，还没看懂，csapp这
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-01-13
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/CSAPP/" class="post-category">
+                                    CSAPP
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/">
+                        <span class="chip bg-color">虚拟内存</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: 书鱼<br />'
+            + '文章作者: st4ck<br />'
+            + '文章链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归书鱼所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+    
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">年份</span>
+            <a href="https://kit4y.github.io" target="_blank">st4ck</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">177.2k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    window.setTimeout("siteTime()", 1000);
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2019";
+                    var startMonth = "6";
+                    var startDate = "28";
+                    var startHour = "0";
+                    var startMinute = "0";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/Kit4y" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:381382770@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=381382770" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 381382770" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script type="text/javascript" src="/libs/background/ribbon-dynamic.js" async="async"></script>
+    
+    
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/miku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+
+</html>
