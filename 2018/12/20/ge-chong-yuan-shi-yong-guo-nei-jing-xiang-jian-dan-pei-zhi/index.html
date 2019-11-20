@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="各种源使用国内镜像简单配置, 书鱼">
+    <meta name="keywords" content="Ubuntu16环境配置-换源, 书鱼">
     <meta name="description" content="一、windows1、windows环境下 pip换国内镜像1、打开user目录，user目录可以通过win+R 然后添加 %APPDATA% (不区分大小写)
 
 2、直接在中创建一个pip目录，如：C:\Users\xx\pip，新建文件">
@@ -15,7 +15,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>各种源使用国内镜像简单配置 | 书鱼</title>
+    <title>Ubuntu16环境配置-换源 | 书鱼</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -233,13 +233,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/14.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        各种源使用国内镜像简单配置
+                        Ubuntu16环境配置-换源
                     </div>
                 </div>
             </div>
@@ -385,14 +385,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    561
+                    764
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    2 分
+                    3 分
                 </div>
                 
 				
@@ -454,7 +454,13 @@ sudo apt-get install gcc-multilib
 sudo apt-get install libc6:i386
 #64位系统跑32位程序
 pip install -i https://pypi.tuna.tsinghua.edu.cn/simple pwntools
-#pwntools</code></pre>
+#pwntools</code></pre><h3 id="3、显卡问题导致开机卡住"><a href="#3、显卡问题导致开机卡住" class="headerlink" title="3、显卡问题导致开机卡住"></a>3、显卡问题导致开机卡住</h3><p>安装Linux 双系统（一般是Nvidia显卡，1080p加核显的电脑）时，经常会出现卡在安装logo的问题，这种原因一般是由于linux发行商收录的nouveau 的开源显卡的问题。针对这种情况，解决方案如下：<br>在进入grub安装界面的时候，在Install Ubuntu选项，按e,进入命令行模式，然后在quiet slash – 后面(也可能没有 – )，添加以下内容，然后按F10重新引导</p>
+<pre><code>acpi_osi=linux nomodeset</code></pre><p>然后能开机，但是每次重启都要来一次，所以解决方法是</p>
+<pre><code>sudo gedit /etc/modprobe.d/blacklist.conf</code></pre><p>在文本最后添加：（禁用nouveau第三方驱动，之后也不需要改回来）</p>
+<pre><code>blacklist nouveau
+options nouveau modeset=0</code></pre><p>然后执行：</p>
+<pre><code>sudo update-initramfs -u</code></pre><p>即可</p>
+
             </div>
             <hr/>
 
@@ -840,7 +846,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">171.7k</span>&nbsp;字
+                class="white-color">171.9k</span>&nbsp;字
             
             
             
