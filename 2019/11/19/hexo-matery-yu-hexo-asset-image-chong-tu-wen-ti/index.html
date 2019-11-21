@@ -389,7 +389,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    605
+                    612
                 </div>
                 
 
@@ -428,7 +428,7 @@
 <p>由于hexo3版本后对很多插件支持有问题，hexo-asset-image插件在处理data.permalink链接时出现路径错误，把年月去掉了，导致最后生成的路径为%d/xxx/xxx需要对其做兼容处理。通过判断当前版本是否等于3的版本做不同的路径分割。<br>反正和matery主题冲突了-我专门用了一个干净的环境也是一样的。</p>
 <h4 id="网上说改hexo-asset-image中的源码"><a href="#网上说改hexo-asset-image中的源码" class="headerlink" title="网上说改hexo-asset-image中的源码"></a>网上说改hexo-asset-image中的源码</h4><p>改来改去确一直不生效，你说气不气</p>
 <p><img src="5.jpg" alt="img"></p>
-<h3 id="我的办法"><a href="#我的办法" class="headerlink" title="我的办法"></a>我的办法</h3><p><del>这个插件中暑了，不如我们</del><br><code>npm install hexo-asset-image –save</code><br>看看会发生啥<br>其实总的来说是正常的，只是url重复了，比如<br>我在markdown中写<code>![](hexo-matery与hexo-asset-image冲突问题/5.jpg)</code><br>生成的url是<code>/hexo-matery与hexo-asset-image冲突问题/hexo-matery与hexo-asset-image冲突问题/5.jpg</code><br>!!!!居然重复了一遍<br>纠结怎么改插件，不如把所有的<code>![]({文件夹名}/x.jpg)</code>改成<code>![](x.jpg)</code>，虽然预览很恶心，但是hexo生成后没问题</p>
+<h3 id="我的办法"><a href="#我的办法" class="headerlink" title="我的办法"></a>我的办法</h3><p><del>这个插件中暑了，不如我们</del>嗯嗯，卸载这个插件<br><code>npm uninstall hexo-asset-image</code><br>看看会发生啥<br>其实总的来说是正常的，只是url重复了，比如<br>我在markdown中写<code>![](hexo-matery与hexo-asset-image冲突问题/5.jpg)</code><br>生成的url是<code>/hexo-matery与hexo-asset-image冲突问题/hexo-matery与hexo-asset-image冲突问题/5.jpg</code><br>!!!!居然重复了一遍<br>纠结怎么改插件，不如把所有的<code>![]({文件夹名}/x.jpg)</code>改成<code>![](x.jpg)</code>，虽然预览很恶心，但是hexo生成后没问题</p>
 <h3 id="写脚本"><a href="#写脚本" class="headerlink" title="写脚本"></a>写脚本</h3><p>emm，终于觉得没白学python,一般我自己之前写了2中插入图片的语法，一种是<code>![]({文件夹名}/x.jpg)</code>,一种是<code>src=&quot;{文件夹啊名}/xx.jpg&quot;</code>，所以通用脚本这样的</p>
 <pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true"># -- coding:utf-8 </span>
 <span class="token keyword">import</span> os
@@ -840,7 +840,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">171.9k</span>&nbsp;字
+                class="white-color">172k</span>&nbsp;字
             
             
             
