@@ -583,7 +583,16 @@ apache重新启动命令：
 如果apache安装成为linux的服务的话，可以用以下命令操作：
 service httpd start 启动
 service httpd restart 重新启动
-service httpd stop 停止服务</code></pre>
+service httpd stop 停止服务</code></pre><h4 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h4><ol start="2">
+<li>备份<pre><code>[root@localhost ~]# cd /var/lib/mysql (进入到MySQL库目录，根据自己的MySQL的安装情况调整目录)
+[root@localhost mysql]# mysqldump -u root -p Test&gt;Test0809.sql，输入密码即可。</code></pre></li>
+<li>还原<br>法一：<pre><code>[root@localhost ~]# mysql -u root -p 回车，输入密码，进入MySQL的控制台&quot;mysql&gt;&quot;，输入命令&quot;show databases；&quot;。</code></pre></li>
+</ol>
+<p>看看有些什么数据库；</p>
+<pre><code>建立你要还原的数据库，输入&quot;create database voice；&quot;，切换到刚建立的数据库，输入&quot;use voice；&quot;，回车；导入数据，输入&quot;source voice.sql；&quot;，回车，开始导入，再次出现&quot;mysql&gt;&quot;并且没有提示错误即还原成功。
+[root@localhost ~]# cd /var/lib/mysql (进入到MySQL库目录，根据自己的MySQL的安装情况调整目录)
+[root@localhost mysql]# mysql -u root -p Test&lt;Test0809.sql，输入密码即可（将要恢复的数据库文件放到服务器的某个目录下，并进入这个目录执行以上命令|）。
+moodle_bak.sql是需要恢复的文件名</code></pre>
             </div>
             <hr/>
 
