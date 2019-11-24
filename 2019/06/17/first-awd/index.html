@@ -383,14 +383,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.1k
+                    2.2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    4 分
+                    9 分
                 </div>
                 
 				
@@ -493,7 +493,7 @@ ip_file<span class="token punctuation">.</span>close<span class="token punctuati
 <span class="token function">waf</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
 <span class="token delimiter">?></span></code></pre>
 <p>然后你在其他文件加上<code>require_once(&#39;waf.php&#39;);</code>也可以拿一下命令所有php加上,源码和waf目录自己灵活一点变化</p>
-<pre class=" language-shell"><code class="language-shell">sudo find /var/www/html/<path> -type f -path "*.php" | xargs sed -i "s/<?php/<?php\nrequire_once('\/tmp\/waf.php');\n/g"</code></pre>
+<p><code>sudo find /var/www/html/&lt;path&gt; -type f -path &quot;*.php&quot; | xargs sed -i &quot;s/&lt;?php/&lt;?php\nrequire_once(&#39;\/tmp\/waf.php&#39;);\n/g&quot;</code></p>
 <p>想象中是看别人的流量然后构造payload攻击其他人<br>现实情况是，压根没几个人访问过我们的网站（估计是fix太狠了</p>
 <h5 id="6、当你能构造padload就可以批量攻击其他人了，不管别人修没修，从之前扫到的ip地址内读ip出来，打一下就完事了，处理好报错就行-比如请求的timeout设置小一点，不会那么卡"><a href="#6、当你能构造padload就可以批量攻击其他人了，不管别人修没修，从之前扫到的ip地址内读ip出来，打一下就完事了，处理好报错就行-比如请求的timeout设置小一点，不会那么卡" class="headerlink" title="6、当你能构造padload就可以批量攻击其他人了，不管别人修没修，从之前扫到的ip地址内读ip出来，打一下就完事了，处理好报错就行,比如请求的timeout设置小一点，不会那么卡"></a>6、当你能构造padload就可以批量攻击其他人了，不管别人修没修，从之前扫到的ip地址内读ip出来，打一下就完事了，处理好报错就行,比如请求的timeout设置小一点，不会那么卡</h5><pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> sys
 <span class="token keyword">import</span> requests
@@ -974,7 +974,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">172.2k</span>&nbsp;字
+                class="white-color">173.3k</span>&nbsp;字
             
             
             
