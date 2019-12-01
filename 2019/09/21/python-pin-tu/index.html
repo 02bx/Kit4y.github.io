@@ -387,14 +387,14 @@ os.path.getatime(f">
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    362
+                    534
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    2 分
                 </div>
                 
 				
@@ -451,6 +451,46 @@ target <span class="token operator">=</span> Image<span class="token punctuation
                                  width<span class="token operator">*</span><span class="token punctuation">(</span>col <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span> height<span class="token operator">*</span><span class="token punctuation">(</span>i<span class="token operator">//</span>column <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>   
 target<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
 <p><img src="2.png" alt=""><br>Orz</p>
+<h3 id="2019121"><a href="#2019121" class="headerlink" title="2019121"></a>2019121</h3><p>又出现了，这回要自己改一下长度和后缀，容易改乱了</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> os
+<span class="token keyword">from</span> PIL <span class="token keyword">import</span> Image
+
+path <span class="token operator">=</span> <span class="token string">"./result/"</span>
+<span class="token keyword">def</span> <span class="token function">get_file_list</span><span class="token punctuation">(</span>file_path<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    dir_list <span class="token operator">=</span> os<span class="token punctuation">.</span>listdir<span class="token punctuation">(</span>file_path<span class="token punctuation">)</span>
+    <span class="token keyword">if</span> <span class="token operator">not</span> dir_list<span class="token punctuation">:</span>
+        <span class="token keyword">return</span>
+    <span class="token keyword">else</span><span class="token punctuation">:</span>
+        dir_list <span class="token operator">=</span> sorted<span class="token punctuation">(</span>dir_list<span class="token punctuation">,</span>  key<span class="token operator">=</span><span class="token keyword">lambda</span> x<span class="token punctuation">:</span> os<span class="token punctuation">.</span>path<span class="token punctuation">.</span>getmtime<span class="token punctuation">(</span>os<span class="token punctuation">.</span>path<span class="token punctuation">.</span>join<span class="token punctuation">(</span>file_path<span class="token punctuation">,</span> x<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span>dir_list<span class="token punctuation">)</span>
+        <span class="token keyword">return</span> dir_list
+
+list_im <span class="token operator">=</span> get_file_list<span class="token punctuation">(</span>path<span class="token punctuation">)</span>
+column <span class="token operator">=</span> <span class="token number">6</span>
+row_num <span class="token operator">=</span> <span class="token number">6</span>
+width <span class="token operator">=</span> <span class="token number">134</span>
+height <span class="token operator">=</span> <span class="token number">134</span>
+
+<span class="token keyword">for</span> i <span class="token keyword">in</span> list_im<span class="token punctuation">:</span>
+    os<span class="token punctuation">.</span>rename<span class="token punctuation">(</span>path<span class="token operator">+</span>i<span class="token punctuation">,</span>path<span class="token operator">+</span>i<span class="token operator">+</span><span class="token string">'.png'</span><span class="token punctuation">)</span>
+    img <span class="token operator">=</span> Image<span class="token punctuation">.</span>open<span class="token punctuation">(</span>path<span class="token operator">+</span>i<span class="token operator">+</span><span class="token string">'.png'</span><span class="token punctuation">)</span>
+    out <span class="token operator">=</span> img<span class="token punctuation">.</span>resize<span class="token punctuation">(</span><span class="token punctuation">(</span>width<span class="token punctuation">,</span> height<span class="token punctuation">)</span><span class="token punctuation">,</span>Image<span class="token punctuation">.</span>ANTIALIAS<span class="token punctuation">)</span>
+    os<span class="token punctuation">.</span>remove<span class="token punctuation">(</span>path<span class="token operator">+</span>i<span class="token operator">+</span><span class="token string">'.png'</span><span class="token punctuation">)</span>
+    out<span class="token punctuation">.</span>save<span class="token punctuation">(</span>path<span class="token operator">+</span>i<span class="token operator">+</span><span class="token string">'.png'</span><span class="token punctuation">,</span> <span class="token string">'png'</span><span class="token punctuation">)</span>
+
+
+
+imgs <span class="token operator">=</span> <span class="token punctuation">[</span>Image<span class="token punctuation">.</span>open<span class="token punctuation">(</span>path<span class="token operator">+</span>i<span class="token operator">+</span><span class="token string">'.png'</span><span class="token punctuation">)</span> <span class="token keyword">for</span> i <span class="token keyword">in</span> list_im<span class="token punctuation">]</span>
+target <span class="token operator">=</span> Image<span class="token punctuation">.</span>new<span class="token punctuation">(</span><span class="token string">'RGB'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>width<span class="token operator">*</span>column<span class="token punctuation">,</span> height<span class="token operator">*</span>row_num<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span>len<span class="token punctuation">(</span>list_im<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">if</span> i <span class="token operator">%</span> column <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">:</span>
+        end <span class="token operator">=</span> len<span class="token punctuation">(</span>list_im<span class="token punctuation">)</span> <span class="token keyword">if</span> i <span class="token operator">+</span> column <span class="token operator">></span> len<span class="token punctuation">(</span>list_im<span class="token punctuation">)</span> <span class="token keyword">else</span> i <span class="token operator">+</span> column 
+        <span class="token keyword">for</span> col<span class="token punctuation">,</span> image <span class="token keyword">in</span> enumerate<span class="token punctuation">(</span>imgs<span class="token punctuation">[</span>i<span class="token punctuation">:</span>i<span class="token operator">+</span>column<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            target<span class="token punctuation">.</span>paste<span class="token punctuation">(</span>image<span class="token punctuation">,</span> <span class="token punctuation">(</span>width<span class="token operator">*</span>col<span class="token punctuation">,</span> height<span class="token operator">*</span><span class="token punctuation">(</span>i<span class="token operator">//</span>column<span class="token punctuation">)</span><span class="token punctuation">,</span> 
+                                 width<span class="token operator">*</span><span class="token punctuation">(</span>col <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span> height<span class="token operator">*</span><span class="token punctuation">(</span>i<span class="token operator">//</span>column <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>   
+
+target<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre>
 
             </div>
             <hr/>
@@ -834,7 +874,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">173.3k</span>&nbsp;字
+                class="white-color">173.5k</span>&nbsp;字
             
             
             
