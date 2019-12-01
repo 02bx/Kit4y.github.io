@@ -412,21 +412,38 @@
 <li>预处理,生成 .i 的文件[预处理器cpp]</li>
 <li>将预处理后的文件不转换成汇编语言, 生成文件 .s [编译器egcs]</li>
 <li>有汇编变为目标代码(机器代码)生成 .o 的文件[汇编器as]</li>
-<li>连接目标代码, 生成可执行程序 [链接器ld]<h4 id="来看一下gcc常用选项："><a href="#来看一下gcc常用选项：" class="headerlink" title="来看一下gcc常用选项："></a>来看一下gcc常用选项：</h4><img src="gcc.PNG" alt=""><h4 id="现在我们有源文件hello-c，下面是一些gcc的使用示例："><a href="#现在我们有源文件hello-c，下面是一些gcc的使用示例：" class="headerlink" title="现在我们有源文件hello.c，下面是一些gcc的使用示例："></a>现在我们有源文件hello.c，下面是一些gcc的使用示例：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">gcc -E hello.c -o hello.i   对hello.c文件进行预处理，生成了hello.i 文件</span><br><span class="line">gcc -S hello.i -o hello.s    对预处理文件进行编译，生成了汇编文件</span><br><span class="line">gcc -c hello.s -o hello.o  对汇编文件进行编译，生成了目标文件</span><br><span class="line">gcc hello.o -o hello 对目标文件进行链接，生成可执行文件</span><br><span class="line">gcc hello.c -o hello 直接编译链接成可执行目标文件</span><br><span class="line">gcc -c  hello.c 或 gcc -c hello.c -o hello.o 编译生成可重定位目标文件</span><br><span class="line">gcc -Og -S hello.c  生成汇编</span><br></pre></td></tr></table></figure>
-<h2 id="二、GDB入门教程"><a href="#二、GDB入门教程" class="headerlink" title="二、GDB入门教程"></a>二、GDB入门教程</h2><h4 id="什么是GDB"><a href="#什么是GDB" class="headerlink" title="什么是GDB"></a>什么是GDB</h4>GDB（The GNU Debugger），是GNU开源组织发布的一个强大的UNIX程序调试工具。如果你是在 UNIX平台下开发软件，你会发现GDB这个调试工具有比VC、BCB的图形化调试工具拥有更强大的功能。同时GDB也具有例如DDD调试器，全称是Data Display Debugger这样的图形化调试端。</li>
+<li>连接目标代码, 生成可执行程序 [链接器ld]<h4 id="来看一下gcc常用选项："><a href="#来看一下gcc常用选项：" class="headerlink" title="来看一下gcc常用选项："></a>来看一下gcc常用选项：</h4><img src="gcc.PNG" alt=""><h4 id="现在我们有源文件hello-c，下面是一些gcc的使用示例："><a href="#现在我们有源文件hello-c，下面是一些gcc的使用示例：" class="headerlink" title="现在我们有源文件hello.c，下面是一些gcc的使用示例："></a>现在我们有源文件hello.c，下面是一些gcc的使用示例：</h4><pre><code>gcc -E hello.c -o hello.i   对hello.c文件进行预处理，生成了hello.i 文件
+gcc -S hello.i -o hello.s    对预处理文件进行编译，生成了汇编文件
+gcc -c hello.s -o hello.o  对汇编文件进行编译，生成了目标文件
+gcc hello.o -o hello 对目标文件进行链接，生成可执行文件
+gcc hello.c -o hello 直接编译链接成可执行目标文件
+gcc -c  hello.c 或 gcc -c hello.c -o hello.o 编译生成可重定位目标文件
+gcc -Og -S hello.c  生成汇编</code></pre><h2 id="二、GDB入门教程"><a href="#二、GDB入门教程" class="headerlink" title="二、GDB入门教程"></a>二、GDB入门教程</h2><h4 id="什么是GDB"><a href="#什么是GDB" class="headerlink" title="什么是GDB"></a>什么是GDB</h4>GDB（The GNU Debugger），是GNU开源组织发布的一个强大的UNIX程序调试工具。如果你是在 UNIX平台下开发软件，你会发现GDB这个调试工具有比VC、BCB的图形化调试工具拥有更强大的功能。同时GDB也具有例如DDD调试器，全称是Data Display Debugger这样的图形化调试端。</li>
 </ol>
 <p>一般来说，GDB主要完成下面四个方面的功能：<br>(1)启动你的程序，可以按照你的自定义的要求随心所欲的运行程序。<br>(2)可让被调试的程序在你所指定的调置的断点处停住。（断点可以是条件表达式）<br>(3)当程序被停住时，可以检查此时你的程序中所发生的事。<br>(4)动态的改变程序的执行环境。</p>
-<h4 id="GDB通常和gcc命令一起使用，编译选项加入-g才可使可执行文件处于debug模式。"><a href="#GDB通常和gcc命令一起使用，编译选项加入-g才可使可执行文件处于debug模式。" class="headerlink" title="GDB通常和gcc命令一起使用，编译选项加入-g才可使可执行文件处于debug模式。"></a>GDB通常和gcc命令一起使用，编译选项加入-g才可使可执行文件处于debug模式。</h4><h4 id="gdb命令格式："><a href="#gdb命令格式：" class="headerlink" title="gdb命令格式："></a>gdb命令格式：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">gdb [-help] [-nx] [-q] [-batch] [-cd=dir] [-f] [-b bps] [-tty=dev]</span><br><span class="line">    [-s symfile] [-e prog] [-se prog] [-c core] [-x cmds] [-d dir]</span><br><span class="line">    [prog[core|procID]]</span><br></pre></td></tr></table></figure>
-<p>常用的操作：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">gdb [可执行文件]：选中可执行程序,进入gdb的debug模式；</span><br><span class="line">    (gdb) b（breakpoint）:用法：b 函数名 ：对此函数进行中断 ；b 文件名：行号；</span><br><span class="line">    (gdb) run：启动程序，运行至程序的断点或者结束；</span><br><span class="line">    (gdb) l(list):用法：l funcname，制定函数的源码。或者l linenum，显示指定行周围的源码。或l -，显示当前行前面的源码。或l，显示当前行后面的源码；</span><br><span class="line">    (gdb) s(step):进入函数，逐语句运行；</span><br><span class="line">    (gdb) n(next):不进入函数，逐过程运行；</span><br><span class="line">    (gdb) c（continue）：继续运行，跳至下一个断点；</span><br><span class="line">    (gdb) p（print）：打印显示变量值；</span><br><span class="line">    (gdb) set variable=value,为变量赋值；</span><br><span class="line">    (gdb) kill：终止调试的程序；</span><br><span class="line">    (gdb) h（help）：列出gdb详细命令帮助列表；</span><br><span class="line">    (gdb) clear filename.c:30：清除30行处的断点；</span><br><span class="line">    (gdb) info break：显示断点信息；</span><br><span class="line">    (gdb) delete 断点编号：断点编号是info break 后显示出来的；</span><br><span class="line">    (gdb) bt（backtrace）：回溯到段出错的位置；</span><br><span class="line">    (gdb) frame 帧号：帧号是bt命令产生的堆栈针；</span><br><span class="line">    (gdb) q：退出；</span><br></pre></td></tr></table></figure>
-
-<h4 id="gdb分屏操作"><a href="#gdb分屏操作" class="headerlink" title="gdb分屏操作"></a>gdb分屏操作</h4><p>（1）gdb模式下使用layout src 或者大于号 &gt;</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">layout src</span><br></pre></td></tr></table></figure>
-<p>（2）还可以在进入gdb时加入参数-tui达到同样效果。 </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gdb -tui</span><br></pre></td></tr></table></figure>
-<p>(3)退出分屏模式</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">使用快捷键Ctrl+x+a切换。</span><br></pre></td></tr></table></figure>
-<h4 id="Text-User-Interface-TUI-感兴趣的可以自己去了解，此处不展开"><a href="#Text-User-Interface-TUI-感兴趣的可以自己去了解，此处不展开" class="headerlink" title="Text User Interface(TUI)感兴趣的可以自己去了解，此处不展开"></a>Text User Interface(TUI)感兴趣的可以自己去了解，此处不展开</h4>
+<h4 id="GDB通常和gcc命令一起使用，编译选项加入-g才可使可执行文件处于debug模式。"><a href="#GDB通常和gcc命令一起使用，编译选项加入-g才可使可执行文件处于debug模式。" class="headerlink" title="GDB通常和gcc命令一起使用，编译选项加入-g才可使可执行文件处于debug模式。"></a>GDB通常和gcc命令一起使用，编译选项加入-g才可使可执行文件处于debug模式。</h4><h4 id="gdb命令格式："><a href="#gdb命令格式：" class="headerlink" title="gdb命令格式："></a>gdb命令格式：</h4><pre><code>gdb [-help] [-nx] [-q] [-batch] [-cd=dir] [-f] [-b bps] [-tty=dev]
+    [-s symfile] [-e prog] [-se prog] [-c core] [-x cmds] [-d dir]
+    [prog[core|procID]]</code></pre><p>常用的操作：</p>
+<pre><code>gdb [可执行文件]：选中可执行程序,进入gdb的debug模式；
+    (gdb) b（breakpoint）:用法：b 函数名 ：对此函数进行中断 ；b 文件名：行号；
+    (gdb) run：启动程序，运行至程序的断点或者结束；
+    (gdb) l(list):用法：l funcname，制定函数的源码。或者l linenum，显示指定行周围的源码。或l -，显示当前行前面的源码。或l，显示当前行后面的源码；
+    (gdb) s(step):进入函数，逐语句运行；
+    (gdb) n(next):不进入函数，逐过程运行；
+    (gdb) c（continue）：继续运行，跳至下一个断点；
+    (gdb) p（print）：打印显示变量值；
+    (gdb) set variable=value,为变量赋值；
+    (gdb) kill：终止调试的程序；
+    (gdb) h（help）：列出gdb详细命令帮助列表；
+    (gdb) clear filename.c:30：清除30行处的断点；
+    (gdb) info break：显示断点信息；
+    (gdb) delete 断点编号：断点编号是info break 后显示出来的；
+    (gdb) bt（backtrace）：回溯到段出错的位置；
+    (gdb) frame 帧号：帧号是bt命令产生的堆栈针；
+    (gdb) q：退出；</code></pre><h4 id="gdb分屏操作"><a href="#gdb分屏操作" class="headerlink" title="gdb分屏操作"></a>gdb分屏操作</h4><p>（1）gdb模式下使用layout src 或者大于号 &gt;</p>
+<pre><code>layout src</code></pre><p>（2）还可以在进入gdb时加入参数-tui达到同样效果。 </p>
+<pre><code>gdb -tui</code></pre><p>(3)退出分屏模式</p>
+<pre><code>使用快捷键Ctrl+x+a切换。</code></pre><h4 id="Text-User-Interface-TUI-感兴趣的可以自己去了解，此处不展开"><a href="#Text-User-Interface-TUI-感兴趣的可以自己去了解，此处不展开" class="headerlink" title="Text User Interface(TUI)感兴趣的可以自己去了解，此处不展开"></a>Text User Interface(TUI)感兴趣的可以自己去了解，此处不展开</h4>
             </div>
             <hr/>
 
@@ -547,7 +564,9 @@
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            如果你只是简单的解码或编码一个十六进制的原始字符串，可以使用　binascii 模块。例如：1234567&gt;&gt;&gt; s = b&apos;hello&apos;&gt;&gt;&gt; import binascii&gt;
+                            如果你只是简单的解码或编码一个十六进制的原始字符串，可以使用　binascii 模块。例如：&gt;&gt;&gt; s = b&#39;hello&#39;
+&gt;&gt;&gt; import binascii
+&gt;&gt;&gt
                         
                     </div>
                     <div class="publish-info">
@@ -809,7 +828,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">175.5k</span>&nbsp;字
+                class="white-color">173.5k</span>&nbsp;字
             
             
             

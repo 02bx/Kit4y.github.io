@@ -432,11 +432,21 @@
 <h3 id="二、MVVM"><a href="#二、MVVM" class="headerlink" title="二、MVVM"></a>二、MVVM</h3><p><img src="6.png" alt=""></p>
 <h4 id="2-1、mvvm简介"><a href="#2-1、mvvm简介" class="headerlink" title="2.1、mvvm简介"></a>2.1、mvvm简介</h4><p>MVVM与MVC最大的区别就是：它实现了View和Model的自动同步，也就是当Model的属性改变时，我们不用再自己手动操作Dom元素，来改变View的显示，而是改变属性后该属性对应View层显示会自动改变。</p>
 <h4 id="2-2、典型的MVVM模式的代表，Vue"><a href="#2-2、典型的MVVM模式的代表，Vue" class="headerlink" title="2.2、典型的MVVM模式的代表，Vue"></a>2.2、典型的MVVM模式的代表，Vue</h4><p>刚好这两天在学习VUE,下面也是官网的一个例子<br>html</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;app-5&quot;&gt;</span><br><span class="line">  &lt;p&gt;&#123;&#123; message &#125;&#125;&lt;/p&gt;</span><br><span class="line">  &lt;button v-on:click=&quot;reverseMessage&quot;&gt;逆转消息&lt;/button&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
-<p>js</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">var app5 = new Vue(&#123;</span><br><span class="line">  el: &apos;#app-5&apos;,</span><br><span class="line">  data: &#123;</span><br><span class="line">    message: &apos;Hello Vue.js!&apos;</span><br><span class="line">  &#125;,</span><br><span class="line">  methods: &#123;</span><br><span class="line">    reverseMessage: function () &#123;</span><br><span class="line">      this.message = this.message.split(&apos;&apos;).reverse().join(&apos;&apos;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<p>这里的html部分相当于View层，可以看到这里的View通过通过模板语法来声明式的将数据渲染进DOM元素，当ViewModel对Model进行更新时，通过数据绑定更新到View。<br>Vue实例中的data相当于Model层，而ViewModel层的核心是Vue中的<strong>双向数据绑定</strong>，即Model变化时VIew可以实时更新，View变化也能让Model发生变化。<br>整体看来，MVVM比MVC精简很多，不仅简化了业务与界面的依赖，还解决了数据频繁更新的问题，不用再用选择器操作DOM元素。因为在MVVM中，View不知道Model的存在，Model和ViewModel也观察不到View，这种低耦合模式提高代码的可重用性。</p>
+<pre><code>&lt;div id=&quot;app-5&quot;&gt;
+  &lt;p&gt;{{ message }}&lt;/p&gt;
+  &lt;button v-on:click=&quot;reverseMessage&quot;&gt;逆转消息&lt;/button&gt;
+&lt;/div&gt;</code></pre><p>js</p>
+<pre><code>var app5 = new Vue({
+  el: &#39;#app-5&#39;,
+  data: {
+    message: &#39;Hello Vue.js!&#39;
+  },
+  methods: {
+    reverseMessage: function () {
+      this.message = this.message.split(&#39;&#39;).reverse().join(&#39;&#39;)
+    }
+  }
+})</code></pre><p>这里的html部分相当于View层，可以看到这里的View通过通过模板语法来声明式的将数据渲染进DOM元素，当ViewModel对Model进行更新时，通过数据绑定更新到View。<br>Vue实例中的data相当于Model层，而ViewModel层的核心是Vue中的<strong>双向数据绑定</strong>，即Model变化时VIew可以实时更新，View变化也能让Model发生变化。<br>整体看来，MVVM比MVC精简很多，不仅简化了业务与界面的依赖，还解决了数据频繁更新的问题，不用再用选择器操作DOM元素。因为在MVVM中，View不知道Model的存在，Model和ViewModel也观察不到View，这种低耦合模式提高代码的可重用性。</p>
 <h3 id="三、MVP"><a href="#三、MVP" class="headerlink" title="三、MVP"></a>三、MVP</h3><h4 id="3-1、MVP简介"><a href="#3-1、MVP简介" class="headerlink" title="3.1、MVP简介"></a>3.1、MVP简介</h4><p>MVP 全称：Model-View-Presenter ；MVP 是从经典的模式 MVC 演变而来，它们的基本思想有相通的地方：Controller/Presenter 负责逻辑的处理，Model 提供数据，View 负责显示。MVP模式可应用在于APP开发，其实还有MVI也应用于安卓。<br>MVP的模型图<br><img src="7.png" alt=""><br>这个图也很简单，当 View 需要更新数据时，首先去找 Presenter，然后 Presenter 去找 Model 请求数据，Model 获取到数据之后通知 Presenter，Presenter 再通知 View 更新数据，这样 Model 和 View 就不会直接交互了，所有的交互都由 Presenter 进行，Presenter 充当了桥梁的角色。很显然，Presenter 必须同时持有 View 和 Model 的对象的引用，才能在它们之间进行通信。</p>
 <h4 id="3-2、MVP模式的核心思想"><a href="#3-2、MVP模式的核心思想" class="headerlink" title="3.2、MVP模式的核心思想"></a>3.2、MVP模式的核心思想</h4><p><code>MVP把Activity中的UI逻辑抽象成View接口，把业务逻辑抽象成Presenter接口，Model类还是原来的Model。</code></p>
 <h4 id="3-3、与MVC区别"><a href="#3-3、与MVC区别" class="headerlink" title="3.3、与MVC区别"></a>3.3、与MVC区别</h4><ol>
@@ -849,7 +859,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">175.5k</span>&nbsp;字
+                class="white-color">173.5k</span>&nbsp;字
             
             
             

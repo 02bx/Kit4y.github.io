@@ -7,7 +7,7 @@
     <meta name="keywords" content="win10如何在任意文件下打开admin的cmd, 书鱼">
     <meta name="description" content="win10 的win+cmd 打开控制台你要在跳到某文件夹下要多次的cd cd cd cd一次偶然机会发现可以修改一点点注册表即可实现任意文件下打开终端
 第一步：新建任意文本文件复制下列代码
-123456789101112131415161">
+Windows Registry Editor ">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -414,8 +414,23 @@
             <div id="articleContent">
                 <h3 id="win10-的win-cmd-打开控制台你要在跳到某文件夹下要多次的cd-cd-cd-cd"><a href="#win10-的win-cmd-打开控制台你要在跳到某文件夹下要多次的cd-cd-cd-cd" class="headerlink" title="win10 的win+cmd 打开控制台你要在跳到某文件夹下要多次的cd cd cd cd"></a>win10 的win+cmd 打开控制台你要在跳到某文件夹下要多次的cd cd cd cd</h3><h3 id="一次偶然机会发现可以修改一点点注册表即可实现任意文件下打开终端"><a href="#一次偶然机会发现可以修改一点点注册表即可实现任意文件下打开终端" class="headerlink" title="一次偶然机会发现可以修改一点点注册表即可实现任意文件下打开终端"></a>一次偶然机会发现可以修改一点点注册表即可实现任意文件下打开终端</h3><a id="more"></a>
 <p>第一步：新建任意文本文件复制下列代码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Windows Registry Editor Version 5.00</span><br><span class="line">[HKEY_CLASSES_ROOT\Directory\shell\runas]</span><br><span class="line">@=&quot;Open cmd here as Admin&quot;</span><br><span class="line">&quot;HasLUAShield&quot;=&quot;&quot;</span><br><span class="line">[HKEY_CLASSES_ROOT\Directory\shell\runas\command]</span><br><span class="line">@=&quot;cmd.exe /s /k pushd \&quot;%V\&quot;&quot;</span><br><span class="line">[-HKEY_CLASSES_ROOT\Directory\Background\shell\runas]</span><br><span class="line">[HKEY_CLASSES_ROOT\Directory\Background\shell\runas]</span><br><span class="line">@=&quot;Open cmd here as Admin&quot;</span><br><span class="line">&quot;HasLUAShield&quot;=&quot;&quot;</span><br><span class="line">[HKEY_CLASSES_ROOT\Directory\Background\shell\runas\command]</span><br><span class="line">@=&quot;cmd.exe /s /k pushd \&quot;%V\&quot;&quot;</span><br><span class="line">[-HKEY_CLASSES_ROOT\Drive\shell\runas]</span><br><span class="line">[HKEY_CLASSES_ROOT\Drive\shell\runas]</span><br><span class="line">@=&quot;Open cmd here as Admin&quot;</span><br><span class="line">&quot;HasLUAShield&quot;=&quot;&quot;</span><br><span class="line">[HKEY_CLASSES_ROOT\Drive\shell\runas\command]</span><br></pre></td></tr></table></figure>
-<p>第二步：修改文件后缀名为.reg(例如 cmd.reg)</p>
+<pre><code>Windows Registry Editor Version 5.00
+[HKEY_CLASSES_ROOT\Directory\shell\runas]
+@=&quot;Open cmd here as Admin&quot;
+&quot;HasLUAShield&quot;=&quot;&quot;
+[HKEY_CLASSES_ROOT\Directory\shell\runas\command]
+@=&quot;cmd.exe /s /k pushd \&quot;%V\&quot;&quot;
+[-HKEY_CLASSES_ROOT\Directory\Background\shell\runas]
+[HKEY_CLASSES_ROOT\Directory\Background\shell\runas]
+@=&quot;Open cmd here as Admin&quot;
+&quot;HasLUAShield&quot;=&quot;&quot;
+[HKEY_CLASSES_ROOT\Directory\Background\shell\runas\command]
+@=&quot;cmd.exe /s /k pushd \&quot;%V\&quot;&quot;
+[-HKEY_CLASSES_ROOT\Drive\shell\runas]
+[HKEY_CLASSES_ROOT\Drive\shell\runas]
+@=&quot;Open cmd here as Admin&quot;
+&quot;HasLUAShield&quot;=&quot;&quot;
+[HKEY_CLASSES_ROOT\Drive\shell\runas\command]</code></pre><p>第二步：修改文件后缀名为.reg(例如 cmd.reg)</p>
 <p>第三步：双击有个安全询问弹窗，点击确定即可。</p>
 <h3 id="测试：在任意文件夹下，右键有一个“Open-cmd-here-as-Admin”（字母能自定义）"><a href="#测试：在任意文件夹下，右键有一个“Open-cmd-here-as-Admin”（字母能自定义）" class="headerlink" title="测试：在任意文件夹下，右键有一个“Open cmd here as Admin”（字母能自定义）"></a>测试：在任意文件夹下，右键有一个“Open cmd here as Admin”（字母能自定义）</h3>
             </div>
@@ -539,7 +554,10 @@
                     <div class="summary block-with-text">
                         
                             雁丘是我QQ用了近7年的网名，我可能应该也是一个怀旧的人会一直用下去，也想和大家分享这首词，作者是元好问。
-12345678问世间，情为何物？直教生死相许。天南地北双飞客，老翅几回寒暑。欢乐趣，离别苦，就中更有痴儿女。君应有语，渺万里层云，
+问世间，情为何物？直教生死相许。
+天南地北双飞客，老翅几回寒暑。
+欢乐趣，离别苦，就中更有痴儿女。
+君应有语，渺万里层云，千山暮雪，
                         
                     </div>
                     <div class="publish-info">
@@ -582,7 +600,7 @@
                         
                             win10 的win+cmd 打开控制台你要在跳到某文件夹下要多次的cd cd cd cd一次偶然机会发现可以修改一点点注册表即可实现任意文件下打开终端
 第一步：新建任意文本文件复制下列代码
-123456789101112131415161
+Windows Registry Editor 
                         
                     </div>
                     <div class="publish-info">
@@ -797,7 +815,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">175.5k</span>&nbsp;字
+                class="white-color">173.5k</span>&nbsp;字
             
             
             

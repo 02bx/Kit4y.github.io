@@ -423,8 +423,37 @@
 <p>式（5）对应的码组为K+R位，即：<br>N = (mk-1+ mk-2 +……m1+ m0  + rR-1+ rR-2 +……r1+ r0) ————————————————————式（6）<br>从M到N就是CRC的编码过程mk-1+ mk-2 +……m1+ m0  为k位信息码；rR-1+ rR-2 +……r1+ r0为R位校验码。<br>在信息接收端，将接受到的K+R位码除以相同的多项式g(x),根据式（3）所产生的余数为0，则接受到的数据信息正确无误，否则则认为信息在传输过程中产生的误码。</p>
 <h3 id="三、bugku例题："><a href="#三、bugku例题：" class="headerlink" title="三、bugku例题："></a>三、bugku例题：</h3><p><img src="3.png" alt=""></p>
 <p>zip压缩包以及帮大家撸下来了<br><a href="/images/123.zip">123.zip</a><br><br>解压下载后的文件，发现有68个压缩文件，并且每个压缩文件里都有一个4个字节大小的名为data.txt的txt文件，还有文本所对应的CRC32码，于是尝试用crc32碰撞还原出所有压缩包中的文件内容<br><img src="22.png" alt=""><br>python3 脚本</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">#coding:utf-8</span><br><span class="line">import zipfile</span><br><span class="line">import string</span><br><span class="line">import binascii</span><br><span class="line"></span><br><span class="line">def CrackCrc(crc):</span><br><span class="line">    for i in dic:</span><br><span class="line">        for j in dic:</span><br><span class="line">            for p in dic:</span><br><span class="line">                for q in dic:</span><br><span class="line">                    s = i + j + p + q</span><br><span class="line">                    if crc == (binascii.crc32(s.encode()) &amp; 0xffffffff):</span><br><span class="line">                        print (s)</span><br><span class="line">                        f.write(s)</span><br><span class="line">                        return</span><br><span class="line"></span><br><span class="line">def CrackZip():</span><br><span class="line">    for I in range(68):</span><br><span class="line">        file = &apos;out&apos; + str(I) + &apos;.zip&apos;</span><br><span class="line">        f = zipfile.ZipFile(file, &apos;r&apos;)</span><br><span class="line">        GetCrc = f.getinfo(&apos;data.txt&apos;)</span><br><span class="line">        crc = GetCrc.CRC</span><br><span class="line">        #以上3行为获取压缩包CRC32值的步骤</span><br><span class="line">        print (hex(crc))</span><br><span class="line">        CrackCrc(crc)</span><br><span class="line"></span><br><span class="line">dic = string.ascii_letters + string.digits + &apos;+/=&apos;</span><br><span class="line"></span><br><span class="line">f = open(&apos;out.txt&apos;, &apos;w&apos;)</span><br><span class="line">CrackZip()</span><br><span class="line">f.close()</span><br></pre></td></tr></table></figure>
-<p>然后out.txt文本是这样的,根据碰撞出内容的格式（末尾两个==）推断这段数据是base64编码过的，先解码，根据解码结果中的flag.txt推断这可能是一个压缩包，同时根据fix the file and get the flag知需要修复文件<br><img src="4.png" alt=""><br>将解码后的文件导入16进制编辑器（如010editor），观察数据，发现存在rar的文件尾C43D7B00400700，但缺少文件头，于是补上rar的文件头526172211A0700。</p>
+<pre><code>#coding:utf-8
+import zipfile
+import string
+import binascii
+
+def CrackCrc(crc):
+    for i in dic:
+        for j in dic:
+            for p in dic:
+                for q in dic:
+                    s = i + j + p + q
+                    if crc == (binascii.crc32(s.encode()) &amp; 0xffffffff):
+                        print (s)
+                        f.write(s)
+                        return
+
+def CrackZip():
+    for I in range(68):
+        file = &#39;out&#39; + str(I) + &#39;.zip&#39;
+        f = zipfile.ZipFile(file, &#39;r&#39;)
+        GetCrc = f.getinfo(&#39;data.txt&#39;)
+        crc = GetCrc.CRC
+        #以上3行为获取压缩包CRC32值的步骤
+        print (hex(crc))
+        CrackCrc(crc)
+
+dic = string.ascii_letters + string.digits + &#39;+/=&#39;
+
+f = open(&#39;out.txt&#39;, &#39;w&#39;)
+CrackZip()
+f.close()</code></pre><p>然后out.txt文本是这样的,根据碰撞出内容的格式（末尾两个==）推断这段数据是base64编码过的，先解码，根据解码结果中的flag.txt推断这可能是一个压缩包，同时根据fix the file and get the flag知需要修复文件<br><img src="4.png" alt=""><br>将解码后的文件导入16进制编辑器（如010editor），观察数据，发现存在rar的文件尾C43D7B00400700，但缺少文件头，于是补上rar的文件头526172211A0700。</p>
 <p><img src="5.png" alt=""><br><img src="6.png" alt=""><br><strong>试了好久不会玩winhex 尴尬，最后发现是先填充0然后覆盖</strong><br>然后改后缀名拿到了这个包<br><a href="/images/out.rar">out.rar</a> flag在注释里<br><img src="1.png" alt=""></p>
 
             </div>
@@ -809,7 +838,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">175.5k</span>&nbsp;字
+                class="white-color">173.5k</span>&nbsp;字
             
             
             

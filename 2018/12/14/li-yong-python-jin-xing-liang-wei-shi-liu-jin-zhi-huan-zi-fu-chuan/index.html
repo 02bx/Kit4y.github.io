@@ -5,7 +5,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="利用python进行两位十六进制换字符串, 书鱼">
-    <meta name="description" content="如果你只是简单的解码或编码一个十六进制的原始字符串，可以使用　binascii 模块。例如：1234567&amp;gt;&amp;gt;&amp;gt; s = b&amp;apos;hello&amp;apos;&amp;gt;&amp;gt;&amp;gt; import binascii&amp;gt;">
+    <meta name="description" content="如果你只是简单的解码或编码一个十六进制的原始字符串，可以使用　binascii 模块。例如：&amp;gt;&amp;gt;&amp;gt; s = b&amp;#39;hello&amp;#39;
+&amp;gt;&amp;gt;&amp;gt; import binascii
+&amp;gt;&amp;gt;&amp;gt">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -383,7 +385,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    302
+                    301
                 </div>
                 
 
@@ -406,11 +408,27 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="如果你只是简单的解码或编码一个十六进制的原始字符串，可以使用-binascii-模块。例如："><a href="#如果你只是简单的解码或编码一个十六进制的原始字符串，可以使用-binascii-模块。例如：" class="headerlink" title="如果你只是简单的解码或编码一个十六进制的原始字符串，可以使用　binascii 模块。例如："></a>如果你只是简单的解码或编码一个十六进制的原始字符串，可以使用　binascii 模块。例如：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; s = b&apos;hello&apos;</span><br><span class="line">&gt;&gt;&gt; import binascii</span><br><span class="line">&gt;&gt;&gt; h = binascii.b2a_hex(s)</span><br><span class="line">&gt;&gt;&gt; h</span><br><span class="line">b&apos;68656c6c6f&apos;</span><br><span class="line">&gt;&gt;&gt; binascii.a2b_hex(h)</span><br><span class="line">b&apos;hello&apos;</span><br></pre></td></tr></table></figure>
-<a id="more"></a>
-<h3 id="类似的功能同样可以在-base64-模块中找到。例如："><a href="#类似的功能同样可以在-base64-模块中找到。例如：" class="headerlink" title="类似的功能同样可以在 base64 模块中找到。例如："></a>类似的功能同样可以在 base64 模块中找到。例如：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; s = b&apos;hello&apos;</span><br><span class="line">&gt;&gt;&gt; import base64</span><br><span class="line">&gt;&gt;&gt; h = base64.b16encode(s)</span><br><span class="line">&gt;&gt;&gt; h</span><br><span class="line">b&apos;68656C6C6F&apos;</span><br><span class="line">&gt;&gt;&gt; base64.b16decode(h)</span><br><span class="line">b&apos;hello&apos;</span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
-<h3 id="讨论"><a href="#讨论" class="headerlink" title="讨论:"></a>讨论:</h3><p>大部分情况下，通过使用上述的函数来转换十六进制是很简单的。 上面两种技术的主要不同在于大小写的处理。 函数 base64.b16decode() 和 base64.b16encode() 只能操作大写形式的十六进制字母， 而 binascii 模块中的函数大小写都能处理。</p>
-<h3 id="还有一点需要注意的是编码函数所产生的输出总是一个字节字符串。-如果想强制以Unicode形式输出，你需要增加一个额外的界面步骤。例如："><a href="#还有一点需要注意的是编码函数所产生的输出总是一个字节字符串。-如果想强制以Unicode形式输出，你需要增加一个额外的界面步骤。例如：" class="headerlink" title="还有一点需要注意的是编码函数所产生的输出总是一个字节字符串。 如果想强制以Unicode形式输出，你需要增加一个额外的界面步骤。例如："></a>还有一点需要注意的是编码函数所产生的输出总是一个字节字符串。 如果想强制以Unicode形式输出，你需要增加一个额外的界面步骤。例如：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; h = base64.b16encode(s)</span><br><span class="line">&gt;&gt;&gt; print(h)</span><br><span class="line">b&apos;68656C6C6F&apos;</span><br><span class="line">&gt;&gt;&gt; print(h.decode(&apos;ascii&apos;))</span><br><span class="line">68656C6C6F</span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
+                <h3 id="如果你只是简单的解码或编码一个十六进制的原始字符串，可以使用-binascii-模块。例如："><a href="#如果你只是简单的解码或编码一个十六进制的原始字符串，可以使用-binascii-模块。例如：" class="headerlink" title="如果你只是简单的解码或编码一个十六进制的原始字符串，可以使用　binascii 模块。例如："></a>如果你只是简单的解码或编码一个十六进制的原始字符串，可以使用　binascii 模块。例如：</h3><pre><code>&gt;&gt;&gt; s = b&#39;hello&#39;
+&gt;&gt;&gt; import binascii
+&gt;&gt;&gt; h = binascii.b2a_hex(s)
+&gt;&gt;&gt; h
+b&#39;68656c6c6f&#39;
+&gt;&gt;&gt; binascii.a2b_hex(h)
+b&#39;hello&#39;</code></pre><a id="more"></a>
+<h3 id="类似的功能同样可以在-base64-模块中找到。例如："><a href="#类似的功能同样可以在-base64-模块中找到。例如：" class="headerlink" title="类似的功能同样可以在 base64 模块中找到。例如："></a>类似的功能同样可以在 base64 模块中找到。例如：</h3><pre><code>&gt;&gt;&gt; s = b&#39;hello&#39;
+&gt;&gt;&gt; import base64
+&gt;&gt;&gt; h = base64.b16encode(s)
+&gt;&gt;&gt; h
+b&#39;68656C6C6F&#39;
+&gt;&gt;&gt; base64.b16decode(h)
+b&#39;hello&#39;
+&gt;&gt;&gt;</code></pre><h3 id="讨论"><a href="#讨论" class="headerlink" title="讨论:"></a>讨论:</h3><p>大部分情况下，通过使用上述的函数来转换十六进制是很简单的。 上面两种技术的主要不同在于大小写的处理。 函数 base64.b16decode() 和 base64.b16encode() 只能操作大写形式的十六进制字母， 而 binascii 模块中的函数大小写都能处理。</p>
+<h3 id="还有一点需要注意的是编码函数所产生的输出总是一个字节字符串。-如果想强制以Unicode形式输出，你需要增加一个额外的界面步骤。例如："><a href="#还有一点需要注意的是编码函数所产生的输出总是一个字节字符串。-如果想强制以Unicode形式输出，你需要增加一个额外的界面步骤。例如：" class="headerlink" title="还有一点需要注意的是编码函数所产生的输出总是一个字节字符串。 如果想强制以Unicode形式输出，你需要增加一个额外的界面步骤。例如："></a>还有一点需要注意的是编码函数所产生的输出总是一个字节字符串。 如果想强制以Unicode形式输出，你需要增加一个额外的界面步骤。例如：</h3><pre><code>&gt;&gt;&gt; h = base64.b16encode(s)
+&gt;&gt;&gt; print(h)
+b&#39;68656C6C6F&#39;
+&gt;&gt;&gt; print(h.decode(&#39;ascii&#39;))
+68656C6C6F
+&gt;&gt;&gt;</code></pre>
             </div>
             <hr/>
 
@@ -792,7 +810,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">175.5k</span>&nbsp;字
+                class="white-color">173.5k</span>&nbsp;字
             
             
             

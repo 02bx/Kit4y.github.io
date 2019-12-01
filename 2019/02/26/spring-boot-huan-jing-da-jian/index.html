@@ -387,7 +387,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    676
+                    675
                 </div>
                 
 
@@ -413,18 +413,36 @@
                 <h4 id="人终究没有自己想象的那么厉害，之前有过spring的基础，现在仅仅是回忆Spring的配置问题以及转向spring-boot-从昨晚肝到此刻（Orz只能拿时间来弥补自己的天赋不足），又一次见到了5点钟的南航，任何火热技术的发展都是能够为了解决人类当前的一个痛点，Spring和Spring-MVC的配置问题应该是Spring最大的门槛或者说败笔，而Spring-boot完美的解决了这一问题，甚至帮你把汤姆猫（Tomcat）封装进去了，一晚上大概学了点Maven-配置，Spring-boot的参数请求，整合swagger-路由设定等，虽然说写博客挺花时间的，而且还是没有水平的，但是还是想记一下博客，主要是以便于之后的自己回忆快一些"><a href="#人终究没有自己想象的那么厉害，之前有过spring的基础，现在仅仅是回忆Spring的配置问题以及转向spring-boot-从昨晚肝到此刻（Orz只能拿时间来弥补自己的天赋不足），又一次见到了5点钟的南航，任何火热技术的发展都是能够为了解决人类当前的一个痛点，Spring和Spring-MVC的配置问题应该是Spring最大的门槛或者说败笔，而Spring-boot完美的解决了这一问题，甚至帮你把汤姆猫（Tomcat）封装进去了，一晚上大概学了点Maven-配置，Spring-boot的参数请求，整合swagger-路由设定等，虽然说写博客挺花时间的，而且还是没有水平的，但是还是想记一下博客，主要是以便于之后的自己回忆快一些" class="headerlink" title="人终究没有自己想象的那么厉害，之前有过spring的基础，现在仅仅是回忆Spring的配置问题以及转向spring boot,从昨晚肝到此刻（Orz只能拿时间来弥补自己的天赋不足），又一次见到了5点钟的南航，任何火热技术的发展都是能够为了解决人类当前的一个痛点，Spring和Spring MVC的配置问题应该是Spring最大的门槛或者说败笔，而Spring boot完美的解决了这一问题，甚至帮你把汤姆猫（Tomcat）封装进去了，一晚上大概学了点Maven 配置，Spring boot的参数请求，整合swagger,路由设定等，虽然说写博客挺花时间的，而且还是没有水平的，但是还是想记一下博客，主要是以便于之后的自己回忆快一些"></a>人终究没有自己想象的那么厉害，之前有过spring的基础，现在仅仅是回忆Spring的配置问题以及转向spring boot,从昨晚肝到此刻（Orz只能拿时间来弥补自己的天赋不足），又一次见到了5点钟的南航，任何火热技术的发展都是能够为了解决人类当前的一个痛点，Spring和Spring MVC的配置问题应该是Spring最大的门槛或者说败笔，而Spring boot完美的解决了这一问题，甚至帮你把汤姆猫（Tomcat）封装进去了，一晚上大概学了点Maven 配置，Spring boot的参数请求，整合swagger,路由设定等，虽然说写博客挺花时间的，而且还是没有水平的，但是还是想记一下博客，主要是以便于之后的自己回忆快一些</h4><h4 id="一、SpringBoot2-0环境准备"><a href="#一、SpringBoot2-0环境准备" class="headerlink" title="一、SpringBoot2.0环境准备"></a>一、SpringBoot2.0环境准备</h4><p>jdk1.8+；java version “1.8.0_112”<br>A favorite text editor or IDE：IntelliJ IDEA 2018.2.6</p>
 <h4 id="二、Maven配置"><a href="#二、Maven配置" class="headerlink" title="二、Maven配置"></a>二、Maven配置</h4><p>Maven的核心功能便是合理叙述项目间的依赖关系，通俗点讲，就是通过XXXX.xml这样的文件的配置获取jar包，而不用手动去添加jar包，就好比前端开发的package.json<br>IDEA内部自带一Maven2，一个Maven3，我们当然用的是Maven3，当初学spring mvc的时候，环境真要折腾死了，主要是当初自己不敢尝试，害怕失败后重装的折腾，但是这玩意折腾折腾几次才真的会了，所以自然要配置国内maven仓库镜像<br>IDEA的Maven文件目录为：{你IDEA软件安装目录}、IDEA\IntelliJ IDEA 2018.3.1\plugins\maven\lib\maven3\conf<br>这个里面有一个setting.xml,在mirrors标签的子标签<code>&lt;mirror&gt;</code>中的代码改为：</p>
 <a id="more"></a>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;mirror&gt;</span><br><span class="line">    &lt;id&gt;alimaven&lt;/id&gt;</span><br><span class="line">    &lt;name&gt;aliyun maven&lt;/name&gt;</span><br><span class="line">    &lt;url&gt;http://maven.aliyun.com/nexus/content/groups/public/&lt;/url&gt;</span><br><span class="line">    &lt;mirrorOf&gt;central&lt;/mirrorOf&gt;        </span><br><span class="line">&lt;/mirror&gt;</span><br></pre></td></tr></table></figure>
-<p>其实很简单对不对</p>
+<pre><code>&lt;mirror&gt;
+    &lt;id&gt;alimaven&lt;/id&gt;
+    &lt;name&gt;aliyun maven&lt;/name&gt;
+    &lt;url&gt;http://maven.aliyun.com/nexus/content/groups/public/&lt;/url&gt;
+    &lt;mirrorOf&gt;central&lt;/mirrorOf&gt;        
+&lt;/mirror&gt;</code></pre><p>其实很简单对不对</p>
 <h4 id="三、新建一个项目"><a href="#三、新建一个项目" class="headerlink" title="三、新建一个项目"></a>三、新建一个项目</h4><ol>
 <li>新建Spring Initializr 项目，如图：<br><img src="1.png" alt=""></li>
 <li>填写项目信息，如图：<br><img src="2.png" alt=""></li>
 <li>选择项目使用的技术，如图：<br><img src="3.png" alt=""></li>
 <li>填写项目名称：如图：<br><img src="4.png" alt=""></li>
 <li>项目架构及依赖，如图：<br><img src="5.png" alt=""></li>
-<li>添加测试控制器。直接在入口类中编写。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">package com.springboot.first;</span><br><span class="line"></span><br><span class="line">import org.springframework.boot.SpringApplication;</span><br><span class="line">import org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line">import org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line">import org.springframework.web.bind.annotation.RestController;</span><br><span class="line"></span><br><span class="line">@RestController</span><br><span class="line">@SpringBootApplication</span><br><span class="line">public class FirstApplication &#123;</span><br><span class="line"></span><br><span class="line">    @RequestMapping(&quot;/&quot;)</span><br><span class="line">    String index() &#123;</span><br><span class="line">        return &quot;Hello Spring Boot&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        SpringApplication.run(FirstApplication.class, args);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li>运行项目，把它当成一个java类运行就可以了，右键菜单中选择，如图：<br><img src="6.png" alt=""><br>运行信息：<br><img src="7.png" alt=""></li>
-<li>访问localhost:8080即可<h4 id="四、时区设置"><a href="#四、时区设置" class="headerlink" title="四、时区设置"></a>四、时区设置</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jdbc:mysql://XXXX:3306/xxxx?characterEncoding=utf8&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC</span><br></pre></td></tr></table></figure></li>
+<li>添加测试控制器。直接在入口类中编写。<pre><code>package com.springboot.first;
+</code></pre></li>
 </ol>
+<p>import org.springframework.boot.SpringApplication;<br>import org.springframework.boot.autoconfigure.SpringBootApplication;<br>import org.springframework.web.bind.annotation.RequestMapping;<br>import org.springframework.web.bind.annotation.RestController;</p>
+<p>@RestController<br>@SpringBootApplication<br>public class FirstApplication {</p>
+<pre><code>@RequestMapping(&quot;/&quot;)
+String index() {
+    return &quot;Hello Spring Boot&quot;;
+}
+public static void main(String[] args) {
+    SpringApplication.run(FirstApplication.class, args);
+}</code></pre><p>}</p>
+<pre><code>7. 运行项目，把它当成一个java类运行就可以了，右键菜单中选择，如图：
+![](6.png)
+运行信息：
+![](7.png)
+8. 访问localhost:8080即可
+#### 四、时区设置</code></pre><p>jdbc:mysql://XXXX:3306/xxxx?characterEncoding=utf8&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC<br>```</p>
 
             </div>
             <hr/>
@@ -815,7 +833,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">175.5k</span>&nbsp;字
+                class="white-color">173.5k</span>&nbsp;字
             
             
             

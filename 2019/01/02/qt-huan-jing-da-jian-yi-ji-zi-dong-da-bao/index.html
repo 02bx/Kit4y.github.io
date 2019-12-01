@@ -387,7 +387,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    981
+                    976
                 </div>
                 
 
@@ -427,10 +427,8 @@
 <h4 id="3-Design"><a href="#3-Design" class="headerlink" title="3.Design"></a>3.Design</h4><p>qtcreator具备可视化编辑ui,双击mainwindow.ui即进入左侧任务栏中的Design<br>在左侧拉一个Display Widgets-&gt;Label 进去即可<br><img src="8.png" alt=""></p>
 <h3 id="三、编译以及打包"><a href="#三、编译以及打包" class="headerlink" title="三、编译以及打包"></a>三、编译以及打包</h3><h4 id="1-编译，选择Qt-5-9-0-MinGW-32bit-不是强制，可自选-，为了打包所以选择Release"><a href="#1-编译，选择Qt-5-9-0-MinGW-32bit-不是强制，可自选-，为了打包所以选择Release" class="headerlink" title="1. 编译，选择Qt 5.9.0 MinGW 32bit(不是强制，可自选)，为了打包所以选择Release"></a>1. 编译，选择Qt 5.9.0 MinGW 32bit(不是强制，可自选)，为了打包所以选择Release</h4><p><img src="9.png" alt=""><br>点击第二个（非debug,即可编译运行，然后会在源代码的文件夹出现一个build-XX的文件目录<br><img src="10.png" alt=""><br>找到里面的release-&gt;hello.exe 双击运行会提示少一大堆.dll,所以要打包</p>
 <h4 id="2-自动打包"><a href="#2-自动打包" class="headerlink" title="2. 自动打包"></a>2. 自动打包</h4><p>Qt 官方开发环境使用的动态链接库方式，在发布生成的exe程序时，需要复制一大堆 dll，如果自己去复制dll，很可能丢三落四，导致exe在别的电脑里无法正常运行。<br>因此 Qt 官方开发环境里自带了一个工具：windeployqt.exe。<br>这个工具在该编译器所在的bin目录下，是一个终端操作工具<br><img src="11.png" alt=""><br>你只需要把release目录下的hello.exe复制到bin目录下 cmd输入 windeployqt.exe hello.exe即可，但是这个会导致你的bin目录非常恶心<br>所以直接，新建一个目录，里面放一个从Releasee复制出来的hello.exe,cmd切到hello.exe目录下然后（只要一个hello.exe即可）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;你自己的Qt安装路径&#125;\Qt\5.9\mingw53_32\bin\windeployqt.exe hello.exe</span><br></pre></td></tr></table></figure>
-<p>或者先把该编译器的bin目录放在环境变量中</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">windeployqt.exe hello.exe</span><br></pre></td></tr></table></figure>
-<p><img src="12.png" alt=""><br>然后hello.exe 文件夹下会出现一堆依赖文件，即可帮助你运行hello.exe<br><img src="13.png" alt=""></p>
+<pre><code>{你自己的Qt安装路径}\Qt\5.9\mingw53_32\bin\windeployqt.exe hello.exe</code></pre><p>或者先把该编译器的bin目录放在环境变量中</p>
+<pre><code>windeployqt.exe hello.exe</code></pre><p><img src="12.png" alt=""><br>然后hello.exe 文件夹下会出现一堆依赖文件，即可帮助你运行hello.exe<br><img src="13.png" alt=""></p>
 <h4 id="3-可能遇到的问题"><a href="#3-可能遇到的问题" class="headerlink" title="3.可能遇到的问题"></a>3.可能遇到的问题</h4><p>windeployqt.exe的作用其实也就是简单把项目需要的的dll从bin目录下复制出来，所以如果在打包之后运行还提示缺少了什么.dll文件，直接去编译器的bin目录下复制过来即可。</p>
 
             </div>
@@ -818,7 +816,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">175.5k</span>&nbsp;字
+                class="white-color">173.5k</span>&nbsp;字
             
             
             

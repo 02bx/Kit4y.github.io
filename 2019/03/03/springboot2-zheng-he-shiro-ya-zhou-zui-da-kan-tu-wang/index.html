@@ -391,7 +391,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.5k
+                    1.4k
                 </div>
                 
 
@@ -422,31 +422,154 @@
 <h5 id="2、普通用户成功登录，但是未授权的用户提示未授权-cws为普通用户未授权，lzz为牛逼用户授权成功，授权字段自己定义-由于追求最简单化，所以没有将权限分表，实战项目RBAC需要对多多表对应关系"><a href="#2、普通用户成功登录，但是未授权的用户提示未授权-cws为普通用户未授权，lzz为牛逼用户授权成功，授权字段自己定义-由于追求最简单化，所以没有将权限分表，实战项目RBAC需要对多多表对应关系" class="headerlink" title="2、普通用户成功登录，但是未授权的用户提示未授权(cws为普通用户未授权，lzz为牛逼用户授权成功，授权字段自己定义,由于追求最简单化，所以没有将权限分表，实战项目RBAC需要对多多表对应关系)"></a>2、普通用户成功登录，但是未授权的用户提示未授权(cws为普通用户未授权，lzz为牛逼用户授权成功，授权字段自己定义,由于追求最简单化，所以没有将权限分表，实战项目RBAC需要对多多表对应关系)</h5><p><img src="2.gif" alt=""></p>
 <h5 id="3、授权的牛逼用户登录，能够查看白百合高清裸照（刺不刺激"><a href="#3、授权的牛逼用户登录，能够查看白百合高清裸照（刺不刺激" class="headerlink" title="3、授权的牛逼用户登录，能够查看白百合高清裸照（刺不刺激"></a>3、授权的牛逼用户登录，能够查看白百合高清裸照（刺不刺激</h5><p><img src="3.gif" alt=""></p>
 <h3 id="二、代码分析，由于源码在github，所以只略述核心代码"><a href="#二、代码分析，由于源码在github，所以只略述核心代码" class="headerlink" title="二、代码分析，由于源码在github，所以只略述核心代码"></a>二、代码分析，由于源码在github，所以只略述核心代码</h3><h4 id="2-1、项目文件结构"><a href="#2-1、项目文件结构" class="headerlink" title="2.1、项目文件结构"></a>2.1、项目文件结构</h4><p><img src="3.png" alt=""></p>
-<h4 id="2-2、添加依赖包（pow-xml）"><a href="#2-2、添加依赖包（pow-xml）" class="headerlink" title="2.2、添加依赖包（pow.xml）"></a>2.2、添加依赖包（pow.xml）</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.apache.shiro&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;shiro-spring&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;1.3.2&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;mysql&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;</span><br><span class="line">    &lt;scope&gt;runtime&lt;/scope&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;com.alibaba&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;druid&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;1.1.10&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-boot-starter-thymeleaf&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
-<p>其中shiro-spring是shiro的包，mysql-connector-java和druid是数据库的包，spring-boot-starter-thymeleaf是thymeleaf的包（如果前后端分离可以不需要这个包）</p>
+<h4 id="2-2、添加依赖包（pow-xml）"><a href="#2-2、添加依赖包（pow-xml）" class="headerlink" title="2.2、添加依赖包（pow.xml）"></a>2.2、添加依赖包（pow.xml）</h4><pre><code>    &lt;dependency&gt;
+        &lt;groupId&gt;org.apache.shiro&lt;/groupId&gt;
+        &lt;artifactId&gt;shiro-spring&lt;/artifactId&gt;
+        &lt;version&gt;1.3.2&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;mysql&lt;/groupId&gt;
+        &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
+        &lt;scope&gt;runtime&lt;/scope&gt;
+    &lt;/dependency&gt;
+
+    &lt;dependency&gt;
+        &lt;groupId&gt;com.alibaba&lt;/groupId&gt;
+        &lt;artifactId&gt;druid&lt;/artifactId&gt;
+        &lt;version&gt;1.1.10&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-boot-starter-thymeleaf&lt;/artifactId&gt;
+    &lt;/dependency&gt;</code></pre><p>其中shiro-spring是shiro的包，mysql-connector-java和druid是数据库的包，spring-boot-starter-thymeleaf是thymeleaf的包（如果前后端分离可以不需要这个包）</p>
 <h4 id="2-3、User类和数据库配置"><a href="#2-3、User类和数据库配置" class="headerlink" title="2.3、User类和数据库配置"></a>2.3、User类和数据库配置</h4><p>这里讲shiro的，所以数据库问题，不展开,只展示一下UserMapper<br>UserMapper</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">@Mapper</span><br><span class="line">public interface UserMapper &#123;</span><br><span class="line">    @Select(&quot;select * from user where name = #&#123;name&#125;&quot;)</span><br><span class="line">    public User findByName(String name);</span><br><span class="line"></span><br><span class="line">    @Select(&quot;select * from user where id = #&#123;id&#125;&quot;)</span><br><span class="line">    public User findById(Integer id);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code>@Mapper
+public interface UserMapper {
+    @Select(&quot;select * from user where name = #{name}&quot;)
+    public User findByName(String name);
 
-<h4 id="2-4、Controller"><a href="#2-4、Controller" class="headerlink" title="2.4、Controller"></a>2.4、Controller</h4><p>由于这个demo非常简单，所以Controller也很简单,其他的只要返回对于的html就行，主要只是登录处理</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">@RequestMapping(&quot;/login&quot;)</span><br><span class="line">   public String login(String name,String password,boolean rememberMe, Model model) &#123;</span><br><span class="line"></span><br><span class="line">       //1、获取subject</span><br><span class="line">       Subject subject = SecurityUtils.getSubject();</span><br><span class="line"></span><br><span class="line">       //2、封装用户数据</span><br><span class="line">       UsernamePasswordToken token = new UsernamePasswordToken(name,password,rememberMe);</span><br><span class="line"></span><br><span class="line">       //3、执行登录方法</span><br><span class="line">       try &#123;</span><br><span class="line">           //交给Realm处理---&gt;执行它的认证方法</span><br><span class="line">           subject.login(token);</span><br><span class="line">           //登录成功</span><br><span class="line">           return &quot;index&quot;;</span><br><span class="line">       &#125;catch (UnknownAccountException e)&#123;</span><br><span class="line">           //登录失败:用户名不存在</span><br><span class="line">           return &quot;accountError&quot;;</span><br><span class="line">       &#125;catch (IncorrectCredentialsException e)&#123;</span><br><span class="line">           //登录失败：密码错误</span><br><span class="line">           return &quot;accountError&quot;;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-<p>相对应是login.html中的表单</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;form method=&quot;post&quot; action=&quot;login&quot;&gt;</span><br><span class="line">    用户名:&lt;input type=&quot;text&quot; name=&quot;name&quot;&gt;&lt;br&gt;</span><br><span class="line">    密码:&lt;input type=&quot;password&quot; name=&quot;password&quot;&gt;&lt;br&gt;</span><br><span class="line">    &lt;input type=&quot;submit&quot; value=&quot;登录&quot;&gt;</span><br><span class="line">&lt;/form&gt;</span><br></pre></td></tr></table></figure>
-<h4 id="2-5、Shiro核心配置"><a href="#2-5、Shiro核心配置" class="headerlink" title="2.5、Shiro核心配置"></a>2.5、Shiro核心配置</h4><h5 id="ShiroConfig-主要是对于全局拦截规则的定义，比如哪些路由需要登录啦，哪些路由需要授权啦，大致的规则如下。"><a href="#ShiroConfig-主要是对于全局拦截规则的定义，比如哪些路由需要登录啦，哪些路由需要授权啦，大致的规则如下。" class="headerlink" title="ShiroConfig,主要是对于全局拦截规则的定义，比如哪些路由需要登录啦，哪些路由需要授权啦，大致的规则如下。"></a>ShiroConfig,主要是对于全局拦截规则的定义，比如哪些路由需要登录啦，哪些路由需要授权啦，大致的规则如下。</h5><pre><code>/**
- * Shiro内置过滤器，可以实现权限相关的拦截器
- *  常用的过滤器：
- *      anon: 无需认证（登录）可以访问
- *      authc: 必须认证才可以访问
- *      user: 如果使用rememberMe功能可以直接访问
- *      perms: 该资源必须得到资源权限才可以访问
- *      role: 该资源必须得到角色权限才可以访问
- */</code></pre><p>具体使用</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">@Bean</span><br><span class="line">   public ShiroFilterFactoryBean getShiroFilterFactoryBean(@Qualifier(&quot;securityManager&quot;) </span><br><span class="line">   DefaultWebSecurityManager securityManager)&#123;</span><br><span class="line">       ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();</span><br><span class="line"></span><br><span class="line">       // 设置安全管理器</span><br><span class="line">       shiroFilterFactoryBean.setSecurityManager(securityManager);</span><br><span class="line"></span><br><span class="line">       Map&lt;String, String&gt; filerMap = new LinkedHashMap&lt;&gt;(); //顺序的map</span><br><span class="line">       filerMap.put(&quot;/index&quot;,&quot;anon&quot;);</span><br><span class="line">       filerMap.put(&quot;/login&quot;,&quot;anon&quot;); //login是表单提交的</span><br><span class="line">       filerMap.put(&quot;/toLogin&quot;,&quot;anon&quot;);</span><br><span class="line">       filerMap.put(&quot;/see&quot;,&quot;perms[user:see]&quot;); //对应数据库的 permers</span><br><span class="line"></span><br><span class="line">       //设置登录的页面，发送toLogin请求</span><br><span class="line">       shiroFilterFactoryBean.setLoginUrl(&quot;/toLogin&quot;);</span><br><span class="line"></span><br><span class="line">       //设置未授权的页面</span><br><span class="line">       shiroFilterFactoryBean.setUnauthorizedUrl(&quot;/noAuth&quot;);</span><br><span class="line">       //设置过滤器</span><br><span class="line">       shiroFilterFactoryBean.setFilterChainDefinitionMap(filerMap);</span><br><span class="line">       return shiroFilterFactoryBean;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-<p>其中setLoginUrl设置未认证如何跳转，setUnauthorizedUrl设置未授权如何跳转</p>
-<h5 id="UserRealm-Realm叫做用户域，从mysql数据库获取用户权限，并显示设置给shiro，即连接逻辑和数据库的配置。"><a href="#UserRealm-Realm叫做用户域，从mysql数据库获取用户权限，并显示设置给shiro，即连接逻辑和数据库的配置。" class="headerlink" title="UserRealm Realm叫做用户域，从mysql数据库获取用户权限，并显示设置给shiro，即连接逻辑和数据库的配置。"></a>UserRealm Realm叫做用户域，从mysql数据库获取用户权限，并显示设置给shiro，即连接逻辑和数据库的配置。</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">public class UserRealm extends AuthorizingRealm &#123;</span><br><span class="line"></span><br><span class="line">    @Autowired</span><br><span class="line">    private UserService userService;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 执行授权逻辑</span><br><span class="line">     */</span><br><span class="line">    @Override</span><br><span class="line">    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) &#123;</span><br><span class="line">        System.out.println(&quot;执行授权逻辑&quot;);</span><br><span class="line">        //给资源进行授权</span><br><span class="line">        SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();</span><br><span class="line">        //获取当前登录用户</span><br><span class="line">        Subject subject = SecurityUtils.getSubject();</span><br><span class="line">        User user = (User)subject.getPrincipal();</span><br><span class="line">        //System.out.println(subject.getPrincipal());</span><br><span class="line">        User dbUser = userService.findById(user.getId());</span><br><span class="line">       // info.addStringPermission(&quot;user:add&quot;);</span><br><span class="line">        info.addStringPermission(dbUser.getPerms());</span><br><span class="line">        return info;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 执行认证逻辑</span><br><span class="line">     */</span><br><span class="line">    @Override</span><br><span class="line">    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException &#123;</span><br><span class="line">        System.out.println(&quot;执行认证逻辑&quot;);</span><br><span class="line"></span><br><span class="line">        //编写shiro判断逻辑，判断用户名和密码</span><br><span class="line">        UsernamePasswordToken token  =  (UsernamePasswordToken)authenticationToken;</span><br><span class="line"></span><br><span class="line">        User user = userService.findByName(token.getUsername());</span><br><span class="line"></span><br><span class="line">        //1、判断用户名</span><br><span class="line">        if(user == null)&#123;</span><br><span class="line">            //用户名不存在</span><br><span class="line">            return null; //shiro底层会抛出UnKnowAccountException</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        //2、判断密码, 这里的user是principal</span><br><span class="line">        return new SimpleAuthenticationInfo(user,user.getPassword(),getName());</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+    @Select(&quot;select * from user where id = #{id}&quot;)
+    public User findById(Integer id);
+}</code></pre><h4 id="2-4、Controller"><a href="#2-4、Controller" class="headerlink" title="2.4、Controller"></a>2.4、Controller</h4><p>由于这个demo非常简单，所以Controller也很简单,其他的只要返回对于的html就行，主要只是登录处理</p>
+<pre><code> @RequestMapping(&quot;/login&quot;)
+    public String login(String name,String password,boolean rememberMe, Model model) {
 
-<h4 id="然后你只要在ShiroConfig中实例化Realm、SecurityManager即完成"><a href="#然后你只要在ShiroConfig中实例化Realm、SecurityManager即完成" class="headerlink" title="然后你只要在ShiroConfig中实例化Realm、SecurityManager即完成"></a>然后你只要在ShiroConfig中实例化Realm、SecurityManager即完成</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">@Bean(name = &quot;securityManager&quot;)</span><br><span class="line">public DefaultWebSecurityManager getDefaultWebSecurityManager(@Qualifier(&quot;userRealm&quot;) UserRealm userRealm)&#123;</span><br><span class="line">    DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();</span><br><span class="line">    // 关联realm</span><br><span class="line">    securityManager.setRealm(userRealm);</span><br><span class="line">    return securityManager;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 创建Realm</span><br><span class="line"> */</span><br><span class="line">@Bean(name = &quot;userRealm&quot;)</span><br><span class="line">public UserRealm getRealm()&#123;</span><br><span class="line">    return new UserRealm();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        //1、获取subject
+        Subject subject = SecurityUtils.getSubject();
 
-<h4 id="本文只列出核心代码，详细代码请移步github。"><a href="#本文只列出核心代码，详细代码请移步github。" class="headerlink" title="本文只列出核心代码，详细代码请移步github。"></a>本文只列出核心代码，详细代码请移步github。</h4>
+        //2、封装用户数据
+        UsernamePasswordToken token = new UsernamePasswordToken(name,password,rememberMe);
+
+        //3、执行登录方法
+        try {
+            //交给Realm处理---&gt;执行它的认证方法
+            subject.login(token);
+            //登录成功
+            return &quot;index&quot;;
+        }catch (UnknownAccountException e){
+            //登录失败:用户名不存在
+            return &quot;accountError&quot;;
+        }catch (IncorrectCredentialsException e){
+            //登录失败：密码错误
+            return &quot;accountError&quot;;
+        }
+    }</code></pre><p>相对应是login.html中的表单</p>
+<pre><code>&lt;form method=&quot;post&quot; action=&quot;login&quot;&gt;
+    用户名:&lt;input type=&quot;text&quot; name=&quot;name&quot;&gt;&lt;br&gt;
+    密码:&lt;input type=&quot;password&quot; name=&quot;password&quot;&gt;&lt;br&gt;
+    &lt;input type=&quot;submit&quot; value=&quot;登录&quot;&gt;
+&lt;/form&gt;</code></pre><h4 id="2-5、Shiro核心配置"><a href="#2-5、Shiro核心配置" class="headerlink" title="2.5、Shiro核心配置"></a>2.5、Shiro核心配置</h4><h5 id="ShiroConfig-主要是对于全局拦截规则的定义，比如哪些路由需要登录啦，哪些路由需要授权啦，大致的规则如下。"><a href="#ShiroConfig-主要是对于全局拦截规则的定义，比如哪些路由需要登录啦，哪些路由需要授权啦，大致的规则如下。" class="headerlink" title="ShiroConfig,主要是对于全局拦截规则的定义，比如哪些路由需要登录啦，哪些路由需要授权啦，大致的规则如下。"></a>ShiroConfig,主要是对于全局拦截规则的定义，比如哪些路由需要登录啦，哪些路由需要授权啦，大致的规则如下。</h5><pre><code>    /**
+     * Shiro内置过滤器，可以实现权限相关的拦截器
+     *  常用的过滤器：
+     *      anon: 无需认证（登录）可以访问
+     *      authc: 必须认证才可以访问
+     *      user: 如果使用rememberMe功能可以直接访问
+     *      perms: 该资源必须得到资源权限才可以访问
+     *      role: 该资源必须得到角色权限才可以访问
+     */</code></pre><p>具体使用</p>
+<pre><code> @Bean
+    public ShiroFilterFactoryBean getShiroFilterFactoryBean(@Qualifier(&quot;securityManager&quot;) 
+    DefaultWebSecurityManager securityManager){
+        ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
+
+        // 设置安全管理器
+        shiroFilterFactoryBean.setSecurityManager(securityManager);
+
+        Map&lt;String, String&gt; filerMap = new LinkedHashMap&lt;&gt;(); //顺序的map
+        filerMap.put(&quot;/index&quot;,&quot;anon&quot;);
+        filerMap.put(&quot;/login&quot;,&quot;anon&quot;); //login是表单提交的
+        filerMap.put(&quot;/toLogin&quot;,&quot;anon&quot;);
+        filerMap.put(&quot;/see&quot;,&quot;perms[user:see]&quot;); //对应数据库的 permers
+
+        //设置登录的页面，发送toLogin请求
+        shiroFilterFactoryBean.setLoginUrl(&quot;/toLogin&quot;);
+
+        //设置未授权的页面
+        shiroFilterFactoryBean.setUnauthorizedUrl(&quot;/noAuth&quot;);
+        //设置过滤器
+        shiroFilterFactoryBean.setFilterChainDefinitionMap(filerMap);
+        return shiroFilterFactoryBean;
+    }</code></pre><p>其中setLoginUrl设置未认证如何跳转，setUnauthorizedUrl设置未授权如何跳转</p>
+<h5 id="UserRealm-Realm叫做用户域，从mysql数据库获取用户权限，并显示设置给shiro，即连接逻辑和数据库的配置。"><a href="#UserRealm-Realm叫做用户域，从mysql数据库获取用户权限，并显示设置给shiro，即连接逻辑和数据库的配置。" class="headerlink" title="UserRealm Realm叫做用户域，从mysql数据库获取用户权限，并显示设置给shiro，即连接逻辑和数据库的配置。"></a>UserRealm Realm叫做用户域，从mysql数据库获取用户权限，并显示设置给shiro，即连接逻辑和数据库的配置。</h5><pre><code>public class UserRealm extends AuthorizingRealm {
+
+    @Autowired
+    private UserService userService;
+
+    /**
+     * 执行授权逻辑
+     */
+    @Override
+    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
+        System.out.println(&quot;执行授权逻辑&quot;);
+        //给资源进行授权
+        SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+        //获取当前登录用户
+        Subject subject = SecurityUtils.getSubject();
+        User user = (User)subject.getPrincipal();
+        //System.out.println(subject.getPrincipal());
+        User dbUser = userService.findById(user.getId());
+       // info.addStringPermission(&quot;user:add&quot;);
+        info.addStringPermission(dbUser.getPerms());
+        return info;
+    }
+
+
+    /**
+     * 执行认证逻辑
+     */
+    @Override
+    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
+        System.out.println(&quot;执行认证逻辑&quot;);
+
+        //编写shiro判断逻辑，判断用户名和密码
+        UsernamePasswordToken token  =  (UsernamePasswordToken)authenticationToken;
+
+        User user = userService.findByName(token.getUsername());
+
+        //1、判断用户名
+        if(user == null){
+            //用户名不存在
+            return null; //shiro底层会抛出UnKnowAccountException
+        }
+
+        //2、判断密码, 这里的user是principal
+        return new SimpleAuthenticationInfo(user,user.getPassword(),getName());
+    }
+</code></pre><h4 id="然后你只要在ShiroConfig中实例化Realm、SecurityManager即完成"><a href="#然后你只要在ShiroConfig中实例化Realm、SecurityManager即完成" class="headerlink" title="然后你只要在ShiroConfig中实例化Realm、SecurityManager即完成"></a>然后你只要在ShiroConfig中实例化Realm、SecurityManager即完成</h4><pre><code>    @Bean(name = &quot;securityManager&quot;)
+    public DefaultWebSecurityManager getDefaultWebSecurityManager(@Qualifier(&quot;userRealm&quot;) UserRealm userRealm){
+        DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
+        // 关联realm
+        securityManager.setRealm(userRealm);
+        return securityManager;
+    }
+
+    /**
+     * 创建Realm
+     */
+    @Bean(name = &quot;userRealm&quot;)
+    public UserRealm getRealm(){
+        return new UserRealm();
+    }   </code></pre><h4 id="本文只列出核心代码，详细代码请移步github。"><a href="#本文只列出核心代码，详细代码请移步github。" class="headerlink" title="本文只列出核心代码，详细代码请移步github。"></a>本文只列出核心代码，详细代码请移步github。</h4>
             </div>
             <hr/>
 
@@ -835,7 +958,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">175.5k</span>&nbsp;字
+                class="white-color">173.5k</span>&nbsp;字
             
             
             

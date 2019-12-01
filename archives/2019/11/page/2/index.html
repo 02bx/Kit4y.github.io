@@ -448,7 +448,14 @@
                             <div class="summary block-with-text">
                                 
                                     cookie欺骗攻击index.php
-123456789101112131415&lt;?phpsetcookie("name","cookie");if(isset($_POST['name']))&#123;echo $_POST['
+&lt;?php
+setcookie("name","cookie");
+if(isset($_POST['name']))
+{
+echo $_POST['name'];
+}
+?>
+&lt;html>
                                 
                             </div>
                             <div class="publish-info">
@@ -571,7 +578,8 @@
                             <div class="summary block-with-text">
                                 
                                     “百度杯”CTF比赛 2017 二月场爆破-1描述flag就在某六位变量中。题目的意思是flag.php中定义了一个flag字符串 我们传递hello如果为那个变量 那个$$a就能把flag丢出来
-123456789&lt;?phpincl
+&lt;?php
+include "fla
                                 
                             </div>
                             <div class="publish-info">
@@ -645,7 +653,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">175.5k</span>&nbsp;字
+                class="white-color">173.5k</span>&nbsp;字
             
             
             

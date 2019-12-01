@@ -470,24 +470,24 @@
 <p>“只匹配不返回”：不消费</p>
 <p>向前查找（向后查找）匹配本身其实是有返回结果的，只是这个结果的字节长度永远为0而已。因此，前后查找操作有时也称为零宽度匹配操作。</p>
 <p>文本：</p>
-<pre><code>http://www.forta.com/
+<pre><code>    http://www.forta.com/
 
-https://mail.forta.com/
+    https://mail.forta.com/
 
-ftp://ftp.forta.com/</code></pre><p>正则表达式： .+(?=:)</p>
+    ftp://ftp.forta.com/</code></pre><p>正则表达式： .+(?=:)</p>
 <p>结果：<br><strong>http</strong></p>
 <p><strong>https</strong></p>
 <p>2.向后查找：“?&lt;=”元字符。</p>
 <p>文本：</p>
-<pre><code>ABC01：$23.45
+<pre><code>    ABC01：$23.45
 
-HGG42：$5.31
+    HGG42：$5.31
 
-CFMX1：$899.00
+    CFMX1：$899.00
 
-XTC99：$69.96
+    XTC99：$69.96
 
-Total items found: 4</code></pre><p>正则表达式：(?&lt;=$)[0-9.]+</p>
+    Total items found: 4</code></pre><p>正则表达式：(?&lt;=$)[0-9.]+</p>
 <p>结果：<br>ABC01：$<strong>23.45</strong></p>
 <p>HGG42：$<strong>5.31</strong></p>
 <p>CFMX1：$<strong>899.00</strong></p>
@@ -503,17 +503,17 @@ Total items found: 4</code></pre><p>正则表达式：(?&lt;=$)[0-9.]+</p>
 <p>3.回溯引用条件：</p>
 <p>?(1)：检查第一个回溯引用是否存在。</p>
 <p>文本：</p>
-<pre><code>123-456-7890
+<pre><code>     123-456-7890
 
-(123)456-7890
+     (123)456-7890
 
-(123)-456-7890
+     (123)-456-7890
 
-(123-456-7890
+     (123-456-7890
 
-1234567890
+     1234567890
 
-123 456 7890</code></pre><p>正则表达式：(\()?\d{3}(?(1))|-)\d{3}-\d{4}</p>
+     123 456 7890</code></pre><p>正则表达式：(\()?\d{3}(?(1))|-)\d{3}-\d{4}</p>
 <p>结果：<br><strong>123-456-7890</strong></p>
 <p><strong>(123)456-7890</strong></p>
 <p>(123)-456-7890</p>
@@ -522,27 +522,33 @@ Total items found: 4</code></pre><p>正则表达式：(?&lt;=$)[0-9.]+</p>
 <p>123 456 7890</p>
 <p>4.前后查找条件:  (?(前后查找表达式))</p>
 <p>文本：</p>
-<pre><code>11111
+<pre><code>    11111
 
-22222
+    22222
 
-33333-
+    33333-
 
-44444-4444</code></pre><p>正则表达式：\d{5}(?(?=-)-\d{4})</p>
+    44444-4444</code></pre><p>正则表达式：\d{5}(?(?=-)-\d{4})</p>
 <p>结果：<br><strong>11111</strong></p>
 <p><strong>22222</strong></p>
 <p>33333-</p>
 <p><strong>44444-4444</strong></p>
 <h3 id="简单的python正则表达式-re模块"><a href="#简单的python正则表达式-re模块" class="headerlink" title="简单的python正则表达式(re模块)"></a>简单的python正则表达式(re模块)</h3><p>1、一个网页的HTML源码。其中有一段</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt;&lt;body&gt;&lt;h1&gt;hello world&lt;h1&gt;&lt;/body&gt;&lt;/html&gt;</span><br></pre></td></tr></table></figure>
-<p>你想要把这个hello world提取出来</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import re</span><br><span class="line"></span><br><span class="line">key = r&quot;&lt;html&gt;&lt;body&gt;&lt;h1&gt;hello world&lt;h1&gt;&lt;/body&gt;&lt;/html&gt;&quot;#这段是你要匹配的文本</span><br><span class="line">p1 = r&quot;(?&lt;=&lt;h1&gt;).+?(?=&lt;h1&gt;)&quot;#这是我们写的正则表达式规则，你现在可以不理解啥意思</span><br><span class="line">pattern1 = re.compile(p1)#我们在编译这段正则表达式</span><br><span class="line">matcher1 = re.search(pattern1,key)#在源文本中搜索符合正则表达式的部分</span><br><span class="line">print matcher1.group(0)#打印出来</span><br></pre></td></tr></table></figure>
+<pre><code>&lt;html&gt;&lt;body&gt;&lt;h1&gt;hello world&lt;h1&gt;&lt;/body&gt;&lt;/html&gt;</code></pre><p>你想要把这个hello world提取出来</p>
+<pre><code>import re
 
-<p>2、既有http://开头的，又有https://开头的，我们怎么处理？</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import re</span><br><span class="line"></span><br><span class="line">key = r&quot;http://www.nsfbuhwe.com and https://www.auhfisna.com&quot;#胡编乱造的网址，别在意</span><br><span class="line">p1 = r&quot;https*://&quot;#看那个星号！1</span><br><span class="line">pattern1 = re.compile(p1)</span><br><span class="line">print pattern1.findall(key)</span><br></pre></td></tr></table></figure>
-<p>输出</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&apos;http://&apos;, &apos;https://&apos;]</span><br></pre></td></tr></table></figure>
-<p>findall函数返回的总是正则表达式在字符串中所有匹配结果的列表</p>
+key = r&quot;&lt;html&gt;&lt;body&gt;&lt;h1&gt;hello world&lt;h1&gt;&lt;/body&gt;&lt;/html&gt;&quot;#这段是你要匹配的文本
+p1 = r&quot;(?&lt;=&lt;h1&gt;).+?(?=&lt;h1&gt;)&quot;#这是我们写的正则表达式规则，你现在可以不理解啥意思
+pattern1 = re.compile(p1)#我们在编译这段正则表达式
+matcher1 = re.search(pattern1,key)#在源文本中搜索符合正则表达式的部分
+print matcher1.group(0)#打印出来</code></pre><p>2、既有http://开头的，又有https://开头的，我们怎么处理？</p>
+<pre><code>import re
+
+key = r&quot;http://www.nsfbuhwe.com and https://www.auhfisna.com&quot;#胡编乱造的网址，别在意
+p1 = r&quot;https*://&quot;#看那个星号！1
+pattern1 = re.compile(p1)
+print pattern1.findall(key)</code></pre><p>输出</p>
+<pre><code>[&#39;http://&#39;, &#39;https://&#39;]</code></pre><p>findall函数返回的总是正则表达式在字符串中所有匹配结果的列表</p>
 
             </div>
             <hr/>
@@ -923,7 +929,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">175.5k</span>&nbsp;字
+                class="white-color">173.5k</span>&nbsp;字
             
             
             

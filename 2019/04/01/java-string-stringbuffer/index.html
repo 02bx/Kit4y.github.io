@@ -383,7 +383,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.7k
+                    2.6k
                 </div>
                 
 
@@ -407,61 +407,201 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h3 id="一、字符串个人觉得一直贼可怕！！ヽ-。-gt-Д-lt-o゜，从C-python-java都挺有讲究的，而这也是逃不掉的，反正一定会用到吧。"><a href="#一、字符串个人觉得一直贼可怕！！ヽ-。-gt-Д-lt-o゜，从C-python-java都挺有讲究的，而这也是逃不掉的，反正一定会用到吧。" class="headerlink" title="一、字符串个人觉得一直贼可怕！！ヽ(*。&gt;Д&lt;)o゜，从C++,python,java都挺有讲究的，而这也是逃不掉的，反正一定会用到吧。"></a>一、字符串个人觉得一直贼可怕！！ヽ(*。&gt;Д&lt;)o゜，从C++,python,java都挺有讲究的，而这也是逃不掉的，反正一定会用到吧。</h3><p>在 Java 中字符串属于对象，Java 提供了 String 类来创建和操作字符串。<br>创建字符串最简单的方式如下:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String greeting = &quot;Hello Kitty&quot;;</span><br></pre></td></tr></table></figure>
-<p>在代码中遇到字符串常量时，这里的值是 “Hello Kitty”，编译器会使用该值创建一个 String 对象。<br>和其它对象一样，可以使用关键字和构造方法来创建 String 对象。<br>String 类有 11 种构造方法，这些方法提供不同的参数来初始化字符串，比如提供一个字符数组参数:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public class StringDemo&#123;</span><br><span class="line">   public static void main(String args[])&#123;</span><br><span class="line">      char[] helloArray = &#123; &apos;H&apos;, &apos;e&apos;, &apos;l&apos;, &apos;l&apos;, &apos;o&apos;&#125;;</span><br><span class="line">      String helloString = new String(helloArray);  </span><br><span class="line">      System.out.println( helloString );</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<a id="more"></a>
+<pre><code>String greeting = &quot;Hello Kitty&quot;;</code></pre><p>在代码中遇到字符串常量时，这里的值是 “Hello Kitty”，编译器会使用该值创建一个 String 对象。<br>和其它对象一样，可以使用关键字和构造方法来创建 String 对象。<br>String 类有 11 种构造方法，这些方法提供不同的参数来初始化字符串，比如提供一个字符数组参数:</p>
+<pre><code>public class StringDemo{
+   public static void main(String args[]){
+      char[] helloArray = { &#39;H&#39;, &#39;e&#39;, &#39;l&#39;, &#39;l&#39;, &#39;o&#39;};
+      String helloString = new String(helloArray);  
+      System.out.println( helloString );
+   }
+}</code></pre><a id="more"></a>
 <p>以上实例编译运行结果如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello</span><br></pre></td></tr></table></figure>
-<h5 id="注意-String-类是不可改变的，所以你一旦创建了-String-对象，那它的值就无法改变了"><a href="#注意-String-类是不可改变的，所以你一旦创建了-String-对象，那它的值就无法改变了" class="headerlink" title="注意:String 类是不可改变的，所以你一旦创建了 String 对象，那它的值就无法改变了"></a>注意:String 类是不可改变的，所以你一旦创建了 String 对象，那它的值就无法改变了</h5><h3 id="二、String-类一些常用函数"><a href="#二、String-类一些常用函数" class="headerlink" title="二、String 类一些常用函数"></a>二、String 类一些常用函数</h3><h4 id="2-1、字符串长度"><a href="#2-1、字符串长度" class="headerlink" title="2.1、字符串长度"></a>2.1、字符串长度</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public class Test &#123;</span><br><span class="line">    public static void main(String args[]) &#123;</span><br><span class="line">        String site = &quot;Hello Kitty&quot;;</span><br><span class="line">        int len = site.length();</span><br><span class="line">        System.out.println(&quot;Hello Kitty : &quot; + len);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello Kitty : 11</span><br></pre></td></tr></table></figure>
-<h4 id="2-2、连接字符串"><a href="#2-2、连接字符串" class="headerlink" title="2.2、连接字符串"></a>2.2、连接字符串</h4><p>String 类提供了连接两个字符串的方法：<br><code>string1.concat(string2);</code>更常用的是使用’+’操作符来连接字符串</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public class Test &#123;</span><br><span class="line">    public static void main(String args[]) &#123;</span><br><span class="line">        String site = &quot;Hello&quot;;</span><br><span class="line">        String str=site.concat(&quot; kitty&quot;);</span><br><span class="line">        System.out.println(str);</span><br><span class="line">        System.out.println(site+&quot; kitty&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>结果</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Hello kitty</span><br><span class="line">Hello kitty</span><br></pre></td></tr></table></figure>
-<h4 id="2-3、创建格式化字符串"><a href="#2-3、创建格式化字符串" class="headerlink" title="2.3、创建格式化字符串"></a>2.3、创建格式化字符串</h4><p>我们知道输出格式化数字可以使用 printf() 和 format() 方法。<br>String 类使用静态方法 format() 返回一个String 对象而不是 PrintStream 对象。<br>String 类的静态方法 format() 能用来创建可复用的格式化字符串，而不仅仅是用于一次打印输出。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">System.out.printf(&quot;浮点型变量的值为 &quot; +</span><br><span class="line">                  &quot;%f, 整型变量的值为 &quot; +</span><br><span class="line">                  &quot; %d, 字符串变量的值为 &quot; +</span><br><span class="line">                  &quot;is %s&quot;, floatVar, intVar, stringVar);</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">String fs;</span><br><span class="line">fs = String.format(&quot;浮点型变量的值为 &quot; +</span><br><span class="line">                   &quot;%f, 整型变量的值为 &quot; +</span><br><span class="line">                   &quot; %d, 字符串变量的值为 &quot; +</span><br><span class="line">                   &quot; %s&quot;, floatVar, intVar, stringVar);</span><br></pre></td></tr></table></figure>
-<h4 id="2-4、charAt-方法"><a href="#2-4、charAt-方法" class="headerlink" title="2.4、charAt() 方法"></a>2.4、charAt() 方法</h4><p>charAt() 方法用于返回指定索引处的字符。索引范围为从 0 到 length() - 1</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public class Test &#123;</span><br><span class="line"></span><br><span class="line">    public static void main(String args[]) &#123;</span><br><span class="line">        String s = &quot;Hello Kitty&quot;;</span><br><span class="line">        char result = s.charAt(0);</span><br><span class="line">        System.out.println(result);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">H</span><br></pre></td></tr></table></figure>
-<h4 id="2-5、compareTo"><a href="#2-5、compareTo" class="headerlink" title="2.5、compareTo()"></a>2.5、compareTo()</h4><p>语法</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int compareTo(Object o)</span><br><span class="line">或</span><br><span class="line">int compareTo(String anotherString)</span><br></pre></td></tr></table></figure>
-<p>返回值</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">如果参数字符串等于此字符串，则返回值 0；</span><br><span class="line">如果此字符串小于字符串参数，则返回一个小于 0 的值；</span><br><span class="line">如果此字符串大于字符串参数，则返回一个大于 0 的值。</span><br></pre></td></tr></table></figure>
-<p>例子</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public class Test &#123;</span><br><span class="line"> </span><br><span class="line">    public static void main(String args[]) &#123;</span><br><span class="line">        String str1 = &quot;Strings&quot;;</span><br><span class="line">        String str2 = &quot;Strings&quot;;</span><br><span class="line">        String str3 = &quot;Strings123&quot;;</span><br><span class="line"> </span><br><span class="line">        int result = str1.compareTo( str2 );</span><br><span class="line">        System.out.println(result);</span><br><span class="line">      </span><br><span class="line">        result = str2.compareTo( str3 );</span><br><span class="line">        System.out.println(result);</span><br><span class="line">     </span><br><span class="line">        result = str3.compareTo( str1 );</span><br><span class="line">        System.out.println(result);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">0</span><br><span class="line">-3</span><br><span class="line">3</span><br></pre></td></tr></table></figure>
-<p>PS:equalsIgnoreCase() 方法用于将字符串与指定的对象比较，不考虑大小写</p>
+<pre><code>Hello</code></pre><h5 id="注意-String-类是不可改变的，所以你一旦创建了-String-对象，那它的值就无法改变了"><a href="#注意-String-类是不可改变的，所以你一旦创建了-String-对象，那它的值就无法改变了" class="headerlink" title="注意:String 类是不可改变的，所以你一旦创建了 String 对象，那它的值就无法改变了"></a>注意:String 类是不可改变的，所以你一旦创建了 String 对象，那它的值就无法改变了</h5><h3 id="二、String-类一些常用函数"><a href="#二、String-类一些常用函数" class="headerlink" title="二、String 类一些常用函数"></a>二、String 类一些常用函数</h3><h4 id="2-1、字符串长度"><a href="#2-1、字符串长度" class="headerlink" title="2.1、字符串长度"></a>2.1、字符串长度</h4><pre><code>public class Test {
+    public static void main(String args[]) {
+        String site = &quot;Hello Kitty&quot;;
+        int len = site.length();
+        System.out.println(&quot;Hello Kitty : &quot; + len);
+    }
+}</code></pre><pre><code>Hello Kitty : 11</code></pre><h4 id="2-2、连接字符串"><a href="#2-2、连接字符串" class="headerlink" title="2.2、连接字符串"></a>2.2、连接字符串</h4><p>String 类提供了连接两个字符串的方法：<br><code>string1.concat(string2);</code>更常用的是使用’+’操作符来连接字符串</p>
+<pre><code>public class Test {
+    public static void main(String args[]) {
+        String site = &quot;Hello&quot;;
+        String str=site.concat(&quot; kitty&quot;);
+        System.out.println(str);
+        System.out.println(site+&quot; kitty&quot;);
+    }
+}</code></pre><p>结果</p>
+<pre><code>Hello kitty
+Hello kitty</code></pre><h4 id="2-3、创建格式化字符串"><a href="#2-3、创建格式化字符串" class="headerlink" title="2.3、创建格式化字符串"></a>2.3、创建格式化字符串</h4><p>我们知道输出格式化数字可以使用 printf() 和 format() 方法。<br>String 类使用静态方法 format() 返回一个String 对象而不是 PrintStream 对象。<br>String 类的静态方法 format() 能用来创建可复用的格式化字符串，而不仅仅是用于一次打印输出。</p>
+<pre><code>System.out.printf(&quot;浮点型变量的值为 &quot; +
+                  &quot;%f, 整型变量的值为 &quot; +
+                  &quot; %d, 字符串变量的值为 &quot; +
+                  &quot;is %s&quot;, floatVar, intVar, stringVar);</code></pre><pre><code>String fs;
+fs = String.format(&quot;浮点型变量的值为 &quot; +
+                   &quot;%f, 整型变量的值为 &quot; +
+                   &quot; %d, 字符串变量的值为 &quot; +
+                   &quot; %s&quot;, floatVar, intVar, stringVar);</code></pre><h4 id="2-4、charAt-方法"><a href="#2-4、charAt-方法" class="headerlink" title="2.4、charAt() 方法"></a>2.4、charAt() 方法</h4><p>charAt() 方法用于返回指定索引处的字符。索引范围为从 0 到 length() - 1</p>
+<pre><code>public class Test {
+
+    public static void main(String args[]) {
+        String s = &quot;Hello Kitty&quot;;
+        char result = s.charAt(0);
+        System.out.println(result);
+    }
+}</code></pre><pre><code>H</code></pre><h4 id="2-5、compareTo"><a href="#2-5、compareTo" class="headerlink" title="2.5、compareTo()"></a>2.5、compareTo()</h4><p>语法</p>
+<pre><code>int compareTo(Object o)
+或
+int compareTo(String anotherString)</code></pre><p>返回值</p>
+<pre><code>如果参数字符串等于此字符串，则返回值 0；
+如果此字符串小于字符串参数，则返回一个小于 0 的值；
+如果此字符串大于字符串参数，则返回一个大于 0 的值。</code></pre><p>例子</p>
+<pre><code>public class Test {
+
+    public static void main(String args[]) {
+        String str1 = &quot;Strings&quot;;
+        String str2 = &quot;Strings&quot;;
+        String str3 = &quot;Strings123&quot;;
+
+        int result = str1.compareTo( str2 );
+        System.out.println(result);
+
+        result = str2.compareTo( str3 );
+        System.out.println(result);
+
+        result = str3.compareTo( str1 );
+        System.out.println(result);
+    }
+}</code></pre><pre><code>0
+-3
+3</code></pre><p>PS:equalsIgnoreCase() 方法用于将字符串与指定的对象比较，不考虑大小写</p>
 <h4 id="2-6、getBytes-方法"><a href="#2-6、getBytes-方法" class="headerlink" title="2.6、getBytes() 方法"></a>2.6、getBytes() 方法</h4><p>getBytes() 方法有两种形式：<br>getBytes(String charsetName): 使用指定的字符集将字符串编码为 byte 序列，并将结果存储到一个新的 byte 数组中。<br>getBytes(): 使用平台的默认字符集将字符串编码为 byte 序列，并将结果存储到一个新的 byte 数组中。<br>语法</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public byte[] getBytes(String charsetName) throws UnsupportedEncodingException</span><br><span class="line">或</span><br><span class="line">public byte[] getBytes()</span><br></pre></td></tr></table></figure>
-<p>例子</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">    String str = &quot;make a fortune&quot;;</span><br><span class="line">    byte[] byt = str.getBytes();</span><br><span class="line">        for (byte b : byt) &#123;</span><br><span class="line">            System.out.println(b);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">109</span><br><span class="line">97</span><br><span class="line">107</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-<h4 id="2-7、-hashCode-方法"><a href="#2-7、-hashCode-方法" class="headerlink" title="2.7、 hashCode() 方法"></a>2.7、 hashCode() 方法</h4><p>hashCode() 方法用于返回字符串的哈希码。<br>字符串对象的哈希码根据以下公式计算：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s[0]*31^(n-1) + s[1]*31^(n-2) + ... + s[n-1]</span><br></pre></td></tr></table></figure>
-<p>语法<code>public int hashCode()</code><br>例子</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public class Test &#123;</span><br><span class="line">    public static void main(String args[]) &#123;</span><br><span class="line">        String Str = new String(&quot;Hello Kitty&quot;);</span><br><span class="line">        System.out.println(&quot;字符串的哈希码为 :&quot; + Str.hashCode() );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">字符串的哈希码为 :-873804083</span><br></pre></td></tr></table></figure>
-<h4 id="2-8、indexOf-方法"><a href="#2-8、indexOf-方法" class="headerlink" title="2.8、indexOf() 方法"></a>2.8、indexOf() 方法</h4><p>indexOf() 方法有以下四种形式：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public int indexOf(int ch): 返回指定字符在字符串中第一次出现处的索引，如果此字符串中没有这样的字符，则返回 -1。</span><br><span class="line"></span><br><span class="line">public int indexOf(int ch, int fromIndex): 返回从 fromIndex 位置开始查找指定字符在字符串中第一次出现处的索引，如果此字符串中没有这样的字符，则返回 -1。</span><br><span class="line"></span><br><span class="line">int indexOf(String str): 返回指定字符在字符串中第一次出现处的索引，如果此字符串中没有这样的字符，则返回 -1。</span><br><span class="line"></span><br><span class="line">int indexOf(String str, int fromIndex): 返回从 fromIndex 位置开始查找指定字符在字符串中第一次出现处的索引，如果此字符串中没有这样的字符，则返回 -1。</span><br></pre></td></tr></table></figure>
-<h4 id="2-9、matches-方法-正则表达式"><a href="#2-9、matches-方法-正则表达式" class="headerlink" title="2.9、matches() 方法 //正则表达式"></a>2.9、matches() 方法 //正则表达式</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public class Test &#123;</span><br><span class="line">    public static void main(String args[]) &#123;</span><br><span class="line">        String Str = new String(&quot;Hello Kitty&quot;);</span><br><span class="line"></span><br><span class="line">        System.out.print(&quot;返回值 :&quot; );</span><br><span class="line">        System.out.println(Str.matches(&quot;(.*)Kitty(.*)&quot;));</span><br><span class="line">        </span><br><span class="line">        System.out.print(&quot;返回值 :&quot; );</span><br><span class="line">        System.out.println(Str.matches(&quot;(.*)google(.*)&quot;));</span><br><span class="line"></span><br><span class="line">        System.out.print(&quot;返回值 :&quot; );</span><br><span class="line">        System.out.println(Str.matches(&quot;Hello(.*)&quot;));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">返回值 :true</span><br><span class="line">返回值 :false</span><br><span class="line">返回值 :true</span><br></pre></td></tr></table></figure>
-<h4 id="2-10、split-方法"><a href="#2-10、split-方法" class="headerlink" title="2.10、split() 方法"></a>2.10、split() 方法</h4><p>split() 方法根据匹配给定的正则表达式来拆分字符串。<br>注意： . 、 | 和 * 等转义字符，必须得加 \。<br>注意：多个分隔符，可以用 | 作为连字符。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public String[] split(String regex, int limit)</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">public class Test &#123;</span><br><span class="line">    public static void main(String args[]) &#123;</span><br><span class="line">        String str = new String(&quot;Hello-World-Kitty&quot;);</span><br><span class="line"></span><br><span class="line">        System.out.println(&quot;- 分隔符返回值 :&quot; );</span><br><span class="line">        for (String retval: str.split(&quot;-&quot;))&#123;</span><br><span class="line">            System.out.println(retval);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        System.out.println(&quot;&quot;);</span><br><span class="line">        System.out.println(&quot;- 分隔符设置分割份数返回值 :&quot; );</span><br><span class="line">        for (String retval: str.split(&quot;-&quot;, 2))&#123;</span><br><span class="line">            System.out.println(retval);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        System.out.println(&quot;&quot;);</span><br><span class="line">        String str2 = new String(&quot;www.kitty.com&quot;);</span><br><span class="line">        System.out.println(&quot;转义字符返回值 :&quot; );</span><br><span class="line">        for (String retval: str2.split(&quot;\\.&quot;, 3))&#123;</span><br><span class="line">            System.out.println(retval);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        System.out.println(&quot;&quot;);</span><br><span class="line">        String str3 = new String(&quot;acount=? and uu =? or n=?&quot;);</span><br><span class="line">        System.out.println(&quot;多个分隔符返回值 :&quot; );</span><br><span class="line">        for (String retval: str3.split(&quot;and|or&quot;))&#123;</span><br><span class="line">            System.out.println(retval);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">- 分隔符返回值 :</span><br><span class="line">Hello</span><br><span class="line">World</span><br><span class="line">Kitty</span><br><span class="line"></span><br><span class="line">- 分隔符设置分割份数返回值 :</span><br><span class="line">Hello</span><br><span class="line">World-Kitty</span><br><span class="line"></span><br><span class="line">转义字符返回值 :</span><br><span class="line">www</span><br><span class="line">kitty</span><br><span class="line">com</span><br><span class="line"></span><br><span class="line">多个分隔符返回值 :</span><br><span class="line">acount=? </span><br><span class="line"> uu =? </span><br><span class="line"> n=?</span><br></pre></td></tr></table></figure>
-<h4 id="2-11、startsWith-方法"><a href="#2-11、startsWith-方法" class="headerlink" title="2.11、startsWith() 方法"></a>2.11、startsWith() 方法</h4><p>startsWith() 方法用于检测字符串是否以指定的前缀开始。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public boolean startsWith(String prefix, int toffset)</span><br><span class="line"></span><br><span class="line">或</span><br><span class="line"></span><br><span class="line">public boolean startsWith(String prefix)</span><br></pre></td></tr></table></figure>
-<h4 id="2-12、substring-方法"><a href="#2-12、substring-方法" class="headerlink" title="2.12、substring() 方法"></a>2.12、substring() 方法</h4><p>substring() 方法返回字符串的子字符串。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public String substring(int beginIndex)</span><br><span class="line"></span><br><span class="line">或</span><br><span class="line"></span><br><span class="line">public String substring(int beginIndex, int endIndex)</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public class Test &#123;</span><br><span class="line">    public static void main(String args[]) &#123;</span><br><span class="line">        String Str = new String(&quot;Hello Kitty&quot;);</span><br><span class="line"></span><br><span class="line">        System.out.print(&quot;返回值 :&quot; );</span><br><span class="line">        System.out.println(Str.substring(3) );</span><br><span class="line"></span><br><span class="line">        System.out.print(&quot;返回值 :&quot; );</span><br><span class="line">        System.out.println(Str.substring(3, 10) );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">返回值 :lo Kitty</span><br><span class="line">返回值 :lo Kitt</span><br></pre></td></tr></table></figure>
-<h4 id="2-13、-toLowerCase-toUpperCase-方法"><a href="#2-13、-toLowerCase-toUpperCase-方法" class="headerlink" title="2.13、 toLowerCase()/toUpperCase() 方法"></a>2.13、 toLowerCase()/toUpperCase() 方法</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public class Test &#123;</span><br><span class="line">    public static void main(String args[]) &#123;</span><br><span class="line">        String Str = new String(&quot;Hellokitty&quot;);</span><br><span class="line"></span><br><span class="line">        String lowStr=Str.toLowerCase();</span><br><span class="line">        System.out.println(lowStr );</span><br><span class="line"></span><br><span class="line">        String bigStr=Str.toUpperCase();</span><br><span class="line">        System.out.println(bigStr );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hellokitty</span><br><span class="line">HELLOKITTY</span><br></pre></td></tr></table></figure>
-<h3 id="3、String类一旦创建是不能修改的，所以当对字符串进行修改的时候，需要使用-StringBuffer-和-StringBuilder-类。"><a href="#3、String类一旦创建是不能修改的，所以当对字符串进行修改的时候，需要使用-StringBuffer-和-StringBuilder-类。" class="headerlink" title="3、String类一旦创建是不能修改的，所以当对字符串进行修改的时候，需要使用 StringBuffer 和 StringBuilder 类。"></a>3、String类一旦创建是不能修改的，所以当对字符串进行修改的时候，需要使用 StringBuffer 和 StringBuilder 类。</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public class Test&#123;</span><br><span class="line">    public static void main(String args[])&#123;</span><br><span class="line">        StringBuffer sBuffer = new StringBuffer(&quot;Hello &quot;);</span><br><span class="line">        sBuffer.append(&quot;kitty&quot;);</span><br><span class="line">        System.out.println(sBuffer);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello kitty</span><br></pre></td></tr></table></figure>
-<h4 id="3-1、StringBuffer-方法"><a href="#3-1、StringBuffer-方法" class="headerlink" title="3.1、StringBuffer 方法"></a>3.1、StringBuffer 方法</h4><table>
+<pre><code>public byte[] getBytes(String charsetName) throws UnsupportedEncodingException
+或
+public byte[] getBytes()</code></pre><p>例子</p>
+<pre><code>public static void main(String[] args) {
+    String str = &quot;make a fortune&quot;;
+    byte[] byt = str.getBytes();
+        for (byte b : byt) {
+            System.out.println(b);
+        }
+    }</code></pre><pre><code>109
+97
+107
+...</code></pre><h4 id="2-7、-hashCode-方法"><a href="#2-7、-hashCode-方法" class="headerlink" title="2.7、 hashCode() 方法"></a>2.7、 hashCode() 方法</h4><p>hashCode() 方法用于返回字符串的哈希码。<br>字符串对象的哈希码根据以下公式计算：</p>
+<pre><code>s[0]*31^(n-1) + s[1]*31^(n-2) + ... + s[n-1]</code></pre><p>语法<code>public int hashCode()</code><br>例子</p>
+<pre><code>public class Test {
+    public static void main(String args[]) {
+        String Str = new String(&quot;Hello Kitty&quot;);
+        System.out.println(&quot;字符串的哈希码为 :&quot; + Str.hashCode() );
+    }
+}</code></pre><pre><code>字符串的哈希码为 :-873804083</code></pre><h4 id="2-8、indexOf-方法"><a href="#2-8、indexOf-方法" class="headerlink" title="2.8、indexOf() 方法"></a>2.8、indexOf() 方法</h4><p>indexOf() 方法有以下四种形式：</p>
+<pre><code>public int indexOf(int ch): 返回指定字符在字符串中第一次出现处的索引，如果此字符串中没有这样的字符，则返回 -1。
+
+public int indexOf(int ch, int fromIndex): 返回从 fromIndex 位置开始查找指定字符在字符串中第一次出现处的索引，如果此字符串中没有这样的字符，则返回 -1。
+
+int indexOf(String str): 返回指定字符在字符串中第一次出现处的索引，如果此字符串中没有这样的字符，则返回 -1。
+
+int indexOf(String str, int fromIndex): 返回从 fromIndex 位置开始查找指定字符在字符串中第一次出现处的索引，如果此字符串中没有这样的字符，则返回 -1。</code></pre><h4 id="2-9、matches-方法-正则表达式"><a href="#2-9、matches-方法-正则表达式" class="headerlink" title="2.9、matches() 方法 //正则表达式"></a>2.9、matches() 方法 //正则表达式</h4><pre><code>public class Test {
+    public static void main(String args[]) {
+        String Str = new String(&quot;Hello Kitty&quot;);
+
+        System.out.print(&quot;返回值 :&quot; );
+        System.out.println(Str.matches(&quot;(.*)Kitty(.*)&quot;));
+
+        System.out.print(&quot;返回值 :&quot; );
+        System.out.println(Str.matches(&quot;(.*)google(.*)&quot;));
+
+        System.out.print(&quot;返回值 :&quot; );
+        System.out.println(Str.matches(&quot;Hello(.*)&quot;));
+    }
+}</code></pre><pre><code>返回值 :true
+返回值 :false
+返回值 :true</code></pre><h4 id="2-10、split-方法"><a href="#2-10、split-方法" class="headerlink" title="2.10、split() 方法"></a>2.10、split() 方法</h4><p>split() 方法根据匹配给定的正则表达式来拆分字符串。<br>注意： . 、 | 和 * 等转义字符，必须得加 \。<br>注意：多个分隔符，可以用 | 作为连字符。</p>
+<pre><code>public String[] split(String regex, int limit)</code></pre><pre><code>public class Test {
+    public static void main(String args[]) {
+        String str = new String(&quot;Hello-World-Kitty&quot;);
+
+        System.out.println(&quot;- 分隔符返回值 :&quot; );
+        for (String retval: str.split(&quot;-&quot;)){
+            System.out.println(retval);
+        }
+
+        System.out.println(&quot;&quot;);
+        System.out.println(&quot;- 分隔符设置分割份数返回值 :&quot; );
+        for (String retval: str.split(&quot;-&quot;, 2)){
+            System.out.println(retval);
+        }
+
+        System.out.println(&quot;&quot;);
+        String str2 = new String(&quot;www.kitty.com&quot;);
+        System.out.println(&quot;转义字符返回值 :&quot; );
+        for (String retval: str2.split(&quot;\\.&quot;, 3)){
+            System.out.println(retval);
+        }
+
+        System.out.println(&quot;&quot;);
+        String str3 = new String(&quot;acount=? and uu =? or n=?&quot;);
+        System.out.println(&quot;多个分隔符返回值 :&quot; );
+        for (String retval: str3.split(&quot;and|or&quot;)){
+            System.out.println(retval);
+        }
+    }
+}</code></pre><pre><code>- 分隔符返回值 :
+Hello
+World
+Kitty
+
+- 分隔符设置分割份数返回值 :
+Hello
+World-Kitty
+
+转义字符返回值 :
+www
+kitty
+com
+
+多个分隔符返回值 :
+acount=? 
+ uu =? 
+ n=?</code></pre><h4 id="2-11、startsWith-方法"><a href="#2-11、startsWith-方法" class="headerlink" title="2.11、startsWith() 方法"></a>2.11、startsWith() 方法</h4><p>startsWith() 方法用于检测字符串是否以指定的前缀开始。</p>
+<pre><code>public boolean startsWith(String prefix, int toffset)
+
+或
+
+public boolean startsWith(String prefix)</code></pre><h4 id="2-12、substring-方法"><a href="#2-12、substring-方法" class="headerlink" title="2.12、substring() 方法"></a>2.12、substring() 方法</h4><p>substring() 方法返回字符串的子字符串。</p>
+<pre><code>public String substring(int beginIndex)
+
+或
+
+public String substring(int beginIndex, int endIndex)</code></pre><pre><code>public class Test {
+    public static void main(String args[]) {
+        String Str = new String(&quot;Hello Kitty&quot;);
+
+        System.out.print(&quot;返回值 :&quot; );
+        System.out.println(Str.substring(3) );
+
+        System.out.print(&quot;返回值 :&quot; );
+        System.out.println(Str.substring(3, 10) );
+    }
+}</code></pre><pre><code>返回值 :lo Kitty
+返回值 :lo Kitt</code></pre><h4 id="2-13、-toLowerCase-toUpperCase-方法"><a href="#2-13、-toLowerCase-toUpperCase-方法" class="headerlink" title="2.13、 toLowerCase()/toUpperCase() 方法"></a>2.13、 toLowerCase()/toUpperCase() 方法</h4><pre><code>public class Test {
+    public static void main(String args[]) {
+        String Str = new String(&quot;Hellokitty&quot;);
+
+        String lowStr=Str.toLowerCase();
+        System.out.println(lowStr );
+
+        String bigStr=Str.toUpperCase();
+        System.out.println(bigStr );
+    }
+}</code></pre><pre><code>hellokitty
+HELLOKITTY</code></pre><h3 id="3、String类一旦创建是不能修改的，所以当对字符串进行修改的时候，需要使用-StringBuffer-和-StringBuilder-类。"><a href="#3、String类一旦创建是不能修改的，所以当对字符串进行修改的时候，需要使用-StringBuffer-和-StringBuilder-类。" class="headerlink" title="3、String类一旦创建是不能修改的，所以当对字符串进行修改的时候，需要使用 StringBuffer 和 StringBuilder 类。"></a>3、String类一旦创建是不能修改的，所以当对字符串进行修改的时候，需要使用 StringBuffer 和 StringBuilder 类。</h3><pre><code>public class Test{
+    public static void main(String args[]){
+        StringBuffer sBuffer = new StringBuffer(&quot;Hello &quot;);
+        sBuffer.append(&quot;kitty&quot;);
+        System.out.println(sBuffer);
+    }
+}</code></pre><pre><code>Hello kitty</code></pre><h4 id="3-1、StringBuffer-方法"><a href="#3-1、StringBuffer-方法" class="headerlink" title="3.1、StringBuffer 方法"></a>3.1、StringBuffer 方法</h4><table>
 <thead>
 <tr>
 <th>序号</th>
@@ -912,7 +1052,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">175.5k</span>&nbsp;字
+                class="white-color">173.5k</span>&nbsp;字
             
             
             
