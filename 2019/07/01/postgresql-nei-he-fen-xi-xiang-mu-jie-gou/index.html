@@ -26,7 +26,7 @@
     
     <script src="/libs/jquery/jquery.min.js"></script>
     
-</head>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"><script src="/js/prism.js"></script></head>
 
 
 <body>
@@ -487,135 +487,12 @@
 <td>ExecutorRun (executor/execMain.c)</td>
 </tr>
 </tbody></table>
-<h4 id="四、PostgreSQL的源码"><a href="#四、PostgreSQL的源码" class="headerlink" title="四、PostgreSQL的源码"></a>四、PostgreSQL的源码</h4><h5 id="4-1、第一级目录结构"><a href="#4-1、第一级目录结构" class="headerlink" title="4.1、第一级目录结构"></a>4.1、第一级目录结构</h5><pre><code>.
-├── aclocal.m4      # config 用的文件的一部分
-├── config/         # config 用的文件的目录
-├── configure       # configure 文件
-├── configure.in    # configure 文件的雏形
-├── contrib/        # config 用的文件的目录
-├── COPYRIGHT       # 版权信息
-├── doc/            # 文档目录
-├── GNUmakefile.in  # Makefile 的雏形
-├── HISTORY         # 修改历史
-├── INSTALL         # 安装方法简要说明
-├── Makefile        # Makefile模版
-├── README          # 简单说明
-└── src             # 最重要的源代码目录</code></pre><h5 id="4-2、第二级目录结构-src"><a href="#4-2、第二级目录结构-src" class="headerlink" title="4.2、第二级目录结构-src"></a>4.2、第二级目录结构-src</h5><pre><code>.
-├── aclocal.m4
-├── config
-├── configure
-├── configure.in
-├── contrib
-├── COPYRIGHT
-├── doc
-├── GNUmakefile.in
-├── HISTORY
-├── INSTALL
-├── Makefile
-├── README
-└── src
-    ├── backend             # 后端的源码目录
-    ├── bin/                # psql 等UNIX命令的代码
-    ├── common/             # 一些公用的函数
-    ├── DEVELOPERS          # 面向开发人员的注释 
-    ├── fe_utils            
-    ├── include/            # 一些公用的头文件           
-    ├── interfaces/         # 前端相关的库的代码
-    ├── Makefile            # make 的设定值（从configure生成的）
-    ├── Makefile.global.in  # Configure使用的Makefile.global的雏形
-    ├── makefiles/          # 平台相关的make 的设置值 
-    ├── Makefile.shlib      # 共享库用的Makefile
-    ├── nls-global.mk       # 信息目录用的Makefile文件的规则
-    ├── pl/                 # 存储过程语言的代码
-    ├── port/               # 平台移植相关的代码
-    ├── template/           # 平台相关的设置值
-    ├── test/               # 各种测试脚本
-    ├── timezone/           # 时区相关代码
-    ├── tools/              # 各自开发工具和文档
-    └── tutorial/           # 教程</code></pre><p>这里比较核心的是backend,bin,interface这几个目录。Backend是对应于后端，bin和interface对应于前端，bin里面有pgsql,initdb,pg_dump等各种工具的代码。interface里面有PostgreSQL的C语言的库libpq,另外可以在C里嵌入SQL的ECPG命令的相关代码。</p>
-<h5 id="4-3、第三级目录结构-backend"><a href="#4-3、第三级目录结构-backend" class="headerlink" title="4.3、第三级目录结构-backend"></a>4.3、第三级目录结构-backend</h5><pre><code>.
-├── 1.txt
-├── aclocal.m4
-├── config
-├── configure
-├── configure.in
-├── contrib
-├── COPYRIGHT
-├── doc
-├── GNUmakefile.in
-├── HISTORY
-├── INSTALL
-├── Makefile
-├── README
-└── src
-    ├── backend
-        ├── access/         # 各种存储访问方法(在各个子目录下) common(共同函数)、gin
-        ├── bootstrap/        # 数据库的初始化处理(initdb的时候)
-        ├── catalog/        # 系统目录    
-        ├── commands/        # SELECT/INSERT/UPDATE/DELETE以为的SQL文的处理
-        ├── executor/        # 执行器(访问的执行)
-        ├── foreign/        # FDW(Foreign Data Wrapper)处理
-        ├── jit             
-        ├── lib/        # 共同函数
-        ├── libpq/        # 前端/后端通信处理
-        ├── main/        # postgres的主函数
-        ├── Makefile        # makefile
-        ├── nodes/        # 构文树节点相关的处理函数
-        ├── optimizer/        # 优化器
-        ├── parser/        # SQL构文解析器
-        ├── partitioning
-        ├── po
-        ├── port/        # 平台相关的代码
-        ├── postmaster/        # postmaster的主函数 (常驻postgres)
-        ├── regex/        # 正则处理
-        ├── replication/    # streaming replication
-        ├── rewrite/        # 规则及视图相关的重写处理
-        ├── snowball/        # 全文检索相关（语干处理）
-        ├── statistics
-        ├── storage/        # 共享内存、磁盘上的存储、缓存等全部一次/二次记录管理(以下的目录)buffer/(缓存管理)、 file/(文件)、
-        ├── tcop/        # postgres (数据库引擎的进程)的主要部分
-        ├── tsearch/        # 全文检索
-        └── utils/          # 各种模块(以下目录)
-</code></pre><h4 id="五、PostgreSQL的data生成目录结构"><a href="#五、PostgreSQL的data生成目录结构" class="headerlink" title="五、PostgreSQL的data生成目录结构"></a>五、PostgreSQL的data生成目录结构</h4><h5 id="4-1、根目录"><a href="#4-1、根目录" class="headerlink" title="4.1、根目录"></a>4.1、根目录</h5><pre><code>    data
-    ├── base                  # use to store database file(SELECT oid, datname FROM pg_database;)
-    ├── global                # under global, all the filenode is hard-code(select oid,relname,relfilenode from pg_class where relfilenode=0 order by oid;)
-    ├── pg_clog               # dir of transaction commit log
-    │   └── 0000
-    ├── pg_commit_ts
-    ├── pg_dynshmem
-    ├── pg_hba.conf           # client authentication config file
-    ├── pg_ident.conf         # user ident map file
-    ├── pg_logical
-    │   ├── mappings
-    │   └── snapshots
-    ├── pg_multixact
-    │   ├── members
-    │   │   └── 0000
-    │   └── offsets
-    │       └── 0000
-    ├── pg_notify
-    │   └── 0000
-    ├── pg_replslot
-    ├── pg_serial
-    ├── pg_snapshots         # dir of snapshot file
-    ├── pg_stat
-    ├── pg_stat_tmp          # dir of tmp stat file
-    │   ├── db_0.stat
-    │   ├── db_12407.stat
-    │   ├── db_16384.stat
-    │   └── global.stat
-    ├── pg_subtrans
-    │   └── 0000
-    ├── pg_tblspc
-    ├── pg_twophase
-    ├── PG_VERSION           # version file
-    ├── pg_xlog              # dir of xlog file
-    │   ├── 000000010000000000000001
-    │   └── archive_status   # status info of xlog archive
-    ├── postgresql.auto.conf
-    ├── postgresql.conf      # config file of postmaster progress
-    ├── postmaster.opts
-    └── postmaster.pid       # pid file of postmaster progress</code></pre><h5 id="4-2、global目录介绍"><a href="#4-2、global目录介绍" class="headerlink" title="4.2、global目录介绍"></a>4.2、global目录介绍</h5><p>global名如其意，存放的文件用于存储全局的系统表信息和全局控制信息。</p>
+<h4 id="四、PostgreSQL的源码"><a href="#四、PostgreSQL的源码" class="headerlink" title="四、PostgreSQL的源码"></a>四、PostgreSQL的源码</h4><h5 id="4-1、第一级目录结构"><a href="#4-1、第一级目录结构" class="headerlink" title="4.1、第一级目录结构"></a>4.1、第一级目录结构</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── aclocal.m4      # config 用的文件的一部分</span><br><span class="line">├── config/         # config 用的文件的目录</span><br><span class="line">├── configure       # configure 文件</span><br><span class="line">├── configure.in    # configure 文件的雏形</span><br><span class="line">├── contrib/        # config 用的文件的目录</span><br><span class="line">├── COPYRIGHT       # 版权信息</span><br><span class="line">├── doc/            # 文档目录</span><br><span class="line">├── GNUmakefile.in  # Makefile 的雏形</span><br><span class="line">├── HISTORY         # 修改历史</span><br><span class="line">├── INSTALL         # 安装方法简要说明</span><br><span class="line">├── Makefile        # Makefile模版</span><br><span class="line">├── README          # 简单说明</span><br><span class="line">└── src             # 最重要的源代码目录</span><br></pre></td></tr></table></figure>
+<h5 id="4-2、第二级目录结构-src"><a href="#4-2、第二级目录结构-src" class="headerlink" title="4.2、第二级目录结构-src"></a>4.2、第二级目录结构-src</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── aclocal.m4</span><br><span class="line">├── config</span><br><span class="line">├── configure</span><br><span class="line">├── configure.in</span><br><span class="line">├── contrib</span><br><span class="line">├── COPYRIGHT</span><br><span class="line">├── doc</span><br><span class="line">├── GNUmakefile.in</span><br><span class="line">├── HISTORY</span><br><span class="line">├── INSTALL</span><br><span class="line">├── Makefile</span><br><span class="line">├── README</span><br><span class="line">└── src</span><br><span class="line">    ├── backend             # 后端的源码目录</span><br><span class="line">    ├── bin/                # psql 等UNIX命令的代码</span><br><span class="line">    ├── common/             # 一些公用的函数</span><br><span class="line">    ├── DEVELOPERS          # 面向开发人员的注释 </span><br><span class="line">    ├── fe_utils            </span><br><span class="line">    ├── include/            # 一些公用的头文件           </span><br><span class="line">    ├── interfaces/         # 前端相关的库的代码</span><br><span class="line">    ├── Makefile            # make 的设定值（从configure生成的）</span><br><span class="line">    ├── Makefile.global.in  # Configure使用的Makefile.global的雏形</span><br><span class="line">    ├── makefiles/          # 平台相关的make 的设置值 </span><br><span class="line">    ├── Makefile.shlib      # 共享库用的Makefile</span><br><span class="line">    ├── nls-global.mk       # 信息目录用的Makefile文件的规则</span><br><span class="line">    ├── pl/                 # 存储过程语言的代码</span><br><span class="line">    ├── port/               # 平台移植相关的代码</span><br><span class="line">    ├── template/           # 平台相关的设置值</span><br><span class="line">    ├── test/               # 各种测试脚本</span><br><span class="line">    ├── timezone/           # 时区相关代码</span><br><span class="line">    ├── tools/              # 各自开发工具和文档</span><br><span class="line">    └── tutorial/           # 教程</span><br></pre></td></tr></table></figure>
+<p>这里比较核心的是backend,bin,interface这几个目录。Backend是对应于后端，bin和interface对应于前端，bin里面有pgsql,initdb,pg_dump等各种工具的代码。interface里面有PostgreSQL的C语言的库libpq,另外可以在C里嵌入SQL的ECPG命令的相关代码。</p>
+<h5 id="4-3、第三级目录结构-backend"><a href="#4-3、第三级目录结构-backend" class="headerlink" title="4.3、第三级目录结构-backend"></a>4.3、第三级目录结构-backend</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── 1.txt</span><br><span class="line">├── aclocal.m4</span><br><span class="line">├── config</span><br><span class="line">├── configure</span><br><span class="line">├── configure.in</span><br><span class="line">├── contrib</span><br><span class="line">├── COPYRIGHT</span><br><span class="line">├── doc</span><br><span class="line">├── GNUmakefile.in</span><br><span class="line">├── HISTORY</span><br><span class="line">├── INSTALL</span><br><span class="line">├── Makefile</span><br><span class="line">├── README</span><br><span class="line">└── src</span><br><span class="line">    ├── backend</span><br><span class="line">        ├── access/         # 各种存储访问方法(在各个子目录下) common(共同函数)、gin</span><br><span class="line">        ├── bootstrap/	    # 数据库的初始化处理(initdb的时候)</span><br><span class="line">        ├── catalog/	    # 系统目录    </span><br><span class="line">        ├── commands/	    # SELECT/INSERT/UPDATE/DELETE以为的SQL文的处理</span><br><span class="line">        ├── executor/	    # 执行器(访问的执行)</span><br><span class="line">        ├── foreign/	    # FDW(Foreign Data Wrapper)处理</span><br><span class="line">        ├── jit             </span><br><span class="line">        ├── lib/	    # 共同函数</span><br><span class="line">        ├── libpq/	    # 前端/后端通信处理</span><br><span class="line">        ├── main/	    # postgres的主函数</span><br><span class="line">        ├── Makefile        # makefile</span><br><span class="line">        ├── nodes/	    # 构文树节点相关的处理函数</span><br><span class="line">        ├── optimizer/	    # 优化器</span><br><span class="line">        ├── parser/	    # SQL构文解析器</span><br><span class="line">        ├── partitioning</span><br><span class="line">        ├── po</span><br><span class="line">        ├── port/	    # 平台相关的代码</span><br><span class="line">        ├── postmaster/	    # postmaster的主函数 (常驻postgres)</span><br><span class="line">        ├── regex/	    # 正则处理</span><br><span class="line">        ├── replication/    # streaming replication</span><br><span class="line">        ├── rewrite/	    # 规则及视图相关的重写处理</span><br><span class="line">        ├── snowball/	    # 全文检索相关（语干处理）</span><br><span class="line">        ├── statistics</span><br><span class="line">        ├── storage/	    # 共享内存、磁盘上的存储、缓存等全部一次/二次记录管理(以下的目录)buffer/(缓存管理)、 file/(文件)、</span><br><span class="line">        ├── tcop/	    # postgres (数据库引擎的进程)的主要部分</span><br><span class="line">        ├── tsearch/	    # 全文检索</span><br><span class="line">        └── utils/          # 各种模块(以下目录)</span><br></pre></td></tr></table></figure>
+<h4 id="五、PostgreSQL的data生成目录结构"><a href="#五、PostgreSQL的data生成目录结构" class="headerlink" title="五、PostgreSQL的data生成目录结构"></a>五、PostgreSQL的data生成目录结构</h4><h5 id="4-1、根目录"><a href="#4-1、根目录" class="headerlink" title="4.1、根目录"></a>4.1、根目录</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">data</span><br><span class="line">├── base                  # use to store database file(SELECT oid, datname FROM pg_database;)</span><br><span class="line">├── global                # under global, all the filenode is hard-code(select oid,relname,relfilenode from pg_class where relfilenode=0 order by oid;)</span><br><span class="line">├── pg_clog               # dir of transaction commit log</span><br><span class="line">│   └── 0000</span><br><span class="line">├── pg_commit_ts</span><br><span class="line">├── pg_dynshmem</span><br><span class="line">├── pg_hba.conf           # client authentication config file</span><br><span class="line">├── pg_ident.conf         # user ident map file</span><br><span class="line">├── pg_logical</span><br><span class="line">│   ├── mappings</span><br><span class="line">│   └── snapshots</span><br><span class="line">├── pg_multixact</span><br><span class="line">│   ├── members</span><br><span class="line">│   │   └── 0000</span><br><span class="line">│   └── offsets</span><br><span class="line">│       └── 0000</span><br><span class="line">├── pg_notify</span><br><span class="line">│   └── 0000</span><br><span class="line">├── pg_replslot</span><br><span class="line">├── pg_serial</span><br><span class="line">├── pg_snapshots         # dir of snapshot file</span><br><span class="line">├── pg_stat</span><br><span class="line">├── pg_stat_tmp          # dir of tmp stat file</span><br><span class="line">│   ├── db_0.stat</span><br><span class="line">│   ├── db_12407.stat</span><br><span class="line">│   ├── db_16384.stat</span><br><span class="line">│   └── global.stat</span><br><span class="line">├── pg_subtrans</span><br><span class="line">│   └── 0000</span><br><span class="line">├── pg_tblspc</span><br><span class="line">├── pg_twophase</span><br><span class="line">├── PG_VERSION           # version file</span><br><span class="line">├── pg_xlog              # dir of xlog file</span><br><span class="line">│   ├── 000000010000000000000001</span><br><span class="line">│   └── archive_status   # status info of xlog archive</span><br><span class="line">├── postgresql.auto.conf</span><br><span class="line">├── postgresql.conf      # config file of postmaster progress</span><br><span class="line">├── postmaster.opts</span><br><span class="line">└── postmaster.pid       # pid file of postmaster progress</span><br></pre></td></tr></table></figure>
+<h5 id="4-2、global目录介绍"><a href="#4-2、global目录介绍" class="headerlink" title="4.2、global目录介绍"></a>4.2、global目录介绍</h5><p>global名如其意，存放的文件用于存储全局的系统表信息和全局控制信息。</p>
 <p>global下有四种文件：</p>
 <ol>
 <li><p>pg_control<br>用于存储全局控制信息</p>
@@ -625,106 +502,25 @@
 <li><p>pg_internal.init<br>用于缓存系统表，加快系统表读取速度（每个用户创建的数据库目录下也有同名文件）。</p>
 </li>
 <li><p>全局系统表文件<br>数字命名的文件，用于存储系统表的内容。它们在pg_class里的relfilenode都为0，是靠pg_filenode.map将OID与文件硬编码映射。（注：不是所有的系统表的relfilenode都为0）</p>
-<pre><code>
-data
-├── global                # under global, all the filenode is hard-code(select oid,relname,relfilenode from pg_class where relfilenode=0 order by oid;)
-│   ├── 1136              # pg_pltemplate
-│   ├── 1137              # pg_pltemplate_name_index
-│   ├── 1213              # pg_tablespace
-│   ├── 1214              # pg_shdepend
-│   ├── 1232              # pg_shdepend_depender_index
-│   ├── 1233              # pg_shdepend_reference_index
-│   ├── 1260              # pg_authid
-│   ├── 1261              # pg_auth_members
-│   ├── 1262              # pg_database
-│   ├── 2396              # pg_shdescription
-│   ├── 2397              # pg_shdescription_o_c_index
-│   ├── 2671              # pg_database_datname_index
-│   ├── 2672              # pg_database_oid_index
-│   ├── 2676              # pg_authid_rolname_index
-│   ├── 2677              # pg_authid_oid_index
-│   ├── 2694              # pg_auth_members_role_member_index
-│   ├── 2695              # pg_auth_members_member_role_index
-│   ├── 2697              # pg_tablespace_oid_index
-│   ├── 2698              # pg_tablespace_spcname_index
-│   ├── 2846              # pg_toast_2396
-│   ├── 2847              # pg_toast_2396_index
-│   ├── 2964              # pg_db_role_setting
-│   ├── 2965              # pg_db_role_setting_databaseid_rol_index
-│   ├── 2966              # pg_toast_2964
-│   ├── 2967              # pg_toast_2964_index
-│   ├── 3592              # pg_shseclabel
-│   ├── 3593              # pg_shseclabel_object_index
-│   ├── 4060              # pg_toast_3592x
-│   ├── 4061              # pg_toast_3592_index
-│   ├── 6000              # pg_replication_origin
-│   ├── 6001              # pg_replication_origin_roiident_index
-│   ├── 6002              # pg_replication_origin_roname_index
-│   ├── pg_control        # global control file, use pgcheck -pc to see it.
-│   ├── pg_filenode.map   # system table (oid -&gt; filenode) mapping file, use pgcheck -pm to see it.
-│   └── pg_internal.init  # system table cache file, use pgcheck -pr to see it.
-</code></pre></li>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">data</span><br><span class="line">├── global                # under global, all the filenode is hard-code(select oid,relname,relfilenode from pg_class where relfilenode=0 order by oid;)</span><br><span class="line">│   ├── 1136              # pg_pltemplate</span><br><span class="line">│   ├── 1137              # pg_pltemplate_name_index</span><br><span class="line">│   ├── 1213              # pg_tablespace</span><br><span class="line">│   ├── 1214              # pg_shdepend</span><br><span class="line">│   ├── 1232              # pg_shdepend_depender_index</span><br><span class="line">│   ├── 1233              # pg_shdepend_reference_index</span><br><span class="line">│   ├── 1260              # pg_authid</span><br><span class="line">│   ├── 1261              # pg_auth_members</span><br><span class="line">│   ├── 1262              # pg_database</span><br><span class="line">│   ├── 2396              # pg_shdescription</span><br><span class="line">│   ├── 2397              # pg_shdescription_o_c_index</span><br><span class="line">│   ├── 2671              # pg_database_datname_index</span><br><span class="line">│   ├── 2672              # pg_database_oid_index</span><br><span class="line">│   ├── 2676              # pg_authid_rolname_index</span><br><span class="line">│   ├── 2677              # pg_authid_oid_index</span><br><span class="line">│   ├── 2694              # pg_auth_members_role_member_index</span><br><span class="line">│   ├── 2695              # pg_auth_members_member_role_index</span><br><span class="line">│   ├── 2697              # pg_tablespace_oid_index</span><br><span class="line">│   ├── 2698              # pg_tablespace_spcname_index</span><br><span class="line">│   ├── 2846              # pg_toast_2396</span><br><span class="line">│   ├── 2847              # pg_toast_2396_index</span><br><span class="line">│   ├── 2964              # pg_db_role_setting</span><br><span class="line">│   ├── 2965              # pg_db_role_setting_databaseid_rol_index</span><br><span class="line">│   ├── 2966              # pg_toast_2964</span><br><span class="line">│   ├── 2967              # pg_toast_2964_index</span><br><span class="line">│   ├── 3592              # pg_shseclabel</span><br><span class="line">│   ├── 3593              # pg_shseclabel_object_index</span><br><span class="line">│   ├── 4060              # pg_toast_3592x</span><br><span class="line">│   ├── 4061              # pg_toast_3592_index</span><br><span class="line">│   ├── 6000              # pg_replication_origin</span><br><span class="line">│   ├── 6001              # pg_replication_origin_roiident_index</span><br><span class="line">│   ├── 6002              # pg_replication_origin_roname_index</span><br><span class="line">│   ├── pg_control        # global control file, use pgcheck -pc to see it.</span><br><span class="line">│   ├── pg_filenode.map   # system table (oid -&gt; filenode) mapping file, use pgcheck -pm to see it.</span><br><span class="line">│   └── pg_internal.init  # system table cache file, use pgcheck -pr to see it.</span><br></pre></td></tr></table></figure>
+<h5 id="4-3、base目录介绍"><a href="#4-3、base目录介绍" class="headerlink" title="4.3、base目录介绍"></a>4.3、base目录介绍</h5></li>
 </ol>
-<pre><code>##### 4.3、base目录介绍
-
-base目录用于存放数据库的所有实体文件。例如，我们创建的第一个库testdb的OID为16384，那么在data/base下就会产生一个名为16384的目录，用于存储testdb的数据文件。
-</code></pre><pre><code>testdb=# select oid,datname from pg_database;
-  oid  |  datname
--------+-----------     12407 | postgres
- 16384 | testdb
-     1 | template1
- 12406 | template0
-(4 rows)</code></pre><pre><code>base目录结构
-
-</code></pre><pre><code>data
-├── base                  # use to store database file(SELECT oid, datname FROM pg_database;)
-│   ├── 1                 # template database
-│   ├── 12406             # template0 database
-│   ├── 12407             # postgres database
-│   └── 16384             # testdb, first user database
-│   │   ├── 3600
-│   │   ├── 3600_fsm
-│   │   ├── 3600_vm
-│   │   ├── 16385
-│   │   ├── pg_filenode.map
-│   │   ├── pg_internal.init
-│   │   └── PG_VERSION</code></pre><pre><code>
-  1. pg_filenode.map 是pg_class里relfilenode为0的系统表，OID与文件的硬编码映射。
-  2. pg_internal.init 是系统表的cache文件，用于加快读取。默认不存在，查询系统表后自动产生。
-  3. PG_VERSION 是当前数据库数据格式对应的版本号
-  4. 其它文件是需要到pg_class里根据OID查到对应的relfilenode来与文件名匹配的。  
-例如：tab1的relfilenode是16385，那么16385这个文件就是tab1的数据文件
-</code></pre><pre><code>    testdb=# select oid,relfilenode,relname from pg_class where relname=&#39;tab1&#39;;
-      oid  | relfilenode | relname
-    -------+-------------+---------         16385 |       16385 | tab1
-    (1 row)</code></pre><pre><code>  5. 空闲空间映射表  
-名字以_fsm结尾的文件是数据文件对应的FSM(free space
-map)文件，用map方式来标识哪些block是空闲的。用一个Byte而不是bit来标识一个block。对于一个有N个字节的block，它在_fsm文件中第blknum个字节中记录的值是(31+N)/32。通过这种方式标识一个block空闲字节数。FSM中不是简单的数组，而是一个三层的树形结构。FSM文件是在需要用到它时才自动产生的。
-
-  6. 可见性映射表文件  
-名字以_vm结尾的文件是数据文件对应的VM(visibility
-map)。PostgreSQL中在做多版本并发控制时是通过在元组头上标识“已无效”来实现删除或更新的，最后通过VACUUM功能来清理无效数据回收空闲空间。在做VACUUM时就使用VM开快速查找包含无效元组的block。VM仅是个简单的bitmap,一个bit对应一个block。
-
-**注：** 系统表分为全局系统表和库级系统表。  
-全局系统表位于global下，例如：pg_database,pg_tablespace,pg_auth_members这种存储系统级对象的表。  
-库级系统表位于数据库目录下，例如：pg_type,pg_proc,pg_attribute这种存储库级对象的表。  
-值得注意的是pg_class位于库级目录的里，但也包含全局系统表信息，因此研发或运维人员在改动全局系统表信息时需要注意。
-
-##### 4.4、表空间目录介绍
-
-</code></pre><pre><code>testdb=# select oid,* from pg_tablespace;
-  oid  |  spcname   | spcowner | spcacl | spcoptions
--------+------------+----------+--------+------------      1663 | pg_default |       10 |        |
-  1664 | pg_global  |       10 |        |
- 49162 | dbspace    |       10 |        |
-(3 rows)</code></pre><pre><code>每一个Oid都在data/pg_tblspc下对应一个名为Oid的软链接文件，指向真正的space目录。
-</code></pre><pre><code> tree ../data/pg_tblspc/
-../data/pg_tblspc/
-└── 49162 -&gt; /home/postgres/postgresql-9.6.6/postgres/data/dbspace</code></pre><pre><code>在space目录是如何组织的呢？
-</code></pre><p>testdb=# create table tab3(a int) tablespace dbspace;<br>CREATE TABLE</p>
-<p>testdb=# select oid,relname,relfilenode from pg_class where relname=’tab3’;<br>oid  | relname | relfilenode<br>——-+———+————-     57351 | tab3    |       57351<br>(1 row)</p>
-<p>tree ../data/pg_tblspc/49162<br>../data/pg_tblspc/49162<br>└── PG_9.6_201608131<br>    └── 16384<br>        └── 57351<br>```</p>
-
+<p>base目录用于存放数据库的所有实体文件。例如，我们创建的第一个库testdb的OID为16384，那么在data/base下就会产生一个名为16384的目录，用于存储testdb的数据文件。</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">testdb=# select oid,datname from pg_database;</span><br><span class="line">  oid  |  datname</span><br><span class="line">-------+-----------     12407 | postgres</span><br><span class="line"> 16384 | testdb</span><br><span class="line">     1 | template1</span><br><span class="line"> 12406 | template0</span><br><span class="line">(4 rows)</span><br></pre></td></tr></table></figure>
+<p>base目录结构</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">    data</span><br><span class="line">    ├── base                  # use to store database file(SELECT oid, datname FROM pg_database;)</span><br><span class="line">    │   ├── 1                 # template database</span><br><span class="line">    │   ├── 12406             # template0 database</span><br><span class="line">    │   ├── 12407             # postgres database</span><br><span class="line">    │   └── 16384             # testdb, first user database</span><br><span class="line">    │   │   ├── 3600</span><br><span class="line">    │   │   ├── 3600_fsm</span><br><span class="line">    │   │   ├── 3600_vm</span><br><span class="line">    │   │   ├── 16385</span><br><span class="line">    │   │   ├── pg_filenode.map</span><br><span class="line">    │   │   ├── pg_internal.init</span><br><span class="line">    │   │   └── PG_VERSION</span><br><span class="line"> ```   </span><br><span class="line"></span><br><span class="line">  1. pg_filenode.map 是pg_class里relfilenode为0的系统表，OID与文件的硬编码映射。</span><br><span class="line">  2. pg_internal.init 是系统表的cache文件，用于加快读取。默认不存在，查询系统表后自动产生。</span><br><span class="line">  3. PG_VERSION 是当前数据库数据格式对应的版本号</span><br><span class="line">  4. 其它文件是需要到pg_class里根据OID查到对应的relfilenode来与文件名匹配的。  </span><br><span class="line">例如：tab1的relfilenode是16385，那么16385这个文件就是tab1的数据文件</span><br><span class="line"></span><br><span class="line">```   </span><br><span class="line">    </span><br><span class="line">        testdb=# select oid,relfilenode,relname from pg_class where relname=&apos;tab1&apos;;</span><br><span class="line">          oid  | relfilenode | relname</span><br><span class="line">        -------+-------------+---------         16385 |       16385 | tab1</span><br><span class="line">        (1 row)</span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li><p>空闲空间映射表<br>名字以_fsm结尾的文件是数据文件对应的FSM(free space<br>map)文件，用map方式来标识哪些block是空闲的。用一个Byte而不是bit来标识一个block。对于一个有N个字节的block，它在_fsm文件中第blknum个字节中记录的值是(31+N)/32。通过这种方式标识一个block空闲字节数。FSM中不是简单的数组，而是一个三层的树形结构。FSM文件是在需要用到它时才自动产生的。</p>
+</li>
+<li><p>可见性映射表文件<br>名字以_vm结尾的文件是数据文件对应的VM(visibility<br>map)。PostgreSQL中在做多版本并发控制时是通过在元组头上标识“已无效”来实现删除或更新的，最后通过VACUUM功能来清理无效数据回收空闲空间。在做VACUUM时就使用VM开快速查找包含无效元组的block。VM仅是个简单的bitmap,一个bit对应一个block。</p>
+</li>
+</ol>
+<p><strong>注：</strong> 系统表分为全局系统表和库级系统表。<br>全局系统表位于global下，例如：pg_database,pg_tablespace,pg_auth_members这种存储系统级对象的表。<br>库级系统表位于数据库目录下，例如：pg_type,pg_proc,pg_attribute这种存储库级对象的表。<br>值得注意的是pg_class位于库级目录的里，但也包含全局系统表信息，因此研发或运维人员在改动全局系统表信息时需要注意。</p>
+<h5 id="4-4、表空间目录介绍"><a href="#4-4、表空间目录介绍" class="headerlink" title="4.4、表空间目录介绍"></a>4.4、表空间目录介绍</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">testdb=# select oid,* from pg_tablespace;</span><br><span class="line">  oid  |  spcname   | spcowner | spcacl | spcoptions</span><br><span class="line">-------+------------+----------+--------+------------      1663 | pg_default |       10 |        |</span><br><span class="line">  1664 | pg_global  |       10 |        |</span><br><span class="line"> 49162 | dbspace    |       10 |        |</span><br><span class="line">(3 rows)</span><br></pre></td></tr></table></figure>
+<p>每一个Oid都在data/pg_tblspc下对应一个名为Oid的软链接文件，指向真正的space目录。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"> tree ../data/pg_tblspc/</span><br><span class="line">../data/pg_tblspc/</span><br><span class="line">└── 49162 -&gt; /home/postgres/postgresql-9.6.6/postgres/data/dbspace</span><br></pre></td></tr></table></figure>
+<p>在space目录是如何组织的呢？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">testdb=# create table tab3(a int) tablespace dbspace;</span><br><span class="line">CREATE TABLE</span><br><span class="line"></span><br><span class="line">testdb=# select oid,relname,relfilenode from pg_class where relname=&apos;tab3&apos;;</span><br><span class="line">oid  | relname | relfilenode</span><br><span class="line">-------+---------+-------------     57351 | tab3    |       57351</span><br><span class="line">(1 row)</span><br><span class="line"></span><br><span class="line">tree ../data/pg_tblspc/49162</span><br><span class="line">../data/pg_tblspc/49162</span><br><span class="line">└── PG_9.6_201608131</span><br><span class="line">    └── 16384</span><br><span class="line">        └── 57351</span><br></pre></td></tr></table></figure>
             </div>
             <hr/>
 
@@ -894,8 +690,8 @@ map)。PostgreSQL中在做多版本并发控制时是通过在元组头上标识
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            一、环境配置Ubuntu 16.04                        
-PostgreSql v11.3二、源码下载解压https://www.postgresql.org/ftp/source/,选择一个版本的,这里下载v1
+                            一、环境配置12Ubuntu 16.04                        PostgreSql v11.3
+二、源码下载解压https://www.postgresql.org/ftp/source/,选择一个版本的,这里下载
                         
                     </div>
                     <div class="publish-info">
@@ -1105,7 +901,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">173.5k</span>&nbsp;字
+                class="white-color">175.5k</span>&nbsp;字
             
             
             

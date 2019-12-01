@@ -26,7 +26,7 @@
     
     <script src="/libs/jquery/jquery.min.js"></script>
     
-</head>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"><script src="/js/prism.js"></script></head>
 
 
 <body>
@@ -590,11 +590,8 @@
 <h3 id="7、动态内存分配（what-is-malloc"><a href="#7、动态内存分配（what-is-malloc" class="headerlink" title="7、动态内存分配（what is malloc?"></a>7、动态内存分配（what is malloc?</h3><p>动态存储器分配指的是在程序运行的时候分配额外的存储空间，分配器维护着虚拟存储器中的堆实现这种分配。<br><img src="16.webp" alt=""><br>堆是紧跟着.bss段，并向上增长，内核维护着一个brk指针，指向堆的顶部。任何一个堆中的块要么是已分配的要么是空闲的。分配的方式分为两种：显式和隐式，我们接下来主要讲一下显示分配和实现一个分配器的基础知识，隐式分配指的其实是分配器回收空间，这个在分配器基础知识中有所讲解，就不再另外提出了：</p>
 <h4 id="7-1、显式分配：程序调用malloc和free函数"><a href="#7-1、显式分配：程序调用malloc和free函数" class="headerlink" title="7.1、显式分配：程序调用malloc和free函数"></a>7.1、显式分配：程序调用malloc和free函数</h4><p>经常直到我们的程序运行的时候，我们才知道某些数据结构的大小。这时候就必须显式的分配相应的存储空间。如下图所示：<br><img src="17.webp" alt=""><br>使用malloc函数以具体的输入内容分配相应大小的存储空间，函数原型如下：<br><img src="18.webp" alt=""><br>如果想要初始化存储器为0，可以使用calloc函数。想要改变已分配的大小可以使用realloc函数<br>释放是通过调用free函数来实现的：<br><img src="19.webp" alt=""><br>ptr是指向一个已分配空间的起始位置</p>
 <h4 id="7-2、demo"><a href="#7-2、demo" class="headerlink" title="7.2、demo"></a>7.2、demo</h4><p><img src="20.webp" alt=""></p>
-<pre><code>（a）请求一个4字大小的块，malloc将分配好的空间的首地址返回给p1；
-（b）请求一个5字大小的块，由于使用的双字对其，所以填充了一个空闲块；
-（c）请求一个6字大小的块，返回给p3；
-（d）释放p2，调用后p2仍然指向原来的位置；
-（e）请求一个2字大小的块，在已经释放的p2处优先分配，然后返回指针p4</code></pre><h4 id="7-3、配器基础知识"><a href="#7-3、配器基础知识" class="headerlink" title="7.3、配器基础知识"></a>7.3、配器基础知识</h4><p>分配器的目标主要是找到吞吐量和利用率的契合点，那么为什么需要隐式的分配，因为碎片的产生会降低存储空间的利用率<br><strong>碎片：内部和外部</strong><br>1&gt;内部碎片：我们上面讲到的（b）的情况，分配了一个额外的空闲块，实现双字对其；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">（a）请求一个4字大小的块，malloc将分配好的空间的首地址返回给p1；</span><br><span class="line">（b）请求一个5字大小的块，由于使用的双字对其，所以填充了一个空闲块；</span><br><span class="line">（c）请求一个6字大小的块，返回给p3；</span><br><span class="line">（d）释放p2，调用后p2仍然指向原来的位置；</span><br><span class="line">（e）请求一个2字大小的块，在已经释放的p2处优先分配，然后返回指针p4</span><br></pre></td></tr></table></figure>
+<h4 id="7-3、配器基础知识"><a href="#7-3、配器基础知识" class="headerlink" title="7.3、配器基础知识"></a>7.3、配器基础知识</h4><p>分配器的目标主要是找到吞吐量和利用率的契合点，那么为什么需要隐式的分配，因为碎片的产生会降低存储空间的利用率<br><strong>碎片：内部和外部</strong><br>1&gt;内部碎片：我们上面讲到的（b）的情况，分配了一个额外的空闲块，实现双字对其；</p>
 <p>2&gt;外部碎片：(e)中如果请求7字大小的块，即使存储空间有这么大，还是不行</p>
 <p>当然，还有许多问题要思考，诸如：空闲块如何组织、如何分配新的块、怎么分割和合并块，这些技术都要求我们提供一种新的数据结构<br><img src="21.webp" alt=""><br><strong>(更分配器更高级的骚操作以及垃圾回收，请自行看书吧)</strong></p>
 
@@ -977,7 +974,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">173.5k</span>&nbsp;字
+                class="white-color">175.5k</span>&nbsp;字
             
             
             

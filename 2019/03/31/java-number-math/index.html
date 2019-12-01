@@ -26,7 +26,7 @@
     
     <script src="/libs/jquery/jquery.min.js"></script>
     
-</head>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"><script src="/js/prism.js"></script></head>
 
 
 <body>
@@ -383,7 +383,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.6k
+                    1.7k
                 </div>
                 
 
@@ -407,20 +407,14 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h4 id="为什么要给无聊的语法记博客呢，因为太菜了啊，写java后端代码不会复制粘贴的时候，一杯酒，一包烟，一行代码写半天，关于数据类型也折腾了不少时间。"><a href="#为什么要给无聊的语法记博客呢，因为太菜了啊，写java后端代码不会复制粘贴的时候，一杯酒，一包烟，一行代码写半天，关于数据类型也折腾了不少时间。" class="headerlink" title="为什么要给无聊的语法记博客呢，因为太菜了啊，写java后端代码不会复制粘贴的时候，一杯酒，一包烟，一行代码写半天，关于数据类型也折腾了不少时间。"></a>为什么要给无聊的语法记博客呢，因为太菜了啊，写java后端代码不会复制粘贴的时候，一杯酒，一包烟，一行代码写半天，关于数据类型也折腾了不少时间。</h4><h3 id="1、Java-Number-amp-Math-类"><a href="#1、Java-Number-amp-Math-类" class="headerlink" title="1、Java Number &amp; Math 类"></a>1、Java Number &amp; Math 类</h3><p>Java和其他语言一样，有内置的数据类型比如</p>
-<pre><code>int a = 5000;
-float b = 13.65f;
-byte c = 0x4a;</code></pre><p>然鹅开发过程中，却主要用的是封装好的类（除了我这样的大萌新傻傻分不清Integer和int而天天混着用，没被祭天真是万幸鸭），其实Java 语言为每一个内置数据类型提供了对应的包装类。所有的包装类（Integer、Long、Byte、Double、Float、Short）都是抽象类 Number 的子类。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int a = 5000;</span><br><span class="line">float b = 13.65f;</span><br><span class="line">byte c = 0x4a;</span><br></pre></td></tr></table></figure>
+<p>然鹅开发过程中，却主要用的是封装好的类（除了我这样的大萌新傻傻分不清Integer和int而天天混着用，没被祭天真是万幸鸭），其实Java 语言为每一个内置数据类型提供了对应的包装类。所有的包装类（Integer、Long、Byte、Double、Float、Short）都是抽象类 Number 的子类。</p>
 <a id="more"></a>
 <p><img src="1.png" alt=""><br>这种由编译器特别支持的包装称为装箱，所以当内置数据类型被当作对象使用的时候，编译器会把内置类型装箱为包装类。相似的，编译器也可以把一个对象拆箱为内置类型。Number 类属于 java.lang 包。<br>但是普通用法还是可以和int一样用的</p>
-<pre><code>public class Test{
-
-   public static void main(String args[]){
-      Integer x = 5;
-      x =  x + 10;
-      System.out.println(x); 
-   }
-}</code></pre><p>输出</p>
-<pre><code>15</code></pre><p>当 x 被赋为整型值时，由于x是一个对象，所以编译器要对x进行装箱。然后，为了使x能进行加运算，所以要对x进行拆箱。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public class Test&#123;</span><br><span class="line"> </span><br><span class="line">   public static void main(String args[])&#123;</span><br><span class="line">      Integer x = 5;</span><br><span class="line">      x =  x + 10;</span><br><span class="line">      System.out.println(x); </span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">15</span><br></pre></td></tr></table></figure>
+<p>当 x 被赋为整型值时，由于x是一个对象，所以编译器要对x进行装箱。然后，为了使x能进行加运算，所以要对x进行拆箱。</p>
 <h3 id="2、Java-Math-类"><a href="#2、Java-Math-类" class="headerlink" title="2、Java Math 类"></a>2、Java Math 类</h3><p>Java 的 Math 包含了用于执行基本数学运算的属性和方法，如初等指数、对数、平方根和三角函数。<br>Math 的方法都被定义为 static 形式，通过 Math 类可以在主函数中直接调用。这里介绍几个常用的</p>
 <h4 id="2-1、Java-xxxValue-方法"><a href="#2-1、Java-xxxValue-方法" class="headerlink" title="2.1、Java xxxValue() 方法"></a>2.1、Java xxxValue() 方法</h4><p>xxxValue() 方法用于将 Number 对象转换为 xxx 数据类型的值并返回</p>
 <table>
@@ -455,88 +449,158 @@ byte c = 0x4a;</code></pre><p>然鹅开发过程中，却主要用的是封装�
 <td>shortValue()</td>
 </tr>
 <tr>
-<td>```</td>
+<td><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public class Test&#123; </span><br><span class="line"> </span><br><span class="line">   public static void main(String args[])&#123;</span><br><span class="line">      Integer x = 5;</span><br><span class="line">      // 返回 byte 原生数据类型</span><br><span class="line">      System.out.println( x.byteValue() );</span><br><span class="line"> </span><br><span class="line">      // 返回 double 原生数据类型</span><br><span class="line">      System.out.println(x.doubleValue());</span><br><span class="line"> </span><br><span class="line">      // 返回 long 原生数据类型</span><br><span class="line">      System.out.println( x.longValue() );      </span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></td>
 <td></td>
 </tr>
 <tr>
-<td>public class Test{</td>
+<td>返回</td>
+<td></td>
+</tr>
+<tr>
+<td><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">5</span><br><span class="line">5.0</span><br><span class="line">5</span><br></pre></td></tr></table></figure></td>
+<td></td>
+</tr>
+<tr>
+<td>#### 2.2、Java compareTo() 方法</td>
+<td></td>
+</tr>
+<tr>
+<td><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public class Test&#123; </span><br><span class="line">   public static void main(String args[])&#123;</span><br><span class="line">      Integer x = 5;</span><br><span class="line">      System.out.println(x.compareTo(3));</span><br><span class="line">      System.out.println(x.compareTo(5));</span><br><span class="line">      System.out.println(x.compareTo(8));            </span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></td>
+<td></td>
+</tr>
+<tr>
+<td><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1</span><br><span class="line">0</span><br><span class="line">-1</span><br></pre></td></tr></table></figure></td>
+<td></td>
+</tr>
+<tr>
+<td>#### 2.3、Java equals() 方法</td>
+<td></td>
+</tr>
+<tr>
+<td>equals() 方法用于判断 Number 对象与方法的参数进是否相等。</td>
+<td></td>
+</tr>
+<tr>
+<td><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public class Test&#123;</span><br><span class="line">    public static void main(String args[])&#123;</span><br><span class="line">        Integer x = 5;</span><br><span class="line">        Integer y = 10;</span><br><span class="line">        Integer z =5;</span><br><span class="line">        Short a = 5;</span><br><span class="line"></span><br><span class="line">        System.out.println(x.equals(y));  </span><br><span class="line">        System.out.println(x.equals(z)); </span><br><span class="line">        System.out.println(x.equals(a));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></td>
+<td></td>
+</tr>
+<tr>
+<td><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">false</span><br><span class="line">true</span><br><span class="line">false</span><br></pre></td></tr></table></figure></td>
+<td></td>
+</tr>
+<tr>
+<td>#### 2.4、Java valueOf() 方法//进制转换,字符串转数</td>
+<td></td>
+</tr>
+<tr>
+<td>语法</td>
+<td></td>
+</tr>
+<tr>
+<td>该方法有以下几种语法格式：</td>
+<td></td>
+</tr>
+<tr>
+<td><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">static Integer valueOf(int i)</span><br><span class="line">static Integer valueOf(String s)</span><br><span class="line">static Integer valueOf(String s, int radix)</span><br></pre></td></tr></table></figure></td>
+<td></td>
+</tr>
+<tr>
+<td>参数</td>
+<td></td>
+</tr>
+<tr>
+<td><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">i -- Integer 对象的整数。</span><br><span class="line"></span><br><span class="line">s -- Integer 对象的字符串。</span><br><span class="line"></span><br><span class="line">radix --在解析字符串 s 时使用的基数，用于指定使用的进制数。</span><br></pre></td></tr></table></figure></td>
+<td></td>
+</tr>
+<tr>
+<td>返回值</td>
+<td></td>
+</tr>
+<tr>
+<td><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Integer valueOf(int i)：返回一个表示指定的 int 值的 Integer 实例。</span><br><span class="line"></span><br><span class="line">Integer valueOf(String s):返回保存指定的 String 的值的 Integer 对象。</span><br><span class="line"></span><br><span class="line">Integer valueOf(String s, int radix): 返回一个 Integer 对象，该对象中保存了用第二个参数提供的基数进行解析时从指定的 String 中提取的值。</span><br></pre></td></tr></table></figure></td>
+<td></td>
+</tr>
+<tr>
+<td>实例</td>
+<td></td>
+</tr>
+<tr>
+<td><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public class Test&#123; </span><br><span class="line">public static void main(String args[])&#123;</span><br><span class="line">        Integer x =Integer.valueOf(9);</span><br><span class="line">        Double c = Double.valueOf(5);</span><br><span class="line">        Float a = Float.valueOf(&quot;80&quot;);               </span><br><span class="line"></span><br><span class="line">        Integer b = Integer.valueOf(&quot;444&quot;,16);   // 使用 16 进制</span><br><span class="line"></span><br><span class="line">        System.out.println(x); </span><br><span class="line">        System.out.println(c);</span><br><span class="line">        System.out.println(a);</span><br><span class="line">        System.out.println(b);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></td>
+<td></td>
+</tr>
+<tr>
+<td><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">9</span><br><span class="line">5.0</span><br><span class="line">80.0</span><br><span class="line">1092</span><br></pre></td></tr></table></figure></td>
+<td></td>
+</tr>
+<tr>
+<td>#### 2.5、Java min() max()方法</td>
+<td></td>
+</tr>
+<tr>
+<td><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">double min(double arg1, double arg2)</span><br><span class="line">float min(float arg1, float arg2)</span><br><span class="line">int min(int arg1, int arg2)</span><br><span class="line">long min(long arg1, long arg2)</span><br></pre></td></tr></table></figure></td>
+<td></td>
+</tr>
+<tr>
+<td>实例</td>
+<td></td>
+</tr>
+<tr>
+<td><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public class Test&#123;</span><br><span class="line">    public static void main(String args[])&#123;</span><br><span class="line">        System.out.println(Math.min(12.123, 12.456));      </span><br><span class="line">        System.out.println(Math.min(23.12, 23.0));  </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></td>
+<td></td>
+</tr>
+<tr>
+<td>#### 2.6、Java random() 方法/随机数生成</td>
+<td></td>
+</tr>
+<tr>
+<td>random() 方法用于返回一个随机数，随机数范围为 0.0 =&lt; Math.random &lt; 1.0。</td>
+<td></td>
+</tr>
+<tr>
+<td>实例1</td>
+<td></td>
+</tr>
+<tr>
+<td><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public class Test&#123;</span><br><span class="line">    public static void main(String args[])&#123;</span><br><span class="line">        System.out.println( Math.random() );</span><br><span class="line">        System.out.println( Math.random() );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></td>
+<td></td>
+</tr>
+<tr>
+<td><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">0.5444085967267008</span><br><span class="line">0.7960235983184115</span><br></pre></td></tr></table></figure></td>
+<td></td>
+</tr>
+<tr>
+<td>实例2</td>
+<td></td>
+</tr>
+<tr>
+<td><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import java.util.Random;</span><br><span class="line"></span><br><span class="line">public class RandomTest&#123;</span><br><span class="line">    public static void main(String[] args)&#123;</span><br><span class="line">        Random rand=new Random();</span><br><span class="line">        int i=(int)(Math.random()*100);       //  生成0-100的随机数，包括0不包括100 -- (0,100]</span><br><span class="line">        int j=rand.nextInt(100);              // 这里是一个方法的重载，参数的内容是指定范围</span><br><span class="line">        System.out.println(&quot;i:&quot;+i+&quot;\nj:&quot;+j); // 分别输出两个随机数</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></td>
+<td></td>
+</tr>
+<tr>
+<td><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">i:55</span><br><span class="line">j:34</span><br></pre></td></tr></table></figure></td>
+<td></td>
+</tr>
+<tr>
+<td>#### 2.7、floor,round 和 ceil 实例：</td>
+<td></td>
+</tr>
+<tr>
+<td><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public class Main &#123;   </span><br><span class="line">  public static void main(String[] args) &#123;   </span><br><span class="line">    double[] nums = &#123; 1.4, 1.5, 1.6, -1.4, -1.5, -1.6 &#125;;   </span><br><span class="line">    for (double num : nums) &#123;   </span><br><span class="line">      test(num);   </span><br><span class="line">    &#125;   </span><br><span class="line">  &#125;   </span><br><span class="line">  </span><br><span class="line">  private static void test(double num) &#123;   </span><br><span class="line">    System.out.println(&quot;Math.floor(&quot; + num + &quot;)=&quot; + Math.floor(num));   </span><br><span class="line">    System.out.println(&quot;Math.round(&quot; + num + &quot;)=&quot; + Math.round(num));   </span><br><span class="line">    System.out.println(&quot;Math.ceil(&quot; + num + &quot;)=&quot; + Math.ceil(num));   </span><br><span class="line">  &#125;   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></td>
+<td></td>
+</tr>
+<tr>
+<td><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">Math.floor(1.4)=1.0</span><br><span class="line">Math.round(1.4)=1</span><br><span class="line">Math.ceil(1.4)=2.0</span><br><span class="line">Math.floor(1.5)=1.0</span><br><span class="line">Math.round(1.5)=2</span><br><span class="line">Math.ceil(1.5)=2.0</span><br><span class="line">Math.floor(1.6)=1.0</span><br><span class="line">Math.round(1.6)=2</span><br><span class="line">Math.ceil(1.6)=2.0</span><br><span class="line">Math.floor(-1.4)=-2.0</span><br><span class="line">Math.round(-1.4)=-1</span><br><span class="line">Math.ceil(-1.4)=-1.0</span><br><span class="line">Math.floor(-1.5)=-2.0</span><br><span class="line">Math.round(-1.5)=-1</span><br><span class="line">Math.ceil(-1.5)=-1.0</span><br><span class="line">Math.floor(-1.6)=-2.0</span><br><span class="line">Math.round(-1.6)=-2</span><br><span class="line">Math.ceil(-1.6)=-1.0</span><br></pre></td></tr></table></figure></td>
 <td></td>
 </tr>
 </tbody></table>
-<p>   public static void main(String args[]){<br>      Integer x = 5;<br>      // 返回 byte 原生数据类型<br>      System.out.println( x.byteValue() );</p>
-<pre><code>  // 返回 double 原生数据类型
-  System.out.println(x.doubleValue());
-
-  // 返回 long 原生数据类型
-  System.out.println( x.longValue() );      </code></pre><p>   }<br>}</p>
-<pre><code>返回</code></pre><p>5<br>5.0<br>5</p>
-<pre><code>#### 2.2、Java compareTo() 方法</code></pre><p>public class Test{<br>   public static void main(String args[]){<br>      Integer x = 5;<br>      System.out.println(x.compareTo(3));<br>      System.out.println(x.compareTo(5));<br>      System.out.println(x.compareTo(8));<br>     }<br>}</p>
-<pre><code></code></pre><p>1<br>0<br>-1</p>
-<pre><code>#### 2.3、Java equals() 方法
-equals() 方法用于判断 Number 对象与方法的参数进是否相等。</code></pre><p>public class Test{<br>    public static void main(String args[]){<br>        Integer x = 5;<br>        Integer y = 10;<br>        Integer z =5;<br>        Short a = 5;</p>
-<pre><code>    System.out.println(x.equals(y));  
-    System.out.println(x.equals(z)); 
-    System.out.println(x.equals(a));
-}</code></pre><p>}</p>
-<pre><code></code></pre><p>false<br>true<br>false</p>
-<pre><code>#### 2.4、Java valueOf() 方法//进制转换,字符串转数
-语法
-该方法有以下几种语法格式：</code></pre><p>static Integer valueOf(int i)<br>static Integer valueOf(String s)<br>static Integer valueOf(String s, int radix)</p>
-<pre><code>参数</code></pre><p>i – Integer 对象的整数。</p>
-<p>s – Integer 对象的字符串。</p>
-<p>radix –在解析字符串 s 时使用的基数，用于指定使用的进制数。</p>
-<pre><code>返回值</code></pre><p>Integer valueOf(int i)：返回一个表示指定的 int 值的 Integer 实例。</p>
-<p>Integer valueOf(String s):返回保存指定的 String 的值的 Integer 对象。</p>
-<p>Integer valueOf(String s, int radix): 返回一个 Integer 对象，该对象中保存了用第二个参数提供的基数进行解析时从指定的 String 中提取的值。</p>
-<pre><code>实例</code></pre><p>public class Test{<br>public static void main(String args[]){<br>        Integer x =Integer.valueOf(9);<br>        Double c = Double.valueOf(5);<br>        Float a = Float.valueOf(“80”);               </p>
-<pre><code>    Integer b = Integer.valueOf(&quot;444&quot;,16);   // 使用 16 进制
-
-    System.out.println(x); 
-    System.out.println(c);
-    System.out.println(a);
-    System.out.println(b);
-}</code></pre><p>}</p>
-<pre><code></code></pre><p>9<br>5.0<br>80.0<br>1092</p>
-<pre><code>#### 2.5、Java min() max()方法</code></pre><p>double min(double arg1, double arg2)<br>float min(float arg1, float arg2)<br>int min(int arg1, int arg2)<br>long min(long arg1, long arg2)</p>
-<pre><code>实例</code></pre><p>public class Test{<br>    public static void main(String args[]){<br>        System.out.println(Math.min(12.123, 12.456));<br>        System.out.println(Math.min(23.12, 23.0));<br>    }<br>}</p>
-<pre><code>#### 2.6、Java random() 方法/随机数生成
-random() 方法用于返回一个随机数，随机数范围为 0.0 =&lt; Math.random &lt; 1.0。
-实例1</code></pre><p>public class Test{<br>    public static void main(String args[]){<br>        System.out.println( Math.random() );<br>        System.out.println( Math.random() );<br>    }<br>}</p>
-<pre><code></code></pre><p>0.5444085967267008<br>0.7960235983184115</p>
-<pre><code>实例2</code></pre><p>import java.util.Random;</p>
-<p>public class RandomTest{<br>    public static void main(String[] args){<br>        Random rand=new Random();<br>        int i=(int)(Math.random()*100);       //  生成0-100的随机数，包括0不包括100 – (0,100]<br>        int j=rand.nextInt(100);              // 这里是一个方法的重载，参数的内容是指定范围<br>        System.out.println(“i:”+i+”\nj:”+j); // 分别输出两个随机数<br>    }<br>}</p>
-<pre><code></code></pre><p>i:55<br>j:34</p>
-<pre><code>#### 2.7、floor,round 和 ceil 实例：</code></pre><p>public class Main {<br>  public static void main(String[] args) {<br>    double[] nums = { 1.4, 1.5, 1.6, -1.4, -1.5, -1.6 };<br>    for (double num : nums) {<br>      test(num);<br>    }<br>  }   </p>
-<p>  private static void test(double num) {<br>    System.out.println(“Math.floor(“ + num + “)=” + Math.floor(num));<br>    System.out.println(“Math.round(“ + num + “)=” + Math.round(num));<br>    System.out.println(“Math.ceil(“ + num + “)=” + Math.ceil(num));<br>  }<br>}</p>
-<pre><code></code></pre><p>Math.floor(1.4)=1.0<br>Math.round(1.4)=1<br>Math.ceil(1.4)=2.0<br>Math.floor(1.5)=1.0<br>Math.round(1.5)=2<br>Math.ceil(1.5)=2.0<br>Math.floor(1.6)=1.0<br>Math.round(1.6)=2<br>Math.ceil(1.6)=2.0<br>Math.floor(-1.4)=-2.0<br>Math.round(-1.4)=-1<br>Math.ceil(-1.4)=-1.0<br>Math.floor(-1.5)=-2.0<br>Math.round(-1.5)=-1<br>Math.ceil(-1.5)=-1.0<br>Math.floor(-1.6)=-2.0<br>Math.round(-1.6)=-2<br>Math.ceil(-1.6)=-1.0</p>
-<pre><code>
-#### 2.8、Java toString() 方法 //数转字符串
-toString() 方法用于返回以一个字符串表示的 Number 对象值。
-如果方法使用了原生的数据类型作为参数，返回原生数据类型的 String 对象值。
-如果方法有两个参数， 返回用第二个参数指定基数表示的第一个参数的字符串表示形式。
-实例</code></pre><p>public class Test{<br>    public static void main(String args[]){<br>        Integer x = 5;</p>
-<pre><code>    System.out.println(x.toString());  
-    System.out.println(Integer.toString(12)); 
-}</code></pre><p>}</p>
-<pre><code></code></pre><p>5<br>12</p>
-<pre><code>### 3、PS:Java 增强 for 循环
-Java5 引入了一种主要用于数组的增强型 for 循环。
-Java 增强 for 循环语法格式如下</code></pre><p>for(声明语句 : 表达式)<br>{<br>   //代码句子<br>}</p>
-<pre><code>声明语句：声明新的局部变量，该变量的类型必须和数组元素的类型匹配。其作用域限定在循环语句块，其值与此时数组元素的值相等。
-表达式：表达式是要访问的数组名，或者是返回值为数组的方法。
-实例</code></pre><p>public class Test {<br>   public static void main(String args[]){<br>      int [] numbers = {10, 20, 30, 40, 50};</p>
-<pre><code>  for(int x : numbers ){
-     System.out.print( x );
-     System.out.print(&quot;,&quot;);
-  }
-  System.out.print(&quot;\n&quot;);
-  String [] names ={&quot;James&quot;, &quot;Larry&quot;, &quot;Tom&quot;, &quot;Lacy&quot;};
-  for( String name : names ) {
-     System.out.print( name );
-     System.out.print(&quot;,&quot;);
-  }</code></pre><p>   }<br>}</p>
-<pre><code></code></pre><p>10,20,30,40,50,<br>James,Larry,Tom,Lacy,<br>```</p>
-
+<h4 id="2-8、Java-toString-方法-数转字符串"><a href="#2-8、Java-toString-方法-数转字符串" class="headerlink" title="2.8、Java toString() 方法 //数转字符串"></a>2.8、Java toString() 方法 //数转字符串</h4><p>toString() 方法用于返回以一个字符串表示的 Number 对象值。<br>如果方法使用了原生的数据类型作为参数，返回原生数据类型的 String 对象值。<br>如果方法有两个参数， 返回用第二个参数指定基数表示的第一个参数的字符串表示形式。<br>实例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public class Test&#123;</span><br><span class="line">    public static void main(String args[])&#123;</span><br><span class="line">        Integer x = 5;</span><br><span class="line"></span><br><span class="line">        System.out.println(x.toString());  </span><br><span class="line">        System.out.println(Integer.toString(12)); </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">5</span><br><span class="line">12</span><br></pre></td></tr></table></figure>
+<h3 id="3、PS-Java-增强-for-循环"><a href="#3、PS-Java-增强-for-循环" class="headerlink" title="3、PS:Java 增强 for 循环"></a>3、PS:Java 增强 for 循环</h3><p>Java5 引入了一种主要用于数组的增强型 for 循环。<br>Java 增强 for 循环语法格式如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">for(声明语句 : 表达式)</span><br><span class="line">&#123;</span><br><span class="line">   //代码句子</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>声明语句：声明新的局部变量，该变量的类型必须和数组元素的类型匹配。其作用域限定在循环语句块，其值与此时数组元素的值相等。<br>表达式：表达式是要访问的数组名，或者是返回值为数组的方法。<br>实例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">public class Test &#123;</span><br><span class="line">   public static void main(String args[])&#123;</span><br><span class="line">      int [] numbers = &#123;10, 20, 30, 40, 50&#125;;</span><br><span class="line"> </span><br><span class="line">      for(int x : numbers )&#123;</span><br><span class="line">         System.out.print( x );</span><br><span class="line">         System.out.print(&quot;,&quot;);</span><br><span class="line">      &#125;</span><br><span class="line">      System.out.print(&quot;\n&quot;);</span><br><span class="line">      String [] names =&#123;&quot;James&quot;, &quot;Larry&quot;, &quot;Tom&quot;, &quot;Lacy&quot;&#125;;</span><br><span class="line">      for( String name : names ) &#123;</span><br><span class="line">         System.out.print( name );</span><br><span class="line">         System.out.print(&quot;,&quot;);</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">10,20,30,40,50,</span><br><span class="line">James,Larry,Tom,Lacy,</span><br></pre></td></tr></table></figure>
             </div>
             <hr/>
 
@@ -929,7 +993,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">173.5k</span>&nbsp;字
+                class="white-color">175.5k</span>&nbsp;字
             
             
             

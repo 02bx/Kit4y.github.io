@@ -26,7 +26,7 @@
     
     <script src="/libs/jquery/jquery.min.js"></script>
     
-</head>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"><script src="/js/prism.js"></script></head>
 
 
 <body>
@@ -458,30 +458,14 @@
 <h5 id="切记如果从机有密码-需要另外配置，否则只要修改salveof-ip-端口就行"><a href="#切记如果从机有密码-需要另外配置，否则只要修改salveof-ip-端口就行" class="headerlink" title="切记如果从机有密码 需要另外配置，否则只要修改salveof ip+端口就行"></a>切记如果从机有密码 需要另外配置，否则只要修改salveof ip+端口就行</h5><p> 如果主机设置了密码则：查找/masterauth 回车搜索<code>masterauth &lt;master-password&gt;</code>的下一行<br> masterauth  主机密码 如：<code>masterauth beijing</code></p>
 <p><img src="5.png" alt=""></p>
 <h3 id="网络配置"><a href="#网络配置" class="headerlink" title="网络配置"></a>网络配置</h3><p>CentOS7 取消了中已经取消了ifconfig，用nmcli进行了代替，服务管理也升级为systemd<br>首先虚拟机采用NAT模式<br><img src="1.png" alt=""><br>因为是minimal版本，所以ifconfig没有，先通过ip address<br><img src="2.png" alt=""><br>找到了ens33,然后输入</p>
-<pre><code>cd /etc/sysconfig/network-scripts/
-ls</code></pre><p>通过</p>
-<pre><code>nmcli connection show</code></pre><p>发现device是空的<br>我们需要做的是<code>vi ifcfg-ens33</code><br>里面内容是</p>
-<pre><code>TYPE=Ethernet       (类型：以太网)
-RPOXY_METHOD=none   (代理方式：无)
-BROWSER_ONLY=no        (仅限于浏览器：否)
-BOOTPROTO=dhcp        (网络配置参数：dhcp意为自动获取，此处改为static表示设置静态IP)
-DEFROUTE=yes        (默认路由：是)
-IPV4_FAILURE_FATAL=no 
-IPV6INIT=yes
-IPV6_AUTOCONF=yes
-IPV6_DEFROUTE=yes
-IPV6_PEERDNS=yes
-IPV6_PEERROUTES=yes
-IPV6_FAILURE_FATAL=no
-IPV6_ADDR_GEN_MODE=stable-privacy
-NAME=ens33            (名字：ens33)
-UUID=b39f9e9e-f63d-4845-81ed-45c8a85bb0d3 ( 通用标示码)
-DEVICE=ens33        (设备：ens33)
-ONBOOT=no            (开机是否自动启用配置：这里要改成yes)</code></pre><p>我们只要把最后的no改成yes,然后<code>service network restart</code>,即可<br><img src="3.png" alt=""></p>
-<h3 id="关闭防火墙-redis外部访问"><a href="#关闭防火墙-redis外部访问" class="headerlink" title="关闭防火墙-redis外部访问"></a>关闭防火墙-redis外部访问</h3><pre><code>查看防火墙状态： systemctl status firewalld.service
-执行关闭命令： systemctl stop firewalld.service
-再次执行查看防火墙命令：systemctl status firewalld.service
-执行开机禁用防火墙自启命令  ： systemctl disable firewalld.service</code></pre><h3 id="配置远程访问"><a href="#配置远程访问" class="headerlink" title="配置远程访问"></a>配置远程访问</h3><p>一、修改 redis.conf<br>1、将 bind 127.0.0.1 ::1 这一行注释掉。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /etc/sysconfig/network-scripts/</span><br><span class="line">ls</span><br></pre></td></tr></table></figure>
+<p>通过</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmcli connection show</span><br></pre></td></tr></table></figure>
+<p>发现device是空的<br>我们需要做的是<code>vi ifcfg-ens33</code><br>里面内容是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">TYPE=Ethernet       (类型：以太网)</span><br><span class="line">RPOXY_METHOD=none   (代理方式：无)</span><br><span class="line">BROWSER_ONLY=no		(仅限于浏览器：否)</span><br><span class="line">BOOTPROTO=dhcp		(网络配置参数：dhcp意为自动获取，此处改为static表示设置静态IP)</span><br><span class="line">DEFROUTE=yes		(默认路由：是)</span><br><span class="line">IPV4_FAILURE_FATAL=no </span><br><span class="line">IPV6INIT=yes</span><br><span class="line">IPV6_AUTOCONF=yes</span><br><span class="line">IPV6_DEFROUTE=yes</span><br><span class="line">IPV6_PEERDNS=yes</span><br><span class="line">IPV6_PEERROUTES=yes</span><br><span class="line">IPV6_FAILURE_FATAL=no</span><br><span class="line">IPV6_ADDR_GEN_MODE=stable-privacy</span><br><span class="line">NAME=ens33			(名字：ens33)</span><br><span class="line">UUID=b39f9e9e-f63d-4845-81ed-45c8a85bb0d3 ( 通用标示码)</span><br><span class="line">DEVICE=ens33		(设备：ens33)</span><br><span class="line">ONBOOT=no			(开机是否自动启用配置：这里要改成yes)</span><br></pre></td></tr></table></figure>
+<p>我们只要把最后的no改成yes,然后<code>service network restart</code>,即可<br><img src="3.png" alt=""></p>
+<h3 id="关闭防火墙-redis外部访问"><a href="#关闭防火墙-redis外部访问" class="headerlink" title="关闭防火墙-redis外部访问"></a>关闭防火墙-redis外部访问</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">查看防火墙状态： systemctl status firewalld.service</span><br><span class="line">执行关闭命令： systemctl stop firewalld.service</span><br><span class="line">再次执行查看防火墙命令：systemctl status firewalld.service</span><br><span class="line">执行开机禁用防火墙自启命令  ： systemctl disable firewalld.service</span><br></pre></td></tr></table></figure>
+<h3 id="配置远程访问"><a href="#配置远程访问" class="headerlink" title="配置远程访问"></a>配置远程访问</h3><p>一、修改 redis.conf<br>1、将 bind 127.0.0.1 ::1 这一行注释掉。</p>
 <p>这里的bind指的是只有指定的网段才能远程访问这个redis。  注释掉后，就没有这个限制了。</p>
 <p>或者bind 自己所在的网段</p>
 <p>Linux Redis启用远程连接</p>
@@ -496,48 +480,35 @@ ONBOOT=no            (开机是否自动启用配置：这里要改成yes)</code
 <p>5、重启 reids</p>
 <h5 id="启动redis-server-的时候-一定要加上你自己配置的redis-config"><a href="#启动redis-server-的时候-一定要加上你自己配置的redis-config" class="headerlink" title="启动redis-server 的时候 一定要加上你自己配置的redis-config"></a>启动redis-server 的时候 一定要加上你自己配置的redis-config</h5><p><img src="4.png" alt=""></p>
 <h3 id="python3"><a href="#python3" class="headerlink" title="python3"></a>python3</h3><p>首先安装依赖包</p>
-<pre><code>yum -y groupinstall &quot;Development tools&quot;
-yum -y install zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel gdbm-devel db4-devel libpcap-devel xz-devel</code></pre><p>然后根据自己需求下载不同版本的Python3，我下载的是Python3.6.2</p>
-<pre><code>wget https://www.python.org/ftp/python/3.6.2/Python-3.6.2.tar.xz</code></pre><p>如果速度不够快，可以直接去官网下载，利用WinSCP等软件传到服务器上指定位置，我的存放目录是/usr/local/python3，使用命令：</p>
-<pre><code>mkdir /usr/local/python3 </code></pre><p>建立一个空文件夹</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum -y groupinstall &quot;Development tools&quot;</span><br><span class="line">yum -y install zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel gdbm-devel db4-devel libpcap-devel xz-devel</span><br></pre></td></tr></table></figure>
+<p>然后根据自己需求下载不同版本的Python3，我下载的是Python3.6.2</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://www.python.org/ftp/python/3.6.2/Python-3.6.2.tar.xz</span><br></pre></td></tr></table></figure>
+<p>如果速度不够快，可以直接去官网下载，利用WinSCP等软件传到服务器上指定位置，我的存放目录是/usr/local/python3，使用命令：</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir /usr/local/python3</span><br></pre></td></tr></table></figure>
+<p>建立一个空文件夹</p>
 <p>然后解压压缩包，进入该目录，安装Python3</p>
-<pre><code>
-tar -xvJf  Python-3.6.2.tar.xz
-cd Python-3.6.2
-./configure --prefix=/usr/local/python3
-make &amp;&amp; make install</code></pre><p>最后创建软链接</p>
-<pre><code>ln -s /usr/local/python3/bin/python3 /usr/bin/python3
-ln -s /usr/local/python3/bin/pip3 /usr/bin/pip3</code></pre><h3 id="安装pip"><a href="#安装pip" class="headerlink" title="安装pip"></a>安装pip</h3><p>没有可用软件包 python-pip。就执行命令 yum -y install epel-release 。然后再执行 yum install python-pip</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">tar -xvJf  Python-3.6.2.tar.xz</span><br><span class="line">cd Python-3.6.2</span><br><span class="line">./configure --prefix=/usr/local/python3</span><br><span class="line">make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
+
+
+<p>最后创建软链接</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ln -s /usr/local/python3/bin/python3 /usr/bin/python3</span><br><span class="line">ln -s /usr/local/python3/bin/pip3 /usr/bin/pip3</span><br></pre></td></tr></table></figure>
+<h3 id="安装pip"><a href="#安装pip" class="headerlink" title="安装pip"></a>安装pip</h3><p>没有可用软件包 python-pip。就执行命令 yum -y install epel-release 。然后再执行 yum install python-pip</p>
 <h3 id="jdk"><a href="#jdk" class="headerlink" title="jdk"></a>jdk</h3><p>第一步：下载jre</p>
 <p>我们去oracle官方下载下jre<br><a href="http://www.oracle.com/technetwork/java/javase/downloads/server-jre8-downloads-2133154.html" target="_blank" rel="noopener">http://www.oracle.com/technetwork/java/javase/downloads/server-jre8-downloads-2133154.html</a><br>下载 server jre<br>第二步：上传jre到/home/data/下<br>第三步：解压以及剪切到/home/java/目录</p>
-<pre class=" language-shell"><code class="language-shell">[root@localhost ~]# cd /home/data/
-[root@localhost data]# ls 
-server-jre-8u131-linux-x64.tar.gz
-[root@localhost data]# tar -zxvf server-jre-8u131-linux-x64.tar.gz 
-
-进入/home/data/ 解压tar.gz压缩包 
-
-[root@localhost data]# ls
-
-jdk1.8.0_131  server-jre-8u131-linux-x64.tar.gz
-
-[root@localhost ~]# mkdir /home/java
-root@localhost ~]# mv /home/data/jdk1.8.0_131/ /home/java/
-[root@localhost ~]# ls /home/java/
-jdk1.8.0_131</code></pre>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# cd /home/data/</span><br><span class="line">[root@localhost data]# ls </span><br><span class="line">server-jre-8u131-linux-x64.tar.gz</span><br><span class="line">[root@localhost data]# tar -zxvf server-jre-8u131-linux-x64.tar.gz </span><br><span class="line"></span><br><span class="line">进入/home/data/ 解压tar.gz压缩包 </span><br><span class="line"></span><br><span class="line">[root@localhost data]# ls</span><br><span class="line"></span><br><span class="line">jdk1.8.0_131  server-jre-8u131-linux-x64.tar.gz</span><br><span class="line"></span><br><span class="line">[root@localhost ~]# mkdir /home/java</span><br><span class="line">root@localhost ~]# mv /home/data/jdk1.8.0_131/ /home/java/</span><br><span class="line">[root@localhost ~]# ls /home/java/</span><br><span class="line">jdk1.8.0_131</span><br></pre></td></tr></table></figure>
 <p>第四步：jre目录以及子目录授予root权限</p>
-<pre><code>chown root:root -R /home/java/jdk1.8.0_131/</code></pre><p>第五步：配置环境变量</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chown root:root -R /home/java/jdk1.8.0_131/</span><br></pre></td></tr></table></figure>
+<p>第五步：配置环境变量</p>
 <p>编辑环境变量配置文件</p>
-<pre><code>vi /etc/profile </code></pre><p>在文件末尾加入下面代码，强制保存（w!）退出</p>
-<pre><code>export JAVA_HOME=/home/java
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/profile</span><br></pre></td></tr></table></figure>
+<p>在文件末尾加入下面代码，强制保存（w!）退出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME=/home/java</span><br><span class="line"></span><br><span class="line">export JRE_HOME=/home/java/jdk1.8.0_131</span><br><span class="line"></span><br><span class="line">export CLASSPATH=$JRE_HOME/lib/rt.jar:$JRE_HOME/lib/ext</span><br><span class="line"></span><br><span class="line">export PATH=$PATH:$JRE_HOME/bin</span><br></pre></td></tr></table></figure>
 
-export JRE_HOME=/home/java/jdk1.8.0_131
 
-export CLASSPATH=$JRE_HOME/lib/rt.jar:$JRE_HOME/lib/ext
-
-export PATH=$PATH:$JRE_HOME/bin</code></pre><p>使环境变量即时生效</p>
-<pre><code>source /etc/profile</code></pre><p>第六步：测试</p>
-<pre><code>[root@localhost ~]# java -version</code></pre>
+<p>使环境变量即时生效</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source /etc/profile</span><br></pre></td></tr></table></figure>
+<p>第六步：测试</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# java -version</span><br></pre></td></tr></table></figure>
             </div>
             <hr/>
 
@@ -708,10 +679,7 @@ export PATH=$PATH:$JRE_HOME/bin</code></pre><p>使环境变量即时生效</p>
                     <div class="summary block-with-text">
                         
                             一、一些psql shell常用命令一些比较有用的帮助, 在psql shell中输入 : 
-\? -- 可以得到psql的一些快捷命令
-\h -- 可以得到SQL的语法帮助
-\dt -- 输出当前搜索路径下的表
-\du -- 输出当前搜索
+12345678910\? -- 可以得到psql的一些快捷命令\h -- 可以得到SQL的语法帮助\dt -- 输出当前搜索路径下的表\du -
                         
                     </div>
                     <div class="publish-info">
@@ -921,7 +889,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">173.5k</span>&nbsp;字
+                class="white-color">175.5k</span>&nbsp;字
             
             
             

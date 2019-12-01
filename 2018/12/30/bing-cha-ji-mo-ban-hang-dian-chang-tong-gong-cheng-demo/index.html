@@ -26,7 +26,7 @@
     
     <script src="/libs/jquery/jquery.min.js"></script>
     
-</head>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"><script src="/js/prism.js"></script></head>
 
 
 <body>
@@ -411,76 +411,17 @@
 <h3 id="二、并查集的存储结构及实现分析"><a href="#二、并查集的存储结构及实现分析" class="headerlink" title="二、并查集的存储结构及实现分析"></a>二、并查集的存储结构及实现分析</h3><h4 id="2-1、存储结构"><a href="#2-1、存储结构" class="headerlink" title="2.1、存储结构"></a>2.1、存储结构</h4><p>并查集(大S)由若干子集合si构成，并查集的<strong>逻辑结构</strong>就是一个森林。si表示森林中的一棵子树。一般以子树的根作为该子树的代表。<br>而对于<strong>实际</strong>的并查集的存储结构，可用一维数组和链表来实现。这里主要介绍一维数组的实现。<br>假设一维数组s中的每个元素 s[i] 表示该元素 i 的父亲。这里有两个需要注意的地方：①我们用一维数组来存储并查集，数组的元素s[i]表示的是结点的父亲的位置。②数组元素的下标 i 则是结点的标识。如：s[5]=4，表示：结点5 的父亲 是结点4。</p>
 <h4 id="2-2、Union操作"><a href="#2-2、Union操作" class="headerlink" title="2.2、Union操作"></a>2.2、Union操作</h4><p>Union操作就是将两个不相交的子集合合并成一个大集合。简单的Union操作是非常容易实现的，因为只需要把一棵子树的根结点指向另一棵子树即可完成合并。</p>
 <h4 id="2-3、Find操作"><a href="#2-3、Find操作" class="headerlink" title="2.3、Find操作"></a>2.3、Find操作</h4><p>Find操作就是查找某个元素所在的集合，返回该集合的代表元素</p>
-<pre><code>int find(int x)
-{
-    int r=x;
-    while(bin[r]!=r)
-        r=bin[r];
-    return r;
-}</code></pre><p>这里find(int x)返回的是最里层递归执行后，得到的值。由于只有树根的父结点位置等于父节点数组里对应的值（bin[r]=r），故返回的是树根结点的标识。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">int find(int x)</span><br><span class="line">&#123;</span><br><span class="line">    int r=x;</span><br><span class="line">    while(bin[r]!=r)</span><br><span class="line">        r=bin[r];</span><br><span class="line">    return r;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里find(int x)返回的是最里层递归执行后，得到的值。由于只有树根的父结点位置等于父节点数组里对应的值（bin[r]=r），故返回的是树根结点的标识。</p>
 <h4 id="2-4、路径压缩"><a href="#2-4、路径压缩" class="headerlink" title="2.4、路径压缩"></a>2.4、路径压缩</h4><p>思想：我们一开始找到了x的父亲节点，之后，我们随着（X—&gt;X的祖先）这条路，一直把这条路上的所有节点的父节点都标记为祖先节点。从而加快了查找的速度。</p>
-<pre><code>int Find(int x)
-{
-    int k, j, r;
-    r = x;
-    while(r != parent[r])     //查找跟节点
-        r = parent[r];      //找到跟节点，用r记录下
-    k = x;        
-    while(k != r)             //非递归路径压缩操作
-    {
-        j = parent[k];         //用j暂存parent[k]的父节点
-         parent[k] = r;        //parent[x]指向跟节点
-         k = j;                    //k移到父节点
-    }
-    return r;         //返回根节点的值            
-}</code></pre><p><img src="1.gif" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">int Find(int x)</span><br><span class="line">&#123;</span><br><span class="line">    int k, j, r;</span><br><span class="line">    r = x;</span><br><span class="line">    while(r != parent[r])     //查找跟节点</span><br><span class="line">        r = parent[r];      //找到跟节点，用r记录下</span><br><span class="line">    k = x;        </span><br><span class="line">    while(k != r)             //非递归路径压缩操作</span><br><span class="line">    &#123;</span><br><span class="line">        j = parent[k];         //用j暂存parent[k]的父节点</span><br><span class="line">         parent[k] = r;        //parent[x]指向跟节点</span><br><span class="line">         k = j;                    //k移到父节点</span><br><span class="line">    &#125;</span><br><span class="line">    return r;         //返回根节点的值            </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="1.gif" alt=""></p>
 <h3 id="三、例题"><a href="#三、例题" class="headerlink" title="三、例题"></a>三、例题</h3><h4 id="畅通工程"><a href="#畅通工程" class="headerlink" title="畅通工程"></a><center><a href="http://acm.hdu.edu.cn/showproblem.php?pid=1232" target="_blank" rel="noopener">畅通工程</a></center></h4><h4 id="Problem-Description"><a href="#Problem-Description" class="headerlink" title="Problem Description"></a>Problem Description</h4><p>某省调查城镇交通状况，得到现有城镇道路统计表，表中列出了每条道路直接连通的城镇。省政府“畅通工程”的目标是使全省任何两个城镇间都可以实现交通（但不一定有直接的道路相连，只要互相间接通过道路可达即可）。问最少还需要建设多少条道路？ </p>
 <h4 id="Input"><a href="#Input" class="headerlink" title="Input"></a>Input</h4><p>测试输入包含若干测试用例。每个测试用例的第1行给出两个正整数，分别是城镇数目N ( &lt; 1000 )和道路数目M；随后的M行对应M条道路，每行给出一对正整数，分别是该条道路直接连通的两个城镇的编号。为简单起见，城镇从1到N编号。<br>注意:两个城市之间可以有多条道路相通,也就是说<br>3 3<br>1 2<br>1 2<br>2 1<br>这种输入也是合法的<br>当N为0时，输入结束，该用例不被处理。 </p>
 <h4 id="Output"><a href="#Output" class="headerlink" title="Output"></a>Output</h4><p>对每个测试用例，在1行里输出最少还需要建设的道路数目。 </p>
 <h4 id="Sample-Input"><a href="#Sample-Input" class="headerlink" title="Sample Input"></a>Sample Input</h4><p>4 2<br>1 3<br>4 3<br>3 3<br>1 2<br>1 3<br>2 3<br>5 2<br>1 2<br>3 5<br>999 0<br>0</p>
 <h4 id="Sample-Output"><a href="#Sample-Output" class="headerlink" title="Sample Output"></a>Sample Output</h4><p>1<br>0<br>2<br>998</p>
-<pre><code>#include&lt;stdio.h&gt;
-int pre[1010];
-
-int find(int x){
-    int r,k,j;
-    r=x;
-    while(pre[r]!=r){
-        r=pre[r];
-    }
-    k=x;
-    while(k!=r){ //路径压缩 
-        j=pre[k];
-        pre[k]=r;
-        k=j;
-    }
-    return r;
-}
-int main(){
-    int n,m;
-    while(scanf(&quot;%d&quot;,&amp;n),n){
-        int i,x,y,c,d;
-        for(i=1;i&lt;=n;i++) pre[i]=i;
-        scanf(&quot;%d&quot;,&amp;m);
-        for(i=1;i&lt;=m;i++){
-            scanf(&quot;%d%d&quot;,&amp;x,&amp;y);
-            c=find(x);
-            d=find(y);
-            if(c!=d) //合并 
-            {
-                    pre[d]=c;
-            }
-        }
-        int count=-1;
-        for(i=1;i&lt;=n;i++){
-            if(pre[i]==i) count++;
-        }
-        printf(&quot;%d\n&quot;,count);
-    }
-    return 0;
-}
-
-</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">int pre[1010];</span><br><span class="line"> </span><br><span class="line">int find(int x)&#123;</span><br><span class="line">	int r,k,j;</span><br><span class="line">	r=x;</span><br><span class="line">	while(pre[r]!=r)&#123;</span><br><span class="line">		r=pre[r];</span><br><span class="line">	&#125;</span><br><span class="line">	k=x;</span><br><span class="line">	while(k!=r)&#123; //路径压缩 </span><br><span class="line">		j=pre[k];</span><br><span class="line">		pre[k]=r;</span><br><span class="line">		k=j;</span><br><span class="line">	&#125;</span><br><span class="line">	return r;</span><br><span class="line">&#125;</span><br><span class="line">int main()&#123;</span><br><span class="line">	int n,m;</span><br><span class="line">	while(scanf(&quot;%d&quot;,&amp;n),n)&#123;</span><br><span class="line">		int i,x,y,c,d;</span><br><span class="line">		for(i=1;i&lt;=n;i++) pre[i]=i;</span><br><span class="line">		scanf(&quot;%d&quot;,&amp;m);</span><br><span class="line">		for(i=1;i&lt;=m;i++)&#123;</span><br><span class="line">			scanf(&quot;%d%d&quot;,&amp;x,&amp;y);</span><br><span class="line">			c=find(x);</span><br><span class="line">            d=find(y);</span><br><span class="line">            if(c!=d) //合并 </span><br><span class="line">            &#123;</span><br><span class="line">                    pre[d]=c;</span><br><span class="line">            &#125;</span><br><span class="line">	    &#125;</span><br><span class="line">		int count=-1;</span><br><span class="line">		for(i=1;i&lt;=n;i++)&#123;</span><br><span class="line">			if(pre[i]==i) count++;</span><br><span class="line">		&#125;</span><br><span class="line">		printf(&quot;%d\n&quot;,count);</span><br><span class="line">	&#125;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
             </div>
             <hr/>
 
@@ -651,7 +592,7 @@ int main(){
                     <div class="summary block-with-text">
                         
                             1、前提条件 本博客基于ubuntuDocker 要求 Ubuntu 系统的内核版本高于 3.10 ，查看本页面的前提条件来验证你的 Ubuntu 版本是否支持 Docker。通过 uname -r 命令查看你当前的内核版本
-runoob@
+1runoob
                         
                     </div>
                     <div class="publish-info">
@@ -861,7 +802,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">173.5k</span>&nbsp;字
+                class="white-color">175.5k</span>&nbsp;字
             
             
             

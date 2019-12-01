@@ -31,7 +31,7 @@ root最简单，前序遍历的第一节点“1”就是r">
     
     <script src="/libs/jquery/jquery.min.js"></script>
     
-</head>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"><script src="/js/prism.js"></script></head>
 
 
 <body>
@@ -388,7 +388,7 @@ root最简单，前序遍历的第一节点“1”就是r">
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    489
+                    501
                 </div>
                 
 
@@ -416,49 +416,13 @@ root最简单，前序遍历的第一节点“1”就是r">
 <a id="more"></a>
 <h3 id="2、当然我们现在开始假装不知道有这么棵树，但是知道"><a href="#2、当然我们现在开始假装不知道有这么棵树，但是知道" class="headerlink" title="2、当然我们现在开始假装不知道有这么棵树，但是知道"></a>2、当然我们现在开始假装不知道有这么棵树，但是知道</h3><p>先序： 1 2 3 4 5 6<br>中序： 3 2 4 1 6 5</p>
 <h3 id="3、建树步骤"><a href="#3、建树步骤" class="headerlink" title="3、建树步骤"></a>3、建树步骤</h3><ol>
-<li><p>root最简单，前序遍历的第一节点“1”就是root</p>
-</li>
-<li><p>那就观察中序遍历“ 3, 2, 4, 1, 6, 5”。其中root节点“1”左侧的“3, 2, 4”必然是root的左子树，“1”右侧的“6, 5”必然是root的右子树</p>
-</li>
-<li><p>观察左子树“3, 2, 4”，左子树的中的根节点必然是大树的root的leftchild。在前序遍历中，大树的root的leftchild位于root之后，所以左子树的根节点为” 2 “.</p>
-</li>
-<li><p>同样的道理，root的右子树节点“6，5”中的根节点也可以通过前序遍历求得,root为5（通过先序遍历获取。</p>
-</li>
-<li><p>通过中序遍历去数节点的个数判断是前序遍历中的左子树和右子树的分界线。<br>在上一次中序遍历中，root左侧是“3，2，4”，所以有3个节点位于root左侧。那么在前序遍历中，必然是第1个是“1”，第2到第4个由“2，3，4”构成，第5个就是root的右子树的根节点了，是“5”。</p>
-</li>
-<li><p>如此递归</p>
-<h4 id="4、C-代码"><a href="#4、C-代码" class="headerlink" title="4、C++代码"></a>4、C++代码</h4><pre><code>typedef struct BTNode {
- char data;
- BTNode *lchild, *rchild;
-}BTNode, *BiTree;
-// 先序+中序 建树法
-void CreateBiTree(BiTree &amp;bTree, string preOrder, string inOrder) {
- bTree = (BTNode*)malloc(sizeof(BTNode));
- bTree-&gt;data = preOrder[0];
-
- int pos = inOrder.find(preOrder[0]);
- string inOrderL = inOrder.substr(0, pos);
- string inOrderR = inOrder.substr(pos + 1, inOrder.length() - 1);
- string preOrderL = preOrder.substr(1, inOrderL.length());
- string preOrderR = preOrder.substr(inOrderL.length() + 1, preOrder.length() - 1);
-
- bool isEmptyL = false, isEmptyR = false;        // 用来判断左右结点是否为空的标志位 
- if (inOrderL.empty()) {
-     bTree-&gt;lchild = NULL;
-     isEmptyL = true;
- }
- if (inOrderR.empty()) {
-     bTree-&gt;rchild = NULL; 
-     isEmptyR = true;
- }
- if (!isEmptyL) {
-     CreateBiTree(bTree-&gt;lchild, preOrderL, inOrderL);
- }
- if (!isEmptyR) {
-     CreateBiTree(bTree-&gt;rchild, preOrderR, inOrderR);
- }    
-}</code></pre><p>然后当然也就知道了后序遍历为：3，4，2，6，5，1</p>
-</li>
+<li>root最简单，前序遍历的第一节点“1”就是root</li>
+<li>那就观察中序遍历“ 3, 2, 4, 1, 6, 5”。其中root节点“1”左侧的“3, 2, 4”必然是root的左子树，“1”右侧的“6, 5”必然是root的右子树</li>
+<li>观察左子树“3, 2, 4”，左子树的中的根节点必然是大树的root的leftchild。在前序遍历中，大树的root的leftchild位于root之后，所以左子树的根节点为” 2 “.</li>
+<li>同样的道理，root的右子树节点“6，5”中的根节点也可以通过前序遍历求得,root为5（通过先序遍历获取。</li>
+<li>通过中序遍历去数节点的个数判断是前序遍历中的左子树和右子树的分界线。<br>在上一次中序遍历中，root左侧是“3，2，4”，所以有3个节点位于root左侧。那么在前序遍历中，必然是第1个是“1”，第2到第4个由“2，3，4”构成，第5个就是root的右子树的根节点了，是“5”。</li>
+<li>如此递归<h4 id="4、C-代码"><a href="#4、C-代码" class="headerlink" title="4、C++代码"></a>4、C++代码</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">typedef struct BTNode &#123;</span><br><span class="line">	char data;</span><br><span class="line">	BTNode *lchild, *rchild;</span><br><span class="line">&#125;BTNode, *BiTree;</span><br><span class="line">// 先序+中序 建树法</span><br><span class="line">void CreateBiTree(BiTree &amp;bTree, string preOrder, string inOrder) &#123;</span><br><span class="line">	bTree = (BTNode*)malloc(sizeof(BTNode));</span><br><span class="line">	bTree-&gt;data = preOrder[0];</span><br><span class="line">	</span><br><span class="line">	int pos = inOrder.find(preOrder[0]);</span><br><span class="line">	string inOrderL = inOrder.substr(0, pos);</span><br><span class="line">	string inOrderR = inOrder.substr(pos + 1, inOrder.length() - 1);</span><br><span class="line">	string preOrderL = preOrder.substr(1, inOrderL.length());</span><br><span class="line">	string preOrderR = preOrder.substr(inOrderL.length() + 1, preOrder.length() - 1);</span><br><span class="line">	</span><br><span class="line">	bool isEmptyL = false, isEmptyR = false;		// 用来判断左右结点是否为空的标志位 </span><br><span class="line">	if (inOrderL.empty()) &#123;</span><br><span class="line">		bTree-&gt;lchild = NULL;</span><br><span class="line">		isEmptyL = true;</span><br><span class="line">	&#125;</span><br><span class="line">	if (inOrderR.empty()) &#123;</span><br><span class="line">		bTree-&gt;rchild = NULL; </span><br><span class="line">		isEmptyR = true;</span><br><span class="line">	&#125;</span><br><span class="line">	if (!isEmptyL) &#123;</span><br><span class="line">		CreateBiTree(bTree-&gt;lchild, preOrderL, inOrderL);</span><br><span class="line">	&#125;</span><br><span class="line">	if (!isEmptyR) &#123;</span><br><span class="line">		CreateBiTree(bTree-&gt;rchild, preOrderR, inOrderR);</span><br><span class="line">	&#125;	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+然后当然也就知道了后序遍历为：3，4，2，6，5，1</li>
 </ol>
 
             </div>
@@ -843,7 +807,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">173.5k</span>&nbsp;字
+                class="white-color">175.5k</span>&nbsp;字
             
             
             

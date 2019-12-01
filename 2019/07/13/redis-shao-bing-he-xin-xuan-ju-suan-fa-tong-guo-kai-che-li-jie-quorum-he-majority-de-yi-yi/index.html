@@ -26,7 +26,7 @@
     
     <script src="/libs/jquery/jquery.min.js"></script>
     
-</head>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"><script src="/js/prism.js"></script></head>
 
 
 <body>
@@ -410,15 +410,8 @@
 <p><img src="1.jpg" alt=""></p>
 <p>假如一旦确认为了周某开车了，并且有了证据，那么我们将对这个老司机判刑，但是还是需要人民在法院投票确定是否周某犯了开车罪，所有人民同时拥有举报和投票的权利，但是如果你被举报，你将剥夺投票自己是否入刑的权利（总不能说我认为我没开车嘛<br><img src="4.jpg" alt=""></p>
 <p>当然，我们假设这个世界只要有人民指出一个人在开车我们就可以说有证据了，就可以交往法院裁决，由人民投票，假如这个世界有n个人.<br><code>那么问题来了，多少个人举报才算有证据，多少人投票同意判刑周某才能入狱</code><br>于是这个世界的老大在《不允许开车法》中写入一下几条<br>（首先给出一些定义，n表示世界总人数，quorum代表举报周某开车的人数，majority代表大多数人-可以理解为这个值代表了大多数人民的选择-在n确定的时候为定值）</p>
-<pre><code>1、首先quorum一定要大于等于1
-2、如果quorum&lt;majority，那么法院投票同意入刑的人要多于majority才能入刑
-3、如果quorum&gt;=majority, 那么需要法院投票同意入刑的人要多于quorum才能入刑
-4、majority取值如下:
-n= 2，majority=2
-n= 3，majority=2
-n= 4，majority=2
-n= 5，majority=3
-......</code></pre><p>我们来讨论一下这三条<br>1、第一条肯定是没问题的，必须要有人举报才能送温暖嘛<br>2、第二条意思就是如果是少数人举报周某开车，那么需要大多数人投票入刑才能生效、<br>3、第三条就是如果举报的人数已经多与了国家的majority都认为周某开车，那么仅仅是majority投票法院是不够的，可能是因为入刑生效是严肃的，具体细节去问那个世界的扛把子<br>4、这个算法其实类似于(n+1)/2向下取整,但是除了2个人的时候，法律就是法律吧。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">1、首先quorum一定要大于等于1</span><br><span class="line">2、如果quorum&lt;majority，那么法院投票同意入刑的人要多于majority才能入刑</span><br><span class="line">3、如果quorum&gt;=majority, 那么需要法院投票同意入刑的人要多于quorum才能入刑</span><br><span class="line">4、majority取值如下:</span><br><span class="line">n= 2，majority=2</span><br><span class="line">n= 3，majority=2</span><br><span class="line">n= 4，majority=2</span><br><span class="line">n= 5，majority=3</span><br><span class="line">......</span><br></pre></td></tr></table></figure>
+<p>我们来讨论一下这三条<br>1、第一条肯定是没问题的，必须要有人举报才能送温暖嘛<br>2、第二条意思就是如果是少数人举报周某开车，那么需要大多数人投票入刑才能生效、<br>3、第三条就是如果举报的人数已经多与了国家的majority都认为周某开车，那么仅仅是majority投票法院是不够的，可能是因为入刑生效是严肃的，具体细节去问那个世界的扛把子<br>4、这个算法其实类似于(n+1)/2向下取整,但是除了2个人的时候，法律就是法律吧。</p>
 <h4 id="1-2、所以现在模拟两个场景"><a href="#1-2、所以现在模拟两个场景" class="headerlink" title="1.2、所以现在模拟两个场景"></a>1.2、所以现在模拟两个场景</h4><h5 id="场景1、这个世界只有两个人，A举报B开车是否有效"><a href="#场景1、这个世界只有两个人，A举报B开车是否有效" class="headerlink" title="场景1、这个世界只有两个人，A举报B开车是否有效"></a>场景1、这个世界只有两个人，A举报B开车是否有效</h5><p>分析：</p>
 <ul>
 <li>这个环境中n=2,majority=2,quorum=1（世界人数2，根据法律majority人数为2，只有A一个人举报了B所以quorum=1</li>
@@ -441,13 +434,9 @@ n= 5，majority=3
 <li>现在有A，B两个个人拥有投票权限，所以投票有效</li>
 </ul>
 <h4 id="（以上则是经典的Redis三节点哨兵集群"><a href="#（以上则是经典的Redis三节点哨兵集群" class="headerlink" title="（以上则是经典的Redis三节点哨兵集群"></a>（以上则是经典的Redis三节点哨兵集群</h4><h3 id="二、Redis哨兵核心选举算法分析（严肃脸"><a href="#二、Redis哨兵核心选举算法分析（严肃脸" class="headerlink" title="二、Redis哨兵核心选举算法分析（严肃脸"></a>二、Redis哨兵核心选举算法分析（严肃脸</h3><p>这个需要先了解Redis主从架构，如果您还不熟悉，可以先移步<a href="https://kit4y.github.io/2019/07/11/Redis%E4%B8%BB%E4%BB%8E%E6%9E%B6%E6%9E%84%E4%BB%A5%E5%8F%8Avm-centOS-7-minimal%E7%89%88%E6%9C%AC%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE%E5%B0%8F%E8%AE%B0/">Redis主从架构以及vm-centOS-7-minimal版本网络配置小记</a></p>
-<h4 id="2-1、哨兵的主要功能如下"><a href="#2-1、哨兵的主要功能如下" class="headerlink" title="2.1、哨兵的主要功能如下"></a>2.1、哨兵的主要功能如下</h4><pre><code>（1）集群监控，负责监控redis master和slave进程是否正常工作
+<h4 id="2-1、哨兵的主要功能如下"><a href="#2-1、哨兵的主要功能如下" class="headerlink" title="2.1、哨兵的主要功能如下"></a>2.1、哨兵的主要功能如下</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">（1）集群监控，负责监控redis master和slave进程是否正常工作</span><br><span class="line"></span><br><span class="line">（2）消息通知，如果某个redis实例有故障，那么哨兵负责发送消息作为报警通知给管理员</span><br><span class="line"></span><br><span class="line">（3）故障转移，如果master node挂掉了，会自动转移到slave node上</span><br><span class="line"></span><br><span class="line">（4）配置中心，如果故障转移发生了，通知client客户端新的master地址</span><br></pre></td></tr></table></figure>
 
-（2）消息通知，如果某个redis实例有故障，那么哨兵负责发送消息作为报警通知给管理员
-
-（3）故障转移，如果master node挂掉了，会自动转移到slave node上
-
-（4）配置中心，如果故障转移发生了，通知client客户端新的master地址</code></pre><h4 id="2-2、Redis哨兵核心知识"><a href="#2-2、Redis哨兵核心知识" class="headerlink" title="2.2、Redis哨兵核心知识"></a>2.2、Redis哨兵核心知识</h4><p>（1）哨兵至少需要3个实例，来保证自己的健壮性</p>
+<h4 id="2-2、Redis哨兵核心知识"><a href="#2-2、Redis哨兵核心知识" class="headerlink" title="2.2、Redis哨兵核心知识"></a>2.2、Redis哨兵核心知识</h4><p>（1）哨兵至少需要3个实例，来保证自己的健壮性</p>
 <p>（2）哨兵 + redis主从的部署架构，是不会保证数据零丢失的，只能保证redis集群的高可用性</p>
 <p>（3）对于哨兵 + redis主从这种复杂的部署架构，尽量在测试环境和生产环境，都进行充足的测试和演练</p>
 <h4 id="2、3：sdown和odown两种宕机"><a href="#2、3：sdown和odown两种宕机" class="headerlink" title="2、3：sdown和odown两种宕机"></a>2、3：sdown和odown两种宕机</h4><p>sdown和odown两种失败状态</p>
@@ -587,8 +576,7 @@ n= 5，majority=3
                     <div class="summary block-with-text">
                         
                             一直以为assert函数就是执行一下，今天写了一个代码审计题目，发现了assert代码注入，记录一下一、一些php语法1、ASSERT函数在php文档中描述
-PHP 5
-assert ( mixed $assertion [, string
+1234PHP 5assert ( mixed $assertion [, str
                         
                     </div>
                     <div class="publish-info">
@@ -847,7 +835,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">173.5k</span>&nbsp;字
+                class="white-color">175.5k</span>&nbsp;字
             
             
             

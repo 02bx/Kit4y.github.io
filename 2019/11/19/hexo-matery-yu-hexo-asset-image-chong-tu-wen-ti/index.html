@@ -28,7 +28,7 @@
     
     <script src="/libs/jquery/jquery.min.js"></script>
     
-</head>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"><script src="/js/prism.js"></script></head>
 
 
 <body>
@@ -389,7 +389,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    612
+                    611
                 </div>
                 
 
@@ -421,7 +421,9 @@
 <p>可真实情况是</p>
 <p><img src="2.png" alt="img"></p>
 <p>生成图片的链接居然都变成了</p>
-<pre><code>/.io//1.png</code></pre><p><img src="4.jpg" alt="img"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/.io//1.png</span><br></pre></td></tr></table></figure>
+
+<p><img src="4.jpg" alt="img"></p>
 <p>重新hexo-clean,hexo-g也是一样的如下，太惨了</p>
 <p><img src="1.png" alt="img"></p>
 <h3 id="寻找解决办法"><a href="#寻找解决办法" class="headerlink" title="寻找解决办法"></a>寻找解决办法</h3><p>网上说原因是:</p>
@@ -430,27 +432,8 @@
 <p><img src="5.jpg" alt="img"></p>
 <h3 id="我的办法"><a href="#我的办法" class="headerlink" title="我的办法"></a>我的办法</h3><p><del>这个插件中暑了，不如我们</del>嗯嗯，卸载这个插件<br><code>npm uninstall hexo-asset-image</code><br>看看会发生啥<br>其实总的来说是正常的，只是url重复了，比如<br>我在markdown中写<code>![](hexo-matery与hexo-asset-image冲突问题/5.jpg)</code><br>生成的url是<code>/hexo-matery与hexo-asset-image冲突问题/hexo-matery与hexo-asset-image冲突问题/5.jpg</code><br>!!!!居然重复了一遍<br>纠结怎么改插件，不如把所有的<code>![]({文件夹名}/x.jpg)</code>改成<code>![](x.jpg)</code>，虽然预览很恶心，但是hexo生成后没问题</p>
 <h3 id="写脚本"><a href="#写脚本" class="headerlink" title="写脚本"></a>写脚本</h3><p>emm，终于觉得没白学python,一般我自己之前写了2中插入图片的语法，一种是<code>![]({文件夹名}/x.jpg)</code>,一种是<code>src=&quot;{文件夹啊名}/xx.jpg&quot;</code>，所以通用脚本这样的</p>
-<pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true"># -- coding:utf-8 </span>
-<span class="token keyword">import</span> os
-<span class="token keyword">import</span> re
-<span class="token comment" spellcheck="true">#filePath='C:/Users/38138/Desktop/1'</span>
-filePath<span class="token operator">=</span><span class="token string">'C:/blog/source/_posts'</span>
-count<span class="token operator">=</span><span class="token number">1</span>
-<span class="token keyword">for</span> file <span class="token keyword">in</span> os<span class="token punctuation">.</span>listdir<span class="token punctuation">(</span>filePath<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token comment" spellcheck="true">#title=file[0:-3]</span>
-    <span class="token keyword">print</span><span class="token punctuation">(</span>file<span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">2</span><span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-    <span class="token keyword">if</span> file<span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">2</span><span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token operator">==</span><span class="token string">'md'</span><span class="token punctuation">:</span>
-        <span class="token keyword">with</span> open<span class="token punctuation">(</span>os<span class="token punctuation">.</span>path<span class="token punctuation">.</span>join<span class="token punctuation">(</span>filePath<span class="token punctuation">,</span>file<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"r+"</span><span class="token punctuation">,</span>encoding<span class="token operator">=</span><span class="token string">'utf-8'</span><span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
-            <span class="token keyword">print</span><span class="token punctuation">(</span>file<span class="token punctuation">)</span>
-            old <span class="token operator">=</span> f<span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span>
-            new_text<span class="token operator">=</span>re<span class="token punctuation">.</span>sub<span class="token punctuation">(</span><span class="token string">"!\\[[\\u4e00-\\u9fa5a-zA-Z0-9 \\-]*\\]\\([\\u4e00-\\u9fa5a-zA-Z0-9 \\-]*/"</span><span class="token punctuation">,</span><span class="token string">"![]("</span><span class="token punctuation">,</span>old<span class="token punctuation">)</span>
-            new_text1<span class="token operator">=</span>re<span class="token punctuation">.</span>sub<span class="token punctuation">(</span><span class="token string">"src=\"[\\u4e00-\\u9fa5a-zA-Z\\-1-9 ]*/"</span><span class="token punctuation">,</span><span class="token string">"src=\""</span><span class="token punctuation">,</span>new_text<span class="token punctuation">)</span>
-            <span class="token comment" spellcheck="true">#print(new_text1)</span>
-            f<span class="token punctuation">.</span>seek<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
-            f<span class="token punctuation">.</span>truncate<span class="token punctuation">(</span><span class="token punctuation">)</span>
-            f<span class="token punctuation">.</span>write<span class="token punctuation">(</span>new_text1<span class="token punctuation">)</span>
-        count<span class="token operator">+=</span><span class="token number">1</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>count<span class="token punctuation">)</span></code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -- coding:utf-8 </span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="comment">#filePath='C:/Users/38138/Desktop/1'</span></span><br><span class="line">filePath=<span class="string">'C:/blog/source/_posts'</span></span><br><span class="line">count=<span class="number">1</span></span><br><span class="line"><span class="keyword">for</span> file <span class="keyword">in</span> os.listdir(filePath):</span><br><span class="line">    <span class="comment">#title=file[0:-3]</span></span><br><span class="line">    print(file[<span class="number">-2</span>:])</span><br><span class="line">    <span class="keyword">if</span> file[<span class="number">-2</span>:]==<span class="string">'md'</span>:</span><br><span class="line">        <span class="keyword">with</span> open(os.path.join(filePath,file), <span class="string">"r+"</span>,encoding=<span class="string">'utf-8'</span>) <span class="keyword">as</span> f:</span><br><span class="line">            print(file)</span><br><span class="line">            old = f.read()</span><br><span class="line">            new_text=re.sub(<span class="string">"!\\[[\\u4e00-\\u9fa5a-zA-Z0-9 \\-]*\\]\\([\\u4e00-\\u9fa5a-zA-Z0-9 \\-]*/"</span>,<span class="string">"![]("</span>,old)</span><br><span class="line">            new_text1=re.sub(<span class="string">"src=\"[\\u4e00-\\u9fa5a-zA-Z\\-1-9 ]*/"</span>,<span class="string">"src=\""</span>,new_text)</span><br><span class="line">            <span class="comment">#print(new_text1)</span></span><br><span class="line">            f.seek(<span class="number">0</span>)</span><br><span class="line">            f.truncate()</span><br><span class="line">            f.write(new_text1)</span><br><span class="line">        count+=<span class="number">1</span></span><br><span class="line">print(count)</span><br></pre></td></tr></table></figure>
+
 <h3 id="改之前记得备份！！！！"><a href="#改之前记得备份！！！！" class="headerlink" title="改之前记得备份！！！！"></a>改之前记得备份！！！！</h3>
             </div>
             <hr/>
@@ -840,7 +823,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">173.5k</span>&nbsp;字
+                class="white-color">175.5k</span>&nbsp;字
             
             
             

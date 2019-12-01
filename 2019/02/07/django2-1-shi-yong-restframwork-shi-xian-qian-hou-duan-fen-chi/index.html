@@ -26,7 +26,7 @@
     
     <script src="/libs/jquery/jquery.min.js"></script>
     
-</head>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"><script src="/js/prism.js"></script></head>
 
 
 <body>
@@ -387,7 +387,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    926
+                    912
                 </div>
                 
 
@@ -415,90 +415,29 @@
 <p>3、所有的数据，无论是通过网络获取的还是操作（增删改查）的数据，都是资源，将一切数据视为资源是REST区别与其他架构风格的最本质属性<br>4、对于REST这种面向资源的架构风格，有人提出一种全新的结构理念，即：面向资源架构（ROA：Resource Oriented Architecture）</p>
 <h4 id="1-1、Django是一个神奇的框架，而restframework又是遵循了这个框架的另一个神奇的框架，我学这个主要是为了方便前后端分离，而不必重复写json序列化反序列化的操作，这里只是简单的一个实战项目，具体描述可以去官网查看。"><a href="#1-1、Django是一个神奇的框架，而restframework又是遵循了这个框架的另一个神奇的框架，我学这个主要是为了方便前后端分离，而不必重复写json序列化反序列化的操作，这里只是简单的一个实战项目，具体描述可以去官网查看。" class="headerlink" title="1.1、Django是一个神奇的框架，而restframework又是遵循了这个框架的另一个神奇的框架，我学这个主要是为了方便前后端分离，而不必重复写json序列化反序列化的操作，这里只是简单的一个实战项目，具体描述可以去官网查看。"></a>1.1、Django是一个神奇的框架，而restframework又是遵循了这个框架的另一个神奇的框架，我学这个主要是为了方便前后端分离，而不必重复写json序列化反序列化的操作，这里只是简单的一个实战项目，具体描述可以去官网查看。</h4><p><a href="https://www.django-rest-framework.org/" target="_blank" rel="noopener">restframework官网传送门</a><br>实现功能是增查Student的信息<br><img src="1.png" alt=""><br><img src="2.png" alt=""></p>
 <p>源代码地址：<a href="https://github.com/Kit4y/Django2.1-Mysql5.7-Tutorial/tree/master/DjangoAPI" target="_blank" rel="noopener">https://github.com/Kit4y/Django2.1-Mysql5.7-Tutorial/tree/master/DjangoAPI</a></p>
-<h3 id="二、废话少说，上车！"><a href="#二、废话少说，上车！" class="headerlink" title="二、废话少说，上车！"></a>二、废话少说，上车！</h3><h4 id="2-1、requirements-txt"><a href="#2-1、requirements-txt" class="headerlink" title="2.1、requirements.txt"></a>2.1、requirements.txt</h4><pre><code>pip install django==2.1.5
-pip install djangorestframework</code></pre><h4 id="2-2、项目搭建"><a href="#2-2、项目搭建" class="headerlink" title="2.2、项目搭建"></a>2.2、项目搭建</h4><pre><code>创建django项目
-django-admin startproject DjangoAPI
-创建应用
-cd DjangoAPI
-python manage.py startapp api</code></pre><p>修改settings.py</p>
-<pre><code>INSTALLED_APPS = [
-    &#39;django.contrib.admin&#39;,
-    &#39;django.contrib.auth&#39;,
-    &#39;django.contrib.contenttypes&#39;,
-    &#39;django.contrib.sessions&#39;,
-    &#39;django.contrib.messages&#39;,
-    &#39;django.contrib.staticfiles&#39;,
-    &#39;rest_framework&#39;,  # 添加rest_framework应用
-    &#39;api&#39;,  # 添加api应用
-]</code></pre><p>创建管理员</p>
-<pre><code>python manage.py createsuperuser</code></pre><h4 id="2-3、修改-api-models-py，创建数据库模型。"><a href="#2-3、修改-api-models-py，创建数据库模型。" class="headerlink" title="2.3、修改/api/models.py，创建数据库模型。"></a>2.3、修改/api/models.py，创建数据库模型。</h4><pre><code>from django.db import models
+<h3 id="二、废话少说，上车！"><a href="#二、废话少说，上车！" class="headerlink" title="二、废话少说，上车！"></a>二、废话少说，上车！</h3><h4 id="2-1、requirements-txt"><a href="#2-1、requirements-txt" class="headerlink" title="2.1、requirements.txt"></a>2.1、requirements.txt</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip install django==2.1.5</span><br><span class="line">pip install djangorestframework</span><br></pre></td></tr></table></figure>
+<h4 id="2-2、项目搭建"><a href="#2-2、项目搭建" class="headerlink" title="2.2、项目搭建"></a>2.2、项目搭建</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">创建django项目</span><br><span class="line">django-admin startproject DjangoAPI</span><br><span class="line">创建应用</span><br><span class="line">cd DjangoAPI</span><br><span class="line">python manage.py startapp api</span><br></pre></td></tr></table></figure>
+<p>修改settings.py</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">INSTALLED_APPS = [</span><br><span class="line">    &apos;django.contrib.admin&apos;,</span><br><span class="line">    &apos;django.contrib.auth&apos;,</span><br><span class="line">    &apos;django.contrib.contenttypes&apos;,</span><br><span class="line">    &apos;django.contrib.sessions&apos;,</span><br><span class="line">    &apos;django.contrib.messages&apos;,</span><br><span class="line">    &apos;django.contrib.staticfiles&apos;,</span><br><span class="line">    &apos;rest_framework&apos;,  # 添加rest_framework应用</span><br><span class="line">    &apos;api&apos;,  # 添加api应用</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>创建管理员</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py createsuperuser</span><br></pre></td></tr></table></figure>
 
-
-class Student(models.Model):
-    name = models.CharField(u&#39;姓名&#39;, max_length=100, default=&#39;no_name&#39;)
-    sex = models.CharField(u&#39;性别&#39;, max_length=50, default=&#39;male&#39;)
-    sid = models.CharField(u&#39;学号&#39;, max_length=100, default=&#39;0&#39;)
-
-    def __unicode__(self):
-        return &#39;%d: %s&#39; % (self.pk, self.name) </code></pre><p>创建模型后执行：</p>
-<pre><code>
-python manage.py makemigrations # 生成数据库迁移文件
-python manage.py migrate # 执行数据库迁移</code></pre><p>修改/api/admin.py，写后台管理代码:</p>
-<pre><code>from django.contrib import admin
-from .models import Student
-
-
-@admin.register(Student)
-class BlogTypeAdmin(admin.ModelAdmin):
-    list_display = (&#39;pk&#39;, &#39;name&#39;)  # 在后台列表下显示的字段   </code></pre><p>运行项目</p>
-<pre><code>python manage.py runserver
-http://127.0.0.1:8000/ # 出现django成功的界面
-http://127.0.0.1:8000/admin # 进入管理后台</code></pre><p>可以新建一个学生信息</p>
-<h4 id="2-4、序列化模型类，在-api-下创建serializers-py，返回json数据"><a href="#2-4、序列化模型类，在-api-下创建serializers-py，返回json数据" class="headerlink" title="2.4、序列化模型类，在/api/下创建serializers.py，返回json数据"></a>2.4、序列化模型类，在/api/下创建serializers.py，返回json数据</h4><pre><code>from rest_framework import serializers
-from .models import Student
-
-
-class StudentSerializers(serializers.ModelSerializer):
-    class Meta:
-        model = Student  # 指定的模型类
-        fields = (&#39;pk&#39;, &#39;name&#39;, &#39;sex&#39;, &#39;sid&#39;,)  # 需要序列化的属性</code></pre><h4 id="2-5、修改-api-views-py，视图"><a href="#2-5、修改-api-views-py，视图" class="headerlink" title="2.5、修改/api/views.py，视图"></a>2.5、修改/api/views.py，视图</h4><pre><code>from django.shortcuts import render
-from rest_framework import viewsets
-from .models import Student
-from .serializers import StudentSerializers
-# Create your views here.
-
-
-class StudentViewSet(viewsets.ModelViewSet):
-    # 指定结果集并设置排序
-    queryset = Student.objects.all().order_by(&#39;-pk&#39;)
-    # 指定序列化的类
-    serializer_class = StudentSerializers</code></pre><h4 id="2-6、配置路由"><a href="#2-6、配置路由" class="headerlink" title="2.6、配置路由"></a>2.6、配置路由</h4><p>修改/urls.py/，配置主路由</p>
-<pre><code>from django.contrib import admin
-from django.urls import path, include
-
-urlpatterns = [
-    path(&#39;admin/&#39;, admin.site.urls),
-    path(&#39;&#39;, include(&#39;api.urls&#39;)),  # 添加应用的路由地址
-]</code></pre><p>在/api/下创建urls.py，配置应用路由</p>
-<pre><code>from django.conf.urls import include, url
-from rest_framework import routers
-from api import views
-
-
-# 定义路由地址
-route = routers.DefaultRouter()
-
-# 注册新的路由地址
-route.register(r&#39;student&#39;, views.StudentViewSet)
-
-# 注册上一级的路由地址并添加
-urlpatterns = [
-    url(&#39;api/&#39;, include(route.urls)),
-]
-</code></pre><h4 id="2-7、运行项目"><a href="#2-7、运行项目" class="headerlink" title="2.7、运行项目"></a>2.7、运行项目</h4><pre><code>python manage.py runserver 8080
-打开浏览器输入：
-http://127.0.0.1:8080/api/ # api主页
-点击主页提供的链接http://127.0.0.1:8080/api/student/进入下一级目录</code></pre><p><img src="1.png" alt=""></p>
+<h4 id="2-3、修改-api-models-py，创建数据库模型。"><a href="#2-3、修改-api-models-py，创建数据库模型。" class="headerlink" title="2.3、修改/api/models.py，创建数据库模型。"></a>2.3、修改/api/models.py，创建数据库模型。</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">from django.db import models</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class Student(models.Model):</span><br><span class="line">    name = models.CharField(u&apos;姓名&apos;, max_length=100, default=&apos;no_name&apos;)</span><br><span class="line">    sex = models.CharField(u&apos;性别&apos;, max_length=50, default=&apos;male&apos;)</span><br><span class="line">    sid = models.CharField(u&apos;学号&apos;, max_length=100, default=&apos;0&apos;)</span><br><span class="line"></span><br><span class="line">    def __unicode__(self):</span><br><span class="line">        return &apos;%d: %s&apos; % (self.pk, self.name)</span><br></pre></td></tr></table></figure>
+<p>创建模型后执行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">python manage.py makemigrations # 生成数据库迁移文件</span><br><span class="line">python manage.py migrate # 执行数据库迁移</span><br></pre></td></tr></table></figure>
+<p>修改/api/admin.py，写后台管理代码:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from django.contrib import admin</span><br><span class="line">from .models import Student</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@admin.register(Student)</span><br><span class="line">class BlogTypeAdmin(admin.ModelAdmin):</span><br><span class="line">    list_display = (&apos;pk&apos;, &apos;name&apos;)  # 在后台列表下显示的字段</span><br></pre></td></tr></table></figure>
+<p>运行项目</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">python manage.py runserver</span><br><span class="line">http://127.0.0.1:8000/ # 出现django成功的界面</span><br><span class="line">http://127.0.0.1:8000/admin # 进入管理后台</span><br></pre></td></tr></table></figure>
+<p>可以新建一个学生信息</p>
+<h4 id="2-4、序列化模型类，在-api-下创建serializers-py，返回json数据"><a href="#2-4、序列化模型类，在-api-下创建serializers-py，返回json数据" class="headerlink" title="2.4、序列化模型类，在/api/下创建serializers.py，返回json数据"></a>2.4、序列化模型类，在/api/下创建serializers.py，返回json数据</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">from rest_framework import serializers</span><br><span class="line">from .models import Student</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class StudentSerializers(serializers.ModelSerializer):</span><br><span class="line">    class Meta:</span><br><span class="line">        model = Student  # 指定的模型类</span><br><span class="line">        fields = (&apos;pk&apos;, &apos;name&apos;, &apos;sex&apos;, &apos;sid&apos;,)  # 需要序列化的属性</span><br></pre></td></tr></table></figure>
+<h4 id="2-5、修改-api-views-py，视图"><a href="#2-5、修改-api-views-py，视图" class="headerlink" title="2.5、修改/api/views.py，视图"></a>2.5、修改/api/views.py，视图</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">from django.shortcuts import render</span><br><span class="line">from rest_framework import viewsets</span><br><span class="line">from .models import Student</span><br><span class="line">from .serializers import StudentSerializers</span><br><span class="line"># Create your views here.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class StudentViewSet(viewsets.ModelViewSet):</span><br><span class="line">    # 指定结果集并设置排序</span><br><span class="line">    queryset = Student.objects.all().order_by(&apos;-pk&apos;)</span><br><span class="line">    # 指定序列化的类</span><br><span class="line">    serializer_class = StudentSerializers</span><br></pre></td></tr></table></figure>
+<h4 id="2-6、配置路由"><a href="#2-6、配置路由" class="headerlink" title="2.6、配置路由"></a>2.6、配置路由</h4><p>修改/urls.py/，配置主路由</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from django.contrib import admin</span><br><span class="line">from django.urls import path, include</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    path(&apos;admin/&apos;, admin.site.urls),</span><br><span class="line">    path(&apos;&apos;, include(&apos;api.urls&apos;)),  # 添加应用的路由地址</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>在/api/下创建urls.py，配置应用路由</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">from django.conf.urls import include, url</span><br><span class="line">from rest_framework import routers</span><br><span class="line">from api import views</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 定义路由地址</span><br><span class="line">route = routers.DefaultRouter()</span><br><span class="line"></span><br><span class="line"># 注册新的路由地址</span><br><span class="line">route.register(r&apos;student&apos;, views.StudentViewSet)</span><br><span class="line"></span><br><span class="line"># 注册上一级的路由地址并添加</span><br><span class="line">urlpatterns = [</span><br><span class="line">    url(&apos;api/&apos;, include(route.urls)),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<h4 id="2-7、运行项目"><a href="#2-7、运行项目" class="headerlink" title="2.7、运行项目"></a>2.7、运行项目</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">python manage.py runserver 8080</span><br><span class="line">打开浏览器输入：</span><br><span class="line">http://127.0.0.1:8080/api/ # api主页</span><br><span class="line">点击主页提供的链接http://127.0.0.1:8080/api/student/进入下一级目录</span><br></pre></td></tr></table></figure>
+<p><img src="1.png" alt=""></p>
 
             </div>
             <hr/>
@@ -883,7 +822,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">173.5k</span>&nbsp;字
+                class="white-color">175.5k</span>&nbsp;字
             
             
             

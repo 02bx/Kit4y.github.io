@@ -27,7 +27,7 @@
     
     <script src="/libs/jquery/jquery.min.js"></script>
     
-</head>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"><script src="/js/prism.js"></script></head>
 
 
 <body>
@@ -384,7 +384,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    660
+                    665
                 </div>
                 
 
@@ -412,24 +412,19 @@
 <a id="more"></a>
 <p><img src="2.jpg" alt=""></p>
 <p>万物皆可binwalk 放在linux下binwalk分离到6张残图</p>
-<pre><code>foremost 或者binwalk -e</code></pre><p>得到</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">foremost 或者binwalk -e</span><br></pre></td></tr></table></figure>
+<p>得到</p>
 <p><img src="3.png" alt=""><br><img src="4.png" alt=""></p>
 <p>扫描得到</p>
-<pre><code>key:AutomaticKey cipher:fftu{2028mb39927wn1f96o6e12z03j58002p}</code></pre><h4 id="2、然后开始入坑"><a href="#2、然后开始入坑" class="headerlink" title="2、然后开始入坑"></a>2、然后开始入坑</h4><p>一开始以为是维吉尼亚加密，这里解释一下维吉尼亚加密<br>维吉尼亚密码(Vigenère Cipher)是在单一恺撒密码的基础上扩展出多表代换密码，根据密钥(当密钥长度小于明文长度时可以循环使用)来决定用哪一行的密表来进行替换，以此来对抗字频统计<br><img src="1.webp" alt=""></p>
-<pre><code>明文：THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG
-密钥(循环使用)：CULTURE
-加密过程：如果第一行为明文字母，第一列为密钥字母，那么明文字母&#39;T&#39;列和密钥字母&#39;C&#39;行的交点就是密文字母&#39;V&#39;，以此类推。
-密文：VBP JOZGM VCHQE JQR UNGGW QPPK NYI NUKR XFK</code></pre><p>然后拿着本题的密钥和密文去解密，得到答案然后gg<br><img src="5.png" alt=""> 其实是AutoKey Cipher，人家在题目里都提示了，只能怪自己太死脑筋和孤陋寡闻</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">key:AutomaticKey cipher:fftu&#123;2028mb39927wn1f96o6e12z03j58002p&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="2、然后开始入坑"><a href="#2、然后开始入坑" class="headerlink" title="2、然后开始入坑"></a>2、然后开始入坑</h4><p>一开始以为是维吉尼亚加密，这里解释一下维吉尼亚加密<br>维吉尼亚密码(Vigenère Cipher)是在单一恺撒密码的基础上扩展出多表代换密码，根据密钥(当密钥长度小于明文长度时可以循环使用)来决定用哪一行的密表来进行替换，以此来对抗字频统计<br><img src="1.webp" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">明文：THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG</span><br><span class="line">密钥(循环使用)：CULTURE</span><br><span class="line">加密过程：如果第一行为明文字母，第一列为密钥字母，那么明文字母&apos;T&apos;列和密钥字母&apos;C&apos;行的交点就是密文字母&apos;V&apos;，以此类推。</span><br><span class="line">密文：VBP JOZGM VCHQE JQR UNGGW QPPK NYI NUKR XFK</span><br></pre></td></tr></table></figure>
+<p>然后拿着本题的密钥和密文去解密，得到答案然后gg<br><img src="5.png" alt=""> 其实是AutoKey Cipher，人家在题目里都提示了，只能怪自己太死脑筋和孤陋寡闻</p>
 <h4 id="3、啥·是AutoKey-Cipher"><a href="#3、啥·是AutoKey-Cipher" class="headerlink" title="3、啥·是AutoKey Cipher"></a>3、啥·是AutoKey Cipher</h4><p>其实原理和维吉尼亚基本一致的，但是维吉尼亚当密钥长度小于明文，将会循环使用密钥，而Autokey Cipher当密钥长度不足时，将会开始使用明文的第一个字母开始附加在密钥上。<br>在本题的体现是密钥12位，而密文中字母有14哥所以最后两个需要拿f l 替换<br><a href="https://www.wishingstarmoye.com/ctf/autokey" target="_blank" rel="noopener">AutoKey Cipher在线加解密</a></p>
-<h4 id="4、使用Python3解密"><a href="#4、使用Python3解密" class="headerlink" title="4、使用Python3解密"></a>4、使用Python3解密</h4><h5 id="AutoKey-Cipher"><a href="#AutoKey-Cipher" class="headerlink" title="AutoKey Cipher"></a>AutoKey Cipher</h5><pre><code>&gt;&gt;&gt; from pycipher import Autokey
-&gt;&gt;&gt; Autokey(&#39;AutomaticKey&#39;).decipher(&#39;fftu{2028mb39927wn1f96o6e12z03j58002p}&#39;)
-&#39;FLAGABDFDEABEE&#39;
-&gt;&gt;&gt; Autokey(&#39;AutomaticKey&#39;).encipher(&#39;FLAGABDFDEABEE&#39;)
-&#39;FFTUMBWNFOEZJP&#39;</code></pre><h6 id="Vigenere"><a href="#Vigenere" class="headerlink" title="Vigenere"></a>Vigenere</h6><pre><code>&gt;&gt;&gt;from pycipher import Vigenere
-&gt;&gt;&gt;Vigenere(&#39;CULTURE&#39;).encipher(&#39;THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG&#39;)
-&#39;VBPJOZGMVCHQEJQRUNGGWQPPKNYINUKRXFK&#39;
-&gt;&gt;&gt;Vigenere(&#39;CULTURE&#39;).decipher(&#39;VBPJOZGMVCHQEJQRUNGGWQPPKNYINUKRXFK&#39;
-&#39;THEQUICKBROWNFOXJUMPSOVERTHELAZYDOG&#39;</code></pre>
+<h4 id="4、使用Python3解密"><a href="#4、使用Python3解密" class="headerlink" title="4、使用Python3解密"></a>4、使用Python3解密</h4><h5 id="AutoKey-Cipher"><a href="#AutoKey-Cipher" class="headerlink" title="AutoKey Cipher"></a>AutoKey Cipher</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; from pycipher import Autokey</span><br><span class="line">&gt;&gt;&gt; Autokey(&apos;AutomaticKey&apos;).decipher(&apos;fftu&#123;2028mb39927wn1f96o6e12z03j58002p&#125;&apos;)</span><br><span class="line">&apos;FLAGABDFDEABEE&apos;</span><br><span class="line">&gt;&gt;&gt; Autokey(&apos;AutomaticKey&apos;).encipher(&apos;FLAGABDFDEABEE&apos;)</span><br><span class="line">&apos;FFTUMBWNFOEZJP&apos;</span><br></pre></td></tr></table></figure>
+<h6 id="Vigenere"><a href="#Vigenere" class="headerlink" title="Vigenere"></a>Vigenere</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt;from pycipher import Vigenere</span><br><span class="line">&gt;&gt;&gt;Vigenere(&apos;CULTURE&apos;).encipher(&apos;THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG&apos;)</span><br><span class="line">&apos;VBPJOZGMVCHQEJQRUNGGWQPPKNYINUKRXFK&apos;</span><br><span class="line">&gt;&gt;&gt;Vigenere(&apos;CULTURE&apos;).decipher(&apos;VBPJOZGMVCHQEJQRUNGGWQPPKNYINUKRXFK&apos;</span><br><span class="line">&apos;THEQUICKBROWNFOXJUMPSOVERTHELAZYDOG&apos;</span><br></pre></td></tr></table></figure>
+
+
             </div>
             <hr/>
 
@@ -811,7 +806,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">173.5k</span>&nbsp;字
+                class="white-color">175.5k</span>&nbsp;字
             
             
             

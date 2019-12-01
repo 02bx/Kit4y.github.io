@@ -5,8 +5,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="postgreSQL内核分析-源码安装和调试, 书鱼">
-    <meta name="description" content="一、环境配置Ubuntu 16.04                        
-PostgreSql v11.3二、源码下载解压https://www.postgresql.org/ftp/source/,选择一个版本的,这里下载v1">
+    <meta name="description" content="一、环境配置12Ubuntu 16.04                        PostgreSql v11.3
+二、源码下载解压https://www.postgresql.org/ftp/source/,选择一个版本的,这里下载">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -27,7 +27,7 @@ PostgreSql v11.3二、源码下载解压https://www.postgresql.org/ftp/source/,�
     
     <script src="/libs/jquery/jquery.min.js"></script>
     
-</head>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"><script src="/js/prism.js"></script></head>
 
 
 <body>
@@ -384,7 +384,7 @@ PostgreSql v11.3二、源码下载解压https://www.postgresql.org/ftp/source/,�
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    899
+                    903
                 </div>
                 
 
@@ -407,60 +407,67 @@ PostgreSql v11.3二、源码下载解压https://www.postgresql.org/ftp/source/,�
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="一、环境配置"><a href="#一、环境配置" class="headerlink" title="一、环境配置"></a>一、环境配置</h3><pre><code>Ubuntu 16.04                        
-PostgreSql v11.3</code></pre><h3 id="二、源码下载解压"><a href="#二、源码下载解压" class="headerlink" title="二、源码下载解压"></a>二、源码下载解压</h3><p><a href="https://www.postgresql.org/ftp/source/" target="_blank" rel="noopener">https://www.postgresql.org/ftp/source/</a>,选择一个版本的,这里下载v11版本系列<br><img src="1.png" alt=""></p>
+                <h3 id="一、环境配置"><a href="#一、环境配置" class="headerlink" title="一、环境配置"></a>一、环境配置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Ubuntu 16.04                        </span><br><span class="line">PostgreSql v11.3</span><br></pre></td></tr></table></figure>
+<h3 id="二、源码下载解压"><a href="#二、源码下载解压" class="headerlink" title="二、源码下载解压"></a>二、源码下载解压</h3><p><a href="https://www.postgresql.org/ftp/source/" target="_blank" rel="noopener">https://www.postgresql.org/ftp/source/</a>,选择一个版本的,这里下载v11版本系列<br><img src="1.png" alt=""></p>
 <a id="more"></a>
 <h3 id="解压到指定目录-amp-amp-新建用户（非强制只是为了方便管理"><a href="#解压到指定目录-amp-amp-新建用户（非强制只是为了方便管理" class="headerlink" title="解压到指定目录&amp;&amp;新建用户（非强制只是为了方便管理"></a>解压到指定目录&amp;&amp;新建用户（非强制只是为了方便管理</h3><p>在/usr/local/下新建目录pgsql,记得<code>chmod -R 777 pgsql</code>否则后面打log会崩<br>然后将下载的压缩包丢到pgsql目录下解压</p>
-<pre><code>tar zxvf postgresql-11.3.tar.gz</code></pre><p>解压后大概是这么些文件<br><img src="2.png" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar zxvf postgresql-11.3.tar.gz</span><br></pre></td></tr></table></figure>
+<p>解压后大概是这么些文件<br><img src="2.png" alt=""></p>
 <h3 id="三、安装过程"><a href="#三、安装过程" class="headerlink" title="三、安装过程"></a>三、安装过程</h3><p>配置</p>
-<pre><code>cd /usr/local/pgsql/
-./configure --prefix=/usr/local/pgsql --without-readline</code></pre><h4 id="坑1：error-readline-library-not-found"><a href="#坑1：error-readline-library-not-found" class="headerlink" title="坑1：error:readline library not found"></a>坑1：error:readline library not found</h4><p>解决办法<code>apt-get install libreadline-dev</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/pgsql/</span><br><span class="line">./configure --prefix=/usr/local/pgsql --without-readline</span><br></pre></td></tr></table></figure>
+<h4 id="坑1：error-readline-library-not-found"><a href="#坑1：error-readline-library-not-found" class="headerlink" title="坑1：error:readline library not found"></a>坑1：error:readline library not found</h4><p>解决办法<code>apt-get install libreadline-dev</code></p>
 <h4 id="坑2：error-zlib-library-not-found"><a href="#坑2：error-zlib-library-not-found" class="headerlink" title="坑2：error: zlib library not found"></a>坑2：error: zlib library not found</h4><p>解决办法<code>apt-get install zlib1g</code><br><code>apt-get install zlib1g.dev</code><br>如果没有报错了,就可以去解压包里执行make了</p>
-<pre><code>make</code></pre><p>如果不出意外大概需要一两分钟出现</p>
-<pre><code>All of PostgreSQL successfully made. Ready to install.</code></pre><p>然后执行install</p>
-<pre><code>make install</code></pre><p>出现</p>
-<pre><code>PostgreSQL installation complete.</code></pre><p>安装完毕后应该在pgsql目录下会多一些<code>bin,include,lib</code>等文件夹<br><img src="3.png" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make</span><br></pre></td></tr></table></figure>
+<p>如果不出意外大概需要一两分钟出现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">All of PostgreSQL successfully made. Ready to install.</span><br></pre></td></tr></table></figure>
+<p>然后执行install</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make install</span><br></pre></td></tr></table></figure>
+<p>出现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PostgreSQL installation complete.</span><br></pre></td></tr></table></figure>
+<p>安装完毕后应该在pgsql目录下会多一些<code>bin,include,lib</code>等文件夹<br><img src="3.png" alt=""></p>
 <h3 id="四、配置用户环境"><a href="#四、配置用户环境" class="headerlink" title="四、配置用户环境"></a>四、配置用户环境</h3><p>据我的理解是一个用户的数据库数据放在一个文件夹里储存？不知道是不是这样<br>先增加一个用户使用数据库</p>
-<pre><code>adduser postgres  //添加一个名为tommy的用户
-passwd postgres   //修改密码
-Changing password for user postgres.
-New UNIX password:     //在这里输入新密码
-Retype new UNIX password:  //再次输入新密码
-passwd: all authentication tokens updated successfully.</code></pre><p>然后转换到postgres用户下，在刚刚新建的pgsql文件夹下<code>mkdir data</code>，如果有啥权限问题，也<code>chmod -R 777 data/</code>就完事了<br>ps:将用户添加到sudoers中操作（防止出现postgres用户不能sudo</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">adduser postgres  //添加一个名为tommy的用户</span><br><span class="line">passwd postgres   //修改密码</span><br><span class="line">Changing password for user postgres.</span><br><span class="line">New UNIX password:     //在这里输入新密码</span><br><span class="line">Retype new UNIX password:  //再次输入新密码</span><br><span class="line">passwd: all authentication tokens updated successfully.</span><br></pre></td></tr></table></figure>
+<p>然后转换到postgres用户下，在刚刚新建的pgsql文件夹下<code>mkdir data</code>，如果有啥权限问题，也<code>chmod -R 777 data/</code>就完事了<br>ps:将用户添加到sudoers中操作（防止出现postgres用户不能sudo</p>
 <ol>
 <li>首先切换到root用户</li>
 <li>然后修改/etc/sudoers 权限 使其为可写</li>
 </ol>
-<pre><code>chmod u+w /etc/sudoers
-vi  /etc/sudoers</code></pre><p>然后在下面的</p>
-<pre><code>root ALL=(ALL)  ALL</code></pre><p>这里增加自己需要的用户比如</p>
-<pre><code>root ALL=(ALL)  ALL
-postgres ALL=(ALL)  ALL</code></pre><p>最后一定要把权限修改回来：chmod u-w /etc/sudoers</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chmod u+w /etc/sudoers</span><br><span class="line">vi  /etc/sudoers</span><br></pre></td></tr></table></figure>
+<p>然后在下面的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root ALL=(ALL)  ALL</span><br></pre></td></tr></table></figure>
+<p>这里增加自己需要的用户比如</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root ALL=(ALL)  ALL</span><br><span class="line">postgres ALL=(ALL)  ALL</span><br></pre></td></tr></table></figure>
+<p>最后一定要把权限修改回来：chmod u-w /etc/sudoers</p>
 <h3 id="五、初始化和启动数据库"><a href="#五、初始化和启动数据库" class="headerlink" title="五、初始化和启动数据库"></a>五、初始化和启动数据库</h3><p>初始化</p>
-<pre><code>su postgres
-/usr/local/pgsql/bin/initdb -D /usr/local/pgsql/data</code></pre><p>启动数据库</p>
-<pre><code>./bin/pg_ctl start -D ./data/ -l logfile</code></pre><p>重启和关闭</p>
-<pre><code>./bin/pg_ctl restart -D ./data/
-./bin/pg_ctl stop -D ./data/</code></pre><p><img src="4.png" alt=""><br>然后可以执行<br>./bin/psql进入命令行<br><img src="5.png" alt=""></p>
-<h3 id="六、创建数据库和用户"><a href="#六、创建数据库和用户" class="headerlink" title="六、创建数据库和用户"></a>六、创建数据库和用户</h3><pre><code>执行  ./createdb kitty   创建kitty数据库
-执行  ./createuser -P postgres  创建postgres用户</code></pre><p>访问数据库后也可以用sql命令来新建用户</p>
-<pre><code>create user postgres with password &#39;xxx&#39;;</code></pre><h3 id="七、配置远程访问"><a href="#七、配置远程访问" class="headerlink" title="七、配置远程访问"></a>七、配置远程访问</h3><p>1）修改配置文件pgsql/data/postgresql.conf</p>
-<pre><code>vim /usr/local/pgsql/data/postgresql.conf</code></pre><p>修改监听地址：</p>
-<pre><code>#listen_addresses=&#39;localhost&#39;
-#将上面这行改成如下
-listen_addresses=&#39;*&#39;</code></pre><p>2）修改配置文件/pgsql/data/pg_hba.conf：</p>
-<pre><code>vim /usr/local/pgsql/data/pg_hba.conf</code></pre><p>添加一条IP授权记录，可以对一个网段授权</p>
-<pre><code># IPv4 myhost connections:
-host    all         all         0.0.0.0/0          trust</code></pre><h3 id="八、使用pwngdb调试"><a href="#八、使用pwngdb调试" class="headerlink" title="八、使用pwngdb调试"></a>八、使用pwngdb调试</h3><p>首先查看postgres进程，有两个方法</p>
-<h4 id="方法1：先查看客户端未连接后端的postgres进程"><a href="#方法1：先查看客户端未连接后端的postgres进程" class="headerlink" title="方法1：先查看客户端未连接后端的postgres进程"></a>方法1：先查看客户端未连接后端的postgres进程</h4><pre><code>ps -aux | grep postgres</code></pre><p><img src="6.png" alt=""><br>然后执行</p>
-<pre><code>./psql -h 127.0.0.1 -d postgres</code></pre><p>再次查看进程<br><img src="7.png" alt="">,然后还是不确定</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">su postgres</span><br><span class="line">/usr/local/pgsql/bin/initdb -D /usr/local/pgsql/data</span><br></pre></td></tr></table></figure>
+<p>启动数据库</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/pg_ctl start -D ./data/ -l logfile</span><br></pre></td></tr></table></figure>
+<p>重启和关闭</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">./bin/pg_ctl restart -D ./data/</span><br><span class="line">./bin/pg_ctl stop -D ./data/</span><br></pre></td></tr></table></figure>
+<p><img src="4.png" alt=""><br>然后可以执行<br>./bin/psql进入命令行<br><img src="5.png" alt=""></p>
+<h3 id="六、创建数据库和用户"><a href="#六、创建数据库和用户" class="headerlink" title="六、创建数据库和用户"></a>六、创建数据库和用户</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">执行  ./createdb kitty   创建kitty数据库</span><br><span class="line">执行  ./createuser -P postgres  创建postgres用户</span><br></pre></td></tr></table></figure>
+<p>访问数据库后也可以用sql命令来新建用户</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create user postgres with password &apos;xxx&apos;;</span><br></pre></td></tr></table></figure>
+<h3 id="七、配置远程访问"><a href="#七、配置远程访问" class="headerlink" title="七、配置远程访问"></a>七、配置远程访问</h3><p>1）修改配置文件pgsql/data/postgresql.conf</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /usr/local/pgsql/data/postgresql.conf</span><br></pre></td></tr></table></figure>
+<p>修改监听地址：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#listen_addresses=&apos;localhost&apos;</span><br><span class="line">#将上面这行改成如下</span><br><span class="line">listen_addresses=&apos;*&apos;</span><br></pre></td></tr></table></figure>
+<p>2）修改配置文件/pgsql/data/pg_hba.conf：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /usr/local/pgsql/data/pg_hba.conf</span><br></pre></td></tr></table></figure>
+<p>添加一条IP授权记录，可以对一个网段授权</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># IPv4 myhost connections:</span><br><span class="line">host    all         all         0.0.0.0/0          trust</span><br></pre></td></tr></table></figure>
+<h3 id="八、使用pwngdb调试"><a href="#八、使用pwngdb调试" class="headerlink" title="八、使用pwngdb调试"></a>八、使用pwngdb调试</h3><p>首先查看postgres进程，有两个方法</p>
+<h4 id="方法1：先查看客户端未连接后端的postgres进程"><a href="#方法1：先查看客户端未连接后端的postgres进程" class="headerlink" title="方法1：先查看客户端未连接后端的postgres进程"></a>方法1：先查看客户端未连接后端的postgres进程</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps -aux | grep postgres</span><br></pre></td></tr></table></figure>
+<p><img src="6.png" alt=""><br>然后执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./psql -h 127.0.0.1 -d postgres</span><br></pre></td></tr></table></figure>
+<p>再次查看进程<br><img src="7.png" alt="">,然后还是不确定</p>
 <h4 id="方法2：在客户端交互界面查询后端进程ID"><a href="#方法2：在客户端交互界面查询后端进程ID" class="headerlink" title="方法2：在客户端交互界面查询后端进程ID"></a>方法2：在客户端交互界面查询后端进程ID</h4><p>使用<code>postgres=# select pg_backend_pid();</code><br><img src="8.png" alt=""><br>就能确定是30270了</p>
-<h4 id="然后pwngdb出场"><a href="#然后pwngdb出场" class="headerlink" title="然后pwngdb出场"></a>然后pwngdb出场</h4><h4 id="8-1、设置gdb和屏蔽无用中断信号"><a href="#8-1、设置gdb和屏蔽无用中断信号" class="headerlink" title="8.1、设置gdb和屏蔽无用中断信号"></a>8.1、设置gdb和屏蔽无用中断信号</h4><pre><code>sudo gdb attach 4208
-pwndbg&gt;handle SIGUSR1 nostop pass
-Signal        Stop    Print    Pass to program    Description
-SIGUSR1       No    Yes    Yes        User defined signal 1</code></pre><h4 id="8-2、设置断点-随便设置，这里为了测试是打在计算结果处"><a href="#8-2、设置断点-随便设置，这里为了测试是打在计算结果处" class="headerlink" title="8.2、设置断点/随便设置，这里为了测试是打在计算结果处"></a>8.2、设置断点/随便设置，这里为了测试是打在计算结果处</h4><pre><code>pwndbg&gt; b ExecResult
-Breakpoint 1 at 0x6275f0</code></pre><h4 id="8-3、客户端发起查询"><a href="#8-3、客户端发起查询" class="headerlink" title="8.3、客户端发起查询"></a>8.3、客户端发起查询</h4><pre><code>postgres=# select 1+1;</code></pre><p>此刻应该被断点断住的</p>
-<h4 id="8-4、调试"><a href="#8-4、调试" class="headerlink" title="8.4、调试"></a>8.4、调试</h4><pre><code>pwndbg&gt;c</code></pre><p><img src="9.png" alt=""><br>查看调用栈<br><img src="10.png" alt=""></p>
+<h4 id="然后pwngdb出场"><a href="#然后pwngdb出场" class="headerlink" title="然后pwngdb出场"></a>然后pwngdb出场</h4><h4 id="8-1、设置gdb和屏蔽无用中断信号"><a href="#8-1、设置gdb和屏蔽无用中断信号" class="headerlink" title="8.1、设置gdb和屏蔽无用中断信号"></a>8.1、设置gdb和屏蔽无用中断信号</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo gdb attach 4208</span><br><span class="line">pwndbg&gt;handle SIGUSR1 nostop pass</span><br><span class="line">Signal        Stop	Print	Pass to program	Description</span><br><span class="line">SIGUSR1       No	Yes	Yes		User defined signal 1</span><br></pre></td></tr></table></figure>
+<h4 id="8-2、设置断点-随便设置，这里为了测试是打在计算结果处"><a href="#8-2、设置断点-随便设置，这里为了测试是打在计算结果处" class="headerlink" title="8.2、设置断点/随便设置，这里为了测试是打在计算结果处"></a>8.2、设置断点/随便设置，这里为了测试是打在计算结果处</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pwndbg&gt; b ExecResult</span><br><span class="line">Breakpoint 1 at 0x6275f0</span><br></pre></td></tr></table></figure>
+<h4 id="8-3、客户端发起查询"><a href="#8-3、客户端发起查询" class="headerlink" title="8.3、客户端发起查询"></a>8.3、客户端发起查询</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">postgres=# select 1+1;</span><br></pre></td></tr></table></figure>
+<p>此刻应该被断点断住的</p>
+<h4 id="8-4、调试"><a href="#8-4、调试" class="headerlink" title="8.4、调试"></a>8.4、调试</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pwndbg&gt;c</span><br></pre></td></tr></table></figure>
+<p><img src="9.png" alt=""><br>查看调用栈<br><img src="10.png" alt=""></p>
 
             </div>
             <hr/>
@@ -841,7 +848,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">173.5k</span>&nbsp;字
+                class="white-color">175.5k</span>&nbsp;字
             
             
             

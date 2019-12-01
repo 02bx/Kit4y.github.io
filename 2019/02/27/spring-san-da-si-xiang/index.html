@@ -27,7 +27,7 @@
     
     <script src="/libs/jquery/jquery.min.js"></script>
     
-</head>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"><script src="/js/prism.js"></script></head>
 
 
 <body>
@@ -413,80 +413,33 @@
             <div id="articleContent">
                 <h3 id="一、DI-依赖注入-和IOC-控制反转"><a href="#一、DI-依赖注入-和IOC-控制反转" class="headerlink" title="一、DI(依赖注入)和IOC(控制反转)"></a>一、DI(依赖注入)和IOC(控制反转)</h3><p>Spring的三大思想为DI(依赖注入)，IOC(控制反转)，AOP（面向切面编程）。既然在学Spring就认真学一些思想，而不是仅仅停留在复制粘贴CURD的层面，这也许就是码农的自我修养吧。</p>
 <h4 id="1-1、万物初始"><a href="#1-1、万物初始" class="headerlink" title="1.1、万物初始"></a>1.1、万物初始</h4><p>既然大家都没有女朋友，那今天kitty萌新教教大家怎么new女朋友吧。<br>假如你有了一个女朋友，，，，类</p>
-<pre><code>public class GirlFriend{
-    String name; //有名字
-    Face face;
-    Head head; //有头有脸的意思
-    ....... //其他一堆优点
-    GirlFriend(String name)
-    {
-        this.name=name;
-    }
- }</code></pre><p>那么现在你是一个成功人士，即将走上人生巅峰，是不是还有一 点小激动呢</p>
-<pre><code>public class Person{
-    Person(){
-    //给你女朋友加属性
-    GirlFriend girlFriend=new GirlFriend(&quot;迪丽热巴&quot;); 
-    Car car=new Car(&quot;兰博基尼&quot;);
-    House house=new House(&quot;海景套房&quot;); //有车有房
-    }
- }</code></pre><img src="3.jpg" width="400" hegiht="200" align=center />
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public class GirlFriend&#123;</span><br><span class="line">    String name; //有名字</span><br><span class="line">    Face face;</span><br><span class="line">    Head head; //有头有脸的意思</span><br><span class="line">    ....... //其他一堆优点</span><br><span class="line">    GirlFriend(String name)</span><br><span class="line">    &#123;</span><br><span class="line">        this.name=name;</span><br><span class="line">    &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p>那么现在你是一个成功人士，即将走上人生巅峰，是不是还有一 点小激动呢</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public class Person&#123;</span><br><span class="line">    Person()&#123;</span><br><span class="line">    //给你女朋友加属性</span><br><span class="line">    GirlFriend girlFriend=new GirlFriend(&quot;迪丽热巴&quot;); </span><br><span class="line">    Car car=new Car(&quot;兰博基尼&quot;);</span><br><span class="line">    House house=new House(&quot;海景套房&quot;); //有车有房</span><br><span class="line">    &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<img src="3.jpg" width="400" hegiht="200" align=center />
 <a id="more"></a>
 现在你要出生啦啦啦
-```
-Person you;
-//当你需要你女朋友的时候你可以这样
-you.girlFriend;
-//比如当别人问你女朋友谁啊，你可以回答
-printf("%s",you.girlFriend.name);
-```
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Person you;</span><br><span class="line">//当你需要你女朋友的时候你可以这样</span><br><span class="line">you.girlFriend;</span><br><span class="line">//比如当别人问你女朋友谁啊，你可以回答</span><br><span class="line">printf(&quot;%s&quot;,you.girlFriend.name);</span><br></pre></td></tr></table></figure>
 直到一天，你和你女朋友的缘分尽了，经历一段痛心肺腑的分手诀别后，你找到了新的女朋友雏田小姐姐，当然这个时候将会有数百句渣男，臭鸡蛋扑面而来，但是，嘻嘻，你还是要更新你女朋友的名字。那么你要怎么做呢？
 你要把Person类里GirlFriend的构造参数改一下
-```
-GirlFriend girlFriend=new GirlFriend("日向雏田");
-```
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GirlFriend girlFriend=new GirlFriend(&quot;日向雏田&quot;);</span><br></pre></td></tr></table></figure>
 ![](2.jpg)
 这个时候你会发现你是全世界最成功的人士，但是**等等**你可能忽略了一个问题，因为你换女朋友，你自己的类**改变了**(person类改变了)，你不再是那个打娘胎里出来的那个单纯的Person,而是人工改造后的你，这样的你是没有灵魂的，这是因为，你依赖于你女盆友（**Person类依赖于GirlFriend**）,这样你和你女朋友的耦合性太强了（**Person类和GirlFriend耦合性强**），那么依赖注入就是为了解决一下这个问题。
 #### 1.2、控制反转和依赖注入（正经脸）
 以下来自百度百科
-```
-控制反转（Inversion of Control，缩写为IoC），是面向对象编程中的一种设计原则，
-可以用来减低计算机代码之间的耦合度。其中最常见的方式叫做依赖注入（Dependency 
-Injection，简称DI。通过控制反转，对象在被创建的时候，由一个调控系统内所有对象
-的外界实体，将其所依赖的对象的引用传递给它。也可以说，依赖被注入到对象中。
-```
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">控制反转（Inversion of Control，缩写为IoC），是面向对象编程中的一种设计原则，</span><br><span class="line">可以用来减低计算机代码之间的耦合度。其中最常见的方式叫做依赖注入（Dependency </span><br><span class="line">Injection，简称DI。通过控制反转，对象在被创建的时候，由一个调控系统内所有对象</span><br><span class="line">的外界实体，将其所依赖的对象的引用传递给它。也可以说，依赖被注入到对象中。</span><br></pre></td></tr></table></figure>
 是不是很晕，听不懂，如果你懂了，请直接跳过本博客，如果没看懂，请继续听我吹逼。
 其实意思还是很简单的，就是为了解除Person和GirlFriend的耦合，在修改GirlFriend.name的同时不修改Person类，能不能做到呢，答案是肯定的
-```
-class Person{
-  GirlFriend girlFriend;
-  Person(GirlFriend girlFriend){
- this.girlFriend = girlFriend;
-};
- .........
-}
-```
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">class Person&#123;</span><br><span class="line">  GirlFriend girlFriend;</span><br><span class="line">  Person(GirlFriend girlFriend)&#123;</span><br><span class="line"> this.girlFriend = girlFriend;</span><br><span class="line">&#125;;</span><br><span class="line"> .........</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 这样就算你要天天换女朋友，又能保持自己的灵魂，你只要
-```
-GirlFriend girlFriend=new GirlFriend("日向雏田");
-Person you= new Person(girlFriend);
-```
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GirlFriend girlFriend=new GirlFriend(&quot;日向雏田&quot;);</span><br><span class="line">Person you= new Person(girlFriend);</span><br></pre></td></tr></table></figure>
 字面意思就是将你女朋友注入到你中（为什么听起来优点别扭），这是通过构造函数依赖注入,而依赖注入有3种方式
 分别为**构造方法注入**，**setter注入**，**基于注解的注入**。
 思想和构造方法注入是一致的，比如
 **setter函数注入**：
 其实也就是在Person中另外写一个函数来替代构造函数，然后在new person够调用这个函数。
-```
-class Person{
-  GirlFriend girlFriend;
-  SetGirlFriend(GirlFriend girlFriend){
- this.girlFriend = girlFriend;
-};
-}
-Person you=new Person();
-GirlFriend girlFriend=new GirlFriend("日向雏田");
-you.SetGirlFriend(girlFriend)
-```
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">class Person&#123;</span><br><span class="line">  GirlFriend girlFriend;</span><br><span class="line">  SetGirlFriend(GirlFriend girlFriend)&#123;</span><br><span class="line"> this.girlFriend = girlFriend;</span><br><span class="line">&#125;;</span><br><span class="line">&#125;</span><br><span class="line">Person you=new Person();</span><br><span class="line">GirlFriend girlFriend=new GirlFriend(&quot;日向雏田&quot;);</span><br><span class="line">you.SetGirlFriend(girlFriend)</span><br></pre></td></tr></table></figure>
 **基于注解的注入**：
 注解我看来就是为了加快人生进步发展（为了让后人偷懒），而定义的一些约定注释，提高我们的编程体验。
 看一看spring有哪些关于注入的注解
@@ -910,7 +863,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">173.5k</span>&nbsp;字
+                class="white-color">175.5k</span>&nbsp;字
             
             
             

@@ -28,7 +28,7 @@
     
     <script src="/libs/jquery/jquery.min.js"></script>
     
-</head>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"><script src="/js/prism.js"></script></head>
 
 
 <body>
@@ -393,7 +393,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    695
+                    712
                 </div>
                 
 
@@ -419,87 +419,23 @@
                 <h4 id="一、打包：当初spring的项目一般是在服务器开Tomcat容器，然后再启动脚本运行，或者在IDE内运行，而有个方便的maven插件，利用idea打包，生成的jar包，可以使用java-jar-xxx-jar启动，这就很舒服了"><a href="#一、打包：当初spring的项目一般是在服务器开Tomcat容器，然后再启动脚本运行，或者在IDE内运行，而有个方便的maven插件，利用idea打包，生成的jar包，可以使用java-jar-xxx-jar启动，这就很舒服了" class="headerlink" title="一、打包：当初spring的项目一般是在服务器开Tomcat容器，然后再启动脚本运行，或者在IDE内运行，而有个方便的maven插件，利用idea打包，生成的jar包，可以使用java -jar xxx.jar启动，这就很舒服了"></a>一、打包：当初spring的项目一般是在服务器开Tomcat容器，然后再启动脚本运行，或者在IDE内运行，而有个方便的maven插件，利用idea打包，生成的jar包，可以使用java -jar xxx.jar启动，这就很舒服了</h4><p><img src="1.png" alt=""></p>
 <a id="more"></a>
 <p>在pom/xml文件引用插件</p>
-<pre><code>&lt;build&gt;
-       &lt;plugins&gt;
-           &lt;plugin&gt;
-               &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-               &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;
-           &lt;/plugin&gt;
-       &lt;/plugins&gt;
-   &lt;/build&gt;</code></pre><p>然后在IDEA右边的maven中双击package，将会实现自动打包，终端会告诉你jar包的地址<br>运行的效果图：<br><img src="2.png" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;build&gt;</span><br><span class="line">       &lt;plugins&gt;</span><br><span class="line">           &lt;plugin&gt;</span><br><span class="line">               &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">               &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;</span><br><span class="line">           &lt;/plugin&gt;</span><br><span class="line">       &lt;/plugins&gt;</span><br><span class="line">   &lt;/build&gt;</span><br></pre></td></tr></table></figure>
+<p>然后在IDEA右边的maven中双击package，将会实现自动打包，终端会告诉你jar包的地址<br>运行的效果图：<br><img src="2.png" alt=""></p>
 <h3 id="二、不知道你有没有发现我启动后一个闷骚的Kitty艺术字-而你只有一个Spring呢，换字-Banner文件"><a href="#二、不知道你有没有发现我启动后一个闷骚的Kitty艺术字-而你只有一个Spring呢，换字-Banner文件" class="headerlink" title="二、不知道你有没有发现我启动后一个闷骚的Kitty艺术字,而你只有一个Spring呢，换字(Banner文件)"></a>二、不知道你有没有发现我启动后一个闷骚的Kitty艺术字,而你只有一个Spring呢，换字(Banner文件)</h3><p>在resources目录下创建banner.txt文件，添加以下内容<br>可以更换成你自己的banner.txt<br><img src="6.PNG" alt=""><br><a href="http://patorjk.com/software/taag/#p=display&f=Graffiti&t=Kit4y" target="_blank" rel="noopener">艺术字传送门</a><br><code>${AnsiColor.BLUE}</code> 表示Banner文字的颜色<br><code>${spring-boot.version}</code>当前使用的SpringBoot版本<br>再次启动，托马斯小火车就开起来了</p>
 <h3 id="三、swagger的集成：对于前后端分离的项目而言，如果前后端不是一个人做，那么没有swagger的后端是没有灵魂的，所以刚学spring-boot就想看一看能不能完美接入一个swagger。效果图："><a href="#三、swagger的集成：对于前后端分离的项目而言，如果前后端不是一个人做，那么没有swagger的后端是没有灵魂的，所以刚学spring-boot就想看一看能不能完美接入一个swagger。效果图：" class="headerlink" title="三、swagger的集成：对于前后端分离的项目而言，如果前后端不是一个人做，那么没有swagger的后端是没有灵魂的，所以刚学spring boot就想看一看能不能完美接入一个swagger。效果图："></a>三、swagger的集成：对于前后端分离的项目而言，如果前后端不是一个人做，那么没有swagger的后端是没有灵魂的，所以刚学spring boot就想看一看能不能完美接入一个swagger。效果图：</h3><p>代码地址：<a href="https://github.com/Kit4y/Spring-Boot2-Demo" target="_blank" rel="noopener">https://github.com/Kit4y/Spring-Boot2-Demo</a><br><img src="5.png" alt=""></p>
 <p>具体步骤：</p>
 <h4 id="3-1、添加依赖，在pom-xml中添加这几行，然后会弹出一个选项是否maven自动导入jar包，点确定就行"><a href="#3-1、添加依赖，在pom-xml中添加这几行，然后会弹出一个选项是否maven自动导入jar包，点确定就行" class="headerlink" title="3.1、添加依赖，在pom.xml中添加这几行，然后会弹出一个选项是否maven自动导入jar包，点确定就行"></a>3.1、添加依赖，在pom.xml中添加这几行，然后会弹出一个选项是否maven自动导入jar包，点确定就行</h4><p><img src="3.png" alt=""></p>
 <h4 id="3-2、添加配置，结构如图（最好是去看代码）"><a href="#3-2、添加配置，结构如图（最好是去看代码）" class="headerlink" title="3.2、添加配置，结构如图（最好是去看代码）"></a>3.2、添加配置，结构如图（最好是去看代码）</h4><p><img src="4.png" alt=""><br>1、<strong>resource/application.yml</strong>（你可能文件后缀名不是这个，可以自己改）</p>
-<pre><code>swagger:
-  title: Kitty&#39;s Easy Spring Boot Swagger
-  description: I Am Kitty Too
-  version: 1.0.0
-  name: Kitty</code></pre><p>主要是swagger面板上的描述，问题不大<br>2、<strong>config/SwaggerConfig</strong></p>
-<pre><code>package com.example.demo.config;
-
-@Configuration
-@EnableWebMvc
-@EnableSwagger2
-@ComponentScan(basePackages = {&quot;com.example.demo.controller&quot;})
-@Component
-@ConfigurationProperties(prefix = &quot;swagger&quot;)
-@Data
-
-public class SwaggerConfig {
-    private String title;
-    private String description;
-    private String version;
-
-    private String name;
-    private String url;
-    private String email;
-
-    @Bean
-    public Docket customDocket() {
-        return new Docket(DocumentationType.SWAGGER_2).apiInfo(apiInfo());
-    }
-
-    private ApiInfo apiInfo() {
-        Contact contact = new Contact(name, url, email);
-        return new ApiInfoBuilder()
-                .title(title)
-                .description(description)
-                .contact(contact)
-                .version(version)
-                .build();
-    }
-}
-</code></pre><p>这里面有个@Data依赖于</p>
-<pre><code>&lt;dependency&gt;
-    &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;
-    &lt;artifactId&gt;lombok&lt;/artifactId&gt;
-    &lt;version&gt;1.18.6&lt;/version&gt;
-    &lt;scope&gt;provided&lt;/scope&gt;
-&lt;/dependency&gt;</code></pre><p>3、<strong>WebMvcConfig</strong>主要是过滤网页静态资源</p>
-<pre><code>package com.example.demo.config;
-
-@Configuration
-class WebMvcConfig implements WebMvcConfigurer {
-
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler(&quot;swagger-ui.html&quot;)
-                .addResourceLocations(&quot;classpath:/META-INF/resources/&quot;);
-
-        registry.addResourceHandler(&quot;/webjars/**&quot;)
-                .addResourceLocations(&quot;classpath:/META-INF/resources/webjars/&quot;);
-    }
-
-}
-</code></pre><h5 id="然后访问http-localhost-8080-swagger-ui-html即可"><a href="#然后访问http-localhost-8080-swagger-ui-html即可" class="headerlink" title="然后访问http://localhost:8080/swagger-ui.html即可"></a>然后访问<code>http://localhost:8080/swagger-ui.html</code>即可</h5><p>ps:你可以在函数前面多加一个修饰器对swagger将会多一些描述<br>比如</p>
-<pre><code>public class Swagger {
-    @GetMapping(&quot;/swaggertest&quot;)
-    @ApiOperation(value = &quot;测试Swagger&quot;) //添加这个 在swagger上展示
-    public String hello(){
-        return &quot;hello SpringBoot-swagger&quot;;
-    }
-}</code></pre><p><img src="7.png" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">swagger:</span><br><span class="line">  title: Kitty&apos;s Easy Spring Boot Swagger</span><br><span class="line">  description: I Am Kitty Too</span><br><span class="line">  version: 1.0.0</span><br><span class="line">  name: Kitty</span><br></pre></td></tr></table></figure>
+<p>主要是swagger面板上的描述，问题不大<br>2、<strong>config/SwaggerConfig</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">package com.example.demo.config;</span><br><span class="line"></span><br><span class="line">@Configuration</span><br><span class="line">@EnableWebMvc</span><br><span class="line">@EnableSwagger2</span><br><span class="line">@ComponentScan(basePackages = &#123;&quot;com.example.demo.controller&quot;&#125;)</span><br><span class="line">@Component</span><br><span class="line">@ConfigurationProperties(prefix = &quot;swagger&quot;)</span><br><span class="line">@Data</span><br><span class="line"></span><br><span class="line">public class SwaggerConfig &#123;</span><br><span class="line">    private String title;</span><br><span class="line">    private String description;</span><br><span class="line">    private String version;</span><br><span class="line"></span><br><span class="line">    private String name;</span><br><span class="line">    private String url;</span><br><span class="line">    private String email;</span><br><span class="line"></span><br><span class="line">    @Bean</span><br><span class="line">    public Docket customDocket() &#123;</span><br><span class="line">        return new Docket(DocumentationType.SWAGGER_2).apiInfo(apiInfo());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private ApiInfo apiInfo() &#123;</span><br><span class="line">        Contact contact = new Contact(name, url, email);</span><br><span class="line">        return new ApiInfoBuilder()</span><br><span class="line">                .title(title)</span><br><span class="line">                .description(description)</span><br><span class="line">                .contact(contact)</span><br><span class="line">                .version(version)</span><br><span class="line">                .build();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里面有个@Data依赖于</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;lombok&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;1.18.6&lt;/version&gt;</span><br><span class="line">    &lt;scope&gt;provided&lt;/scope&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<p>3、<strong>WebMvcConfig</strong>主要是过滤网页静态资源</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">package com.example.demo.config;</span><br><span class="line"></span><br><span class="line">@Configuration</span><br><span class="line">class WebMvcConfig implements WebMvcConfigurer &#123;</span><br><span class="line"></span><br><span class="line">    public void addResourceHandlers(ResourceHandlerRegistry registry) &#123;</span><br><span class="line">        registry.addResourceHandler(&quot;swagger-ui.html&quot;)</span><br><span class="line">                .addResourceLocations(&quot;classpath:/META-INF/resources/&quot;);</span><br><span class="line"></span><br><span class="line">        registry.addResourceHandler(&quot;/webjars/**&quot;)</span><br><span class="line">                .addResourceLocations(&quot;classpath:/META-INF/resources/webjars/&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="然后访问http-localhost-8080-swagger-ui-html即可"><a href="#然后访问http-localhost-8080-swagger-ui-html即可" class="headerlink" title="然后访问http://localhost:8080/swagger-ui.html即可"></a>然后访问<code>http://localhost:8080/swagger-ui.html</code>即可</h5><p>ps:你可以在函数前面多加一个修饰器对swagger将会多一些描述<br>比如</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public class Swagger &#123;</span><br><span class="line">    @GetMapping(&quot;/swaggertest&quot;)</span><br><span class="line">    @ApiOperation(value = &quot;测试Swagger&quot;) //添加这个 在swagger上展示</span><br><span class="line">    public String hello()&#123;</span><br><span class="line">        return &quot;hello SpringBoot-swagger&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="7.png" alt=""></p>
 
             </div>
             <hr/>
@@ -893,7 +829,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">173.5k</span>&nbsp;字
+                class="white-color">175.5k</span>&nbsp;字
             
             
             

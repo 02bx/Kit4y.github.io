@@ -29,7 +29,7 @@
     
     <script src="/libs/jquery/jquery.min.js"></script>
     
-</head>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"><script src="/js/prism.js"></script></head>
 
 
 <body>
@@ -386,7 +386,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    762
+                    760
                 </div>
                 
 
@@ -420,54 +420,16 @@
 <li>MOV平均负荷值</li>
 </ul>
 <p>简而言之，LEA加载指向你要寻址的项的指针，而MOV则在该地址加载实际值。<br><strong>例如</strong>: </p>
-<pre><code>mov ecx,[eax+0x30]表示先运算eax+0x30得到一个结果,以这个结果为地址找一个ecx长度的内存数赋给ecx
-lea ecx,[eax+0x30]表示先运算eax+0x30得到一个结果,把这个结果(mov时地址)赋给ecx
-效果为ecx=eax+0x30  (这里eax参与了运算却没有改变值)</code></pre><h4 id="七、条件控制"><a href="#七、条件控制" class="headerlink" title="七、条件控制"></a>七、条件控制</h4><p><strong>跳转指令分三类：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mov ecx,[eax+0x30]表示先运算eax+0x30得到一个结果,以这个结果为地址找一个ecx长度的内存数赋给ecx</span><br><span class="line">lea ecx,[eax+0x30]表示先运算eax+0x30得到一个结果,把这个结果(mov时地址)赋给ecx</span><br><span class="line">效果为ecx=eax+0x30  (这里eax参与了运算却没有改变值)</span><br></pre></td></tr></table></figure>
+<h4 id="七、条件控制"><a href="#七、条件控制" class="headerlink" title="七、条件控制"></a>七、条件控制</h4><p><strong>跳转指令分三类：</strong></p>
 <ul>
 <li>无条件跳转: JMP;</li>
 <li>根据 CX、ECX 寄存器的值跳转: JCXZ(CX 为 0 则跳转)、JECXZ(ECX 为 0 则跳转);</li>
 <li>根据 EFLAGS 寄存器的标志位跳转, 以下罗列.</li>
 </ul>
 <p><strong>根据标志位跳转的指令：</strong></p>
-<pre><code>JE   ;等于则跳转
-JNE  ;不等于则跳转
-
-JZ   ;为 0 则跳转
-JNZ  ;不为 0 则跳转
-
-JS   ;为负则跳转
-JNS  ;不为负则跳转
-
-JC   ;进位则跳转
-JNC  ;不进位则跳转
-
-JO   ;溢出则跳转
-JNO  ;不溢出则跳转
-
-JA   ;无符号大于则跳转
-JNA  ;无符号不大于则跳转
-JAE  ;无符号大于等于则跳转
-JNAE ;无符号不大于等于则跳转
-
-JG   ;有符号大于则跳转
-JNG  ;有符号不大于则跳转
-JGE  ;有符号大于等于则跳转
-JNGE ;有符号不大于等于则跳转
-
-JB   ;无符号小于则跳转
-JNB  ;无符号不小于则跳转
-JBE  ;无符号小于等于则跳转
-JNBE ;无符号不小于等于则跳转
-
-JL   ;有符号小于则跳转
-JNL  ;有符号不小于则跳转
-JLE  ;有符号小于等于则跳转
-JNLE ;有符号不小于等于则跳转
-
-JP   ;奇偶位置位则跳转
-JNP  ;奇偶位清除则跳转
-JPE  ;奇偶位相等则跳转
-JPO  ;奇偶位不等则跳转</code></pre><p><strong>跳转相关的标志位:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">JE   ;等于则跳转</span><br><span class="line">JNE  ;不等于则跳转</span><br><span class="line"></span><br><span class="line">JZ   ;为 0 则跳转</span><br><span class="line">JNZ  ;不为 0 则跳转</span><br><span class="line"></span><br><span class="line">JS   ;为负则跳转</span><br><span class="line">JNS  ;不为负则跳转</span><br><span class="line"></span><br><span class="line">JC   ;进位则跳转</span><br><span class="line">JNC  ;不进位则跳转</span><br><span class="line"></span><br><span class="line">JO   ;溢出则跳转</span><br><span class="line">JNO  ;不溢出则跳转</span><br><span class="line"></span><br><span class="line">JA   ;无符号大于则跳转</span><br><span class="line">JNA  ;无符号不大于则跳转</span><br><span class="line">JAE  ;无符号大于等于则跳转</span><br><span class="line">JNAE ;无符号不大于等于则跳转</span><br><span class="line"></span><br><span class="line">JG   ;有符号大于则跳转</span><br><span class="line">JNG  ;有符号不大于则跳转</span><br><span class="line">JGE  ;有符号大于等于则跳转</span><br><span class="line">JNGE ;有符号不大于等于则跳转</span><br><span class="line"></span><br><span class="line">JB   ;无符号小于则跳转</span><br><span class="line">JNB  ;无符号不小于则跳转</span><br><span class="line">JBE  ;无符号小于等于则跳转</span><br><span class="line">JNBE ;无符号不小于等于则跳转</span><br><span class="line"></span><br><span class="line">JL   ;有符号小于则跳转</span><br><span class="line">JNL  ;有符号不小于则跳转</span><br><span class="line">JLE  ;有符号小于等于则跳转</span><br><span class="line">JNLE ;有符号不小于等于则跳转</span><br><span class="line"></span><br><span class="line">JP   ;奇偶位置位则跳转</span><br><span class="line">JNP  ;奇偶位清除则跳转</span><br><span class="line">JPE  ;奇偶位相等则跳转</span><br><span class="line">JPO  ;奇偶位不等则跳转</span><br></pre></td></tr></table></figure>
+<p><strong>跳转相关的标志位:</strong></p>
 <table>
 <thead>
 <tr>
@@ -898,7 +860,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">173.5k</span>&nbsp;字
+                class="white-color">175.5k</span>&nbsp;字
             
             
             

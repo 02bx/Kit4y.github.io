@@ -28,7 +28,7 @@
     
     <script src="/libs/jquery/jquery.min.js"></script>
     
-</head>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"><script src="/js/prism.js"></script></head>
 
 
 <body>
@@ -385,7 +385,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    364
+                    362
                 </div>
                 
 
@@ -416,17 +416,15 @@
 <h4 id="切记：都选是！！虽然默认是否"><a href="#切记：都选是！！虽然默认是否" class="headerlink" title="切记：都选是！！虽然默认是否"></a>切记：都选是！！虽然默认是否</h4><p><img src="4.jpg" alt="img"></p>
 <p><img src="3.jpg" alt="img"></p>
 <h3 id="三、Kali换源和虚拟机装了vm还不能复制文件？"><a href="#三、Kali换源和虚拟机装了vm还不能复制文件？" class="headerlink" title="三、Kali换源和虚拟机装了vm还不能复制文件？"></a>三、Kali换源和虚拟机装了vm还不能复制文件？</h3><p>我也很无奈鸭，装了vmtools也不行复制粘贴,<br>1.编辑源</p>
-<pre><code>vi /etc/apt/sources.list</code></pre><p>2.新增如下源</p>
-<pre><code>deb http://mirrors.tuna.tsinghua.edu.cn/kali kali-rolling main contrib non-free
-deb-src https://mirrors.tuna.tsinghua.edu.cn/kali kali-rolling main contrib non-free
-deb http://mirrors.zju.edu.cn/kali kali-rolling main contrib non-free 
-deb-src http://mirrors.zju.edu.cn/kali kali-rolling main contrib non-free
-deb http://mirrors.aliyun.com/kali kali main non-free contrib 
-deb-src http://mirrors.aliyun.com/kali kali main non-free contrib 
-deb http://mirrors.aliyun.com/kali-security kali/updates main contrib non-free</code></pre><p>3.按照官方文档。</p>
-<pre><code>apt-get update
-apt-get install open-vm-tools-desktop fuse
-reboot</code></pre><p>4.有一说一，确实有效</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/apt/sources.list</span><br></pre></td></tr></table></figure>
+
+<p>2.新增如下源</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">deb http://mirrors.tuna.tsinghua.edu.cn/kali kali-rolling main contrib non-free</span><br><span class="line">deb-src https://mirrors.tuna.tsinghua.edu.cn/kali kali-rolling main contrib non-free</span><br><span class="line">deb http://mirrors.zju.edu.cn/kali kali-rolling main contrib non-free </span><br><span class="line">deb-src http://mirrors.zju.edu.cn/kali kali-rolling main contrib non-free</span><br><span class="line">deb http://mirrors.aliyun.com/kali kali main non-free contrib </span><br><span class="line">deb-src http://mirrors.aliyun.com/kali kali main non-free contrib </span><br><span class="line">deb http://mirrors.aliyun.com/kali-security kali/updates main contrib non-free</span><br></pre></td></tr></table></figure>
+
+<p>3.按照官方文档。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">apt-get update</span><br><span class="line">apt-get install open-vm-tools-desktop fuse</span><br><span class="line">reboot</span><br></pre></td></tr></table></figure>
+
+<p>4.有一说一，确实有效</p>
 
             </div>
             <hr/>
@@ -817,7 +815,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">173.5k</span>&nbsp;字
+                class="white-color">175.5k</span>&nbsp;字
             
             
             
