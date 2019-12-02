@@ -667,19 +667,27 @@ filename=1.php&amp;data[]=&lt;?php phpinfo();?&gt;</code></pre><p>其中data=被
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2019/11/19/php-dai-ma-shen-ji-4-php-lei-yu-dui-xiang-he-ming-ming-kong-jian/">
+                <a href="/2019/11/19/xss-kua-zhan-jiao-ben-gong-ji-pou-xi-yu-fang-yu/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="PHP代码审计4-PHP类与对象和命名空间">
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="XSS跨站脚本攻击剖析与防御">
                         
-                        <span class="card-title">PHP代码审计4-PHP类与对象和命名空间</span>
+                        <span class="card-title">XSS跨站脚本攻击剖析与防御</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            PHP4-&gt;PHP5的一个大飞跃自 PHP 5 起完全重写了对象模型以得到更佳性能和更多特性。这是自 PHP 4 以来的最大变化。PHP 5 具有完整的对象模型。PHP 5 中的新特性包括访问控制，抽象类和 final 类与方法，附加
+                            cookie欺骗攻击index.php
+&lt;?php
+setcookie("name","cookie");
+if(isset($_POST['name']))
+{
+echo $_POST['name'];
+}
+?>
+&lt;html>
                         
                     </div>
                     <div class="publish-info">
@@ -690,12 +698,8 @@ filename=1.php&amp;data[]=&lt;?php phpinfo();?&gt;</code></pre><p>其中data=被
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/CTF/" class="post-category">
-                                    CTF
-                                </a>
-                            
-                            <a href="/categories/CTF/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-category">
-                                    代码审计
+                            <a href="/categories/Web/" class="post-category">
+                                    Web
                                 </a>
                             
                             
@@ -705,8 +709,8 @@ filename=1.php&amp;data[]=&lt;?php phpinfo();?&gt;</code></pre><p>其中data=被
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/CTF/">
-                        <span class="chip bg-color">CTF</span>
+                    <a href="/tags/Web/">
+                        <span class="chip bg-color">Web</span>
                     </a>
                     
                 </div>
@@ -720,36 +724,31 @@ filename=1.php&amp;data[]=&lt;?php phpinfo();?&gt;</code></pre><p>其中data=被
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/10/04/numpy-pandas-de-bi-ji/">
+                <a href="/2019/10/03/php-dai-ma-shen-ji-3-php-wen-dang-de-yi-xie-bi-ji/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="numpy&&pandas的笔记">
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="PHP代码审计3-PHP文档的一些笔记">
                         
-                        <span class="card-title">numpy&&pandas的笔记</span>
+                        <span class="card-title">PHP代码审计3-PHP文档的一些笔记</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            楔子暑期呢卓越班的课程拿公司实习替代了，回头看了看课表确实还是很有用的，所以打算还是补回来
-numpy &amp; pandasNumPy（Numeric Python）系统是Python的一种开源的数值计算扩展。这种工具可用来存储和处理大
+                            1.php短标记PHP 也允许使用短标记 ，但不鼓励使用。只有通过激活 php.ini 中的 short_open_tag 配置指令或者在编译 PHP 时使用了配置选项 –enable-short-tags 时才能使用短标记。短标记方式 开
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2019-10-04
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-10-03
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E5%85%A8%E6%B0%91AI/" class="post-category">
-                                    全民AI
-                                </a>
-                            
-                            <a href="/categories/%E5%85%A8%E6%B0%91AI/%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86/" class="post-category">
-                                    数据处理
+                            <a href="/categories/Web/" class="post-category">
+                                    Web
                                 </a>
                             
                             
@@ -759,8 +758,8 @@ numpy &amp; pandasNumPy（Numeric Python）系统是Python的一种开源的数�
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86/">
-                        <span class="chip bg-color">数据处理</span>
+                    <a href="/tags/PHP/">
+                        <span class="chip bg-color">PHP</span>
                     </a>
                     
                 </div>
@@ -910,7 +909,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">173.5k</span>&nbsp;字
+                class="white-color">146.1k</span>&nbsp;字
             
             
             

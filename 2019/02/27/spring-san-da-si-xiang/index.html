@@ -433,69 +433,43 @@
  }</code></pre><img src="3.jpg" width="400" hegiht="200" align=center />
 <a id="more"></a>
 现在你要出生啦啦啦
-```
-Person you;
+
+<pre><code>Person you;
 //当你需要你女朋友的时候你可以这样
 you.girlFriend;
 //比如当别人问你女朋友谁啊，你可以回答
-printf("%s",you.girlFriend.name);
-```
-直到一天，你和你女朋友的缘分尽了，经历一段痛心肺腑的分手诀别后，你找到了新的女朋友雏田小姐姐，当然这个时候将会有数百句渣男，臭鸡蛋扑面而来，但是，嘻嘻，你还是要更新你女朋友的名字。那么你要怎么做呢？
-你要把Person类里GirlFriend的构造参数改一下
-```
-GirlFriend girlFriend=new GirlFriend("日向雏田");
-```
-![](2.jpg)
-这个时候你会发现你是全世界最成功的人士，但是**等等**你可能忽略了一个问题，因为你换女朋友，你自己的类**改变了**(person类改变了)，你不再是那个打娘胎里出来的那个单纯的Person,而是人工改造后的你，这样的你是没有灵魂的，这是因为，你依赖于你女盆友（**Person类依赖于GirlFriend**）,这样你和你女朋友的耦合性太强了（**Person类和GirlFriend耦合性强**），那么依赖注入就是为了解决一下这个问题。
-#### 1.2、控制反转和依赖注入（正经脸）
-以下来自百度百科
-```
-控制反转（Inversion of Control，缩写为IoC），是面向对象编程中的一种设计原则，
+printf(&quot;%s&quot;,you.girlFriend.name);</code></pre><p>直到一天，你和你女朋友的缘分尽了，经历一段痛心肺腑的分手诀别后，你找到了新的女朋友雏田小姐姐，当然这个时候将会有数百句渣男，臭鸡蛋扑面而来，但是，嘻嘻，你还是要更新你女朋友的名字。那么你要怎么做呢？<br>你要把Person类里GirlFriend的构造参数改一下</p>
+<pre><code>GirlFriend girlFriend=new GirlFriend(&quot;日向雏田&quot;);</code></pre><p><img src="2.jpg" alt=""><br>这个时候你会发现你是全世界最成功的人士，但是<strong>等等</strong>你可能忽略了一个问题，因为你换女朋友，你自己的类<strong>改变了</strong>(person类改变了)，你不再是那个打娘胎里出来的那个单纯的Person,而是人工改造后的你，这样的你是没有灵魂的，这是因为，你依赖于你女盆友（<strong>Person类依赖于GirlFriend</strong>）,这样你和你女朋友的耦合性太强了（<strong>Person类和GirlFriend耦合性强</strong>），那么依赖注入就是为了解决一下这个问题。</p>
+<h4 id="1-2、控制反转和依赖注入（正经脸）"><a href="#1-2、控制反转和依赖注入（正经脸）" class="headerlink" title="1.2、控制反转和依赖注入（正经脸）"></a>1.2、控制反转和依赖注入（正经脸）</h4><p>以下来自百度百科</p>
+<pre><code>控制反转（Inversion of Control，缩写为IoC），是面向对象编程中的一种设计原则，
 可以用来减低计算机代码之间的耦合度。其中最常见的方式叫做依赖注入（Dependency 
 Injection，简称DI。通过控制反转，对象在被创建的时候，由一个调控系统内所有对象
-的外界实体，将其所依赖的对象的引用传递给它。也可以说，依赖被注入到对象中。
-```
-是不是很晕，听不懂，如果你懂了，请直接跳过本博客，如果没看懂，请继续听我吹逼。
-其实意思还是很简单的，就是为了解除Person和GirlFriend的耦合，在修改GirlFriend.name的同时不修改Person类，能不能做到呢，答案是肯定的
-```
-class Person{
+的外界实体，将其所依赖的对象的引用传递给它。也可以说，依赖被注入到对象中。</code></pre><p>是不是很晕，听不懂，如果你懂了，请直接跳过本博客，如果没看懂，请继续听我吹逼。<br>其实意思还是很简单的，就是为了解除Person和GirlFriend的耦合，在修改GirlFriend.name的同时不修改Person类，能不能做到呢，答案是肯定的</p>
+<pre><code>class Person{
   GirlFriend girlFriend;
   Person(GirlFriend girlFriend){
  this.girlFriend = girlFriend;
 };
  .........
-}
-```
-这样就算你要天天换女朋友，又能保持自己的灵魂，你只要
-```
-GirlFriend girlFriend=new GirlFriend("日向雏田");
-Person you= new Person(girlFriend);
-```
-字面意思就是将你女朋友注入到你中（为什么听起来优点别扭），这是通过构造函数依赖注入,而依赖注入有3种方式
-分别为**构造方法注入**，**setter注入**，**基于注解的注入**。
-思想和构造方法注入是一致的，比如
-**setter函数注入**：
-其实也就是在Person中另外写一个函数来替代构造函数，然后在new person够调用这个函数。
-```
-class Person{
+}</code></pre><p>这样就算你要天天换女朋友，又能保持自己的灵魂，你只要</p>
+<pre><code>GirlFriend girlFriend=new GirlFriend(&quot;日向雏田&quot;);
+Person you= new Person(girlFriend);</code></pre><p>字面意思就是将你女朋友注入到你中（为什么听起来优点别扭），这是通过构造函数依赖注入,而依赖注入有3种方式<br>分别为<strong>构造方法注入</strong>，<strong>setter注入</strong>，<strong>基于注解的注入</strong>。<br>思想和构造方法注入是一致的，比如<br><strong>setter函数注入</strong>：<br>其实也就是在Person中另外写一个函数来替代构造函数，然后在new person够调用这个函数。</p>
+<pre><code>class Person{
   GirlFriend girlFriend;
   SetGirlFriend(GirlFriend girlFriend){
  this.girlFriend = girlFriend;
 };
 }
 Person you=new Person();
-GirlFriend girlFriend=new GirlFriend("日向雏田");
-you.SetGirlFriend(girlFriend)
-```
-**基于注解的注入**：
-注解我看来就是为了加快人生进步发展（为了让后人偷懒），而定义的一些约定注释，提高我们的编程体验。
-看一看spring有哪些关于注入的注解
-1. @Component注解：表明当前类为一个组件（bean）
-2. @Value注解：为bean注入值
-3. @Autowired注解 ：为bean注入其他bean（byType方式）
-4. @Qualifier注解：与Autowired注解联用实现byName方式注入
-5. @Resource注解：这个不是Spring提供的注解，这个是jdk提供的注解，要求jdk版本1.6以上，这个注解可以实现Autowired和Resource的功能。当直接注解@Resource时起到Autowired功能（byType），当加上参数@Resource（name=”“）的时候，起到@Autowired和@Qualifier联合使用的功能（byName）
-
+GirlFriend girlFriend=new GirlFriend(&quot;日向雏田&quot;);
+you.SetGirlFriend(girlFriend)</code></pre><p><strong>基于注解的注入</strong>：<br>注解我看来就是为了加快人生进步发展（为了让后人偷懒），而定义的一些约定注释，提高我们的编程体验。<br>看一看spring有哪些关于注入的注解</p>
+<ol>
+<li>@Component注解：表明当前类为一个组件（bean）</li>
+<li>@Value注解：为bean注入值</li>
+<li>@Autowired注解 ：为bean注入其他bean（byType方式）</li>
+<li>@Qualifier注解：与Autowired注解联用实现byName方式注入</li>
+<li>@Resource注解：这个不是Spring提供的注解，这个是jdk提供的注解，要求jdk版本1.6以上，这个注解可以实现Autowired和Resource的功能。当直接注解@Resource时起到Autowired功能（byType），当加上参数@Resource（name=”“）的时候，起到@Autowired和@Qualifier联合使用的功能（byName）</li>
+</ol>
 <p>当你能看到这里的时候，自然就会去学习注解的详细使用，这里只唠唠思维，就不展开。</p>
 <p><strong>控制反转</strong>名字由来：<br>对象A获得依赖对象B的过程,由主动行为变为了被动行为，控制权颠倒过来了，这就是“控制反转”这个名称的由来，其实就是通过IoC容器来关联这些对象类。这样对象与对象之间就通过IoC容器进行联系，但对象与对象之间并没有什么直接联系。在上面例子中，就是可以新建一个工厂类，专门生产女朋友的，然后你要什么女朋友通过调用女朋友工厂生产后再注入。<br><img src="1.png" alt=""></p>
 <h3 id="二、AOP（面向切面编程）"><a href="#二、AOP（面向切面编程）" class="headerlink" title="二、AOP（面向切面编程）"></a>二、AOP（面向切面编程）</h3><p>先来一个官方书面表述：<br>AOP（Aspect Oriented Programming）意为：面向切面编程，通过预编译方式和运行期动态代理实现程序功能的统一维护的一种技术。AOP是OOP的延续，是软件开发中的一个热点，也是Spring框架中的一个重要内容（Spring核心之一），是函数式编程的一种衍生范型。利用AOP可以对业务逻辑的各个部分进行隔离，从而使得业务逻辑各部分之间的耦合度降低，提高程序的可重用性，同时提高了开发的效率。<br>（反正我第一遍是看不懂的）</p>
@@ -621,35 +595,31 @@ you.SetGirlFriend(girlFriend)
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2019/03/03/springboot2-zheng-he-shiro-ya-zhou-zui-da-kan-tu-wang/">
+                <a href="/2019/03/10/ji-suan-ji-wang-luo-zi-ding-xiang-xia-ying-yong-ceng-ji-shu-hou-tao-jie-zi-bian-cheng-lian-xi-can-kao/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="Springboot2整合Shiro-亚洲最大看图网">
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="计算机网络自顶向下-应用层及书后套接字编程练习参考">
                         
-                        <span class="card-title">Springboot2整合Shiro-亚洲最大看图网</span>
+                        <span class="card-title">计算机网络自顶向下-应用层及书后套接字编程练习参考</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            唠唠嗑：咕咕咕，和曹神接了一个战略性的项目，一个月完工，真尼玛刺激每天肝新的东西，但是每天确实收获了很多，把Springboot的边边角角熟练了一遍，也遇到了自己之前从未遇到的问题，比如需要使用Netty-socketio及时推送服务，Sh
+                            虽然说数字阅读填充碎片化时间，但是确实阅读纸质书更容易安静下来，之前看电子档的这本书只是囫囵吞枣，打算再看一次纸质书顺便把书后编程题做完去，否则只知道理论则百无一用是”书生”一、进程通信在操作系统的术语中，进行通信额实际上是进程(proce
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2019-03-03
+                            <i class="far fa-clock fa-fw icon-date"></i>2019-03-10
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E9%9B%81%E5%84%BF%E5%87%A0%E5%BA%A6%E6%81%8B%E5%BC%80%E5%8F%91-%E6%84%BF%E5%BE%97%E4%B8%80%E7%AB%99%E5%85%A5%E4%B8%87%E5%AE%B6/" class="post-category">
-                                    雁儿几度恋开发-愿得一站入万家
-                                </a>
-                            
-                            <a href="/categories/%E9%9B%81%E5%84%BF%E5%87%A0%E5%BA%A6%E6%81%8B%E5%BC%80%E5%8F%91-%E6%84%BF%E5%BE%97%E4%B8%80%E7%AB%99%E5%85%A5%E4%B8%87%E5%AE%B6/Spring-boot/" class="post-category">
-                                    Spring boot
+                            <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B/" class="post-category">
+                                    计算机网络自顶向下
                                 </a>
                             
                             
@@ -659,12 +629,8 @@ you.SetGirlFriend(girlFriend)
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Spring-Boot/">
-                        <span class="chip bg-color">Spring Boot</span>
-                    </a>
-                    
-                    <a href="/tags/Shiro/">
-                        <span class="chip bg-color">Shiro</span>
+                    <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">
+                        <span class="chip bg-color">计算机网络</span>
                     </a>
                     
                 </div>
@@ -678,21 +644,19 @@ you.SetGirlFriend(girlFriend)
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/02/26/spring-boot-da-bao-he-ji-cheng-swagger/">
+                <a href="/2019/02/26/spring-boot-huan-jing-da-jian/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="Spring Boot打包和集成swagger">
+                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="Spring Boot环境搭建">
                         
-                        <span class="card-title">Spring Boot打包和集成swagger</span>
+                        <span class="card-title">Spring Boot环境搭建</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            一、打包：当初spring的项目一般是在服务器开Tomcat容器，然后再启动脚本运行，或者在IDE内运行，而有个方便的maven插件，利用idea打包，生成的jar包，可以使用java -jar xxx.jar启动，这就很舒服了
-
-在pom
+                            人终究没有自己想象的那么厉害，之前有过spring的基础，现在仅仅是回忆Spring的配置问题以及转向spring boot,从昨晚肝到此刻（Orz只能拿时间来弥补自己的天赋不足），又一次见到了5点钟的南航，任何火热技术的发展都是能够为了解
                         
                     </div>
                     <div class="publish-info">
@@ -720,10 +684,6 @@ you.SetGirlFriend(girlFriend)
                     
                     <a href="/tags/Spring-Boot/">
                         <span class="chip bg-color">Spring Boot</span>
-                    </a>
-                    
-                    <a href="/tags/Swagger/">
-                        <span class="chip bg-color">Swagger</span>
                     </a>
                     
                 </div>
@@ -873,7 +833,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">173.5k</span>&nbsp;字
+                class="white-color">146.1k</span>&nbsp;字
             
             
             

