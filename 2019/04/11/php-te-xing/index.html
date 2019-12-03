@@ -408,7 +408,7 @@ PHP中预定义了几个超级全局变量（superglobals） ，这意味着它�
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h4 id="1、超级全局变量"><a href="#1、超级全局变量" class="headerlink" title="1、超级全局变量"></a>1、超级全局变量</h4><p>超级全局变量在PHP 4.1.0之后被启用, 是PHP系统中自带的变量，在一个脚本的全部作用域中都可用。<br>$_SERVER[“PHP_SELF”];</p>
-<h5 id="PHP中预定义了几个超级全局变量（superglobals）-，这意味着它们在一个脚本的全部作用域中都可用。-你不需要特别说明，就可以在函数及类中使用。"><a href="#PHP中预定义了几个超级全局变量（superglobals）-，这意味着它们在一个脚本的全部作用域中都可用。-你不需要特别说明，就可以在函数及类中使用。" class="headerlink" title="PHP中预定义了几个超级全局变量（superglobals） ，这意味着它们在一个脚本的全部作用域中都可用。 你不需要特别说明，就可以在函数及类中使用。"></a>PHP中预定义了几个超级全局变量（superglobals） ，这意味着它们在一个脚本的全部作用域中都可用。 你不需要特别说明，就可以在函数及类中使用。</h5><a id="more"></a>
+<h4 id="PHP中预定义了几个超级全局变量（superglobals）-，这意味着它们在一个脚本的全部作用域中都可用。-你不需要特别说明，就可以在函数及类中使用。"><a href="#PHP中预定义了几个超级全局变量（superglobals）-，这意味着它们在一个脚本的全部作用域中都可用。-你不需要特别说明，就可以在函数及类中使用。" class="headerlink" title="PHP中预定义了几个超级全局变量（superglobals） ，这意味着它们在一个脚本的全部作用域中都可用。 你不需要特别说明，就可以在函数及类中使用。"></a>PHP中预定义了几个超级全局变量（superglobals） ，这意味着它们在一个脚本的全部作用域中都可用。 你不需要特别说明，就可以在函数及类中使用。</h4><a id="more"></a>
 <p>PHP 超级全局变量列表:</p>
 <pre><code>1. $GLOBALS
 2. $_SERVER
@@ -444,7 +444,7 @@ echo $_SERVER[&#39;PHP_SELF&#39;];
 <pre><code>&lt;form action=&quot;/demo.php/{{多加入的参数}}&quot; method=&quot;POST&quot;&gt;</code></pre><p>变成了，符号是自己加上去，表示区分</p>
 <pre><code>&lt;form action=&quot;/demo.php/{{"><script>alert('xss')</script>}}&quot; method=&quot;POST&quot;&gt;</code></pre><p>最终</p>
 <pre><code>&lt;form action=&quot;/demo.php/&quot;&gt;&lt;script&gt;alert(&#39;xss&#39;)&lt;/script&gt;&quot; method=&quot;POST&quot;&gt;</code></pre><p>成功执行了XSS<br><img src="4.png" alt=""><br><img src="5.png" alt=""></p>
-<h5 id="3-1、解决办法-gt-通过htmlentities-SERVER-‘PHP-SELF’-过滤"><a href="#3-1、解决办法-gt-通过htmlentities-SERVER-‘PHP-SELF’-过滤" class="headerlink" title="3.1、解决办法-&gt; 通过htmlentities($_SERVER[‘PHP_SELF’]);过滤"></a>3.1、解决办法-&gt; 通过htmlentities($_SERVER[‘PHP_SELF’]);过滤</h5><h3 id="PS-SERVER-变量中的重要元素"><a href="#PS-SERVER-变量中的重要元素" class="headerlink" title="PS:$_SERVER 变量中的重要元素:"></a>PS:$_SERVER 变量中的重要元素:</h3><table>
+<h4 id="3-1、解决办法-gt-通过htmlentities-SERVER-‘PHP-SELF’-过滤"><a href="#3-1、解决办法-gt-通过htmlentities-SERVER-‘PHP-SELF’-过滤" class="headerlink" title="3.1、解决办法-&gt; 通过htmlentities($_SERVER[‘PHP_SELF’]);过滤"></a>3.1、解决办法-&gt; 通过htmlentities($_SERVER[‘PHP_SELF’]);过滤</h4><h4 id="PS-SERVER-变量中的重要元素"><a href="#PS-SERVER-变量中的重要元素" class="headerlink" title="PS:$_SERVER 变量中的重要元素:"></a>PS:$_SERVER 变量中的重要元素:</h4><table>
 <thead>
 <tr>
 <th>元素/代码</th>
