@@ -388,7 +388,7 @@ htt">
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    620
+                    616
                 </div>
                 
 
@@ -426,9 +426,8 @@ expect:// — 处理交互式的流</code></pre><p><img src="1.png" alt=""></p>
 <h3 id="环境支持"><a href="#环境支持" class="headerlink" title="环境支持"></a>环境支持</h3><p>PHP.ini：</p>
 <pre><code>allow_url_fopen ：on  默认开启  该选项为on便是激活了 URL 形式的 fopen 封装协议使得可以访问 URL 对象文件等。
 allow_url_include：off  默认关闭，该选项为on便是允许 包含URL 对象文件等。</code></pre><h4 id="1-php-协议"><a href="#1-php-协议" class="headerlink" title="1.php://协议"></a>1.php://协议</h4><pre><code>php://filter
-php://input
-php://filter：在allow_url_fopen，allow_url_include都关闭的情况下可以正常使用，主要用于读取源代码并进行base64编码输出。</code></pre><p>payload如下：</p>
-<pre><code>php://filter/read=convert.base64-encode/resource=upload.php</code></pre><p>php://input：访问各个输入/输出流。CTF中经常使用file_get_contents获取php://input内容(POST)，需要开启allow_url_include，并且当enctype=”multipart/form-data”的时候 php://input是无效的。 例子一</p>
+php://input</code></pre><p>php://filter：在allow_url_fopen，allow_url_include都关闭的情况下可以正常使用，主要用于读取源代码并进行base64编码输出。<br>payload如下：</p>
+<pre><code>php://filter/read=convert.base64-encode/resource=upload.php</code></pre><p>php://input：访问各个输入/输出流。CTF中经常使用file_get_contents获取php://input内容(POST)，需要开启allow_url_include，并且当enctype=”multipart/form-data”的时候 php://input是无效的。 </p>
 <h4 id="2-file-协议"><a href="#2-file-协议" class="headerlink" title="2.file://协议"></a>2.file://协议</h4><p>file://：用于访问本地文件系统，并且不受allow_url_fopen，allow_url_include影响，file://还经常和curl函数(SSRF)结合在一起。例子一，例子二<br>使用方法：</p>
 <pre><code>file:// [文件的绝对路径和文件名]
 file:///etc/passwd</code></pre><h4 id="3-phar-协议"><a href="#3-phar-协议" class="headerlink" title="3.phar://协议"></a>3.phar://协议</h4><p>phar://：PHP 归档，常常跟文件包含，文件上传结合着考察。当文件上传仅仅校验mime类型与文件后缀，可以通过以下命令进行利用。例子一</p>
@@ -551,35 +550,33 @@ file.php?file=data:text/plain;base64,PD9waHAgcGhwaW5mbygpPz4=</code></pre><p><a 
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2019/12/03/php-wei-xie-yi/">
+                <a href="/2019/12/03/wei-sui-ji-shu/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="php伪协议">
+                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="伪随机数">
                         
-                        <span class="card-title">php伪协议</span>
+                        <span class="card-title">伪随机数</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            php支持的伪协议有：php:// — 访问各个输入/输出流（I/O streams）
-file:// — 访问本地文件系统
-phar:// — PHP 归档
-zlib:// — 压缩流
-data:// — 数据（RFC 2397）
-htt
+                            在比赛中多次遇到了伪随机数的问题-总结一下在web安恒测试决赛的题目
+ &lt;?php
+#这不是抽奖程序的源代码！不许看！
+header("Content-Type: textml;charset=utf-8");
+session_sta
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2019-12-03
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2019-12-03
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -592,12 +589,11 @@ htt
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/PHP/">
-                        <span class="chip bg-color">PHP</span>
+                    <a href="/tags/%E9%9A%8F%E6%9C%BA%E6%95%B0/">
+                        <span class="chip bg-color">随机数</span>
                     </a>
                     
                 </div>
@@ -797,7 +793,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">146.7k</span>&nbsp;字
+                class="white-color">148.3k</span>&nbsp;字
             
             
             
