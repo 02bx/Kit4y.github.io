@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="PHP代码审计2-反序列化漏洞+变量覆盖, 书鱼">
+    <meta name="keywords" content="php反序列化漏洞, 书鱼">
     <meta name="description" content="反序列化漏洞serialize()，unserialize()这两个函数说一说序列化和反序列化的，序列化说通俗点就是把一个对象变成可以传输的字符串。比如一个类class,在内存中是一个类，但是要持久化或者进行传输，就需要序列化，意思其实就是">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -13,7 +13,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>PHP代码审计2-反序列化漏洞+变量覆盖 | 书鱼</title>
+    <title>php反序列化漏洞 | 书鱼</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -231,13 +231,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/5.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/20.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        PHP代码审计2-反序列化漏洞+变量覆盖
+                        php反序列化漏洞
                     </div>
                 </div>
             </div>
@@ -383,14 +383,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1k
+                    691
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    4 分
+                    3 分
                 </div>
                 
 				
@@ -501,29 +501,6 @@ kitty</code></pre><p>语法规则<br><img src="1.png" alt=""></p>
 <span class="token punctuation">}</span>
 <span class="token delimiter">?></span></code></pre>
 <p>这里我们可以看见只要操控$file这个参数为pctf.php就可以了，这里construct函数在实例被创建的时候(也就是new Shield()的时候)执行，所以不会影响我们对$file的操作<br>payload<code>O:6:&quot;Shield&quot;:1:{s:4:&quot;file&quot;;s:8:&quot;pctf.php&quot;;}</code></p>
-<h3 id="二、变量覆盖"><a href="#二、变量覆盖" class="headerlink" title="二、变量覆盖"></a>二、变量覆盖</h3><p>变量如果未被初始化，且能够用户所控制，那么很可能会导致安全问题。</p>
-<h4 id="全局变量覆盖-已经被抛弃"><a href="#全局变量覆盖-已经被抛弃" class="headerlink" title="全局变量覆盖-已经被抛弃"></a>全局变量覆盖-已经被抛弃</h4><h4 id="extract-变量覆盖"><a href="#extract-变量覆盖" class="headerlink" title="extract() 变量覆盖"></a>extract() 变量覆盖</h4><p>extract() 函数能够将变量从数组导入到当前的符号表，其定义为</p>
-<pre class=" language-php"><code class="language-php">int <span class="token function">extract</span> <span class="token punctuation">(</span> <span class="token keyword">array</span> <span class="token variable">$var_array</span> <span class="token punctuation">[</span><span class="token punctuation">,</span> int <span class="token variable">$extract_type</span> <span class="token punctuation">[</span><span class="token punctuation">,</span> string <span class="token variable">$prefix</span> <span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token punctuation">)</span></code></pre>
-<p>其中，第二个参数指定函数将变量导入符号表时的行为，最常见的两个值是 EXTR_OVERWRITE 和 EXTR_SKIP。</p>
-<p>当值为 EXTR_OVERWRITE 时，在将变量导入符号表的过程中，如果变量名发生冲突，则覆盖所有变量；值为 EXTR_SKIP 则表示跳过不覆盖。若第二个参数未指定，则在默认情况下使用 EXTR_OVERWRITE。<br>demo:</p>
-<pre class=" language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
-<span class="token variable">$auth</span> <span class="token operator">=</span> <span class="token string">"0"</span><span class="token punctuation">;</span>
-<span class="token function">extract</span><span class="token punctuation">(</span><span class="token variable">$_GET</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$auth</span> <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  <span class="token keyword">echo</span> <span class="token string">"private!"</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
-  <span class="token keyword">echo</span> <span class="token string">"public!"</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-<span class="token delimiter">?></span></code></pre>
-<p>payload<code>http://localhost/index.php?auth=1</code></p>
-<h4 id="import-request-variables"><a href="#import-request-variables" class="headerlink" title="import_request_variables"></a>import_request_variables</h4><p>将 GET、POST、Cookies 中的变量导入到全局，使用这个函数只用简单地指定类型即可。也被抛弃<br>版本要求：PHP 4 &gt;= 4.1.0, PHP 5 &lt; 5.4.0<br>####parse_str() 函数<br>parse_str() 函数通常用于解析 URL 中的 querystring，但是当参数值可以被用户控制时，很可能导致变量覆盖。</p>
-<pre class=" language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
-<span class="token variable">$var</span> <span class="token operator">=</span> <span class="token string">"init"</span><span class="token punctuation">;</span>
-<span class="token function">parse_str</span><span class="token punctuation">(</span><span class="token variable">$_SERVER</span><span class="token punctuation">[</span><span class="token string">"QUERY_STRING"</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">print</span> <span class="token variable">$var</span><span class="token punctuation">;</span>
-<span class="token delimiter">?></span></code></pre>
-<p>payload<code>http://localhost/index.php?var=hello kitty</code><br>与 parse_str() 类似的函数还有 mb_parse_str()。</p>
 
             </div>
             <hr/>
@@ -689,9 +666,9 @@ kitty</code></pre><p>语法规则<br><img src="1.png" alt=""></p>
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="assert函数&&PHP命令注入&&GitHack">
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="PHP命令注入">
                         
-                        <span class="card-title">assert函数&&PHP命令注入&&GitHack</span>
+                        <span class="card-title">PHP命令注入</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -872,7 +849,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">148.3k</span>&nbsp;字
+                class="white-color">148k</span>&nbsp;字
             
             
             
