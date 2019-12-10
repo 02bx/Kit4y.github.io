@@ -736,19 +736,26 @@ C:\Users\38138\Desktop&gt;flask-unsign --decode --cookie &quot;eyJfcGVybWFuZW50I
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2019/11/19/64-wei-elf-de-ret2libc/">
+                <a href="/2019/11/19/flask-dao-ssti/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="64位elf的ret2libc">
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="从flask到SSTI">
                         
-                        <span class="card-title">64位elf的ret2libc</span>
+                        <span class="card-title">从flask到SSTI</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            不同点主要是32位的参数丢栈上，而64位的函数前6个参数丢寄存器上x86-64环境下非微软操作系统的前六个整型参数通过寄存器传递,按顺序为:rdi,rsi,rdx,rcx,r8,r9.同时XMM0到XMM7用来放置浮点变元,通过栈传递参数时
+                            flask基础知识from flask import Flask
+app=Flask(__name__)
+
+@app.route('/')
+def hello_world():
+    return "hello World！"
+
+if _
                         
                     </div>
                     <div class="publish-info">
@@ -759,8 +766,12 @@ C:\Users\38138\Desktop&gt;flask-unsign --decode --cookie &quot;eyJfcGVybWFuZW50I
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/Pwn/" class="post-category">
-                                    Pwn
+                            <a href="/categories/CTF/" class="post-category">
+                                    CTF
+                                </a>
+                            
+                            <a href="/categories/CTF/Web/" class="post-category">
+                                    Web
                                 </a>
                             
                             
@@ -785,26 +796,19 @@ C:\Users\38138\Desktop&gt;flask-unsign --decode --cookie &quot;eyJfcGVybWFuZW50I
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/11/19/flask-dao-ssti/">
+                <a href="/2019/11/19/ha-xi-chang-du-kuo-zhan-gong-ji-yi-ji-hashpump-an-zhuang-shi-yong-he-liang-dao-ti-mu/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="从flask到SSTI">
+                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="哈希长度扩展攻击以及HashPump安装使用和两道题目">
                         
-                        <span class="card-title">从flask到SSTI</span>
+                        <span class="card-title">哈希长度扩展攻击以及HashPump安装使用和两道题目</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            flask基础知识from flask import Flask
-app=Flask(__name__)
-
-@app.route('/')
-def hello_world():
-    return "hello World！"
-
-if _
+                            能做什么如果salt的值你不知道，但是你知道长度，又知道sha1(salt)，那么就也就可以知道sha1(salt+“填充数据”+“任意可控数据”).这里的salt+“填充数据”就是对salt进行sha1时所补全的数据+最后8位的长度描述符
                         
                     </div>
                     <div class="publish-info">
@@ -819,8 +823,8 @@ if _
                                     CTF
                                 </a>
                             
-                            <a href="/categories/CTF/Web/" class="post-category">
-                                    Web
+                            <a href="/categories/CTF/Crypto/" class="post-category">
+                                    Crypto
                                 </a>
                             
                             
@@ -981,7 +985,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">150.3k</span>&nbsp;字
+                class="white-color">150.6k</span>&nbsp;字
             
             
             
