@@ -415,7 +415,7 @@ include(&#39;phar://./test.jpg/test.php&#39;);
 ?&gt;</code></pre><p>成功包含（test.jpg为压缩包文件，后面的test.php为里面压缩包文件）<br>其实和zip协议感觉上差不多</p>
 <h5 id="zip"><a href="#zip" class="headerlink" title="zip"></a>zip</h5><p>利用zip或phar伪协议可以读取压缩包中的文件，解压的压缩包与后缀无关。<br>如将file.txt压缩成zip，改后缀为jpg绕过上传限制然后利用如下读取文件</p>
 <pre><code>/about.php?file=phar://./images/file.jpg/1.php
-/about.php?file=zip://./images/file.jpg%231.php</code></pre><h4 id="利用姿势二：Phar反序列化漏洞"><a href="#利用姿势二：Phar反序列化漏洞" class="headerlink" title="利用姿势二：Phar反序列化漏洞"></a>利用姿势二：Phar反序列化漏洞</h4><p>test:<br>PS：php.ini中必须设置phar.readonly=Off，不然Phar文件就会无法生成。<br><img src="phar%E7%9A%84%E5%88%A9%E7%94%A8%E5%A7%BF%E5%8A%BF/1.png" alt=""></p>
+/about.php?file=zip://./images/file.jpg%231.php</code></pre><h4 id="利用姿势二：Phar反序列化漏洞"><a href="#利用姿势二：Phar反序列化漏洞" class="headerlink" title="利用姿势二：Phar反序列化漏洞"></a>利用姿势二：Phar反序列化漏洞</h4><p>test:<br>PS：php.ini中必须设置phar.readonly=Off，不然Phar文件就会无法生成。<br><img src="1.png" alt=""></p>
 <pre><code>[Phar]
 ; http://php.net/phar.readonly
 phar.readonly = Off</code></pre><p>先新建一个php内容为</p>
@@ -431,7 +431,7 @@ phar.readonly = Off</code></pre><p>先新建一个php内容为</p>
     $phar-&gt;setMetadata($o); //将自定义的meta-data存入manifest
     $phar-&gt;addFromString(&quot;test.txt&quot;, &quot;test&quot;); //添加要压缩的文件
     $phar-&gt;stopBuffering();    //签名自动计算
-?&gt;</code></pre><p>访问后得到文件test.phar<br><img src="phar%E7%9A%84%E5%88%A9%E7%94%A8%E5%A7%BF%E5%8A%BF/2.png" alt=""><br>然后使用<code>Phar://</code>协议<br>demo.php</p>
+?&gt;</code></pre><p>访问后得到文件test.phar<br><img src="2.png" alt=""><br>然后使用<code>Phar://</code>协议<br>demo.php</p>
 <pre><code>&lt;?php
 class Test{
     function __destruct(){
@@ -439,11 +439,11 @@ class Test{
     }
 }
 file_get_contents(&quot;phar://./test.phar/test.txt&quot;);
-?&gt;</code></pre><p>除了file_get_contents，这些函数都可用<br><img src="phar%E7%9A%84%E5%88%A9%E7%94%A8%E5%A7%BF%E5%8A%BF/3.png" alt=""></p>
+?&gt;</code></pre><p>除了file_get_contents，这些函数都可用<br><img src="3.png" alt=""></p>
 <h3 id="原理分析"><a href="#原理分析" class="headerlink" title="原理分析"></a>原理分析</h3><h4 id="phar文件结构-参考上面test-phar的图"><a href="#phar文件结构-参考上面test-phar的图" class="headerlink" title="phar文件结构(参考上面test.phar的图)"></a>phar文件结构(参考上面test.phar的图)</h4><p>、stub</p>
 <p>一个供phar扩展用于识别的标志，格式为xxx<?php xxx; __HALT_COMPILER();?>，前面内容不限，但必须以__HALT_COMPILER();?&gt;来结尾，否则phar扩展将无法识别这个文件为phar文件。</p>
 <p>2、manifest</p>
-<p>phar文件本质上是一种压缩文件，其中每个被压缩文件的权限、属性等信息都放在这部分。这部分还会以序列化的形式存储用户自定义的meta-data，这里即为反序列化漏洞点。<br><img src="phar%E7%9A%84%E5%88%A9%E7%94%A8%E5%A7%BF%E5%8A%BF/4.png" alt=""><br>3、contents</p>
+<p>phar文件本质上是一种压缩文件，其中每个被压缩文件的权限、属性等信息都放在这部分。这部分还会以序列化的形式存储用户自定义的meta-data，这里即为反序列化漏洞点。<br><img src="4.png" alt=""><br>3、contents</p>
 <p>被压缩文件的内容。</p>
 <p>4、signature</p>
 <p>签名，放在文件末尾，格式如下：</p>
