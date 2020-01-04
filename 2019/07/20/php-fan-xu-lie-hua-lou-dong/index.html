@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="php反序列化漏洞, 书鱼">
-    <meta name="description" content="反序列化漏洞serialize()，unserialize()这两个函数说一说序列化和反序列化的，序列化说通俗点就是把一个对象变成可以传输的字符串。比如一个类class,在内存中是一个类，但是要持久化或者进行传输，就需要序列化，意思其实就是">
+    <meta name="description" content="一、反序列化漏洞serialize()，unserialize()这两个函数说一说序列化和反序列化的，序列化说通俗点就是把一个对象变成可以传输的字符串。比如一个类class,在内存中是一个类，但是要持久化或者进行传输，就需要序列化，意思其实">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -383,7 +383,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    841
+                    843
                 </div>
                 
 
@@ -406,7 +406,7 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="反序列化漏洞"><a href="#反序列化漏洞" class="headerlink" title="反序列化漏洞"></a>反序列化漏洞</h3><h4 id="serialize-，unserialize-这两个函数"><a href="#serialize-，unserialize-这两个函数" class="headerlink" title="serialize()，unserialize()这两个函数"></a>serialize()，unserialize()这两个函数</h4><p>说一说序列化和反序列化的，序列化说通俗点就是把一个对象变成可以传输的字符串。比如一个类class,在内存中是一个类，但是要持久化或者进行传输，就需要序列化，意思其实就是把类存储起来而已。</p>
+                <h3 id="一、反序列化漏洞"><a href="#一、反序列化漏洞" class="headerlink" title="一、反序列化漏洞"></a>一、反序列化漏洞</h3><h4 id="serialize-，unserialize-这两个函数"><a href="#serialize-，unserialize-这两个函数" class="headerlink" title="serialize()，unserialize()这两个函数"></a>serialize()，unserialize()这两个函数</h4><p>说一说序列化和反序列化的，序列化说通俗点就是把一个对象变成可以传输的字符串。比如一个类class,在内存中是一个类，但是要持久化或者进行传输，就需要序列化，意思其实就是把类存储起来而已。</p>
 <h5 id="demo1-类的序列化"><a href="#demo1-类的序列化" class="headerlink" title="demo1:类的序列化"></a>demo1:类的序列化</h5><a id="more"></a>
 <pre class=" language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
 <span class="token keyword">class</span> <span class="token class-name">Car</span><span class="token punctuation">{</span>
@@ -463,7 +463,7 @@ O:3:&quot;Car&quot;:2:{s:4:&quot;size&quot;;s:3:&quot;big&quot;;s:5:&quot;color&
 <pre><code>a:3:{i:0;s:3:&quot;php&quot;;i:1;s:4:&quot;java&quot;;i:2;i:123;}
 array(3) { [0]=&gt; string(5) &quot;kitty&quot; [1]=&gt; string(4) &quot;java&quot; [2]=&gt; string(6) &quot;python&quot; }
 kitty</code></pre><p>语法规则<br><img src="1.png" alt=""></p>
-<h4 id="反序列化漏洞参生"><a href="#反序列化漏洞参生" class="headerlink" title="反序列化漏洞参生"></a>反序列化漏洞参生</h4><p>其实还是一个变量覆盖的问题吧，我们传入的字符串反序列化，导致控制参数或者任意代码执行<br><img src="2.png" alt=""></p>
+<h3 id="二、反序列化漏洞产生"><a href="#二、反序列化漏洞产生" class="headerlink" title="二、反序列化漏洞产生"></a>二、反序列化漏洞产生</h3><p>其实还是一个变量覆盖的问题吧，我们传入的字符串反序列化，导致控制参数或者任意代码执行<br><img src="2.png" alt=""></p>
 <h5 id="代码执行"><a href="#代码执行" class="headerlink" title="代码执行"></a>代码执行</h5><pre class=" language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
 <span class="token keyword">class</span> <span class="token class-name">Example</span> <span class="token punctuation">{</span>
   <span class="token keyword">var</span> <span class="token variable">$var</span> <span class="token operator">=</span> <span class="token string">""</span><span class="token punctuation">;</span>
@@ -900,7 +900,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">151.2k</span>&nbsp;字
+                class="white-color">152k</span>&nbsp;字
             
             
             
