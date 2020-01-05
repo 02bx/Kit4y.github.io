@@ -384,7 +384,7 @@ Phar的简述phar是什么?Phar归档最好的特点是可以方便地将多个�
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    805
+                    818
                 </div>
                 
 
@@ -441,7 +441,8 @@ class Test{
     }
 }
 file_get_contents(&quot;phar://./test.phar/test.txt&quot;);
-?&gt;</code></pre><p>除了file_get_contents，这些函数都可用<br><img src="3.png" alt=""></p>
+?&gt;
+//输出test</code></pre><p>这里的test.txt可以是任意字符<br>除了file_get_contents，这些函数都可用<br><img src="3.png" alt=""></p>
 <h3 id="phar反序列化漏洞原理分析"><a href="#phar反序列化漏洞原理分析" class="headerlink" title="phar反序列化漏洞原理分析"></a>phar反序列化漏洞原理分析</h3><h4 id="phar文件结构-参考上面test-phar的图"><a href="#phar文件结构-参考上面test-phar的图" class="headerlink" title="phar文件结构(参考上面test.phar的图)"></a>phar文件结构(参考上面test.phar的图)</h4><p>、stub</p>
 <p>一个供phar扩展用于识别的标志，格式为xxx<?php xxx; __HALT_COMPILER();?>，前面内容不限，但必须以__HALT_COMPILER();?&gt;来结尾，否则phar扩展将无法识别这个文件为phar文件。</p>
 <p>2、manifest</p>
