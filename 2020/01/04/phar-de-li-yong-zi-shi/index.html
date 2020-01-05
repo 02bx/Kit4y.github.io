@@ -437,7 +437,7 @@ phar.readonly = Off</code></pre><p>先新建一个php内容为</p>
 <pre><code>&lt;?php
 class Test{
     function __destruct(){
-        echo &quot;test&quot;;
+        echo $this-&gt;test;
     }
 }
 file_get_contents(&quot;phar://./test.phar/test.txt&quot;);
