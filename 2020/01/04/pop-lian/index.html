@@ -383,7 +383,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.9k
+                    2.1k
                 </div>
                 
 
@@ -453,7 +453,17 @@
 <span class="token keyword">echo</span> <span class="token function">urlencode</span><span class="token punctuation">(</span><span class="token function">serialize</span><span class="token punctuation">(</span><span class="token variable">$a</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token delimiter">?></span> </code></pre>
 <p><img src="1.png" alt=""><br>protected $ClassObj = new evil();是不行的，还是通过__construct来实例化。</p>
-<h2 id="三、中级利用，当然这个没有链的感觉，所以看下面例子就长一点，利用了魔法函数"><a href="#三、中级利用，当然这个没有链的感觉，所以看下面例子就长一点，利用了魔法函数" class="headerlink" title="三、中级利用，当然这个没有链的感觉，所以看下面例子就长一点，利用了魔法函数"></a>三、中级利用，当然这个没有链的感觉，所以看下面例子就长一点，利用了魔法函数</h2><h3 id="先解释几个魔法函数"><a href="#先解释几个魔法函数" class="headerlink" title="先解释几个魔法函数"></a>先解释几个魔法函数</h3><p><code>__call</code>, <code>__invoke</code>, <code>__toString</code>, <code>__wakeup()</code>,<code>__sleep()</code><br>更多参考<a href="https://www.php.net/manual/zh/language.oop5.magic.php" target="_blank" rel="noopener">https://www.php.net/manual/zh/language.oop5.magic.php</a></p>
+<h2 id="三、中级利用，当然这个没有链的感觉，所以看下面例子就长一点，利用了魔法函数"><a href="#三、中级利用，当然这个没有链的感觉，所以看下面例子就长一点，利用了魔法函数" class="headerlink" title="三、中级利用，当然这个没有链的感觉，所以看下面例子就长一点，利用了魔法函数"></a>三、中级利用，当然这个没有链的感觉，所以看下面例子就长一点，利用了魔法函数</h2><h3 id="先解释几个魔法函数"><a href="#先解释几个魔法函数" class="headerlink" title="先解释几个魔法函数"></a>先解释几个魔法函数</h3><pre><code>__wakeup() //使用unserialize时触发
+__sleep() //使用serialize时触发
+__destruct() //对象被销毁时触发
+__call() //在对象上下文中调用不可访问的方法时触发
+__callStatic() //在静态上下文中调用不可访问的方法时触发
+__get() //用于从不可访问的属性读取数据
+__set() //用于将数据写入不可访问的属性
+__isset() //在不可访问的属性上调用isset()或empty()触发
+__unset() //在不可访问的属性上使用unset()时触发
+__toString() //把类当作字符串使用时触发
+__invoke() //当脚本尝试将对象调用为函数时触发</code></pre><p>更多参考<a href="https://www.php.net/manual/zh/language.oop5.magic.php" target="_blank" rel="noopener">https://www.php.net/manual/zh/language.oop5.magic.php</a></p>
 <h4 id="1-call"><a href="#1-call" class="headerlink" title="1. __call()"></a>1. __call()</h4><p>PHP5 的对象新增了一个专用方法 <strong>call()，这个方法用来监视一个对象中的其它方法。如果你试着调用一个对象中不存在或被权限控制中的方法，</strong>call 方法将会被自动调用。<br>demo</p>
 <pre class=" language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
     <span class="token keyword">class</span> <span class="token class-name">A</span>
@@ -1001,7 +1011,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">153.9k</span>&nbsp;字
+                class="white-color">154.1k</span>&nbsp;字
             
             
             
