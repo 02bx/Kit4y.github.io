@@ -502,7 +502,7 @@ admin <span class="token operator">=</span> Person<span class="token punctuation
 result <span class="token operator">=</span> pickle<span class="token punctuation">.</span>dumps<span class="token punctuation">(</span>admin<span class="token punctuation">)</span>
 user <span class="token operator">=</span> pickle<span class="token punctuation">.</span>loads<span class="token punctuation">(</span>result<span class="token punctuation">)</span></code></pre>
 <p>不过这样会导致user初构造失败为空</p>
-<h3 id="四、题目：-CISCN2019-华北赛区-Day1-Web2-ikun"><a href="#四、题目：-CISCN2019-华北赛区-Day1-Web2-ikun" class="headerlink" title="四、题目：[CISCN2019 华北赛区 Day1 Web2]ikun"></a>四、题目：[CISCN2019 华北赛区 Day1 Web2]ikun</h3><p><a href="https://github.com/glzjin/CISCN_2019_northern_China_day1_web2" target="_blank" rel="noopener">https://github.com/glzjin/CISCN_2019_northern_China_day1_web2</a><br>意思就是提前有1000货币购买lv,界面上只有lv1-5<br><img src="Python%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/2.png" alt=""><br>先爆破出lv6的购买区</p>
+<h3 id="四、题目：-CISCN2019-华北赛区-Day1-Web2-ikun"><a href="#四、题目：-CISCN2019-华北赛区-Day1-Web2-ikun" class="headerlink" title="四、题目：[CISCN2019 华北赛区 Day1 Web2]ikun"></a>四、题目：[CISCN2019 华北赛区 Day1 Web2]ikun</h3><p><a href="https://github.com/glzjin/CISCN_2019_northern_China_day1_web2" target="_blank" rel="noopener">https://github.com/glzjin/CISCN_2019_northern_China_day1_web2</a><br>意思就是提前有1000货币购买lv,界面上只有lv1-5<br><img src="2.png" alt=""><br>先爆破出lv6的购买区</p>
 <pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> requests
 <span class="token keyword">import</span> threading
 <span class="token keyword">import</span> queue
@@ -537,8 +537,8 @@ user <span class="token operator">=</span> pickle<span class="token punctuation"
         t<span class="token punctuation">.</span>start<span class="token punctuation">(</span><span class="token punctuation">)</span>
 
     q<span class="token punctuation">.</span>join<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
-<p>拿到id=1624<br><img src="Python%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/3.png" alt=""><br>价格超级贵，所以抓包来改一些东西，比如价格尝试购买-这里很难受，你要抓一个进优惠购买的包，id改成1624<br>到这里<br><img src="Python%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/4.png" alt=""><br>然后成功拿到了一个url</p>
-<pre><code>http://ca563c26-7e4b-423f-847b-99ec2db675db.node3.buuoj.cn/b1g_m4mber</code></pre><p><img src="Python%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/5.png" alt=""><br>然后下一步是jwt，可参考<a href="https://kit4y.github.io/2020/01/01/jwt/">https://kit4y.github.io/2020/01/01/jwt/</a><br>拿到<br><code>JWT=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InN0NGNrIn0.3e4wG-w3yFP1kBvUc5dpJ8Vb-yV1N9VixpNXpX_1xLQ</code><br><img src="Python%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/6.png" alt=""><br>思路很明确了，把username伪造成st4ck即可，所以先使用c-jwt-cracker爆破secret<br><img src="Python%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/7.png" alt=""><br>然后伪造成功，发现源码给了<br><code>/static/asd1f654e683wq/www.zip</code><br>在admin.py发现</p>
+<p>拿到id=1624<br><img src="3.png" alt=""><br>价格超级贵，所以抓包来改一些东西，比如价格尝试购买-这里很难受，你要抓一个进优惠购买的包，id改成1624<br>到这里<br><img src="4.png" alt=""><br>然后成功拿到了一个url</p>
+<pre><code>http://ca563c26-7e4b-423f-847b-99ec2db675db.node3.buuoj.cn/b1g_m4mber</code></pre><p><img src="5.png" alt=""><br>然后下一步是jwt，可参考<a href="https://kit4y.github.io/2020/01/01/jwt/">https://kit4y.github.io/2020/01/01/jwt/</a><br>拿到<br><code>JWT=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InN0NGNrIn0.3e4wG-w3yFP1kBvUc5dpJ8Vb-yV1N9VixpNXpX_1xLQ</code><br><img src="6.png" alt=""><br>思路很明确了，把username伪造成st4ck即可，所以先使用c-jwt-cracker爆破secret<br><img src="7.png" alt=""><br>然后伪造成功，发现源码给了<br><code>/static/asd1f654e683wq/www.zip</code><br>在admin.py发现</p>
 <pre class=" language-python"><code class="language-python">@tornado<span class="token punctuation">.</span>web<span class="token punctuation">.</span>authenticated
 <span class="token keyword">def</span> <span class="token function">post</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> <span class="token operator">*</span>args<span class="token punctuation">,</span> <span class="token operator">**</span>kwargs<span class="token punctuation">)</span><span class="token punctuation">:</span>
     <span class="token keyword">try</span><span class="token punctuation">:</span>
@@ -558,7 +558,7 @@ user <span class="token operator">=</span> pickle<span class="token punctuation"
 
 a <span class="token operator">=</span> urllib<span class="token punctuation">.</span>quote<span class="token punctuation">(</span>pickle<span class="token punctuation">.</span>dumps<span class="token punctuation">(</span>payload<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
 <span class="token keyword">print</span> a</code></pre>
-<p>得到的a，抓包改一下丢become得到flag<br><img src="Python%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/8.png" alt=""><br>不过不知道为啥，os的payload打不了？</p>
+<p>得到的a，抓包改一下丢become得到flag<br><img src="8.png" alt=""><br>不过不知道为啥，os的payload打不了？</p>
 <h4 id="参考-1"><a href="#参考-1" class="headerlink" title="参考"></a>参考</h4><p><a href="https://xz.aliyun.com/t/2289" target="_blank" rel="noopener">https://xz.aliyun.com/t/2289</a><br><a href="https://www.zhaoj.in/read-5946.html" target="_blank" rel="noopener">https://www.zhaoj.in/read-5946.html</a></p>
 
             </div>
