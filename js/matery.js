@@ -167,3 +167,18 @@ $(function () {
             }
     });
 });
+
+//来个特效玩玩喵 20200123
+var titleTime;
+var OriginTitile = document.title;
+document.addEventListener('visibilitychange', function() {
+    if (document.hidden) {
+        document.title = '|ω·) 喵~快回来呀！';
+        clearTimeout(titleTime);
+    } else {
+        document.title = '(/≧▽≦)/ Meow！';
+        titleTime = setTimeout(function() {
+            document.title = OriginTitile;
+        }, 1000);
+    }
+});
