@@ -1100,7 +1100,7 @@ thead {
 
 .chip-container .chip-active {
     color: #FFF !important;
-    background: linear-gradient(to bottom right, #FF5E3A 0%, #FF2A68 100%) !important;
+    background: linear-gradient(to bottom right, #E0A579 0%, #E0A579 100%) !important;
     box-shadow: 2px 5px 10px #aaa !important;
 }
 
@@ -1118,7 +1118,7 @@ thead {
 
 .chip-container .chip:hover {
     color: #fff;
-    background: linear-gradient(to right, #4cbf30 0%, #0f9d58 100%) !important;
+    background: linear-gradient(to right, #E0A579 0%, #E0A579 100%) !important;
 }
 
 .chip .tag-length {
@@ -1143,7 +1143,7 @@ thead {
     height: 80px;
     margin: 10px 0 50px -20px;
     padding: 21px 10px;
-    background-color: #ff5722;
+    background-color: #E0A579;
     color: #fff;
     font-size: 1.8rem;
     font-weight: 600;
@@ -1704,7 +1704,7 @@ footer .copy-right {
 }
 
 .top-scroll .btn-floating {
-    background: linear-gradient(to bottom right, #FF5E3A 0%, #FF2A68 100%);
+    background: linear-gradient(to bottom right, #E0A579 0%, #E0A579 100%);
     width: 48px;
     height: 48px;
 }
