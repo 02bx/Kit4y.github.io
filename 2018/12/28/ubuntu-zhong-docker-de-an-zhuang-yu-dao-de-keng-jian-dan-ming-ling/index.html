@@ -384,7 +384,7 @@ runoob@">
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1k
+                    1.1k
                 </div>
                 
 
@@ -430,14 +430,16 @@ sudo rm /var/lib/dpkg/lock</code></pre><p>2、通过ps查看apt-get的PID 然后
 <pre><code>kitty@ubuntu:~$ docker pull ubuntu
 或者
 kitty@ubuntu:~$ docker run ubuntu</code></pre><p>比如你要一个nginx镜像<br><img src="10.png" alt=""><br>然后你就可以使用docker images 查看安装了哪些</p>
-<h4 id="3、5：普通运行"><a href="#3、5：普通运行" class="headerlink" title="3、5：普通运行"></a>3、5：普通运行</h4><p>docker run -t -i ubuntu /bin/bash命令指定使用镜像ubuntu来启动一个容器 其中要保证ubuntu是images中已经存在的镜像<br>-it 表示运行在交互模式，是-i -t的缩写，即-it是两个参数：-i和-t。前者表示打开并保持stdout，后者表示分配一个终端（pseudo-tty）一般这个模式就是可以启动bash，然后和容器有命令行的交互<br><img src="12.png" alt=""></p>
+<h4 id="3、5：普通运行"><a href="#3、5：普通运行" class="headerlink" title="3、5：普通运行"></a>3、5：普通运行</h4><p><code>docker run --name hellow11scan -d -p 9999:8000 boyhack/w11scan</code><br><code>docker run -t -i ubuntu /bin/bash</code>命令指定使用镜像ubuntu来启动一个容器 其中要保证ubuntu是images中已经存在的镜像<br>-it 表示运行在交互模式，是-i -t的缩写，即-it是两个参数：-i和-t。前者表示打开并保持stdout，后者表示分配一个终端（pseudo-tty）一般这个模式就是可以启动bash，然后和容器有命令行的交互<br><img src="12.png" alt=""></p>
 <h4 id="3、6：查看当前正在运行的容器："><a href="#3、6：查看当前正在运行的容器：" class="headerlink" title="3、6：查看当前正在运行的容器："></a>3、6：查看当前正在运行的容器：</h4><pre><code>~$ docker ps</code></pre><p><img src="13.png" alt=""><br>其中加上-a 表示查看所有的容器，包括已经停了的</p>
 <h4 id="3、7：启动、停止、重启容器"><a href="#3、7：启动、停止、重启容器" class="headerlink" title="3、7：启动、停止、重启容器"></a>3、7：启动、停止、重启容器</h4><pre><code>~$ docker start aa97ba3292ce
 ~$ docker stop aa97ba3292ce
 ~$ docker restart aa97ba3292ce</code></pre><p>和容器有关的一般是容器的ID </p>
 <h4 id="3、8：-删除镜像或者容器"><a href="#3、8：-删除镜像或者容器" class="headerlink" title="3、8： 删除镜像或者容器"></a>3、8： 删除镜像或者容器</h4><pre><code>~$ docker rm container_id
 ~$ docker rmi image_id</code></pre><p>如果遇到了问题比如占用等加上参数 -f 一梭子下去就完事了（docker rm -f container_id</p>
-<h3 id="4、跑一个nginx当demo玩玩"><a href="#4、跑一个nginx当demo玩玩" class="headerlink" title="4、跑一个nginx当demo玩玩"></a>4、跑一个nginx当demo玩玩</h3><h4 id="4-1、安装nginx"><a href="#4-1、安装nginx" class="headerlink" title="4.1、安装nginx"></a>4.1、安装nginx</h4><pre><code>kitty@ubuntu:~$ docker pull nginx</code></pre><h4 id="4-2、通过docker-images确认安装后运行一下"><a href="#4-2、通过docker-images确认安装后运行一下" class="headerlink" title="4.2、通过docker images确认安装后运行一下"></a>4.2、通过docker images确认安装后运行一下</h4><p><img src="14.png" alt=""><br>其中–name 后面接的是images名也就是 REPOSITORY对应的东西<br>-p后面的第一个8888是本地端口，80是nginx的端口，意思是将nginx端口映射到本地,现在可以访问本地8888端口<br><img src="15.png" alt=""></p>
+<h4 id="3、9：进入shell"><a href="#3、9：进入shell" class="headerlink" title="3、9：进入shell"></a>3、9：进入shell</h4><pre><code>docker exec -it 775c7c9ee1e1 /bin/bash  </code></pre><h4 id="3-10、文件处理"><a href="#3-10、文件处理" class="headerlink" title="3.10、文件处理"></a>3.10、文件处理</h4><p>从容器到本地：</p>
+<pre><code>docker cp  96f7f14e99ab:/www /tmp/</code></pre><p>从本地到容器：</p>
+<pre><code>docker cp /www/runoob 96f7f14e99ab:/www/</code></pre><h3 id="4、跑一个nginx当demo玩玩"><a href="#4、跑一个nginx当demo玩玩" class="headerlink" title="4、跑一个nginx当demo玩玩"></a>4、跑一个nginx当demo玩玩</h3><h4 id="4-1、安装nginx"><a href="#4-1、安装nginx" class="headerlink" title="4.1、安装nginx"></a>4.1、安装nginx</h4><pre><code>kitty@ubuntu:~$ docker pull nginx</code></pre><h4 id="4-2、通过docker-images确认安装后运行一下"><a href="#4-2、通过docker-images确认安装后运行一下" class="headerlink" title="4.2、通过docker images确认安装后运行一下"></a>4.2、通过docker images确认安装后运行一下</h4><p><img src="14.png" alt=""><br>其中–name 后面接的是images名也就是 REPOSITORY对应的东西<br>-p后面的第一个8888是本地端口，80是nginx的端口，意思是将nginx端口映射到本地,现在可以访问本地8888端口<br><img src="15.png" alt=""></p>
 <h4 id="4-3、使用自写的界面"><a href="#4-3、使用自写的界面" class="headerlink" title="4.3、使用自写的界面"></a>4.3、使用自写的界面</h4><p>先本地随便写一个index.html 然后当运行一个容器的时候，将该html替换进容器的index.html了<br>至于文件目录问题就要我们自己了解了 53be82f8c182这个东西是容器的ID<br><img src="16.png" alt=""><br>然后访问<br><img src="17.png" alt=""></p>
 <h4 id="当然这个只是在容器中修改如果要完全保存起来，你需要学commit等操作形成新的镜像，本篇文章旨在入门，所以其他的希望看到本博客的能去自学，坚持下去，就是大佬了Orz。"><a href="#当然这个只是在容器中修改如果要完全保存起来，你需要学commit等操作形成新的镜像，本篇文章旨在入门，所以其他的希望看到本博客的能去自学，坚持下去，就是大佬了Orz。" class="headerlink" title="当然这个只是在容器中修改如果要完全保存起来，你需要学commit等操作形成新的镜像，本篇文章旨在入门，所以其他的希望看到本博客的能去自学，坚持下去，就是大佬了Orz。"></a>当然这个只是在容器中修改如果要完全保存起来，你需要学commit等操作形成新的镜像，本篇文章旨在入门，所以其他的希望看到本博客的能去自学，坚持下去，就是大佬了Orz。</h4><h3 id="最后附上一张高大上的Docker命令图-望君笑纳"><a href="#最后附上一张高大上的Docker命令图-望君笑纳" class="headerlink" title="最后附上一张高大上的Docker命令图,望君笑纳"></a>最后附上一张高大上的Docker命令图,望君笑纳</h3><p><img src="6.png" alt=""></p>
 
@@ -783,7 +785,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">161.8k</span>&nbsp;字
+                class="white-color">161.9k</span>&nbsp;字
             
             
             

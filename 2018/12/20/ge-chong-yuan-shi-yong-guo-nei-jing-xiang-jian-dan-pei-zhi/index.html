@@ -385,7 +385,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    764
+                    823
                 </div>
                 
 
@@ -426,11 +426,16 @@ index-url = https://pypi.tuna.tsinghua.edu.cn/simple
 </code></pre><h4 id="2-2、Ubuntu更换系统源-apt-get"><a href="#2-2、Ubuntu更换系统源-apt-get" class="headerlink" title="2.2、Ubuntu更换系统源 apt-get"></a>2.2、Ubuntu更换系统源 apt-get</h4><p>1、复制原文件备份</p>
 <pre><code>sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak</code></pre><p>2、编辑源列表文件(对vim不熟可使用gedit)</p>
 <pre><code>sudo vim /etc/apt/sources.list</code></pre><p>3、将原来的列表删除，添加如下内容</p>
-<pre><code>deb http://mirrors.ustc.edu.cn/ubuntu/ xenial main restricted universe multiverse
-deb http://mirrors.ustc.edu.cn/ubuntu/ xenial-security main restricted universe multiverse
-deb http://mirrors.ustc.edu.cn/ubuntu/ xenial-updates main restricted universe multiverse
-deb http://mirrors.ustc.edu.cn/ubuntu/ xenial-proposed main restricted universe multiverse
-deb http://mirrors.ustc.edu.cn/ubuntu/ xenial-backports main restricted universe multiverse</code></pre><p>4、更新本地索引列表运行</p>
+<pre><code>deb http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse</code></pre><p>4、更新本地索引列表运行</p>
 <pre><code>sudo apt-get update #更新本地索引列表
 #sudo apt-get upgrade # 可选/根据更新的索引升级已安装的所有软件包</code></pre><h4 id="2-3、ubuntu-换npm-源"><a href="#2-3、ubuntu-换npm-源" class="headerlink" title="2.3、ubuntu 换npm 源"></a>2.3、ubuntu 换npm 源</h4><pre><code>npm config set registry https://registry.npm.taobao.org</code></pre><h4 id="2-4、ubuntu打开终端自动定位到桌面"><a href="#2-4、ubuntu打开终端自动定位到桌面" class="headerlink" title="2.4、ubuntu打开终端自动定位到桌面"></a>2.4、ubuntu打开终端自动定位到桌面</h4><pre><code>sudo gedit ~/.bashrc
 </code></pre><p>后面加入</p>
@@ -807,7 +812,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">161.8k</span>&nbsp;字
+                class="white-color">161.9k</span>&nbsp;字
             
             
             
