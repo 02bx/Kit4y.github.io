@@ -1,0 +1,1016 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="web安全面经积累, 书鱼">
+    <meta name="description" content="一、安全1、PHP 作为弱类型语言，在底层它是怎么判断变量的类型的PHP 作为弱类型语言，在底层它是怎么判断变量的类型的
+2、SQL 注入时有哪些替代空格/**/替代空格and(1=0)括号绕过%09  %0A  %0D  +都可以替代空格">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>web安全面经积累 | 书鱼</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    
+    <script src="/libs/jquery/jquery.min.js"></script>
+    
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"><script src="/js/prism.js"></script></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper head-container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">书鱼</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>起居注</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>书鱼是谁</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>快来膜大佬</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>私密相册</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">书鱼</div>
+        <div class="logo-desc">
+            
+            他浑身都是弱点，简直一无是处，但他靠着自己的力量一步步克服，最终成为了火影
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			起居注
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			书鱼是谁
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			快来膜大佬
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			私密相册
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+<script src="/libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/';
+            }
+        }
+    })();
+</script>
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        web安全面经积累
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E9%9D%A2%E7%BB%8F/">
+                                <span class="chip bg-color">面经</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/Web/" class="post-category">
+                                Web
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2000-02-13
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    3.5k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    13 分
+                </div>
+                
+				
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+            
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h3 id="一、安全"><a href="#一、安全" class="headerlink" title="一、安全"></a>一、安全</h3><h4 id="1、PHP-作为弱类型语言，在底层它是怎么判断变量的类型的"><a href="#1、PHP-作为弱类型语言，在底层它是怎么判断变量的类型的" class="headerlink" title="1、PHP 作为弱类型语言，在底层它是怎么判断变量的类型的"></a>1、PHP 作为弱类型语言，在底层它是怎么判断变量的类型的</h4><p><a href="https://www.cnblogs.com/tangchuanyang/p/6185655.html" target="_blank" rel="noopener">PHP 作为弱类型语言，在底层它是怎么判断变量的类型的</a></p>
+<h4 id="2、SQL-注入时有哪些替代空格"><a href="#2、SQL-注入时有哪些替代空格" class="headerlink" title="2、SQL 注入时有哪些替代空格"></a>2、SQL 注入时有哪些替代空格</h4><p>/**/替代空格<br>and(1=0)括号绕过<br><code>%09  %0A  %0D  +都可以替代空格</code>绕过</p>
+<h4 id="3、xss与csrf区别"><a href="#3、xss与csrf区别" class="headerlink" title="3、xss与csrf区别"></a>3、xss与csrf区别</h4><p><code>CSRF</code>：无法获取受害者的cookie，无法看到cookie；<br>              只是利用受害者是被服务器信任的（靠验证cookie），而给服务器发送请求；<br><code>XSS</code>：利用cookie只是xss的一种体现，xss还可以篡改网页、URL跳转等等；跨站脚本，脚本可以做什么，xss就可以做什么；单在利用cookie上来说：获取受害者的cookie，从而得到服务器的信任，进行后续攻击<br>获取手段是反射、存储、dom</p>
+<h4 id="4、啥是同源策略，跨域有几种方式"><a href="#4、啥是同源策略，跨域有几种方式" class="headerlink" title="4、啥是同源策略，跨域有几种方式"></a>4、啥是同源策略，跨域有几种方式</h4><p><a href="https://blog.csdn.net/lsg14215/article/details/102753275" target="_blank" rel="noopener">https://blog.csdn.net/lsg14215/article/details/102753275</a><br><a href="https://www.jianshu.com/p/203217977b22" target="_blank" rel="noopener">https://www.jianshu.com/p/203217977b22</a><br>跨域1、通过jsonp请求  2、通过服务器代理进行跨域请求</p>
+<h4 id="5、jsonp"><a href="#5、jsonp" class="headerlink" title="5、jsonp"></a>5、jsonp</h4><p><a href="https://www.runoob.com/json/json-jsonp.html" target="_blank" rel="noopener">https://www.runoob.com/json/json-jsonp.html</a><br>jsonp是jquery提供的跨域方式<br>cors是w3c提供的一个跨域标准<br>jsonp只支持get方式的跨域<br>cors支持get和post方式的跨域</p>
+<h4 id="6、内容安全策略（CSP）"><a href="#6、内容安全策略（CSP）" class="headerlink" title="6、内容安全策略（CSP）"></a>6、内容安全策略（CSP）</h4><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/Security/CSP/CSP_policy_directives" target="_blank" rel="noopener">https://developer.mozilla.org/zh-CN/docs/Web/Security/CSP/CSP_policy_directives</a><br><a href="https://blog.csdn.net/qq_37943295/article/details/79978761" target="_blank" rel="noopener">https://blog.csdn.net/qq_37943295/article/details/79978761</a></p>
+<h4 id="7、SSRF漏洞原理是什么？利用时有哪些伪协议"><a href="#7、SSRF漏洞原理是什么？利用时有哪些伪协议" class="headerlink" title="7、SSRF漏洞原理是什么？利用时有哪些伪协议"></a>7、SSRF漏洞原理是什么？利用时有哪些伪协议</h4><p><a href="https://www.jianshu.com/p/dd46267a8947" target="_blank" rel="noopener">SSRF漏洞原理是什么？利用时有哪些伪协议</a><br>原理：利用一个可以发起网络请求的服务当作跳板来攻击内部其他服务。<br>ssrf用处：探测内网信息,用协议探ftp%26ip={ip}%26port={port}，攻击内网或本地其他服务，穿透防火墙<br>利用协议：curl,file://,Dict://,SFTP://,TFTP://,LDAP://,Gopher://</p>
+<h4 id="8、云waf"><a href="#8、云waf" class="headerlink" title="8、云waf"></a>8、云waf</h4><p>云WAF部署在web应用程序前面，在用户请求到达web服务器前对用户请求进行扫描和过滤，分析并校验每个用户请求的网络包，确保每个用户请求有效且安全，对无效或有攻击行为的请求进行阻断或隔离。通过检查HTTP流量，可以防止源自web应用程序的安全漏洞（如SQL注入，跨站脚本攻击，文件包含和安全配置错误）的攻击。<br><a href="https://www.cnblogs.com/bmjoker/p/8806214.html" target="_blank" rel="noopener">https://www.cnblogs.com/bmjoker/p/8806214.html</a><br><a href="https://www.idcbest.com/idcnews/11003330.html" target="_blank" rel="noopener">https://www.idcbest.com/idcnews/11003330.html</a></p>
+<h4 id="9、链路层劫持"><a href="#9、链路层劫持" class="headerlink" title="9、链路层劫持"></a>9、链路层劫持</h4><p>链路层劫持是指第三方（可能是运营商、黑客）通过在用户至服务器之间，植入恶意设备或者控制网络设备的手段，侦听或篡改用户和服务器之间的数据，达到窃取用户重要数据（包括用户密码，用户身份数据等等）的目的。链路层劫持最明显的危害就是帐号、密码被窃取。<br><a href="http://www.sohu.com/a/84898660_188485" target="_blank" rel="noopener">http://www.sohu.com/a/84898660_188485</a></p>
+<h4 id="10、如何绕过cdn，获取真实ip"><a href="#10、如何绕过cdn，获取真实ip" class="headerlink" title="10、如何绕过cdn，获取真实ip"></a>10、如何绕过cdn，获取真实ip</h4><p><a href="https://www.sohu.com/a/223174102_609556" target="_blank" rel="noopener">如何绕过cdn，获取真实ip </a><br>1、二级域名法<br>2、nslookup<br>例如：<code>nslookup http://xxx.com 8.8.8.8</code>，提示：你要找冷门国外DNS才行，像谷歌的DNS，国内用的人越来越多了，很多CDN提供商都把谷歌DNS作为国内市场之一<br>3、第三方搜索，fofa,凌波微步<br>4、phpinfo，rss订阅</p>
+<h4 id="11、ARP攻击"><a href="#11、ARP攻击" class="headerlink" title="11、ARP攻击"></a>11、ARP攻击</h4><p><a href="https://blog.csdn.net/zhydream77/article/details/85334042" target="_blank" rel="noopener">https://blog.csdn.net/zhydream77/article/details/85334042</a></p>
+<h4 id="12、HTTPS原理，以及加密、解密的原理"><a href="#12、HTTPS原理，以及加密、解密的原理" class="headerlink" title="12、HTTPS原理，以及加密、解密的原理"></a>12、HTTPS原理，以及加密、解密的原理</h4><p><a href="https://www.cnblogs.com/liuqiyun/p/10250891.html" target="_blank" rel="noopener">HTTPS原理，以及加密、解密的原理</a><br><a href="https://www.jianshu.com/p/e30a8c4fa329" target="_blank" rel="noopener">https://www.jianshu.com/p/e30a8c4fa329</a><br>HTTPS = HTTP + SSL</p>
+<h4 id="13、MYSQL5-7中的安全特性"><a href="#13、MYSQL5-7中的安全特性" class="headerlink" title="13、MYSQL5.7中的安全特性"></a>13、MYSQL5.7中的安全特性</h4><p><a href="https://blog.csdn.net/bamuta/article/details/52213660" target="_blank" rel="noopener">https://blog.csdn.net/bamuta/article/details/52213660</a><br><a href="http://www.imooc.com/article/47820" target="_blank" rel="noopener">http://www.imooc.com/article/47820</a><br><a href="https://blog.csdn.net/weixin_33805992/article/details/86132485" target="_blank" rel="noopener">https://blog.csdn.net/weixin_33805992/article/details/86132485</a><br><a href="https://www.cnblogs.com/zhoujinyi/p/5627494.html" target="_blank" rel="noopener">https://www.cnblogs.com/zhoujinyi/p/5627494.html</a></p>
+<p>5.7版本的用户表mysql.user要求plugin字段非空，且默认值是mysql_native_password认证插件，并且不再支持mysql_old_password认证插件。5.7用户长度最大为32字节，之前最大长度为16字节，并且CREATE USER 和 DROP USER 命令里实现了<code>IF [NOT] EXISTS</code> 条件判断。5.7之后用户通过grant创建用户报warning</p>
+<h4 id="14、MYSQL加密方式"><a href="#14、MYSQL加密方式" class="headerlink" title="14、MYSQL加密方式"></a>14、MYSQL加密方式</h4><p><a href="https://www.cnblogs.com/ichunqiu/p/7810914.html" target="_blank" rel="noopener">https://www.cnblogs.com/ichunqiu/p/7810914.html</a><br>MYSQL数据库的认证密码有两种方式，MYSQL 4.1版本之前是MYSQL323加密，MYSQL 4.1和之后的版本都是MYSQLSHA1加密，MYSQL数据库中自带Old_Password（str）和Password（str）函数,它们均可以在MYSQL数据库里进行查询，前者是MYSQL323加密，后者是MYSQLSHA1方式加密。</p>
+<pre><code>show create user dxy@localhost;
++----------------------------------------------------------------------------------+
+| CREATE USER &#39;dxy&#39;@&#39;localhost&#39; IDENTIFIED WITH &#39;mysql_native_password&#39; AS &#39;*6BB4837EB74329105EE4568DDA7DC67ED2CA2AD9&#39; REQUIRE NONE PASSWORD EXPIRE DEFAULT ACCOUNT UNLOCK |
++----------------------------------------------------------------------------------+</code></pre><h4 id="15、localStorage-sesseionStorage"><a href="#15、localStorage-sesseionStorage" class="headerlink" title="15、localStorage,sesseionStorage"></a>15、localStorage,sesseionStorage</h4><p><a href="https://jerryzou.com/posts/cookie-and-web-storage/" target="_blank" rel="noopener">https://jerryzou.com/posts/cookie-and-web-storage/</a><br>sessionStorage和localStorage不会把数据发给服务器，仅在本地保存</p>
+<ul>
+<li>cookie只在设置的cookie过期时间之前一直有效，即使窗口或浏览器关闭</li>
+<li>sessionStorage：仅在当前浏览器窗口关闭前有效</li>
+<li>localStorage 始终有效，长期保存</li>
+</ul>
+<p>1、cookie<br>本身用于客户端和服务端通信，但是它有本地存储的功能，于是就被“借用”，document.cookie = …获取和修改即可，cookie用于存储的缺点<br>存储量太小，只有4kb<br>所有http请求都带着，会影响获取资源的效率<br>api简单，需要封装才能用document.cookie<br>2、localStorage,sesseionStorage<br>html5专门为存储而设计，最大容量5M，api简单易用，lcoalStorage.setItem(key, value);localStorage.getItem(key);，ios safari隐藏模式下:localStorage.getItem会报错，建议统一使用try-catch封装<br>3、sessionStorage用于本地存储一个会话（session）中的数据，这些数据只有在同一个会话中的页面才能访问并且当会话结束后数据也随之销毁。因此sessionStorage不是一种持久化的本地存储，仅仅是会话级别的存储。而localStorage用于持久化的本地存储，除非主动删除数据，否则数据是永远不会过期的。</p>
+<h4 id="16、HQL注入"><a href="#16、HQL注入" class="headerlink" title="16、HQL注入"></a>16、HQL注入</h4><p><a href="https://www.cnblogs.com/-qing-/p/11650774.html" target="_blank" rel="noopener">Hibernate HQL注入与防御(ctf实例)</a></p>
+<h4 id="17、order-by-注入"><a href="#17、order-by-注入" class="headerlink" title="17、order by 注入"></a>17、order by 注入</h4><p><a href="https://www.cnblogs.com/icez/p/Mysql-Order-By-Injection-Summary.html" target="_blank" rel="noopener">https://www.cnblogs.com/icez/p/Mysql-Order-By-Injection-Summary.html</a></p>
+<h4 id="18、-limit-注入"><a href="#18、-limit-注入" class="headerlink" title="18、 limit 注入"></a>18、 limit 注入</h4><p><a href="https://www.jianshu.com/p/6c1420a7a7d9" target="_blank" rel="noopener">https://www.jianshu.com/p/6c1420a7a7d9</a><br>不存在 order by 关键字:这种情况下的 limit 后面可以使用union进行联合查询注入<br>存在 order by 关键字会报错：limit 关键字后面还可跟PROCEDURE和 INTO两个关键字，但是 INTO 后面写入文件需要知道绝对路径以及写入shell的权限，因此利用比较难，因此这里以PROCEDURE为例进行注入<br>mysql时间盲注一般都怎么注?</p>
+<p>最简单的就是sleep了，用if(1=1,sleep(5),0)</p>
+<p>benchmark函数</p>
+<p>heavy query 笛卡尔积 —-&gt;具体的方式就是将简单的表查询不断的叠加，使之以指数倍运算量的速度增长，不断增加系统执行 sql 语句的负荷，直到产生攻击者想要的时间延迟</p>
+<p>get_lock GET_LOCK有两个参数，一个是key,表示要加锁的字段，另一个是加锁失败后的等待时间(s)，一个客户端对某个字段加锁以后另一个客户端再想对这个字段加锁就会失败，然后就会等待设定好的时间</p>
+<h4 id="19、PHP文件包含–session"><a href="#19、PHP文件包含–session" class="headerlink" title="19、PHP文件包含–session"></a>19、PHP文件包含–session</h4><p><a href="https://www.cnblogs.com/Oran9e/p/8082962.html" target="_blank" rel="noopener">https://www.cnblogs.com/Oran9e/p/8082962.html</a><br>利用条件：session文件路径已知，且其中内容部分可控。<br>文件包含：伪协议，session，包含日志，包含environ，包含fd，包含临时文件，包含上传文件</p>
+<h4 id="20、IIS短文件名漏洞"><a href="#20、IIS短文件名漏洞" class="headerlink" title="20、IIS短文件名漏洞"></a>20、IIS短文件名漏洞</h4><p><a href="https://www.cnblogs.com/20180ss916/p/9602568.html" target="_blank" rel="noopener">IIS短文件名漏洞</a><br><a href="https://www.freebuf.com/articles/web/172561.html" target="_blank" rel="noopener">https://www.freebuf.com/articles/web/172561.html</a></p>
+<h4 id="21、SSRF无回显"><a href="#21、SSRF无回显" class="headerlink" title="21、SSRF无回显"></a>21、SSRF无回显</h4><p><a href="https://xz.aliyun.com/t/6373#toc-2" target="_blank" rel="noopener">https://xz.aliyun.com/t/6373#toc-2</a><br>Bool型</p>
+<h4 id="22、redis未授权getshell"><a href="#22、redis未授权getshell" class="headerlink" title="22、redis未授权getshell"></a>22、redis未授权getshell</h4><p><a href="https://blog.csdn.net/csacs/article/details/86776708" target="_blank" rel="noopener">ssrf打内网</a><br><a href="https://www.cnblogs.com/KevinGeorge/p/7995462.html" target="_blank" rel="noopener">redis未授权getshell</a><br><a href="https://www.cnblogs.com/zuoxiaolongzzz/p/8945413.html" target="_blank" rel="noopener">https://www.cnblogs.com/zuoxiaolongzzz/p/8945413.html</a></p>
+<h4 id="23、phar-反序列化"><a href="#23、phar-反序列化" class="headerlink" title="23、phar+反序列化"></a>23、phar+反序列化</h4><p><a href="https://st4ck.gitee.io/2019/07/20/php-fan-xu-lie-hua-lou-dong/" target="_blank" rel="noopener">https://st4ck.gitee.io/2019/07/20/php-fan-xu-lie-hua-lou-dong/</a><br><a href="https://st4ck.gitee.io/2020/01/06/python-fan-xu-lie-hua-lou-dong/" target="_blank" rel="noopener">https://st4ck.gitee.io/2020/01/06/python-fan-xu-lie-hua-lou-dong/</a><br><a href="https://st4ck.gitee.io/2020/01/04/phar-de-li-yong-zi-shi/" target="_blank" rel="noopener">phar的利用姿https://st4ck.gitee.io/2020/01/04/phar-de-li-yong-zi-shi/)势</a><br>php反序列化：变量覆盖的问题吧，我们传入的字符串反序列化，导致控制参数或者任意代码执行<br>phar:在使用phar://协议读取文件时，文件会被解析成phar<br>解析过程中会触发php_var_unserialize()函数对meta-data的操作，造成反序列化。</p>
+<h4 id="23、http-only绕过方法"><a href="#23、http-only绕过方法" class="headerlink" title="23、http-only绕过方法"></a>23、http-only绕过方法</h4><p><a href="https://www.freebuf.com/articles/web/129384.html" target="_blank" rel="noopener">利用HTML5的CORS特性绕过httpOnly的限制实现XSS会话劫持</a></p>
+<h4 id="24、PHP5-5-PHP7-2-新特性"><a href="#24、PHP5-5-PHP7-2-新特性" class="headerlink" title="24、PHP5.5 ~ PHP7.2 新特性"></a>24、PHP5.5 ~ PHP7.2 新特性</h4><p><a href="https://blog.csdn.net/qq_16885135/article/details/79755713" target="_blank" rel="noopener">PHP5.5 ~ PHP7.2 新特性整理</a><br>null合并运算符 +太空船操作符（组合比较符）+preg_replace () 的/e修饰符+assert() 默认不在可以执行代码</p>
+<p>php7.2<br>允许重写抽象方法(Abstract method)，扩展了参数类型，允许分组命名空间的尾部逗号<br>php5-&gt;7<br>标量类型声明 有两种模式: 强制 (默认) 和 严格模式。 现在可以使用下列类型参数（无论用强制模式还是严格模式）： 字符串(string), 整数 (int), 浮点数 (float), 以及布尔值 (bool)<br>返回值类型声明<br>null合并运算符</p>
+<pre><code>//Before PHP7:
+$id = isset($_GET[‘id’]) ? $_GET[‘id’] : null;
+//In PHP7:
+$id = $_GET[‘id’] ?? null;  //equivalent of writing old above syntax</code></pre><p>CSPRNG（伪随机数产生器）<br>php7取消了preg_replace () 的/e修饰符，<br>preg_replace_callback()<br>assert() 默认不在可以执行代码<br> 性能提升</p>
+<h4 id="25、OWASP-top10"><a href="#25、OWASP-top10" class="headerlink" title="25、OWASP-top10"></a>25、OWASP-top10</h4><p><a href="http://blog.nsfocus.net/owasp-top10-2017/" target="_blank" rel="noopener">http://blog.nsfocus.net/owasp-top10-2017/</a></p>
+<h4 id="26、GOpher协议"><a href="#26、GOpher协议" class="headerlink" title="26、GOpher协议"></a>26、GOpher协议</h4><p><a href="https://xz.aliyun.com/t/5844" target="_blank" rel="noopener">https://xz.aliyun.com/t/5844</a></p>
+<h4 id="27、文件名解析漏洞"><a href="#27、文件名解析漏洞" class="headerlink" title="27、文件名解析漏洞"></a>27、文件名解析漏洞</h4><p><a href="https://www.cnblogs.com/zlgxzswjy/p/6561229.html" target="_blank" rel="noopener">https://www.cnblogs.com/zlgxzswjy/p/6561229.html</a><br><a href="https://www.jianshu.com/p/224ac688d135" target="_blank" rel="noopener">https://www.jianshu.com/p/224ac688d135</a></p>
+<h4 id="28、java安全"><a href="#28、java安全" class="headerlink" title="28、java安全"></a>28、java安全</h4><p>Java家族安全<br><a href="https://javasec.org/" target="_blank" rel="noopener">https://javasec.org/</a><br>著名java发序列化漏洞 Apache的common Collection组件里的调用链的原理和利用思路(这个文章特别多) 后续的很多软件的漏洞都是因为使用了这个apache的组件导致的。我写了一个关于我的理解(<a href="https://tiaotiaolong.net/2019/07/19/Apache-Common组件反序列化原理/)同时也收录到我自己的git项目[tiaoVulenv](https://github.com/tiaotiaolong/tiaoVulenv)里。" target="_blank" rel="noopener">https://tiaotiaolong.net/2019/07/19/Apache-Common组件反序列化原理/)同时也收录到我自己的git项目[tiaoVulenv](https://github.com/tiaotiaolong/tiaoVulenv)里。</a></p>
+<p>关于java反序列化一般都是怎么修复的，修复思路是什么？黑名单？</p>
+<p>fastjson 反序列化的问题 关于fastjson我写了一个连载，在博客里，同时也在我自己的git项目tiaoVulenv里。<br><a href="https://xz.aliyun.com/t/5680" target="_blank" rel="noopener">https://xz.aliyun.com/t/5680</a><br>shiro 认证模块反序列化漏洞 大致原理以及利用方式。<br><a href="https://www.cnblogs.com/paperpen/p/11312671.html" target="_blank" rel="noopener">https://www.cnblogs.com/paperpen/p/11312671.html</a><br><a href="https://www.bilibili.com/video/av57241403/" target="_blank" rel="noopener">https://www.bilibili.com/video/av57241403/</a><br>Spring 安全 原理 利用方法</p>
+<p>Struts2 安全 原理 利用方法（s-45上传模块异常处理）<br><a href="https://www.cnblogs.com/qiantan/p/10695567.html" target="_blank" rel="noopener">https://www.cnblogs.com/qiantan/p/10695567.html</a><br><a href="https://blog.csdn.net/xiao190128/article/details/61202955" target="_blank" rel="noopener">045-https://blog.csdn.net/xiao190128/article/details/61202955</a><br><a href="https://blog.csdn.net/xiao190128/article/details/61202955" target="_blank" rel="noopener">https://blog.csdn.net/xiao190128/article/details/61202955</a><br>JBoss 安全 原理 利用方法(未授权上传+反序列化)<br><a href="https://www.jianshu.com/p/55ef524dd85d" target="_blank" rel="noopener">https://www.jianshu.com/p/55ef524dd85d</a><br>Tomcat 安全 原理 利用方法（可通过 PUT 方式创建一个 JSP 文件，并可以执行任意代码。）<br><a href="https://www.freebuf.com/vuls/148283.html" target="_blank" rel="noopener">Tomcat 远程代码执行</a></p>
+<p>WebLogic安全 原理 利用方法<br><a href="https://www.freebuf.com/column/203816.html" target="_blank" rel="noopener">https://www.freebuf.com/column/203816.html</a><br>由WebLogic Server WLS组件远程命令执行漏洞通过构造构造SOAP（XML）格式的请求，在解析的过程中导致XMLDecoder反序列化漏洞。</p>
+<p>jenkins 安全问题</p>
+<p>JVM学习 可以参考深入理解Java虚拟机。</p>
+<h4 id="29、后渗透"><a href="#29、后渗透" class="headerlink" title="29、后渗透"></a>29、后渗透</h4><p><a href="https://www.jianshu.com/p/21090f74edb3" target="_blank" rel="noopener">https://www.jianshu.com/p/21090f74edb3</a><br><a href="https://www.jianshu.com/p/aa1e23ccda92" target="_blank" rel="noopener">https://www.jianshu.com/p/aa1e23ccda92</a></p>
+<h4 id="30、FastJson反序列化"><a href="#30、FastJson反序列化" class="headerlink" title="30、FastJson反序列化"></a>30、FastJson反序列化</h4><p>fastjson 反序列化的问题 关于fastjson我写了一个连载，在博客里，同时也在我自己的git项目tiaoVulenv里。<br><a href="https://xz.aliyun.com/t/5680" target="_blank" rel="noopener">https://xz.aliyun.com/t/5680</a></p>
+<h4 id="31、DNSlog"><a href="#31、DNSlog" class="headerlink" title="31、DNSlog"></a>31、DNSlog</h4><p><a href="https://www.cnblogs.com/sstfy/p/10351807.html" target="_blank" rel="noopener">https://www.cnblogs.com/sstfy/p/10351807.html</a><br><a href="https://www.cnblogs.com/afanti/p/8047530.html" target="_blank" rel="noopener">https://www.cnblogs.com/afanti/p/8047530.html</a></p>
+<h4 id="32、iptables"><a href="#32、iptables" class="headerlink" title="32、iptables"></a>32、iptables</h4><p><a href="https://blog.csdn.net/weixin_37998647/article/details/78895754" target="_blank" rel="noopener">https://blog.csdn.net/weixin_37998647/article/details/78895754</a></p>
+<h4 id="33、JavaScript-原型链污染"><a href="#33、JavaScript-原型链污染" class="headerlink" title="33、JavaScript 原型链污染"></a>33、JavaScript 原型链污染</h4><p><a href="https://www.anquanke.com/post/id/176884" target="_blank" rel="noopener">https://www.anquanke.com/post/id/176884</a><br>在javascript中,每个对象的都有一个指向他的原型(prototype)的内部链接，这个原型对象又有它自己的原型，直到null为止</p>
+<h4 id="34、websocket"><a href="#34、websocket" class="headerlink" title="34、websocket"></a>34、websocket</h4><p>它的最大特点就是，服务器可以主动向客户端推送信息，客户端也可以主动向服务器发送信息，是真正的双向平等对话，属于服务器推送技术的一种。</p>
+<h4 id="35、一些cms漏洞分析"><a href="#35、一些cms漏洞分析" class="headerlink" title="35、一些cms漏洞分析"></a>35、一些cms漏洞分析</h4><p>discuz任意代码执行<br><a href="https://cloud.tencent.com/developer/article/1511932" target="_blank" rel="noopener">https://cloud.tencent.com/developer/article/1511932</a></p>
+<p>thinkphp任意代码执行<br><a href="https://blog.csdn.net/qq_40884727/article/details/101452478" target="_blank" rel="noopener">https://blog.csdn.net/qq_40884727/article/details/101452478</a></p>
+<h4 id="36、免杀"><a href="#36、免杀" class="headerlink" title="36、免杀"></a>36、免杀</h4><p>混淆<br>Powershell天然免杀，我们可以直接用Powershell命令去加载相应的脚本，下载后执行。这种方法是在内存中直接加载，能够绕过杀软的检测<br>第一步，上传Procdump到服务器，Procdump是一个Windows Debug工具，而且是微软爸爸官方提供的，所以无论如何杀软都不会把这货列进黑名单的</p>
+<p><a href="https://www.wtfsec.org/mimikatz-mian-sha/" target="_blank" rel="noopener">https://www.wtfsec.org/mimikatz-mian-sha/</a></p>
+<p>利用抽空ProcessImage就起了一个进程（正常软件），然后把里面的Image抽掉然后映射你的软件进去</p>
+<h4 id="37、sql注入防御"><a href="#37、sql注入防御" class="headerlink" title="37、sql注入防御"></a>37、sql注入防御</h4><p><a href="https://blog.csdn.net/nzjdsds/article/details/77829158" target="_blank" rel="noopener">https://blog.csdn.net/nzjdsds/article/details/77829158</a></p>
+<h4 id="38、一次有趣的绕过"><a href="#38、一次有趣的绕过" class="headerlink" title="38、一次有趣的绕过"></a>38、一次有趣的绕过</h4><p><a href="https://www.cnblogs.com/xishaonian/p/7693136.html" target="_blank" rel="noopener">https://www.cnblogs.com/xishaonian/p/7693136.html</a></p>
+<h4 id="39、linux下passwd和shadow区别"><a href="#39、linux下passwd和shadow区别" class="headerlink" title="39、linux下passwd和shadow区别"></a>39、linux下passwd和shadow区别</h4><p>shadow是root可读<br>passwd匿名都可读</p>
+<h3 id="二、python"><a href="#二、python" class="headerlink" title="二、python"></a>二、python</h3><h4 id="1、PYTHON三大神器：装饰器，迭代器，生成器"><a href="#1、PYTHON三大神器：装饰器，迭代器，生成器" class="headerlink" title="1、PYTHON三大神器：装饰器，迭代器，生成器"></a>1、PYTHON三大神器：装饰器，迭代器，生成器</h4><p><a href="https://www.cnblogs.com/leeeel/p/10769278.html" target="_blank" rel="noopener">PYTHON三大神器：装饰器，迭代器，生成器</a></p>
+<h4 id="2、标准库线程安全的队列是哪一个？不安全的是哪一个？logging是线程安全的吗？"><a href="#2、标准库线程安全的队列是哪一个？不安全的是哪一个？logging是线程安全的吗？" class="headerlink" title="2、标准库线程安全的队列是哪一个？不安全的是哪一个？logging是线程安全的吗？"></a>2、标准库线程安全的队列是哪一个？不安全的是哪一个？logging是线程安全的吗？</h4><p>Python队列都是线程安全的,该问题主要考察你对队列的了解和线程安全的概念.<br>所谓线程安全：就是对于多线程同时操作是是安全的而不会发生写冲突,比如python的Queue<br>相反非线程安全：就是多线程同时操作时会发生写冲突,比如python的其他list,set,dict<br>logging是Python标准库里的日志模块(线程安全)</p>
+<h3 id="三、后渗透"><a href="#三、后渗透" class="headerlink" title="三、后渗透"></a>三、后渗透</h3><h4 id="1、mysql提权"><a href="#1、mysql提权" class="headerlink" title="1、mysql提权"></a>1、mysql提权</h4><p><a href="https://blog.csdn.net/he_and/article/details/81434865" target="_blank" rel="noopener">https://blog.csdn.net/he_and/article/details/81434865</a><br>mof提权:在windows平台下，c:/windows/system32/wbem/mof/nullevt.mof这个文件会每间隔一段时间（很短暂）就会以system权限执行一次，所以，只要我们将我们先要做的事通过代码存储到这个mof文件中，就可以实现权限提升。<br>udf提权:UDF提权是利用MYSQL的自定义函数功能，将MYSQL账号转化为系统system权限<br><a href="https://www.jianshu.com/p/d01167862c42" target="_blank" rel="noopener">https://www.jianshu.com/p/d01167862c42</a><br><a href="https://www.cnblogs.com/R4v3n/articles/8722657.html" target="_blank" rel="noopener">https://www.cnblogs.com/R4v3n/articles/8722657.html</a><br>mysql写木马<br>mysql反弹shell提权<br>phpmyadmin提权</p>
+<h3 id="四、其他"><a href="#四、其他" class="headerlink" title="四、其他"></a>四、其他</h3><h4 id="数据库设计的三大范式"><a href="#数据库设计的三大范式" class="headerlink" title="数据库设计的三大范式"></a>数据库设计的三大范式</h4><p>1、<a href="https://blog.csdn.net/xy707707/article/details/80509123" target="_blank" rel="noopener">数据库设计的三大范式</a></p>
+<p><code>太空船操作符（组合比较符）</code><br>通过 define() 定义常量数组</p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://attacker.cc/index.php/archives/24/" target="_blank" rel="noopener">https://attacker.cc/index.php/archives/24/</a></p>
+
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://kit4y.github.io" rel="external nofollow noreferrer">st4ck</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://kit4y.github.io/2000/02/13/mian-jing-ji-lei/">https://kit4y.github.io/2000/02/13/mian-jing-ji-lei/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="https://kit4y.github.io" target="_blank">st4ck</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/%E9%9D%A2%E7%BB%8F/">
+                                    <span class="chip bg-color">面经</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2018/12/03/duo-xian-cheng-he-duo-jin-cheng-de-ai-mei-chan-mian/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="多线程和多进程的暧昧缠绵">
+                        
+                        <span class="card-title">多线程和多进程的暧昧缠绵</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            先教科书一波（“千万别被吓到”），教科书上关于多进程和多线程解释为进程是资源分配的最小单位，线程是CPU调度的最小单位据说这句话拿去考试,改卷老师一定会给高分，但是还是嘚深入了解一下
+
+线程的定义：线程是操作系统能够进行运算调度的最小单位。
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2018-12-03
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/" class="post-category">
+                                    计算机杂七杂八
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E8%BF%9B%E7%A8%8B-%E7%BA%BF%E7%A8%8B/">
+                        <span class="chip bg-color">进程&amp;&amp;线程</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                本篇&nbsp;<i class="far fa-dot-circle"></i>
+            </div>
+            <div class="card">
+                <a href="/2000/02/13/mian-jing-ji-lei/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="web安全面经积累">
+                        
+                        <span class="card-title">web安全面经积累</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            一、安全1、PHP 作为弱类型语言，在底层它是怎么判断变量的类型的PHP 作为弱类型语言，在底层它是怎么判断变量的类型的
+2、SQL 注入时有哪些替代空格/**/替代空格and(1=0)括号绕过%09  %0A  %0D  +都可以替代空格
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2000-02-13
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Web/" class="post-category">
+                                    Web
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E9%9D%A2%E7%BB%8F/">
+                        <span class="chip bg-color">面经</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+    
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">年份</span>
+            <a href="https://kit4y.github.io" target="_blank">st4ck</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">163.2k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    window.setTimeout("siteTime()", 1000);
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2019";
+                    var startMonth = "6";
+                    var startDate = "28";
+                    var startHour = "0";
+                    var startMinute = "0";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/Kit4y" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:381382770@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=381382770" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 381382770" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script type="text/javascript" src="/libs/background/ribbon-dynamic.js" async="async"></script>
+    
+    
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/miku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body>
+
+</html>
