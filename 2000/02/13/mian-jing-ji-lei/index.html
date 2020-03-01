@@ -384,7 +384,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    3.5k
+                    3.4k
                 </div>
                 
 
@@ -479,7 +479,6 @@ $id = $_GET[‘id’] ?? null;  //equivalent of writing old above syntax</code><
 <h4 id="2、标准库线程安全的队列是哪一个？不安全的是哪一个？logging是线程安全的吗？"><a href="#2、标准库线程安全的队列是哪一个？不安全的是哪一个？logging是线程安全的吗？" class="headerlink" title="2、标准库线程安全的队列是哪一个？不安全的是哪一个？logging是线程安全的吗？"></a>2、标准库线程安全的队列是哪一个？不安全的是哪一个？logging是线程安全的吗？</h4><p>Python队列都是线程安全的,该问题主要考察你对队列的了解和线程安全的概念.<br>所谓线程安全：就是对于多线程同时操作是是安全的而不会发生写冲突,比如python的Queue<br>相反非线程安全：就是多线程同时操作时会发生写冲突,比如python的其他list,set,dict<br>logging是Python标准库里的日志模块(线程安全)</p>
 <h3 id="三、后渗透"><a href="#三、后渗透" class="headerlink" title="三、后渗透"></a>三、后渗透</h3><h4 id="1、mysql提权"><a href="#1、mysql提权" class="headerlink" title="1、mysql提权"></a>1、mysql提权</h4><p><a href="https://blog.csdn.net/he_and/article/details/81434865" target="_blank" rel="noopener">https://blog.csdn.net/he_and/article/details/81434865</a><br>mof提权:在windows平台下，c:/windows/system32/wbem/mof/nullevt.mof这个文件会每间隔一段时间（很短暂）就会以system权限执行一次，所以，只要我们将我们先要做的事通过代码存储到这个mof文件中，就可以实现权限提升。<br>udf提权:UDF提权是利用MYSQL的自定义函数功能，将MYSQL账号转化为系统system权限<br><a href="https://www.jianshu.com/p/d01167862c42" target="_blank" rel="noopener">https://www.jianshu.com/p/d01167862c42</a><br><a href="https://www.cnblogs.com/R4v3n/articles/8722657.html" target="_blank" rel="noopener">https://www.cnblogs.com/R4v3n/articles/8722657.html</a><br>mysql写木马<br>mysql反弹shell提权<br>phpmyadmin提权</p>
 <h3 id="四、其他"><a href="#四、其他" class="headerlink" title="四、其他"></a>四、其他</h3><h4 id="数据库设计的三大范式"><a href="#数据库设计的三大范式" class="headerlink" title="数据库设计的三大范式"></a>数据库设计的三大范式</h4><p>1、<a href="https://blog.csdn.net/xy707707/article/details/80509123" target="_blank" rel="noopener">数据库设计的三大范式</a></p>
-<p><code>太空船操作符（组合比较符）</code><br>通过 define() 定义常量数组</p>
 <h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://attacker.cc/index.php/archives/24/" target="_blank" rel="noopener">https://attacker.cc/index.php/archives/24/</a></p>
 
             </div>
