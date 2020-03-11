@@ -384,14 +384,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    3.4k
+                    3.5k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    13 分
+                    14 分
                 </div>
                 
 				
@@ -454,9 +454,11 @@ $id = $_GET[‘id’] ?? null;  //equivalent of writing old above syntax</code><
 <h4 id="25、OWASP-top10"><a href="#25、OWASP-top10" class="headerlink" title="25、OWASP-top10"></a>25、OWASP-top10</h4><p><a href="http://blog.nsfocus.net/owasp-top10-2017/" target="_blank" rel="noopener">http://blog.nsfocus.net/owasp-top10-2017/</a></p>
 <h4 id="26、GOpher协议"><a href="#26、GOpher协议" class="headerlink" title="26、GOpher协议"></a>26、GOpher协议</h4><p><a href="https://xz.aliyun.com/t/5844" target="_blank" rel="noopener">https://xz.aliyun.com/t/5844</a></p>
 <h4 id="27、文件名解析漏洞"><a href="#27、文件名解析漏洞" class="headerlink" title="27、文件名解析漏洞"></a>27、文件名解析漏洞</h4><p><a href="https://www.cnblogs.com/zlgxzswjy/p/6561229.html" target="_blank" rel="noopener">https://www.cnblogs.com/zlgxzswjy/p/6561229.html</a><br><a href="https://www.jianshu.com/p/224ac688d135" target="_blank" rel="noopener">https://www.jianshu.com/p/224ac688d135</a></p>
-<h4 id="28、java安全"><a href="#28、java安全" class="headerlink" title="28、java安全"></a>28、java安全</h4><p>Java家族安全<br><a href="https://javasec.org/" target="_blank" rel="noopener">https://javasec.org/</a><br>著名java发序列化漏洞 Apache的common Collection组件里的调用链的原理和利用思路(这个文章特别多) 后续的很多软件的漏洞都是因为使用了这个apache的组件导致的。我写了一个关于我的理解(<a href="https://tiaotiaolong.net/2019/07/19/Apache-Common组件反序列化原理/)同时也收录到我自己的git项目[tiaoVulenv](https://github.com/tiaotiaolong/tiaoVulenv)里。" target="_blank" rel="noopener">https://tiaotiaolong.net/2019/07/19/Apache-Common组件反序列化原理/)同时也收录到我自己的git项目[tiaoVulenv](https://github.com/tiaotiaolong/tiaoVulenv)里。</a></p>
+<h4 id="28、java安全"><a href="#28、java安全" class="headerlink" title="28、java安全"></a>28、java安全</h4><p>Java家族安全</p>
+<p> 在Java中的反射机制是指在运行状态中，对于任意一个类都能够知道这个类所有的属性和方法；并且对于任意一个对象，都能够调用它的任意一个方法；这种动态获取信息以及动态调用对象方法的功能成为Java语言的反射机制。 </p>
+<p><a href="https://javasec.org/" target="_blank" rel="noopener">https://javasec.org/</a><br>著名java发序列化漏洞 Apache的common Collection组件里的调用链的原理和利用思路(这个文章特别多) 后续的很多软件的漏洞都是因为使用了这个apache的组件导致的。我写了一个关于我的理解(<a href="https://tiaotiaolong.net/2019/07/19/Apache-Common组件反序列化原理/)同时也收录到我自己的git项目[tiaoVulenv](https://github.com/tiaotiaolong/tiaoVulenv)里。" target="_blank" rel="noopener">https://tiaotiaolong.net/2019/07/19/Apache-Common组件反序列化原理/)同时也收录到我自己的git项目[tiaoVulenv](https://github.com/tiaotiaolong/tiaoVulenv)里。</a></p>
 <p>关于java反序列化一般都是怎么修复的，修复思路是什么？黑名单？</p>
-<p>fastjson 反序列化的问题 关于fastjson我写了一个连载，在博客里，同时也在我自己的git项目tiaoVulenv里。<br><a href="https://xz.aliyun.com/t/5680" target="_blank" rel="noopener">https://xz.aliyun.com/t/5680</a><br>shiro 认证模块反序列化漏洞 大致原理以及利用方式。<br><a href="https://www.cnblogs.com/paperpen/p/11312671.html" target="_blank" rel="noopener">https://www.cnblogs.com/paperpen/p/11312671.html</a><br><a href="https://www.bilibili.com/video/av57241403/" target="_blank" rel="noopener">https://www.bilibili.com/video/av57241403/</a><br>Spring 安全 原理 利用方法</p>
+<p>fastjson 反序列化的问题 关于fastjson我写了一个连载，在博客里，同时也在我自己的git项目tiaoVulenv里。<br><a href="https://xz.aliyun.com/t/5680" target="_blank" rel="noopener">https://xz.aliyun.com/t/5680</a><br>shiro 认证模块反序列化漏洞 大致原理以及利用方式。<br>读取cookie -&gt; base64解码 -&gt; AES解密 -&gt; 反序列化<br><a href="https://www.cnblogs.com/paperpen/p/11312671.html" target="_blank" rel="noopener">https://www.cnblogs.com/paperpen/p/11312671.html</a><br><a href="https://www.bilibili.com/video/av57241403/" target="_blank" rel="noopener">https://www.bilibili.com/video/av57241403/</a><br>Spring 安全 原理 利用方法</p>
 <p>Struts2 安全 原理 利用方法（s-45上传模块异常处理）<br><a href="https://www.cnblogs.com/qiantan/p/10695567.html" target="_blank" rel="noopener">https://www.cnblogs.com/qiantan/p/10695567.html</a><br><a href="https://blog.csdn.net/xiao190128/article/details/61202955" target="_blank" rel="noopener">045-https://blog.csdn.net/xiao190128/article/details/61202955</a><br><a href="https://blog.csdn.net/xiao190128/article/details/61202955" target="_blank" rel="noopener">https://blog.csdn.net/xiao190128/article/details/61202955</a><br>JBoss 安全 原理 利用方法(未授权上传+反序列化)<br><a href="https://www.jianshu.com/p/55ef524dd85d" target="_blank" rel="noopener">https://www.jianshu.com/p/55ef524dd85d</a><br>Tomcat 安全 原理 利用方法（可通过 PUT 方式创建一个 JSP 文件，并可以执行任意代码。）<br><a href="https://www.freebuf.com/vuls/148283.html" target="_blank" rel="noopener">Tomcat 远程代码执行</a></p>
 <p>WebLogic安全 原理 利用方法<br><a href="https://www.freebuf.com/column/203816.html" target="_blank" rel="noopener">https://www.freebuf.com/column/203816.html</a><br>由WebLogic Server WLS组件远程命令执行漏洞通过构造构造SOAP（XML）格式的请求，在解析的过程中导致XMLDecoder反序列化漏洞。</p>
 <p>jenkins 安全问题</p>
@@ -827,7 +829,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">163.2k</span>&nbsp;字
+                class="white-color">163.3k</span>&nbsp;字
             
             
             
