@@ -492,11 +492,12 @@ app<span class="token punctuation">.</span>config<span class="token punctuation"
 <p>获得session为</p>
 <pre><code>eyJfcGVybWFuZW50Ijp0cnVlLCJ1c2VybmFtZSI6InN0NGNrIn0.Xbn3eg.zBDV4huj8XGiRbFjSPMZq1HeV5Y</code></pre><h3 id="四、session安全问题"><a href="#四、session安全问题" class="headerlink" title="四、session安全问题"></a>四、session安全问题</h3><p>其实生成上面的session居然是可以破解的！！！但是没有SECRET_KEY我们无法伪造，可以选择爆破但是一定要拿到SECRET_KEY才能伪造</p>
 <h4 id="方法1：使用flask-unsign工具"><a href="#方法1：使用flask-unsign工具" class="headerlink" title="方法1：使用flask-unsign工具"></a>方法1：使用<a href="https://github.com/Paradoxis/Flask-Unsign" target="_blank" rel="noopener">flask-unsign</a>工具</h4><p>安装<br><code>$ pip3 install flask-unsign</code><br>命令行就可以直接使用<code>$ flask-unsign</code></p>
-<pre><code>C:\Users\38138\Desktop&gt;flask-unsign --sign --cookie &quot;{&#39;_permanent&#39;: True, &#39;username&#39;: &#39;st4ck&#39;}&quot; --secret &quot;admin&quot;
+<pre><code>C:\Users\38138\Desktop&gt;flask-unsign --sign --cookie &quot;{&#39;_permanent&#39;: True, &#39;username&#39;: &#39;st4ck&#39;}&quot; --secret &quot;secret&quot;
 eyJfcGVybWFuZW50Ijp0cnVlLCJ1c2VybmFtZSI6InN0NGNrIn0.Xbn-9Q.uNm3a4894t-TZogqY-Ab4M0HDz4
 
 C:\Users\38138\Desktop&gt;flask-unsign --decode --cookie &quot;eyJfcGVybWFuZW50Ijp0cnVlLCJ1c2VybmFtZSI6InN0NGNrIn0.Xbn-9Q.uNm3a4894t-TZogqY-Ab4M0HDz4&quot;
-{&#39;_permanent&#39;: True, &#39;username&#39;: &#39;st4ck&#39;}</code></pre><h4 id="方法2：使用脚本"><a href="#方法2：使用脚本" class="headerlink" title="方法2：使用脚本"></a>方法2：使用脚本</h4><pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> sys
+{&#39;_permanent&#39;: True, &#39;username&#39;: &#39;st4ck&#39;}</code></pre><p>爆破key</p>
+<pre><code>flask-unsign --unsign --cookie  &quot;eyJfcGVybWFuZW50Ijp0cnVlLCJ1c2VybmFtZSI6Imd1ZXN0In0.Xm2ZFg.-quLR22o3jUH0PzdlVtj4m4Aecg&quot;</code></pre><h4 id="方法2：使用脚本"><a href="#方法2：使用脚本" class="headerlink" title="方法2：使用脚本"></a>方法2：使用脚本</h4><pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> sys
 <span class="token keyword">import</span> zlib
 <span class="token keyword">from</span> itsdangerous <span class="token keyword">import</span> base64_decode
 <span class="token keyword">import</span> ast
